@@ -1,0 +1,106 @@
+name: Deploy documentation
+
+on:
+  # Runs on pushes targeting the default branch
+  push:
+    branches: ["main"]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  update-documentation:
+    runs-on: ubuntu-latest
+    outputs:
+      SHA: ${{ steps.sha.outputs.SHA }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+      
+      - name: Install Doxygen
+        run: |
+          sudo apt update
+          sudo apt install doxygen graphviz texlive texlive-latex-extra ghostscript -y
+        shell: bash
+
+      - name: Remove old documentation
+        run: |
+          cd docs
+          touch html documentation.pdf
+          rm -r html documentation.pdf
+
+      - name: Run Doxygen
+        run: |
+          cd docs
+          doxygen Doxyfile
+        shell: bash
+
+      - name: Make PDF
+        run: |
+          cd docs/latex
+          make
+          mv refman.pdf ../documentation.pdf
+          cd ..
+          rm -r latex
+        shell: bash
+
+      - name: Copy PDF to website
+        run: |
+          cd docs
+          cp documentation.pdf html/
+
+      - name: Push changes
+        uses: actions-x/commit@v6
+        with:
+          name: github-actions
+          email: action@github.com
+          message: updated API documentation
+          files: docs
+          force: true
+
+      - name: Get SHA
+        id: sha
+        run: |
+          sha_new=$(git rev-parse HEAD)
+          echo "SHA=$sha_new" >> $GITHUB_OUTPUT
+          echo ${{ steps.sha.outputs.SHA }}
+      
+      - run: echo ${{ steps.sha.outputs.SHA }}
+      
+  deploy:
+    needs: update-documentation
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          sparse-checkout: ./docs/html
+          ref: ${{ needs.update-documentation.outputs.SHA }}
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+        
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: './docs/html'
+          
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
