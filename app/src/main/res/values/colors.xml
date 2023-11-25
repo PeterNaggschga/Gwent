@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="circle_text">#000000</color>
+
+    <color name="color_add_card_background">#BF000000</color>
+    <color name="color_add_card_text">#FFFFFF</color>
+    <color name="color_coin_text">#FFFFFF</color>
+    <color name="color_cancel_popup_background">#505050</color>
+    <color name="color_cancel_popup_background_gradient">#000000</color>
+    <color name="color_damage_textColor">#2F1700</color>
+    <color name="color_damage_textColor_buffed">#10A010</color>
+    <color name="color_damage_textColor_debuffed">#E42020</color>
+
+    <color name="color_text_scoiatael">#CAC559</color>
+    <color name="color_background_scoiatael">#339300</color>
+    <color name="color_gradient_scoiatael">#164000</color>
+    <color name="color_accent_scoiatael">#52EC00</color>
+
+    <color name="color_text_monster">#B6D1DB</color>
+    <color name="color_background_monster">#99030E</color>
+    <color name="color_gradient_monster">#430008</color>
+    <color name="color_accent_monster">#FF1F30</color>
+
+    <color name="color_text_northern_realms">#D9D9D9</color>
+    <color name="color_background_northern_realms">#005ADF</color>
+    <color name="color_gradient_northern_realms">#002E71</color>
+    <color name="color_accent_northern_realms">#3285FF</color>
+
+    <color name="color_text_nilfgaard">#EFC561</color>
+    <color name="color_background_nilfgaard">#424242</color>
+    <color name="color_gradient_nilfgaard">#0C0C0C</color>
+    <color name="color_accent_nilfgaard">#CCCCCC</color>
+</resources>

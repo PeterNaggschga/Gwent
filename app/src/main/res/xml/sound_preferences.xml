@@ -1,0 +1,51 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <SwitchPreference
+        app:defaultValue="true"
+        app:iconSpaceReserved="false"
+        app:key="sound_all"
+        app:title="@string/preference_sounds_header" />
+
+    <PreferenceCategory
+        app:allowDividerAbove="true"
+        app:dependency="sound_all"
+        app:iconSpaceReserved="false"
+        app:title="@string/preference_sounds_category">
+
+        <SwitchPreference
+            app:defaultValue="true"
+            app:iconSpaceReserved="false"
+            app:key="sound_cards"
+            app:title="@string/preference_sounds_cards_new" />
+
+        <SwitchPreference
+            app:defaultValue="true"
+            app:iconSpaceReserved="false"
+            app:key="sound_reset"
+            app:title="@string/preference_sounds_cards_delete" />
+
+        <SwitchPreference
+            app:defaultValue="true"
+            app:iconSpaceReserved="false"
+            app:key="sound_weather"
+            app:title="@string/preference_sounds_weather" />
+
+        <SwitchPreference
+            app:defaultValue="true"
+            app:iconSpaceReserved="false"
+            app:key="sound_horn"
+            app:title="@string/preference_sounds_horn" />
+
+        <SwitchPreference
+            app:defaultValue="true"
+            app:iconSpaceReserved="false"
+            app:key="sound_burn"
+            app:title="@string/preference_sounds_burn" />
+
+        <SwitchPreference
+            app:defaultValue="true"
+            app:iconSpaceReserved="false"
+            app:key="sound_coin"
+            app:title="@string/preference_sounds_coin" />
+    </PreferenceCategory>
+</PreferenceScreen>

@@ -1,0 +1,58 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ListPreference
+        app:defaultValue="0"
+        app:entries="@array/design_names"
+        app:entryValues="@array/design_values"
+        app:icon="@drawable/icon_design"
+        app:key="design"
+        app:title="@string/preference_design"
+        app:useSimpleSummaryProvider="true" />
+
+    <SwitchPreference
+        app:defaultValue="true"
+        app:icon="@drawable/icon_warnings"
+        app:key="warnings"
+        app:summary="@string/preference_warnings_desc"
+        app:title="@string/preference_warnings_title" />
+
+    <SwitchPreference
+        app:defaultValue="false"
+        app:icon="@drawable/icon_fractionreset"
+        app:key="fractionReset"
+        app:summary="@string/preference_fraction_reset_desc"
+        app:title="@string/preference_fraction_reset_title" />
+
+    <MultiSelectListPreference
+        app:defaultValue="@array/preference_unit_string_defaultValues"
+        app:entries="@array/preference_unit_string"
+        app:entryValues="@array/preference_unit_string_values"
+        app:icon="@drawable/icon_unit_string"
+        app:key="unit_string"
+        app:summary="@string/preference_unit_string_desc"
+        app:title="@string/preference_unit_string_title" />
+
+    <Preference
+        app:fragment="com.peternaggschga.gwent.SettingsActivity$SoundFragment"
+        app:icon="@drawable/icon_sounds"
+        app:key="sounds_header"
+        app:title="@string/preference_sounds_header" />
+
+    <PreferenceCategory
+        app:allowDividerAbove="true"
+        app:key="info"
+        app:title="@string/preference_info_category_header">
+
+        <Preference
+            app:fragment="com.peternaggschga.gwent.SettingsActivity$RuleHeaderFragment"
+            app:icon="@drawable/icon_rules"
+            app:key="rules"
+            app:title="@string/preference_rules_header" />
+
+        <Preference
+            app:icon="@drawable/icon_explore"
+            app:key="onboardingSupport"
+            app:title="@string/preference_info_onboardingSupport" />
+
+    </PreferenceCategory>
+</PreferenceScreen>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Preference
+        app:key="rules_general"
+        app:title="@string/preference_rules_general_title" />
+
+    <Preference
+        app:key="rules_course"
+        app:title="@string/preference_rules_course_title" />
+
+    <Preference
+        app:key="rules_fractions"
+        app:title="@string/preference_rules_fractions_title" />
+
+    <Preference
+        app:key="rules_commander"
+        app:title="@string/preference_rules_commander_title" />
+
+    <Preference
+        app:key="rules_cards"
+        app:title="@string/preference_rules_cards_title" />
+
+    <Preference
+        app:key="rules_card_abilities"
+        app:title="@string/preference_rules_card_abilities_title" />
+
+    <Preference
+        app:key="rules_special_cards"
+        app:title="@string/preference_rules_special_cards_title" />
+</PreferenceScreen>

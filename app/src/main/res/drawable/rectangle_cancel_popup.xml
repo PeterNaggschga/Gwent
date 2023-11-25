@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <gradient
+        android:angle="90"
+        android:centerColor="@color/color_cancel_popup_background"
+        android:endColor="@color/color_cancel_popup_background_gradient"
+        android:startColor="@color/color_cancel_popup_background_gradient" />
+
+    <corners android:radius="@dimen/rectangle_corner_radius" />
+
+    <stroke
+        android:width="@dimen/rectangle_stroke_width"
+        android:color="@color/color_add_card_text" />
+</shape>

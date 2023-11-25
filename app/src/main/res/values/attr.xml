@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="card_count_text_color" format="color" />
+
+    <attr name="card_view_mipmap" format="reference" />
+
+    <attr name="point_ball_mipmap" format="reference" />
+
+    <attr name="card_background_drawable" format="reference" />
+</resources>

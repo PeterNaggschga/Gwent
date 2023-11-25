@@ -1,0 +1,55 @@
+<resources>
+
+    <style name="BaseTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+    </style>
+
+    <style name="MonsterTheme" parent="BaseTheme">
+        <item name="colorPrimary">@color/color_text_monster</item>
+        <item name="colorAccent">@color/color_accent_monster</item>
+        <item name="card_count_text_color">@color/color_text_monster</item>
+        <item name="android:alertDialogIcon">@drawable/icon_round_monster</item>
+        <item name="point_ball_mipmap">@drawable/ball_red</item>
+        <item name="card_view_mipmap">@drawable/card_monster_landscape_free</item>
+        <item name="card_background_drawable">@drawable/rectangle_monster</item>
+    </style>
+
+    <style name="NilfgaardTheme" parent="BaseTheme">
+        <item name="colorPrimary">@color/color_text_nilfgaard</item>
+        <item name="colorAccent">@color/color_accent_nilfgaard</item>
+        <item name="card_count_text_color">@color/color_text_nilfgaard</item>
+        <item name="android:alertDialogIcon">@drawable/icon_round_nilfgaard</item>
+        <item name="point_ball_mipmap">@drawable/ball_grey</item>
+        <item name="card_view_mipmap">@drawable/card_nilfgaard_landscape_free</item>
+        <item name="card_background_drawable">@drawable/rectangle_nilfgaard</item>
+    </style>
+
+    <style name="NorthernRealmsTheme" parent="BaseTheme">
+        <item name="colorPrimary">@color/color_text_northern_realms</item>
+        <item name="colorAccent">@color/color_accent_northern_realms</item>
+        <item name="card_count_text_color">@color/color_text_northern_realms</item>
+        <item name="android:alertDialogIcon">@drawable/icon_round_northern_realms</item>
+        <item name="point_ball_mipmap">@drawable/ball_blue</item>
+        <item name="card_view_mipmap">@drawable/card_northern_realms_landscape_free</item>
+        <item name="card_background_drawable">@drawable/rectangle_northern_realms</item>
+    </style>
+
+    <style name="ScoiataelTheme" parent="BaseTheme">
+        <item name="colorPrimary">@color/color_text_scoiatael</item>
+        <item name="colorAccent">@color/color_accent_scoiatael</item>
+        <item name="card_count_text_color">@color/color_text_scoiatael</item>
+        <item name="android:alertDialogIcon">@drawable/icon_round_scoiatael</item>
+        <item name="point_ball_mipmap">@drawable/ball_green</item>
+        <item name="card_view_mipmap">@drawable/card_scoiatael_landscape_free</item>
+        <item name="card_background_drawable">@drawable/rectangle_scoiatael</item>
+    </style>
+
+    <style name="popUpAnimation">
+        <item name="android:windowEnterAnimation">@anim/popup_show</item>
+        <item name="android:windowExitAnimation">@anim/popup_hide</item>
+    </style>
+</resources>

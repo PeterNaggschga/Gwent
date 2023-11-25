@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="@dimen/popUp_coin_window_width"
+        android:layout_height="match_parent"
+        android:background="@drawable/rectangle_add_card"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/border_margin"
+            android:layout_marginTop="@dimen/border_margin"
+            android:layout_marginEnd="@dimen/border_margin"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/popUp_coin_dialog_image_width"
+                android:layout_height="@dimen/popUp_coin_dialog_image_height"
+                android:contentDescription="@string/content_description_coinpopup_terry_1"
+                android:scaleType="centerCrop"
+                android:src="@drawable/terry_1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/border_margin"
+                android:layout_marginTop="@dimen/border_margin"
+                android:layout_marginEnd="@dimen/border_margin"
+                android:gravity="center"
+                android:text="@string/popUp_coin_terry_1"
+                android:textColor="@color/color_coin_text"
+                android:textSize="@dimen/popUp_coin_title_textSize" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/border_margin"
+            android:layout_marginEnd="@dimen/border_margin"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/popUp_coin_dialog_image_width"
+                android:layout_height="@dimen/popUp_coin_dialog_image_height"
+                android:contentDescription="@string/content_description_coinpopup_terry_2"
+                android:scaleType="centerCrop"
+                android:src="@drawable/terry_2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/border_margin"
+                android:layout_marginEnd="@dimen/border_margin"
+                android:gravity="center"
+                android:text="@string/popUp_coin_terry_2"
+                android:textColor="@color/color_coin_text"
+                android:textSize="@dimen/popUp_coin_dialog_textSize" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/border_margin"
+            android:layout_marginEnd="@dimen/border_margin"
+            android:layout_marginBottom="@dimen/border_margin"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/popUp_coin_dialog_image_width"
+                android:layout_height="@dimen/popUp_coin_dialog_image_height"
+                android:contentDescription="@string/content_description_coinpopup_terry_3"
+                android:scaleType="centerCrop"
+                android:src="@drawable/terry_3" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/border_margin"
+                android:layout_marginEnd="@dimen/border_margin"
+                android:layout_marginBottom="@dimen/border_margin"
+                android:gravity="center"
+                android:text="@string/popUp_coin_terry_3"
+                android:textColor="@color/color_coin_text"
+                android:textSize="@dimen/popUp_coin_dialog_textSize" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

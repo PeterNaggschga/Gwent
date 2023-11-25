@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Gwint</string>
+    <string name="app_description">Eine App, die es erleichtert, Gwint mit analogen Karten zu spielen.</string>
+    <string name="settings_title">Einstellungen</string>
+
+    <string name="fraction_nilfgaard">Kaiserreich Nilfgaard</string>
+    <string name="fraction_northern_realms">Nördliche Königreiche</string>
+
+    <string name="popUp_cards_add">Eine Karte hinzufügen</string>
+    <string name="popUp_cards_save">Speichern</string>
+    <string name="popUp_add_card_label_dmg">Stärke</string>
+    <string name="popUp_add_card_label_ability">Fähigkeit</string>
+    <string name="popUp_add_card_label_binding">Gruppe</string>
+    <string name="popUp_add_card_label_number">Anzahl</string>
+
+    <string name="popUp_coin_normal_win">Du beginnst.</string>
+    <string name="popUp_coin_normal_lose">Dein Gegner beginnt.</string>
+    <string name="popUp_coin_terry_1">Terry Jeffords hat die Münze gefalten!</string>
+    <string name="popUp_coin_stewie_1">Chris Griffin hat die Münze gegessen!</string>
+    <string name="popUp_coin_vin">Vin hat Stahl verbrannt und die Münze weg gedrückt!</string>
+
+    <string name="unit_toString_melee">Nahkampfeinheit</string>
+    <string name="unit_toString_range">Fernkampfeinheit</string>
+    <string name="unit_toString_siege">Belagerungseinheit</string>
+    <string name="unit_toString_unit">Einheit</string>
+
+    <string name="alertDialog_cancel">Abbrechen</string>
+
+    <string name="alertDialog_burn_title">Verbrennen</string>
+
+    <string name="alertDialog_reset_title">Spielfeld zurücksetzen</string>
+    <string name="alertDialog_reset_msg">Willst du wirklich das gesamte Spielfeld zurücksetzen?</string>
+    <string name="alertDialog_fractionreset_msg">Du hast \"Zurücksetzen bei Fraktionswechsel\" aktiviert. Soll das Spielfeld wirklich zurückgesetzt werden?</string>
+    <string name="alertDialog_reset_checkbox">Die Fähigkeit der Monsterfraktion auslösen (du behältst eine zufällig ausgewählte Einheit)</string>
+    <string name="alertDialog_fractionreset_monster_toast_keep">Du behältst: %1$s</string>
+    <string name="alertDialog_fractionreset_monster_toast_nokeep">Du behältst keine Einheit!</string>
+    <string name="alertDialog_reset_positive">Zurücksetzen</string>
+    <string name="alertDialog_fractionreset_negative">Nicht zurücksetzen</string>
+
+    <string name="alertDialog_monster_title">Fähigkeit auslösen</string>
+    <string name="alertDialog_monster_msg">Willst du die Fähigkeit der Monsterfraktion auslösen? Du kannst eine zufällig ausgewählte Einheit behalten.</string>
+    <string name="alertDialog_monster_positive">Auslösen</string>
+    <string name="alertDialog_monster_negative">Nicht auslösen</string>
+
+    <string name="alertDialog_revenge_title">Rächerfähigkeit</string>
+    <string name="alertDialog_revenge_msg">Du hast eine Einheit vom Spielfeld entfernt, die einen Rächer herbeirufen kann. Möchtest du diese Fähigkeit auslösen?</string>
+    <string name="alertDialog_revenge_positive">Rächer rufen</string>
+
+    <string name="preference_design">Hintergrundbild</string>
+    <string name="preference_warnings_title">Warnungen</string>
+    <string name="preference_warnings_desc">Legt fest, ob beim Zurücksetzen und Verbrennen eine Warnung erscheinen soll.</string>
+    <string name="preference_fraction_reset_title">Zurücksetzen bei Fraktionswechsel</string>
+    <string name="preference_fraction_reset_desc">Legt fest, ob das Spielfeld beim Fraktionswechsel automatisch zurückgesetzt werden soll.</string>
+    <string name="preference_unit_string_title">Kartenbeschreibung</string>
+    <string name="preference_unit_string_desc">Legt fest, welche Daten bei der Kartenbeschreibung (zum Beispiel beim Verbrennen) angezeigt werden.</string>
+    <string name="preference_unit_string_alert">Beispiel: %1$s</string>
+
+    <string name="preference_sounds_header">Tonausgabe</string>
+    <string name="preference_sounds_category">Ereignisse</string>
+    <string name="preference_sounds_cards_new">Neue Einheit</string>
+    <string name="preference_sounds_cards_delete">Einheit entfernt</string>
+    <string name="preference_sounds_weather">Wetteränderung</string>
+    <string name="preference_sounds_horn">Horn des Kommandanten</string>
+    <string name="preference_sounds_burn">Verbrennen</string>
+    <string name="preference_sounds_coin">Münzwurf</string>
+
+    <string name="preference_info_onboardingSupport">App-Einführung</string>
+
+    <string name="preference_rules_header">Spielregeln</string>
+    <string name="preference_rules_general_title">Allgemein</string>
+    <string name="preference_rules_course_title">Spielablauf</string>
+    <string name="preference_rules_fractions_title">Fraktionen</string>
+    <string name="preference_rules_commander_title">Anführer</string>
+    <string name="preference_rules_cards_title">Kartensatz und Spielfeld</string>
+    <string name="preference_rules_card_abilities_title">Kartenfähigkeiten</string>
+    <string name="preference_rules_special_cards_title">Spezialkarten</string>
+
+    <string name="onboardingSupport_button_skip">Überspringen</string>
+    <string name="onboardingSupport_button_finish">Fertig</string>
+
+    <string name="content_description_background_resource">Hintergrundelement</string>
+    <string name="content_description_activity_main_background">Hintergrundbild</string>
+    <string name="content_description_activity_main_point_ball">Gesamtpunktanzeige</string>
+    <string name="content_description_activity_main_fraction_button">Fraktionslogo</string>
+    <string name="content_description_activity_main_weather_button">Sonnen-Icon</string>
+    <string name="content_description_activity_main_burn_button">Totenkopf-Icon</string>
+    <string name="content_description_activity_main_coin_button">Münzen-Icon</string>
+    <string name="content_description_activity_main_settings_button">Einstellungs-Icon</string>
+    <string name="content_description_card_ability">Fähigkeits-Icon</string>
+    <string name="content_description_card_delete">Löschen-Icon</string>
+    <string name="content_description_card_copy">Kopieren-Icon</string>
+    <string name="content_description_coinpopup_coin">Münze</string>
+    <string name="content_description_coinpopup_stewie_1">Chris Griffin, der betroffen die Arme hebt</string>
+    <string name="content_description_coinpopup_stewie_2">Stewie Griffin, der etwas erzählt</string>
+    <string name="content_description_coinpopup_stewie_3">Stewie Griffin, der etwas schreit</string>
+    <string name="content_description_coinpopup_terry_1">Eine Münze, die verbogen auf einem Tisch liegt</string>
+    <string name="content_description_coinpopup_terry_2">Jake Peralta (Andy Samberg), der erstaunt etwas sagt</string>
+    <string name="content_description_coinpopup_terry_3">Terry Jeffords (Terry Crews), der wütend, mit erhobenem Finger etwas sagt und dabei von Charles Boyle (Joe Lo Truglio) erschrocken angesehen wird</string>
+    <string name="content_description_coinpopup_vin">Ein Bild von Vin aus der Mistborn-Reihe von Brandon Sanderson</string>
+    <string name="content_description_fractionpopup_monster">Karte mit Symbol der Monsterfraktion</string>
+    <string name="content_description_fractionpopup_nilfgaard">Karte mit Symbol der Kaiserreich Nilfgaard-Fraktion</string>
+    <string name="content_description_fractionpopup_northern_realms">Karte mit Symbol der Nördliche Königreiche-Fraktion</string>
+    <string name="content_description_fractionpopup_scoiatael">Karte mit Symbol der Scoia\'taelfraktion</string>
+    <string name="content_description_row_pointball">Punktanzeige der Angriffsreihe</string>
+    <string name="content_description_row_weather">Wetteranzeige der Angriffsreihe</string>
+    <string name="content_description_row_horn">Hornanzeige der Angriffsreihe</string>
+    <string name="content_description_row_card">Kartenanzeige der Angriffsreihe</string>
+    <string name="content_description_onboardingSupport_image">Screenshots der App</string>
+    <string name="content_description_onboardingSupport_indicator">Punkt, der den Fortschritt der Einführung zeigt</string>
+    <string name="content_description_onboardingSupport_next">Pfeil, der zum nächsten Schritt führt</string>
+
+    <string name="rules_general_text"><![CDATA[<p>Gwint ist ein altes Kartenspiel für zwei Spieler, das vor allem bei Zwergen sehr beliebt ist. Es stellt die Konfrontation zweier Armeen in einer Schlacht nach. Die Spieler sind die Generäle und die Karten ihre Streitkräfte. Jeder Gwintspieler verwendet seinen eigenen, individuell zusammengestellten Kartensatz. Für jede der vier Fraktionen lässt sich ein eigenes Deck erstellen: Monster, Kaiserreich Nilfgaard, Nördliche Königreiche und Scoia\'tael. Jede Fraktion enthält einige einzigartige Karten, die eine unterschiedliche Spielweise ermöglichen. Des Weiteren gibt es eine Anzahl Neutraler Karten, die in allen vier Fraktionen eingesetzt werden können. Ziel des Spiels ist es, den Gegner zu besiegen, indem man in zwei von drei Runden mehr Stärkepunkte ausspielt als der Gegner.</p>]]></string>
+    <string name="rules_course_text"><![CDATA[<p>Zu Beginn der ersten Runde ziehen beide Spieler jeweils 10 Karten aus ihrem Deck. Danach dürfen zwei Karten abgelegt und neu gezogen werden. Dieser Schritt ist optional, die abgelegten Karten werden wieder in den Nachziehstapel eingemischt. Der Spieler, der den ersten Zug macht, wird per Münzwurf ermittelt.<br/>
+    Die Spieler legen abwechselnd Karten. Es besteht Legezwang! Wenn ein Spieler keine Karte ausspielen möchte, muss er passen und darf den Rest der Runde keinen Spielzug mehr durchführen. Daraufhin kann der Gegner noch weitere Karten ausspielen, bis er selbst passt. Sollte ein Spieler keine Handkarten mehr haben, muss er ebenfalls passen.<br />
+    Wenn beide Spieler gepasst haben, ist die Runde beendet und der Gewinner wird anhand der Gesamtstärke der Einheiten ermittelt. Sollte die Gesamtstärke gleich sein, zählt die Runde als Sieg für beide Spieler. Nun werden alle Karten vom Spielfeld auf den Ablagestapel gelegt. Die Handkarten werden in der nächsten Runde weiter verwendet, es werden keine neuen Karten gezogen. Der Gewinner hat in der nächsten Runde den ersten Zug. Bei Unentschieden beginnt derjenige, der in der vergangenen Runde den zweiten Zug hatte. Ziel des Spiels ist es, zwei Runden zu gewinnen.</p>
+    ]]></string>
+    <string name="rules_fractions_text"><![CDATA[<p>
+    Bei Gwint unterscheidet man vier Fraktionen: Monster, Kaiserreich Nilfgaard, Nördliche Königreiche und die Scoia\'tael. Jede dieser Fraktionen besitzt einzigartige Karten, Anführer und jeweils einen bestimmten Fraktionsvorteil. Zusätzlich gibt es noch neutrale Einheiten, welche keiner Fraktion zugehörig sind und somit in jedem Deck auftauchen können.</p>
+    Die Monster werden vom König der Wilden Jagd Eredin Bréacc Glas, auch Sperber genannt, angeführt. Ihr Vorteil ist die Eisenhaut, welche es ermöglicht, dass nach jeder Runde eine zufällige Einheit auf dem Feld verbleibt.<br />
+    Emhyr var Emreis, der sich auch „Die Weiße Flamme, Die Auf den Grabhügeln Der Feinde tanzt“ nennt, ist Kaiser von Nilfgaard, dessen Stärke der Verrat ist. Dieser ermöglicht es, dass Spieler mit einem Nilfgaard-Deck jede Runde gewinnen, die sonst als Unentschieden enden würde.<br />
+    Den expandierenden Nilfgaardern stellen sich die Nördlichen Königreiche unter Foltest, König Temeriens, entgegen. Diese erhalten nach einer gewonnen Runde eine Verstärkung, dürfen also eine Karte vom Nachziehstapel ziehen.<br />
+    In ihrem Kampf versuchen die Königreiche, Anderlinge zu dezimieren, darunter die Scoia\'tael, welche als nicht-menschliche Rebellen gegen die Repressionen aufbegehren und sich dafür den Hinterhalt zu Nutze machen: Die Scoia\'tael können in der ersten Runde entscheiden, wer den ersten Zug macht. Sie werden von der Elfin Francesca Findabair angeführt, die auch als Enid an Gleanna (Gänseblümchen des Tals) bekannt ist.
+    ]]></string>
+    <string name="rules_commander_text"><![CDATA[<p>
+    <p>Jede Fraktion besitzt bestimmte Anführer mit unterschiedlichen Fähigkeiten. Diese werden hier aufgezählt.</p>
+    <h1>Monster: Eredin Bréacc Glas</h1>
+    <p>Der Trügerische: <br />Passiv - Verdoppelt die Stärke aller Karten mit der Fähigkeit "Spion" (wirkt auf beide Spieler).</p>
+    <p>Bringer des Todes: <br />Wirf 2 Karten ab und ziehe 1 Karte deiner Wahl aus deinem Kartensatz.</p>
+    <p>Führer der Roten Reiter: <br />Durchsuche deinen Nachziehstapel nach einer Wetterkarte und spiele sie sofort aus.</p>
+    <p>König der Wilden Jagd: <br />Verdopple die Stärke deiner Nahkampfeinheiten, sofern kein "Horn des Kommandanten" in der Reihe liegt.</p>
+    <p>Zerstörer der Welten: <br />Nimm eine Karte von deinem Ablagestapel zurück auf die Hand.</p>
+    <h1>Kaiserreich Nilfgaard: Emhyr var Emreis</h1>
+    <p>Der Unbarmherzige: <br />Zieh eine Karte vom Ablagestapel deines Gegners.</p>
+    <p>Die Weiße Flamme: <br />Lass die Anführer-Fähigkeit deines Gegners unwirksam werden.</p>
+    <p>Invasor des Nordens: <br />Fähigkeiten, die Einheiten auf dem Schlachtfeld wiederherstellen, stellen zufällig ausgewählte Einheiten wieder her. Wirkt auf beide Spieler.</p>
+    <p>Kaiser von Nilfgaard: <br />Schau dir drei zufällig gewählte Karten aus der Hand deines Gegners an.</p>
+    <p>Kaiserliche Majestät: <br />Durchsuche deinen Nachziehstapel nach "Strömender Regen" und spiele die Karte sofort aus.</p>
+    <h1>Nördliche Königreiche: Foltest</h1>
+    <p>Der Stählerne: <br />Zerstöre die stärkste(n) Belagerungseinheit(en) des Gegners, sofern deren Gesamtstärke mindestens 10 beträgt.</p>
+    <p>Der Anführer des Nordens: <br />Entferne durch "Klirrende Kälte", "Strömender Regen" und "Extrem dichter Nebel" hervorgerufene Wettereffekte.</p>
+    <p>Der Belagerer: <br />Verdopple die Stärke deiner Belagerungseinheiten, sofern kein "Horn des Kommandanten" in der Reihe liegt.</p>
+    <p>König Temeriens: <br />Durchsuche deinen Nachziehstapel nach "Extrem dichter Nebel" und spiele die Karte sofort aus.</p>
+    <p>Sohn des Medell: <br />Zerstöre die stärkste(n) Fernkampfeinheit(en) des Gegners, wenn die Gesamtstärke seiner Fernkampfeinheiten mindestens 10 beträgt.</p>
+    <h1>Scoia\'tael: Francesca Findabair</h1>
+    <p>Gänseblümchen des Tals: <br />Zieh zu Beginn der Schlacht eine Extrakarte.</p>
+    <p>Hoffnung der Aen Seidhe: <br />Verschiebt Einheiten mit der Fähigkeit „Gewandtheit“ auf die für sie optimale Reihe, sofern sie nicht bereits dort befinden.</p>
+    <p>Königin Dol Blathannas: <br />Zerstöre die stärkste(n) Nahkampfeinheit(en) des Gegners, wenn die Gesamtstärke seiner Nahkampfeinheiten mindestens 10 beträgt.</p>
+    <p>Die Schöne: <br />Verdopple die Stärke deiner Fernkampfeinheiten, sofern kein „Horn des Kommandanten“ in der Reihe liegt.</p>
+    <p>Reinblütige Elfin: <br />Durchsuche deinen Nachziehstapel nach „Klirrende Kälte“ und spiele die Karte sofort aus.</p>
+    ]]></string>
+    <string name="rules_cards_text"><![CDATA[<p>
+    Man unterscheidet bei den Kartentypen in drei Hauptkategorien: Anführer-, Einheiten- und Sonderkarten. In jedem Kartensatz gibt es genau eine Anführerkarte (je Fraktion kann der Spieler zwischen vier unterschiedlichen wählen). Diese hat eine bestimmte Fähigkeit, die nur einmal im ganzen Spiel während eines Zuges aktiviert werden kann, dafür aber unabhängig von den Handkarten immer verfügbar ist.<br />
+    Dazu kommen mindestens 22 Einheitenkarten, zu denen auch die Heldenkarten zählen. Letztere sind gegen Karteneffekte jeglicher Art (positiv wie negativ) immun. Die Einheitenkarten werden während eines Spielzuges in Angriffsreihen gelegt. Jeder Spieler besitzt davon drei, jeweils eine für Nahkämpfer, Fernkämpfer und Belagerungsgeräte. In welche dieser Reihen die Einheit gelegt werden kann, erkennt man am orange hinterlegten Symbol.<br />
+    Schließlich gibt es noch maximal zehn Sonderkarten, zu denen „Finte“, „Verbrennen“, „Horn des Kommandanten“ und die Wetterkarten gehören (Effektbeschreibungen sind unter „Spezialkarten“ nachzulesen). Wetterkarten werden in einen abgesonderten Bereich des Spielfelds platziert, da sie die Reihen beider Spieler betreffen. Das Horn des Kommandanten wird an die Reihe angelegt, für die es ausgespielt wird.
+    ]]></string>
+    <string name="rules_card_abilities_text"><![CDATA[
+    <p>Einige Einheitenkarten besitzen besondere Fähigkeiten, welche hier genauer erklärt werden.</p>
+    <p>Spion: <br />Lege diese Karte auf das Schlachtfeld des Gegners – sie wird auf die Gesamtstärke des Gegners angerechnet – und ziehe zwei Karten.</p>
+    <p>Enge Bindung: <br />Liegt diese Karte neben einer mit demselben Namen, verdopple die Stärke beider Karten.</p>
+    <p>Musterung: <br />Wird diese Karte gespielt, durchsuche deinen Nachziehstapel nach Einheiten mit demselben Namen und spiele diese sofort aus.</p>
+    <p>Moralschub: <br />Verstärke alle anderen Einheiten der Reihe um einen Stärkepunkt.</p>
+    <p>Heilung: <br />Wird diese Karte gespielt, wähle eine Einheitenkarte aus deinem Ablagestapel (Heldenkarten ausgenommen) und spiele diese aus. Karten mit der Fähigkeit Gewandtheit müssen wieder in ihre ursprüngliche Reihe zurückgelegt werden.</p>
+    <p>Horn des Kommandanten: <br />Verdoppele die Stärke aller anderen Einheitenkarten dieser Reihe. Dieser Effekt kumuliert nicht mit dem Effekt der Spezialkarte Horn des Kommandanten! Liegen also beide Karten in der Angriffsreihe, wird der Schaden aller Einheiten (einschließlich dieser) nur einmal verdoppelt.</p>
+    <p>Gewandtheit: <br />Platziere diese Karte in der Nah- oder Fernkampfreihe. Nach dem Ausspielen kannst du sie nicht mehr verschieben.</p>
+    <p>Verbrennen: <br />Zerstöre die stärkste(n) Nahkampfeinheit(en) des Gegners, wenn die Gesamtstärke seiner Nahkampfeinheiten mindestens 10 beträgt.</p>
+    <p>Rächer herbeirufen: <br />Wird diese Karte vom Spielfeld entfernt (egal auf welche Art), wird ein Rächer herbeigerufen.</p>
+    ]]></string>
+    <string name="rules_special_cards_text"><![CDATA[
+    <p>Spezialkarten können alternativ zu Einheitenkarten gespielt werden, wobei bestimmte Effekte ausgelöst werden, die hier erklärt werden.</p>
+    <p>Klirrende Kälte: <br />Setze die Stärke aller Nahkampfeinheiten beider Spieler auf 1. Wenn diese Karte bereits ausgespielt wurde, lege sie sofort auf den Ablagestapel.</p>
+    <p>Extrem dichter Nebel: <br />Setze die Stärke aller Fernkampfeinheiten beider Spieler auf 1. Wenn diese Karte bereits ausgespielt wurde, lege sie sofort auf den Ablagestapel.</p>
+    <p>Strömender Regen: <br />Setze die Stärke aller Belagerungseinheiten beider Spieler auf 1. Wenn diese Karte bereits ausgespielt wurde, lege sie sofort auf den Ablagestapel.</p>
+    <p>Gutes Wetter: <br />Entferne alle Effekte von Wetterkarten und lege sie mit dieser Karte auf den Ablagestapel.</p>
+    <p>Finte: <br />Tausche diese Karte gegen eine Einheitenkarte auf dem Schlachtfeld aus, um sie wieder deiner Hand hinzuzufügen. </p>
+    <p>Horn des Kommandanten: <br />Verdoppele die Stärke aller Einheitenkarte dieser Reihe (maximal einmal pro Reihe). Dieser Effekt kumuliert nicht mit dem Karteneffekt Rittersporns! Liegen also beide Karten in der Angriffsreihe, wird der Schaden aller Einheiten (einschließlich Rittersporn) nur einmal verdoppelt.</p>
+    <p>Verbrennen: <br />Entferne die stärkste(n) Karte(n) beider Spieler auf dem Schlachtfeld und lege sie mit dieser Karte auf den Ablagestapel.</p>
+    ]]></string>
+    <string name="onboarding_page1"><![CDATA[
+    <p>Danke, dass du „Gwint - Eine Rechenhilfe“ installiert hast! Bitte beachte, dass diese App nur dazu da ist, dich bei einem Spiel mit analogen Gwintkarten zu unterstützen, indem sie deinen Punktestand errechnet. Du kannst in dieser App nicht gegen KI-Gegner oder ohne analoge Gwintkarten spielen!</p>
+    <p>Also falls du es noch nicht getan hast: Drucke dir einen Satz Gwintkarten aus und suche dir einen Gegner, der das selbe tut (ihr braucht beide diese App)!</p>
+    ]]></string>
+    <string name="onboarding_page2"><![CDATA[
+    <p>Dein Spielfeld besteht aus drei Angriffsreihen: Nahkampfreihe, Fernkampfreihe und Belagerungsreihe (von links nach rechts). In diese Reihen werden die Einheitenkarten beim Ausspielen gelegt. Jede Angriffsreihe kann außerdem durch eine bestimmte Wetterlage geschwächt oder durch ein Horn des Kommandanten verstärkt werden.</p>
+    ]]></string>
+    <string name="onboarding_page3"><![CDATA[
+    <p>Die Angriffsreihen sind wie folgt aufgebaut:</p>
+    <p>1: Die Gesamtstärke aller Einheiten in der Reihe.</p>
+    <p>2: Das aktuelle Wetter (kann durch antippen geändert werden).</p>
+    <p>3: Die Verstärkung durch ein Horn des Kommandanten (kann durch antippen geändert werden).</p>
+    <p>4: Die Anzahl der Einheiten in dieser Reihe (durch tippen können Einheiten hinzugefügt oder entfernt werden).</p>
+    ]]></string>
+    <string name="onboarding_page4"><![CDATA[
+    <p>Neben deinem eigentlichen Spielfeld gibt es an der Seite einige Schaltflächen mit weiteren nützlichen Funktionen:</p>
+    <p>1: Gesamtstärke aller Einheiten auf dem Spielfeld</p>
+    <p>2: Fraktion ändern</p>
+    <p>3: Spielfeld zurücksetzen</p>
+    <p>4: Wettereffekte entfernen</p>
+    <p>5: Stärkste Einheit(en) verbrennen</p>
+    <p>6: Münzwurf</p>
+    <p>7: Einstellungen</p>
+    ]]></string>
+    <string name="onboarding_page5"><![CDATA[
+    <p>Weitere Informationen zum Spiel und seinen Regeln findest du in den Einstellungen. Dort kannst du diese Tour auch wiederholen!</p>
+    <p>Doch jetzt erstmal: Viel Spaß mit analogem Gwint! Über Verbesserungsvorschläge, Fehlermeldungen und sonstiges Feedback freue ich mich sehr, nutze dazu gerne den Google Play Store!</p>
+    ]]></string>
+    <string name="fraction_monster">Monster</string>
+    <string name="array_design_jaskier">Rittersporn</string>
+    <string name="array_design_default">Standard</string>
+    <string name="array_design_geralt">Geralt von Riva</string>
+    <string name="array_design_yennefer">Yennefer von Vengerberg</string>
+    <string name="array_unit_string_type">Einheitentyp (Nahkampfeinheit, etc.)</string>
+    <string name="array_unit_string_baseAD">Grundangriff</string>
+    <string name="array_unit_string_buffAD">Verstärkter Angriff</string>
+    <string name="array_unit_string_ability">Fähigkeit (Enge Bindung, etc.)</string>
+    <string name="array_add_epic_epic">Held</string>
+    <string name="array_add_ability_default">Keine</string>
+    <string name="array_add_ability_moralBoost">Moralschub</string>
+    <string name="array_add_ability_revenge">Rächer</string>
+    <string name="array_add_ability_binding">Enge Bindung</string>
+    <string name="popUp_add_card_binding_count">Anzahl Einheiten in %1$d. Gruppe: %2$d</string>
+    <string name="alertDialog_burn_msg">Möchtest du wirklich %1$s verbrennen?</string>
+</resources>
