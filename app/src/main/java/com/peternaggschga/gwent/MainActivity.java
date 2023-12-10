@@ -1200,13 +1200,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateBackground() {
-        int backgroundKey;
-        try { //TODO: Entfernen, wenn alle das letzte Update haben
-            backgroundKey = Integer.parseInt(Objects.requireNonNull(sharedPreferences.getString("design", "0")));
-        }catch (RuntimeException e){
-            e.printStackTrace();
-            backgroundKey = 0;
-        }
+        int backgroundKey = Integer.parseInt(Objects.requireNonNull(sharedPreferences.getString("design", "0")));
         int[] imageResIds = {R.drawable.background_geralt, R.drawable.background_ciri, R.drawable.background_jaskier, R.drawable.background_yennefer, R.drawable.background_eredin};
         backgroundImageView.setImageResource(backgroundKey > 1 ? imageResIds[backgroundKey - 1] : imageResIds[0]);
         backgroundImageView.setVisibility(backgroundKey == 0 ? View.GONE : View.VISIBLE);
