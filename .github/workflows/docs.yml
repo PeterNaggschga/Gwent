@@ -74,6 +74,7 @@ jobs:
           mv resources/cards/gwent_cards_english.zip docs/html/cards
           mv resources/cards/gwent_cards_german.tar.gz docs/html/cards
           mv resources/cards/gwent_cards_english.tar.gz docs/html/cards
+          cp resources/cards/printing-layout.pdf docs/html/cards
         shell: bash
 
       - name: Push changes
