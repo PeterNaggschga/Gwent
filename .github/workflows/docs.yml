@@ -65,15 +65,15 @@ jobs:
       - name: Copy cards to website
         run: |
           cd resources/cards
-          zip -r german de
-          zip -r english en
-          tar -cf german.tar.gz de
-          tar -cf english.tar.gz en
+          zip -r gwent_cards_german de
+          zip -r gwent_cards_english en
+          tar -cf gwent_cards_german.tar.gz de
+          tar -cf gwent_cards_english.tar.gz en
           cd && mkdir -p docs/html/cards
-          mv resources/cards/german.zip docs/html/cards
-          mv resources/cards/english.zip docs/html/cards
-          mv resources/cards/german.tar.gz docs/html/cards
-          mv resources/cards/english.tar.gz docs/html/cards
+          mv resources/cards/gwent_cards_german.zip docs/html/cards
+          mv resources/cards/gwent_cards_english.zip docs/html/cards
+          mv resources/cards/gwent_cards_german.tar.gz docs/html/cards
+          mv resources/cards/gwent_cards_english.tar.gz docs/html/cards
         shell: bash
 
       - name: Push changes
