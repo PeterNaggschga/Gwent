@@ -1,11 +1,12 @@
+<!-- TODO: change fraction to faction -->
+<!-- TODO: change realms to kingdoms -->
 <resources>
     <string name="app_name">Gwent</string>
-    <string name="app_description">An app that simplifies playing Gwent using analog cards.</string>
-    <string name="settings_title">Settings</string>
+    <string name="app_description">An app enabling you to play the Gwent card game from The Witcher 3 with analog cards.</string>
 
     <string name="fraction_monster">Monsters</string>
     <string name="fraction_nilfgaard">Nilfgaardian Empire</string>
-    <string name="fraction_northern_realms">Northern Realms</string>
+    <string name="fraction_northern_realms">Northern Kingdoms</string>
     <string name="fraction_scoiatael" translatable="false">Scoia\'tael</string>
 
     <string name="popUp_cards_add">Add card</string>
@@ -13,31 +14,31 @@
     <string name="popUp_add_card_label_epic" translatable="false">Status</string>
     <string name="array_add_epic_normal" translatable="false">Normal</string>
     <string name="array_add_epic_epic">Hero</string>
-    <string name="popUp_add_card_label_dmg">Power</string>
+    <string name="popUp_add_card_label_dmg">Strength</string>
     <string name="popUp_add_card_label_ability">Ability</string>
     <string name="array_add_ability_default">None</string>
-    <string name="array_add_ability_moralBoost">Morale Boost</string>
+    <string name="array_add_ability_moralBoost">Morale boost</string>
     <string name="array_add_ability_horn" translatable="false">Horn</string>
     <string name="array_add_ability_revenge">Avenger</string>
-    <string name="array_add_ability_binding">Tight Bond</string>
+    <string name="array_add_ability_binding">Tight bond</string>
     <string name="popUp_add_card_label_binding">Squad</string>
     <string name="popUp_add_card_label_number">Number</string>
-    <string name="popUp_add_card_binding_count">Number of units in %1$d. squad: %2$d</string>
+    <string name="popUp_add_card_binding_count">Number of units in squad %1$d: %2$d</string>
 
-    <string name="popUp_coin_normal_win">You will go first.</string>
-    <string name="popUp_coin_normal_lose">Your opponent will go first.</string>
+    <string name="popUp_coin_normal_win">You begin.</string>
+    <string name="popUp_coin_normal_lose">Your opponent begins.</string>
     <string name="popUp_coin_terry_1">Terry Jeffords folded your coin!</string>
     <string name="popUp_coin_terry_2" translatable="false">Oh my god! Did you just fold my quarter in half?</string>
-    <string name="popUp_coin_terry_3" translatable="false">Fate\'s a bitch - you make the choice!</string>
+    <string name="popUp_coin_terry_3" translatable="false">Fate\'s a bitch—you make the choice!</string>
     <string name="popUp_coin_stewie_1">Chris Griffin ate your coin!</string>
     <string name="popUp_coin_stewie_2" translatable="false">But don\'t worry, it will come out of my body sooner or later!</string>
     <string name="popUp_coin_stewie_3" translatable="false">He\'s right. I ate a dime once.</string>
-    <string name="popUp_coin_stewie_4" translatable="false">It became a manhole cover for like three days - but then pow!</string>
+    <string name="popUp_coin_stewie_4" translatable="false">It became a manhole cover for like three days—but then pow!</string>
     <string name="popUp_coin_vin">Vin burned steel and pushed away your coin!</string>
 
     <string name="unit_toString_melee">Close combat unit</string>
     <string name="unit_toString_range">Ranged combat unit</string>
-    <string name="unit_toString_siege">Siege unit</string>
+    <string name="unit_toString_siege">Siege combat unit</string>
     <string name="unit_toString_unit">Unit</string>
 
     <string name="alertDialog_cancel">Cancel</string>
@@ -48,7 +49,7 @@
     <string name="alertDialog_reset_title">Reset board</string>
     <string name="alertDialog_reset_msg">Do you really want to reset the board?</string>
     <string name="alertDialog_fractionreset_msg">You activated \"Reset on change of faction\". Do you really want to reset the board?</string>
-    <string name="alertDialog_reset_checkbox">Activate perk of monster faction (you keep one unit)</string>
+    <string name="alertDialog_reset_checkbox">Activate perk of monster faction (you keep one random unit)</string>
     <string name="alertDialog_fractionreset_monster_toast_keep">You keep: %1$s</string>
     <string name="alertDialog_fractionreset_monster_toast_nokeep">You don\'t keep any units!</string>
     <string name="alertDialog_reset_positive">Reset</string>
@@ -77,7 +78,7 @@
     <string name="array_unit_string_type">Type of unit (Close combat unit, etc.)</string>
     <string name="array_unit_string_baseAD">Base strength</string>
     <string name="array_unit_string_buffAD">Boosted strength</string>
-    <string name="array_unit_string_ability">Ability (Tight Bond, etc.)</string>
+    <string name="array_unit_string_ability">Ability (Tight bond, etc.)</string>
     <string name="preference_unit_string_title">Card description</string>
     <string name="preference_unit_string_desc">Determines which data is shown in card description (for instance when units are scorched).</string>
     <string name="preference_unit_string_alert">Example: %1$s</string>
@@ -87,9 +88,9 @@
     <string name="preference_sounds_cards_new">New unit</string>
     <string name="preference_sounds_cards_delete">Unit removed</string>
     <string name="preference_sounds_weather">Change of weather</string>
-    <string name="preference_sounds_horn">Commander\'s Horn</string>
+    <string name="preference_sounds_horn">Commander\'s horn</string>
     <string name="preference_sounds_burn">Scorch</string>
-    <string name="preference_sounds_coin">Coinflip</string>
+    <string name="preference_sounds_coin">Coin-flip</string>
 
     <string name="preference_info_category_header" translatable="false">Info</string>
     <string name="preference_info_onboardingSupport">Introduction</string>
@@ -101,34 +102,34 @@
     <string name="preference_rules_commander_title">Leaders</string>
     <string name="preference_rules_cards_title">Deck and playboard</string>
     <string name="preference_rules_card_abilities_title">Card abilities</string>
-    <string name="preference_rules_special_cards_title">Special Cards</string>
+    <string name="preference_rules_special_cards_title">Special cards</string>
 
     <string name="onboardingSupport_button_skip">Skip</string>
     <string name="onboardingSupport_button_finish">Finish</string>
 
     <string name="content_description_background_resource">background element</string>
     <string name="content_description_activity_main_background">background</string>
-    <string name="content_description_activity_main_point_ball">overall power display</string>
+    <string name="content_description_activity_main_point_ball">total score</string>
     <string name="content_description_activity_main_fraction_button">faction logo</string>
     <string name="content_description_activity_main_reset_button" translatable="false">Reset-Icon</string>
-    <string name="content_description_activity_main_weather_button">Sun-Icon</string>
-    <string name="content_description_activity_main_burn_button">Skull-Icon</string>
+    <string name="content_description_activity_main_weather_button">Clear-Weather-Icon</string>
+    <string name="content_description_activity_main_burn_button">Scorch-Icon</string>
     <string name="content_description_activity_main_coin_button">Coin-Icon</string>
     <string name="content_description_activity_main_settings_button">Settings-Icon</string>
     <string name="content_description_card_ability">Ability-Icon</string>
     <string name="content_description_card_delete">Delete-Icon</string>
     <string name="content_description_card_copy">Copy-Icon</string>
     <string name="content_description_coinpopup_coin">coin</string>
-    <string name="content_description_coinpopup_stewie_1">Chris Griffin who lifts his arms in consternation</string>
+    <string name="content_description_coinpopup_stewie_1">Chris Griffin who raises his arms in consternation</string>
     <string name="content_description_coinpopup_stewie_2">Stewie Griffin who tells a story</string>
     <string name="content_description_coinpopup_stewie_3">Stewie Griffin who yells</string>
     <string name="content_description_coinpopup_terry_1">A bent coin lying on a table</string>
     <string name="content_description_coinpopup_terry_2">Jake Peralta (Andy Samberg) who says something in astonishment</string>
     <string name="content_description_coinpopup_terry_3">Terry Jeffords (Terry Crews) who says something angrily and Charles Boyle (Joe Lo Truglio) looking at him in terror</string>
-    <string name="content_description_coinpopup_vin">A fanart showing Vin from Brandon Sanderson\'s Mistborn-series.</string>
+    <string name="content_description_coinpopup_vin">A fan art showing Vin from Brandon Sanderson\'s Mistborn-series.</string>
     <string name="content_description_fractionpopup_monster">Card with symbol of monster faction</string>
     <string name="content_description_fractionpopup_nilfgaard">Card with symbol of nilfgaardian empire faction</string>
-    <string name="content_description_fractionpopup_northern_realms">Card with symbol of northern realms faction</string>
+    <string name="content_description_fractionpopup_northern_realms">Card with symbol of Northern Kingdoms faction</string>
     <string name="content_description_fractionpopup_scoiatael">Card with symbol of Scoia\'tael faction</string>
     <string name="content_description_row_pointball">point display of combat row</string>
     <string name="content_description_row_weather">weather display of combat row</string>
@@ -138,52 +139,62 @@
     <string name="content_description_onboardingSupport_indicator">dot that indicates progress</string>
     <string name="content_description_onboardingSupport_next">forward arrow</string>
 
-    <string name="rules_general_text"><![CDATA[<p>Gwent is an old card game which is especially fancied by dwarfs. It represents the confrontation of two opposing armies. The players are generals and cards represent their units. Every player uses his own unique deck of cards. Decks can be created for each of the four factions: Monsters, Nilfgaardian Empire, Northern Realms and Scoia\'tael. Each faction has unique cards which lead to different playstyles. Moreover there are cards that can be used for every faction. Your goal is to win two rounds out of three by having more power than your opponent.</p>]]></string>
-    <string name="rules_course_text"><![CDATA[<p>At the beginning of the first round each player draws ten cards from their decks. After drawing you can discard two cards and draw a new card for each. This step is optional, discarded cards are put back into the deck. The beginning player is determined by flipping a coin.<br/>The players place cards alternately. You have to play one card every round! If a player doesn\'t want to play a card, they have to pass and aren\'t allowed to play another card until the round has ended. When one player passes, their opponent can still play cards until they pass too. If one of the opponents uses up all of his cards, he has to pass too.<br />A round ends when both players pass. The round is won by the player with the most overall power. Should both opponents have the same number of points, the round is seen as win for both sides. All cards are moved to the discard pile at the end of each round. Your hand is reused in the next round, you don\'t draw new cards. The winner of last round gets the first turn. Goal of the game is to win two rounds.</p>]]></string>
-    <string name="rules_fractions_text"><![CDATA[<p>There are four factions: Monsters, Nilfgaardian Empire, Northern Realms and Scoia\'tael. Every faction has got unique cards, leaders and perks. Moreover there are some additional cards that are neutral and can be used in every faction.</p>Leader of monster faction is Eredin Bréacc Glas, also dubbed Sparrowhawk who is the King of  the Wild Hunt. Their perk is iron skin which makes it possible to keep 1 unit at the end of each round.<br />Emhyr var Emreis, dubbed \"The White Flame Dancing on the Barrows of his Enemies\", is emperor of Nilfgaard. Treachery causes any player with a nilfgaardian deck to win if points draw level.<br />Archrival of Nilfgaard is Foltest, King of Temeria and leader of the Northern Realms faction. They are able to draw 1 card after a won round.<br />In their fight, the Northern Realms try to decimate Nonhuman which are represented by the Scoia\'tael faction. Scoia\'tael players may decide who gets the first turn in first round. They are led by Francesca Findabair, dubbed Enid an Gleanna (Daisy of the Valleys).]]></string>
+    <string name="rules_general_text"><![CDATA[<p>Gwent is an old card game especially fancied by dwarfs. It represents the confrontation of two opposing armies. The players are generals and cards represent their units. Every player uses his own unique deck of cards. Decks can be created for each of the four factions: Monsters, Nilfgaardian Empire, Northern Kingdoms and Scoia\'tael. Each faction has unique cards which lead to different play styles. Moreover, there are cards that can be used for every faction. Your goal is to win two rounds out of three by having more strength than your opponent.</p>]]></string>
+    <string name="rules_course_text"><![CDATA[<p>At the beginning of the first round each player draws ten cards from their deck. After drawing, you can discard two cards and draw a new card for each. This step is optional, discarded cards are put back into the deck. The beginning player is determined by flipping a coin.<br/>The players place cards alternately. You have to play one card every round! If a player doesn\'t want to play a card, they have to pass and aren\'t allowed to play another card until the round has ended. When one player passes, their opponent can still play cards until they pass too. If one of the opponents uses up all of his cards, he has to pass.<br />A round ends when both players pass. The player with the highest total score wins the round. When both opponents have the same number of points, the round is seen as a win for both sides. All cards are moved to the discard pile at the end of each round. Your hand is reused in the next round—you don\'t draw new cards. The winner of the last round gets the first turn. Goal of the game is to win two rounds.</p>]]></string>
+    <string name="rules_fractions_text"><![CDATA[<p>There are four factions: Monsters, Nilfgaardian Empire, Northern Kingdoms and Scoia\'tael. Every faction has got unique cards, leaders and perks. Moreover, there are some additional cards that are neutral and can be used in every faction.</p>Leader of monster faction is Eredin Bréacc Glas, also known as Sparrowhawk who is the King of the Wild Hunt. Their perk is iron skin which makes it possible to keep one unit at the end of each round.<br />Emhyr var Emreis, also known as \"The White Flame Dancing on the Barrows of his Enemies\", is emperor of Nilfgaard. Treachery causes any player with a nilfgaardian deck to win if points draw level.<br />Archenemy of Nilfgaard is Foltest, King of Temeria and leader of the Northern Kingdoms faction. They are able to draw one card after a won round.<br />In their fight, the Northern Kingdoms try to decimate Nonhumans which are represented by the Scoia\'tael faction. Scoia\'tael players may decide who gets the first turn in the first round. They are led by Francesca Findabair, also known as Enid an Gleanna (Daisy of the Valleys).]]></string>
     <string name="rules_commander_text"><![CDATA[<p>
     <p>Each faction has certain leaders with different abilities. They are listed here.</p>
     <h1>Monsters: Eredin Bréacc Glas</h1>
     <p>The Treacherous: <br />Passive - Doubles the strength of all spy cards (affects both players).</p>
     <p>Bringer of Death: <br />Restore a card from your discard pile to your hand.</p>
-    <p>Commander of the Red Riders: <br />Double the strength of all your Close combat units (unless a Commander\'s horn is also present on that row).</p>
+    <p>Commander of the Red Riders: <br />Double the strength of all your Close combat units (unless a Commander\'s horn is also present in that row).</p>
     <p>King of the Wild Hunt: <br />Pick any weather card from your deck and play it instantly.</p>
-    <p>Destroyer of Worlds: <br />Discard 2 cards and draw 1 card of your choice from your deck.</p>
+    <p>Destroyer of Worlds: <br />Discard two cards and draw one card of your choice from your deck.</p>
     <h1>Nilfgaardian Empire: Emhyr var Emreis</h1>
     <p>The Relentless: <br />Draw a card from your opponent\'s discard pile.</p>
     <p>The White Flame: <br />Cancel your opponent\'s Leader Ability.</p>
     <p>Invader of the North: <br />Abilities that restore a unit to the battlefield restore a randomly-chosen unit. Affects both players.</p>
-    <p>Emperor of Nilfgaard: <br />Look at 3 random cards from your opponent\'s hand.</p>
+    <p>Emperor of Nilfgaard: <br />Look at three random cards from your opponent\'s hand.</p>
     <p>His Imperial Majesty: <br />Pick a Torrential Rain card from your deck and play it instantly.</p>
-    <h1>Northern Realms: Foltest</h1>
-    <p>The Steel-Forged: <br />Destroy your enemy\'s strongest Siege unit(s) if the combined strength of all his or her Siege units is 10 or more.</p>
+    <h1>Northern Kingdoms: Foltest</h1>
+    <p>The Steel-Forged: <br />Destroy your enemy\'s strongest Siege unit(s) if the combined strength of all their Siege units is 10 or more.</p>
     <p>Lord Commander of the North: <br />Clear any weather effects (resulting from Biting Frost, Torrential Rain or Impenetrable Fog cards) in play.</p>
-    <p>The Siegemaster: <br />Doubles the strength of all your Siege units (unless a Commander\'s Horn is also present on that row).</p>
+    <p>The Siegesmaster: <br />Doubles the strength of all your Siege units (unless a Commander\'s Horn is also present on that row).</p>
     <p>King of Temeria: <br />Pick an Impenetrable Fog card from your deck and play it instantly.</p>
-    <p>Son of Medell: <br />Destroy your enemy\'s strongest Ranged combat unit(s) if the combined strength of all his or her Ranged combat units is 10 or more.</p>
+    <p>Son of Medell: <br />Destroy your enemy\'s strongest Ranged combat unit(s) if the combined strength of all their Ranged combat units is 10 or more.</p>
     <h1>Scoia\'tael: Francesca Findabair</h1>
     <p>Daisy of the Valley: <br />Draw an extra card at the beginning of the battle.</p>
     <p>Hope of the Aen Seidhe: <br />Move agile units to whichever valid row maximizes their strength (don\'t move units already in optimal row).</p>
-    <p>Queen of Dol Blathanna: <br />Destroy your enemy\'s strongest Close combat unit(s) if the combined strength of all his or her Close combat units is 10 or more.</p>
+    <p>Queen of Dol Blathanna: <br />Destroy your enemy\'s strongest Close combat unit(s) if the combined strength of all their Close combat units is 10 or more.</p>
     <p>The Beautiful: <br />Doubles the strength of all your Ranged combat units (unless a Commander\'s Horn is also present on that row).</p>
     <p>Pureblood Elf: <br />Pick a Biting Frost card from your deck and play it instantly.</p>
     ]]></string>
     <string name="rules_cards_text"><![CDATA[<p>
-    There are 3 major types of cards: Leaders, units and Special Cards. Each deck has 1 leader card. It has a certain ability which can be activated once per game.<br />
-    Moreover there are at least 22 Unit Cards which includes Heroes. Heroes are immune to any boost or weakening. Units are played in turns. Each player has got 3 combat rows, one for Close combat, Ranged combat and Siege units each. Which row has to be used can be seen on the cards.<br />
-    Also there are Special Cards (maximum 10), \"Decoy\", \"Scorch\", \"Commander\'s Horn\" and weather cards. Weather cards are placed in a separate section of the board, because they influence both players equally. Commander\'s Horn is placed at the designated combat row.</p>
+    There are three major types of cards: Leaders, units and Special Cards.
+    Each deck has one leader card.
+    It has a certain ability which can be activated once per game.<br />
+    Moreover, there are at least 22 Unit Cards including Heroes.
+    Heroes are immune to any boost or weakening.
+    Units are played in turns.
+    Each player has got three combat rows, one for Close combat, Ranged combat and Siege units each.
+    It can be seen on the cards which row must be used.<br />
+    Also there are Special Cards (maximum 10), \"Decoy\",
+    \"Scorch\", \"Commander\'s Horn\" and weather cards.
+    Weather cards are placed in a separate section of the board
+    because they influence both players equally.
+    Commander\'s Horn is placed at the designated combat row.</p>
     ]]></string>
     <string name="rules_card_abilities_text"><![CDATA[
-    <p>Some Unit Cards have got special abilities which are explained in the following.</p>
-    <p>Spy: <br />Can be placed on your opponent\'s battlefield (and count towards your opponent\'s total), but allow you to draw 2 cards extra from your deck.</p>
+    <p>Some unit cards have got special abilities which are explained in the following.</p>
+    <p>Spy: <br />Must be placed on your opponent\'s battlefield (and counts toward your opponent\'s total score), and allows you to draw 2 cards extra from your deck.</p>
     <p>Tight Bond: <br />When placed next to a card with the same name, double the strength of both cards.</p>
     <p>Muster: <br />When played, automatically find any cards with the same name in your deck and play them instantly.</p>
-    <p>Morale Boost: <br />Add +1 strength to all units in the row in which they are played, excluding themselves.</p>
+    <p>Morale Boost: <br />When played, add +1 strength to all other units in the row it is played in.</p>
     <p>Medic: <br />Allow you to choose one card from your discard pile and play it instantly (no Heroes or Special Cards). Agile units have to be placed in the combat row they have been in before.</p>
-    <p>Commander\'s Horn: <br />Double the strength of all other units of this combat row.</p>
+    <p>Commander\'s Horn: <br />Double the strength of all other units in this combat row.</p>
     <p>Agile: <br />Can be placed in either the Close combat or the Ranged combat row. They cannot be moved once placed.</p>
-    <p>Scorch: <br />Kill the strongest card(s) in the specified row.</p>
-    <p>Summon Avenger: <br />Summon a powerful new Unit Card to take their place when they are removed from the battlefield.</p>
+    <p>Scorch: <br />Kill the strongest card(s) in the specified row of the enemy.</p>
+    <p>Summon Avenger: <br />Summon a powerful new unit card to take their place when they are removed from the battlefield.</p>
     ]]></string>
     <string name="rules_special_cards_text"><![CDATA[
     <p>Special Cards can be played instead of Unit Cards and trigger certain effects which are listed below.</p>
@@ -197,10 +208,13 @@
     ]]></string>
     <string name="onboarding_page1"><![CDATA[
     <p>Thanks for installing \"Gwent - A Calculator\"! Please note that this app is made to support you in playing Gwent using analog cards by calculating your points. This app does not allow you to play Gwent against AI or without analog cards!</p>
-    <p>So if you didn\'t yet do so: Print out a deck of Gwent Cards and find an opponent who does the same (both of you will need to install this app).</p>
+    <p>So if you didn\'t do so yet: Print out a deck of Gwent cards and find an opponent who does the same (both of you need to install this app).</p>
     ]]></string>
     <string name="onboarding_page2"><![CDATA[
-    <p>Your game board consists of 3 combat rows: Close combat, Ranged combat and Siege combat row (left to right). Those rows contain Unit Cards. Each row can be weakened by certain weather or boosted by a Commander\'s Horn.</p>
+    <p>Your game board consists of three combat rows: Close combat, Ranged combat and Siege row
+    (left to right).
+    These rows contain unit cards.
+    Each of them can be weakened by certain weather cards or boosted by a Commander\'s Horn.</p>
     ]]></string>
     <string name="onboarding_page3"><![CDATA[
     <p>Combat rows consist of the following parts:</p>
@@ -210,17 +224,18 @@
     <p>4: Number of units in this combat row (you can add or remove units by tapping).</p>
     ]]></string>
     <string name="onboarding_page4"><![CDATA[
-    <p>Next to the game board there are multiple buttons providing useful functions:</p>
+    <p>Next to the game board there is a menu providing useful functions:</p>
     <p>1: Overall strength of all units</p>
     <p>2: Change faction</p>
     <p>3: Reset board</p>
     <p>4: Clear weather</p>
     <p>5: Scorch strongest unit(s)</p>
-    <p>6: Flip coin</p>
+    <p>6: Coin-flip</p>
     <p>7: Settings</p>
     ]]></string>
     <string name="onboarding_page5"><![CDATA[
     <p>More information on Gwent and its rules can be found in the settings. There you can repeat this introduction too!</p>
     <p>But first: Have fun with analog Gwent! Please use the Google Play Store to share improvement suggestions, bugs and other feedback with me!</p>
     ]]></string>
+    <string name="settings_title">Settings</string>
 </resources>
