@@ -38,8 +38,8 @@ jobs:
       - name: Remove old documentation
         run: |
           cd docs
-          touch html documentation.pdf
-          rm -r html documentation.pdf
+          touch html documentation.pdf cards
+          rm -r html documentation.pdf cards
 
       - name: Run Doxygen
         run: |
@@ -60,6 +60,21 @@ jobs:
         run: |
           cd docs
           cp documentation.pdf html/
+        shell: bash
+
+      - name: Copy cards to website
+        run: |
+          cd resources/cards
+          zip -r german de
+          zip -r english en
+          tar -cf german.tar.gz de
+          tar -cf english.tar.gz en
+          cd && mkdir -p docs/html/cards
+          mv resources/cards/german.zip docs/html/cards
+          mv resources/cards/english.zip docs/html/cards
+          mv resources/cards/german.tar.gz docs/html/cards
+          mv resources/cards/english.tar.gz docs/html/cards
+        shell: bash
 
       - name: Push changes
         uses: actions-x/commit@v6
