@@ -38,8 +38,8 @@ jobs:
       - name: Remove old documentation
         run: |
           cd docs
-          touch html documentation.pdf
-          rm -r html documentation.pdf
+          touch html documentation.pdf cards
+          rm -r html documentation.pdf cards
 
       - name: Run Doxygen
         run: |
@@ -60,6 +60,22 @@ jobs:
         run: |
           cd docs
           cp documentation.pdf html/
+        shell: bash
+
+      - name: Copy cards to website
+        run: |
+          cd resources/cards
+          zip -r gwent_cards_de de
+          zip -r gwent_cards_en en
+          tar -cf gwent_cards_de.tar.gz de
+          tar -cf gwent_cards_en.tar.gz en
+          cd && mkdir -p docs/html/cards
+          mv resources/cards/gwent_cards_de.zip docs/html/cards
+          mv resources/cards/gwent_cards_en.zip docs/html/cards
+          mv resources/cards/gwent_cards_de.tar.gz docs/html/cards
+          mv resources/cards/gwent_cards_en.tar.gz docs/html/cards
+          cp resources/cards/printing-layout.pdf docs/html/cards
+        shell: bash
 
       - name: Push changes
         uses: actions-x/commit@v6

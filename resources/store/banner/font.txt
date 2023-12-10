@@ -1,0 +1,2 @@
+Font: Algerian
+Color: #3B2D10
