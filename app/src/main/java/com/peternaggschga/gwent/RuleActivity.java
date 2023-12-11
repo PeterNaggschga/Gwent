@@ -9,57 +9,61 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class RuleActivity extends AppCompatActivity {
+import java.util.Objects;
 
-    public static final String INTENT_EXTRA_TAG = "rule_type";
-    public static final int PREFERENCE_KEY_GENERAL = R.string.preference_rules_general_title;
-    public static final int PREFERENCE_KEY_COURSE = R.string.preference_rules_course_title;
-    public static final int PREFERENCE_KEY_FACTIONS = R.string.preference_rules_factions_title;
-    public static final int PREFERENCE_KEY_COMMANDER = R.string.preference_rules_commander_title;
-    public static final int PREFERENCE_KEY_CARDS = R.string.preference_rules_cards_title;
-    public static final int PREFERENCE_KEY_CARD_ABILITIES = R.string.preference_rules_card_abilities_title;
-    public static final int PREFERENCE_KEY_SPECIAL_CARDS = R.string.preference_rules_special_cards_title;
+public class RuleActivity extends AppCompatActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rules);
 
-        int key = getIntent().getIntExtra(INTENT_EXTRA_TAG, PREFERENCE_KEY_GENERAL);
+        RULES rule = (RULES) getIntent().getSerializableExtra(INTENT_EXTRA_TAG);
 
         setSupportActionBar(findViewById(R.id.rulesToolbar));
         MainActivity.hideSystemUI(getWindow());
 
         TextView textView = findViewById(R.id.rulesTextView);
 
-        switch (key) {
-            case PREFERENCE_KEY_GENERAL:
-                textView.setText(Html.fromHtml(getString(R.string.rules_general_text)));
-                break;
-            case PREFERENCE_KEY_COURSE:
-                textView.setText(Html.fromHtml(getString(R.string.rules_course_text)));
-                break;
-            case PREFERENCE_KEY_FACTIONS:
-                textView.setText(Html.fromHtml(getString(R.string.rules_factions_text)));
-                break;
-            case PREFERENCE_KEY_COMMANDER:
-                textView.setText(Html.fromHtml(getString(R.string.rules_commander_text)));
-                break;
-            case PREFERENCE_KEY_CARDS:
-                textView.setText(Html.fromHtml(getString(R.string.rules_cards_text)));
-                break;
-            case PREFERENCE_KEY_CARD_ABILITIES:
-                textView.setText(Html.fromHtml(getString(R.string.rules_card_abilities_text)));
-                break;
-            case PREFERENCE_KEY_SPECIAL_CARDS:
-                textView.setText(Html.fromHtml(getString(R.string.rules_special_cards_text)));
-        }
-
         ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle(key);
+        Objects.requireNonNull(actionBar).setDisplayHomeAsUpEnabled(true);
+
+        switch (Objects.requireNonNull(rule)) {
+            case GENERAL:
+                textView.setText(Html.fromHtml(getString(R.string.rules_general_text)));
+                Objects.requireNonNull(actionBar).setTitle(R.string.preference_rules_general_title);
+                break;
+            case COURSE:
+                textView.setText(Html.fromHtml(getString(R.string.rules_course_text)));
+                Objects.requireNonNull(actionBar).setTitle(R.string.preference_rules_course_title);
+                break;
+            case FACTIONS:
+                textView.setText(Html.fromHtml(getString(R.string.rules_factions_text)));
+                Objects.requireNonNull(actionBar).setTitle(R.string.preference_rules_factions_title);
+                break;
+            case COMMANDER:
+                textView.setText(Html.fromHtml(getString(R.string.rules_commander_text)));
+                Objects.requireNonNull(actionBar).setTitle(R.string.preference_rules_commander_title);
+                break;
+            case CARDS:
+                textView.setText(Html.fromHtml(getString(R.string.rules_cards_text)));
+                Objects.requireNonNull(actionBar).setTitle(R.string.preference_rules_cards_title);
+                break;
+            case CARD_ABILITIES:
+                textView.setText(Html.fromHtml(getString(R.string.rules_card_abilities_text)));
+                Objects.requireNonNull(actionBar).setTitle(R.string.preference_rules_card_abilities_title);
+                break;
+            case SPECIAL_CARDS:
+                textView.setText(Html.fromHtml(getString(R.string.rules_special_cards_text)));
+                Objects.requireNonNull(actionBar).setTitle(R.string.preference_rules_special_cards_title);
         }
+    }
+
+    public static final String INTENT_EXTRA_TAG = "rule_type";
+
+    public enum RULES {
+        GENERAL, COURSE, FACTIONS, COMMANDER, CARDS, CARD_ABILITIES, SPECIAL_CARDS
+
     }
 
     @Override
