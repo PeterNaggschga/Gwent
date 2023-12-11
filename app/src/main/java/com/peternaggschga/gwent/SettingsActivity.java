@@ -146,10 +146,10 @@ public class SettingsActivity extends AppCompatActivity implements
                 startActivity(new Intent(getContext(), RuleActivity.class).putExtra(RuleActivity.INTENT_EXTRA_TAG, RuleActivity.PREFERENCE_KEY_COURSE));
                 return true;
             });
-            Preference rulesFractions = findPreference("rules_factions");
-            assert rulesFractions != null;
-            rulesFractions.setOnPreferenceClickListener(preference -> {
-                startActivity(new Intent(getContext(), RuleActivity.class).putExtra(RuleActivity.INTENT_EXTRA_TAG, RuleActivity.PREFERENCE_KEY_FRACTIONS));
+            Preference rulesFactions = findPreference("rules_factions");
+            assert rulesFactions != null;
+            rulesFactions.setOnPreferenceClickListener(preference -> {
+                startActivity(new Intent(getContext(), RuleActivity.class).putExtra(RuleActivity.INTENT_EXTRA_TAG, RuleActivity.PREFERENCE_KEY_FACTIONS));
                 return true;
             });
             Preference rulesCommander = findPreference("rules_commander");

@@ -8,14 +8,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 public class RuleActivity extends AppCompatActivity {
 
     public static final String INTENT_EXTRA_TAG = "rule_type";
     public static final int PREFERENCE_KEY_GENERAL = R.string.preference_rules_general_title;
     public static final int PREFERENCE_KEY_COURSE = R.string.preference_rules_course_title;
-    public static final int PREFERENCE_KEY_FRACTIONS = R.string.preference_rules_factions_title;
+    public static final int PREFERENCE_KEY_FACTIONS = R.string.preference_rules_factions_title;
     public static final int PREFERENCE_KEY_COMMANDER = R.string.preference_rules_commander_title;
     public static final int PREFERENCE_KEY_CARDS = R.string.preference_rules_cards_title;
     public static final int PREFERENCE_KEY_CARD_ABILITIES = R.string.preference_rules_card_abilities_title;
@@ -40,7 +39,7 @@ public class RuleActivity extends AppCompatActivity {
             case PREFERENCE_KEY_COURSE:
                 textView.setText(Html.fromHtml(getString(R.string.rules_course_text)));
                 break;
-            case PREFERENCE_KEY_FRACTIONS:
+            case PREFERENCE_KEY_FACTIONS:
                 textView.setText(Html.fromHtml(getString(R.string.rules_factions_text)));
                 break;
             case PREFERENCE_KEY_COMMANDER:

@@ -221,7 +221,7 @@ public class MainActivity extends AppCompatActivity {
         if (sharedPreferences.getBoolean("firstUse", true)) {
             startActivity(new Intent(this, OnboardingSupportActivity.class));
         }
-        inflateFractionLayout(true);
+        inflateFactionLayout(true);
         initViews();
 
         try {
@@ -242,7 +242,7 @@ public class MainActivity extends AppCompatActivity {
         factionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                inflateFractionPopup(view);
+                inflateFactionPopup(view);
             }
         });
         resetButton.setOnClickListener(new View.OnClickListener() {
@@ -689,7 +689,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void inflateFractionPopup(View view) {
+    private void inflateFactionPopup(View view) {
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         View popupView = inflater.inflate(R.layout.popup_faction, (ViewGroup) getWindow().getDecorView(), false);
         popupView.findViewById(R.id.monsterButton).setOnClickListener(new View.OnClickListener() {
@@ -719,7 +719,7 @@ public class MainActivity extends AppCompatActivity {
         inflatePopup(view, popupView, true);
     }
 
-    private void inflateFractionLayout(boolean init) {
+    private void inflateFactionLayout(boolean init) {
         int themeResourceId = sharedPreferences.getInt("faction", THEME_SCOIATAEL);
         setTheme(themeResourceId);
         if (init) {
@@ -1270,7 +1270,7 @@ public class MainActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 resetAll(false);
                                 sharedPreferences.edit().putInt("faction", theme).apply();
-                                inflateFractionLayout(false);
+                                inflateFactionLayout(false);
                                 popupWindow.dismiss();
                             }
                         })
@@ -1278,7 +1278,7 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 sharedPreferences.edit().putInt("faction", theme).apply();
-                                inflateFractionLayout(false);
+                                inflateFactionLayout(false);
                                 popupWindow.dismiss();
                             }
                         });
@@ -1286,11 +1286,11 @@ public class MainActivity extends AppCompatActivity {
             } else if (sharedPreferences.getBoolean("factionReset", false) && resetButton.isEnabled()) {
                 resetAll(false);
                 sharedPreferences.edit().putInt("faction", theme).apply();
-                inflateFractionLayout(false);
+                inflateFactionLayout(false);
                 popupWindow.dismiss();
             } else {
                 sharedPreferences.edit().putInt("faction", theme).apply();
-                inflateFractionLayout(false);
+                inflateFactionLayout(false);
                 popupWindow.dismiss();
             }
         } else {
