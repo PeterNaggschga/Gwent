@@ -661,6 +661,191 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void inflateAddCardPopup(@NonNull final Row row, View view) {
+        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        View popupView = inflater.inflate(R.layout.popup_add_card, (ViewGroup) getWindow().getDecorView(), false);
+        epicPicker = popupView.findViewById(R.id.popup_add_card_epic_picker);
+        dmgPicker = popupView.findViewById(R.id.popup_add_card_dmg_picker);
+        abilityPicker = popupView.findViewById(R.id.popup_add_card_ability_picker);
+        bindingPickerLabel = popupView.findViewById(R.id.popup_add_card_binding_picker_label);
+        bindingPicker = popupView.findViewById(R.id.popup_add_card_binding_picker);
+        numberPicker = popupView.findViewById(R.id.popup_add_card_number_picker);
+        epicPicker.setMinValue(0);
+        epicPicker.setMaxValue(1);
+        epicPicker.setDisplayedValues(getResources().getStringArray(R.array.popup_add_card_epic_values));
+        dmgPicker.setMinValue(0);
+        dmgPicker.setMaxValue(18);
+        dmgPicker.setValue(5);
+        abilityPicker.setMinValue(0);
+        abilityPicker.setMaxValue(4);
+        abilityPicker.setDisplayedValues(getResources().getStringArray(R.array.popup_add_card_ability_values));
+        bindingPicker.setMinValue(1);
+        bindingPicker.setMaxValue(3);
+        numberPicker.setMinValue(1);
+        numberPicker.setMaxValue(5);
+
+        epicPicker.setOnValueChangedListener((numberPicker, i, i1) -> {
+            boolean epic = i1 == 1;
+            dmgPicker.setDisplayedValues(null);
+            dmgPicker.setMinValue(0);
+            dmgPicker.setMaxValue(epic ? 5 : 18);
+            dmgPicker.setValue(epic ? 3 : 5);
+            dmgPicker.setEnabled(epic);
+            if (epic) {
+                dmgPicker.setDisplayedValues(getResources().getStringArray(R.array.popup_add_card_dmg_values_epic));
+
+                abilityPicker.setMinValue(0);
+                abilityPicker.setMaxValue(1);
+                abilityPicker.setDisplayedValues(getResources().getStringArray(R.array.popup_add_card_ability_values_epic));
+
+                bindingPicker.setVisibility(View.GONE);
+                bindingPickerLabel.setVisibility(View.GONE);
+            } else {
+                abilityPicker.setDisplayedValues(getResources().getStringArray(R.array.popup_add_card_ability_values));
+                abilityPicker.setMinValue(0);
+                abilityPicker.setMaxValue(4);
+            }
+            int ability = abilityPicker.getValue();
+            abilityPicker.setValue(ability == 1 ? ability : 0);
+            if (ability == 1) {
+                dmgPicker.setMinValue(0);
+                dmgPicker.setMaxValue(1);
+                dmgPicker.setValue(0);
+                dmgPicker.setDisplayedValues(getResources().getStringArray(i1 == 0 ? R.array.popup_add_card_dmg_values_moralboost_normal : R.array.popup_add_card_dmg_values_moralboost_epic));
+            }
+        });
+        abilityPicker.setOnValueChangedListener((numberPicker, i, i1) -> {
+            switch (i) {
+                case 1:
+                    boolean epic = !(epicPicker.getValue() == 0);
+                    dmgPicker.setDisplayedValues(null);
+                    dmgPicker.setMinValue(0);
+                    dmgPicker.setMaxValue(epic ? 4 : 18);
+                    dmgPicker.setValue(epic ? 3 : 5);
+                    if (epic) {
+                        dmgPicker.setDisplayedValues(getResources().getStringArray(R.array.popup_add_card_dmg_values_epic));
+                    }
+                    dmgPicker.setEnabled(true);
+                    break;
+                case 2:
+                case 3:
+                    dmgPicker.setEnabled(true);
+                    dmgPicker.setValue(5);
+                    break;
+                case 4:
+                    bindingPicker.setVisibility(View.GONE);
+                    bindingPickerLabel.setVisibility(View.GONE);
+            }
+
+            switch (i1) {
+                case 1:
+                    dmgPicker.setMinValue(0);
+                    boolean epic = !(epicPicker.getValue() == 0);
+                    dmgPicker.setMaxValue(epic ? 1 : 4);
+                    dmgPicker.setValue(1);
+                    dmgPicker.setDisplayedValues(getResources().getStringArray(epic ? R.array.popup_add_card_dmg_values_moralboost_epic : R.array.popup_add_card_dmg_values_moralboost_normal));
+                    break;
+                case 2:
+                    dmgPicker.setValue(2);
+                    dmgPicker.setEnabled(false);
+                    break;
+                case 3:
+                    dmgPicker.setValue(0);
+                    dmgPicker.setEnabled(false);
+                    break;
+                case 4:
+                    bindingPicker.setVisibility(View.VISIBLE);
+                    bindingPickerLabel.setVisibility(View.VISIBLE);
+                    int binding = bindingPicker.getValue();
+                    List<Unit> bindingList = row.getBindingUnits(binding);
+                    Toast.makeText(MainActivity.this, getString(R.string.popUp_add_card_binding_count, binding, bindingList.size()), Toast.LENGTH_SHORT).show();
+                    if (bindingList.size() > 0) {
+                        dmgPicker.setValue(bindingList.get(0).getBaseAD());
+                        dmgPicker.setEnabled(false);
+                    }
+            }
+        });
+        bindingPicker.setOnValueChangedListener((numberPicker, i, i1) -> new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                runOnUiThread(() -> {
+                    if (i1 == bindingPicker.getValue()) {
+                        List<Unit> bindingList = row.getBindingUnits(i1);
+                        Toast.makeText(MainActivity.this, getString(R.string.popUp_add_card_binding_count, i1, bindingList.size()), Toast.LENGTH_SHORT).show();
+                        if (bindingList.size() > 0) {
+                            dmgPicker.setValue(bindingList.get(0).getBaseAD());
+                            dmgPicker.setEnabled(false);
+                        } else {
+                            dmgPicker.setEnabled(true);
+                        }
+                    }
+                });
+            }
+        }, 250));
+
+        popupView.findViewById(R.id.popup_add_card_save_button).setOnClickListener(view12 -> {
+            boolean epic = epicPicker.getValue() == 1;
+            boolean moralBoost = abilityPicker.getValue() == 1;
+            boolean jaskier = abilityPicker.getValue() == 2;
+            boolean revenge = abilityPicker.getValue() == 3;
+            int binding = abilityPicker.getValue() == 4 ? bindingPicker.getValue() : 0;
+            int damage = 0;
+            if (moralBoost) {
+                if (epic) {
+                    damage = dmgPicker.getValue() == 0 ? 8 : 10;
+                } else {
+                    switch (dmgPicker.getValue()) {
+                        case 0:
+                            damage = 1;
+                            break;
+                        case 1:
+                            damage = 6;
+                            break;
+                        case 2:
+                            damage = 10;
+                            break;
+                        case 3:
+                            damage = 12;
+                            break;
+                        case 4:
+                            damage = 14;
+                    }
+                }
+            } else {
+                if (epic) {
+                    switch (dmgPicker.getValue()) {
+                        case 1:
+                            damage = 7;
+                            break;
+                        case 2:
+                            damage = 8;
+                            break;
+                        case 3:
+                            damage = 10;
+                            break;
+                        case 4:
+                            damage = 11;
+                            break;
+                        case 5:
+                            damage = 15;
+                    }
+                } else {
+                    damage = dmgPicker.getValue();
+                }
+            }
+            Unit unit = new Unit(damage, epic, jaskier, revenge, binding, moralBoost);
+            for (int i = 0; i < numberPicker.getValue(); i++) {
+                row.addUnit(new Unit(unit));
+            }
+            playAddCardSound(epic, row.getType());
+            checkSidebarButtons();
+            popupWindow.dismiss();
+        });
+        popupView.findViewById(R.id.popup_add_card_cancel_button).setOnClickListener(view1 -> popupWindow.dismiss());
+
+        inflatePopup(view, popupView, false);
+    }
+
     private void inflateCoinflipPopup(View view) {
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         View popupView;
@@ -819,195 +1004,38 @@ public class MainActivity extends AppCompatActivity {
         inflatePopup(view, popupLayout, false);
     }
 
-    private void inflateAddCardPopup(@NonNull final Row row, View view) {
-        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-        View popupView = inflater.inflate(R.layout.popup_add_card, (ViewGroup) getWindow().getDecorView(), false);
-        epicPicker = popupView.findViewById(R.id.popup_add_card_epic_picker);
-        dmgPicker = popupView.findViewById(R.id.popup_add_card_dmg_picker);
-        abilityPicker = popupView.findViewById(R.id.popup_add_card_ability_picker);
-        bindingPickerLabel = popupView.findViewById(R.id.popup_add_card_binding_picker_label);
-        bindingPicker = popupView.findViewById(R.id.popup_add_card_binding_picker);
-        numberPicker = popupView.findViewById(R.id.popup_add_card_number_picker);
-        epicPicker.setMinValue(0);
-        epicPicker.setMaxValue(1);
-        epicPicker.setDisplayedValues(getResources().getStringArray(R.array.popup_add_card_epic_values));
-        dmgPicker.setMinValue(0);
-        dmgPicker.setMaxValue(18);
-        dmgPicker.setValue(5);
-        abilityPicker.setMinValue(0);
-        abilityPicker.setMaxValue(4);
-        abilityPicker.setDisplayedValues(getResources().getStringArray(R.array.popup_add_card_ability_values));
-        bindingPicker.setMinValue(1);
-        bindingPicker.setMaxValue(3);
-        numberPicker.setMinValue(1);
-        numberPicker.setMaxValue(5);
-
-        epicPicker.setOnValueChangedListener((numberPicker, i, i1) -> {
-            boolean epic = i1 == 1;
-            dmgPicker.setDisplayedValues(null);
-            dmgPicker.setMinValue(0);
-            dmgPicker.setMaxValue(epic ? 5 : 18);
-            dmgPicker.setValue(epic ? 3 : 5);
-            dmgPicker.setEnabled(epic);
-            if (epic) {
-                dmgPicker.setDisplayedValues(getResources().getStringArray(R.array.popup_add_card_dmg_values_epic));
-
-                abilityPicker.setMinValue(0);
-                abilityPicker.setMaxValue(1);
-                abilityPicker.setDisplayedValues(getResources().getStringArray(R.array.popup_add_card_ability_values_epic));
-
-                bindingPicker.setVisibility(View.GONE);
-                bindingPickerLabel.setVisibility(View.GONE);
+    private void changeTheme(final THEME theme) {
+        if (sharedPreferences.getInt("faction", THEME.SCOIATAEL.ordinal()) != theme.ordinal()) {
+            if (sharedPreferences.getBoolean("factionReset", false) && sharedPreferences.getBoolean("warnings", true) && resetButton.isEnabled()) {
+                AlertDialog.Builder builder = getAlertDialogBuilder();
+                builder.setTitle(R.string.alertDialog_reset_title)
+                        .setMessage(R.string.alertDialog_factionreset_msg)
+                        .setCancelable(false)
+                        .setPositiveButton(R.string.alertDialog_reset_positive, (dialogInterface, i) -> {
+                            resetAll(false);
+                            sharedPreferences.edit().putInt("faction", theme.ordinal()).apply();
+                            inflateFactionLayout(false);
+                            popupWindow.dismiss();
+                        })
+                        .setNegativeButton(R.string.alertDialog_factionreset_negative, (dialogInterface, i) -> {
+                            sharedPreferences.edit().putInt("faction", theme.ordinal()).apply();
+                            inflateFactionLayout(false);
+                            popupWindow.dismiss();
+                        });
+                builder.create().show();
+            } else if (sharedPreferences.getBoolean("factionReset", false) && resetButton.isEnabled()) {
+                resetAll(false);
+                sharedPreferences.edit().putInt("faction", theme.ordinal()).apply();
+                inflateFactionLayout(false);
+                popupWindow.dismiss();
             } else {
-                abilityPicker.setDisplayedValues(getResources().getStringArray(R.array.popup_add_card_ability_values));
-                abilityPicker.setMinValue(0);
-                abilityPicker.setMaxValue(4);
-            }
-            int ability = abilityPicker.getValue();
-            abilityPicker.setValue(ability == 1 ? ability : 0);
-            if (ability == 1) {
-                dmgPicker.setMinValue(0);
-                dmgPicker.setMaxValue(1);
-                dmgPicker.setValue(0);
-                dmgPicker.setDisplayedValues(getResources().getStringArray(i1 == 0 ? R.array.popup_add_card_dmg_values_moralboost_normal : R.array.popup_add_card_dmg_values_moralboost_epic));
-            }
-        });
-        abilityPicker.setOnValueChangedListener((numberPicker, i, i1) -> {
-            switch (i) {
-                case 1:
-                    boolean epic = !(epicPicker.getValue() == 0);
-                    dmgPicker.setDisplayedValues(null);
-                    dmgPicker.setMinValue(0);
-                    dmgPicker.setMaxValue(epic ? 4 : 18);
-                    dmgPicker.setValue(epic ? 3 : 5);
-                    if (epic) {
-                        dmgPicker.setDisplayedValues(getResources().getStringArray(R.array.popup_add_card_dmg_values_epic));
-                    }
-                    dmgPicker.setEnabled(true);
-                    break;
-                case 2:
-                case 3:
-                    dmgPicker.setEnabled(true);
-                    dmgPicker.setValue(5);
-                    break;
-                case 4:
-                    bindingPicker.setVisibility(View.GONE);
-                    bindingPickerLabel.setVisibility(View.GONE);
-            }
-
-            switch (i1) {
-                case 1:
-                    dmgPicker.setMinValue(0);
-                    boolean epic = !(epicPicker.getValue() == 0);
-                    dmgPicker.setMaxValue(epic ? 1 : 4);
-                    dmgPicker.setValue(1);
-                    dmgPicker.setDisplayedValues(getResources().getStringArray(epic ? R.array.popup_add_card_dmg_values_moralboost_epic : R.array.popup_add_card_dmg_values_moralboost_normal));
-                    break;
-                case 2:
-                    dmgPicker.setValue(2);
-                    dmgPicker.setEnabled(false);
-                    break;
-                case 3:
-                    dmgPicker.setValue(0);
-                    dmgPicker.setEnabled(false);
-                    break;
-                case 4:
-                    bindingPicker.setVisibility(View.VISIBLE);
-                    bindingPickerLabel.setVisibility(View.VISIBLE);
-                    int binding = bindingPicker.getValue();
-                    List<Unit> bindingList = row.getBindingUnits(binding);
-                    Toast.makeText(MainActivity.this, getString(R.string.popUp_add_card_binding_count, binding, bindingList.size()), Toast.LENGTH_SHORT).show();
-                    if (bindingList.size() > 0) {
-                        dmgPicker.setValue(bindingList.get(0).getBaseAD());
-                        dmgPicker.setEnabled(false);
-                    }
-            }
-        });
-        bindingPicker.setOnValueChangedListener((numberPicker, i, i1) -> new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
-                runOnUiThread(() -> {
-                    if (i1 == bindingPicker.getValue()) {
-                        List<Unit> bindingList = row.getBindingUnits(i1);
-                        Toast.makeText(MainActivity.this, getString(R.string.popUp_add_card_binding_count, i1, bindingList.size()), Toast.LENGTH_SHORT).show();
-                        if (bindingList.size() > 0) {
-                            dmgPicker.setValue(bindingList.get(0).getBaseAD());
-                            dmgPicker.setEnabled(false);
-                        } else {
-                            dmgPicker.setEnabled(true);
-                        }
-                    }
-                });
-            }
-        }, 250));
-
-        popupView.findViewById(R.id.popup_add_card_save_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                boolean epic = epicPicker.getValue() == 1;
-                boolean moralBoost = abilityPicker.getValue() == 1;
-                boolean jaskier = abilityPicker.getValue() == 2;
-                boolean revenge = abilityPicker.getValue() == 3;
-                int binding = abilityPicker.getValue() == 4 ? bindingPicker.getValue() : 0;
-                int damage = 0;
-                if (moralBoost) {
-                    if (epic) {
-                        damage = dmgPicker.getValue() == 0 ? 8 : 10;
-                    } else {
-                        switch (dmgPicker.getValue()) {
-                            case 0:
-                                damage = 1;
-                                break;
-                            case 1:
-                                damage = 6;
-                                break;
-                            case 2:
-                                damage = 10;
-                                break;
-                            case 3:
-                                damage = 12;
-                                break;
-                            case 4:
-                                damage = 14;
-                        }
-                    }
-                } else {
-                    if (epic) {
-                        switch (dmgPicker.getValue()) {
-                            case 0:
-                                damage = 0;
-                                break;
-                            case 1:
-                                damage = 7;
-                                break;
-                            case 2:
-                                damage = 8;
-                                break;
-                            case 3:
-                                damage = 10;
-                                break;
-                            case 4:
-                                damage = 11;
-                                break;
-                            case 5:
-                                damage = 15;
-                        }
-                    } else {
-                        damage = dmgPicker.getValue();
-                    }
-                }
-                Unit unit = new Unit(damage, epic, jaskier, revenge, binding, moralBoost);
-                for (int i = 0; i < numberPicker.getValue(); i++) {
-                    row.addUnit(new Unit(unit));
-                }
-                playAddCardSound(epic, row.getType());
-                checkSidebarButtons();
+                sharedPreferences.edit().putInt("faction", theme.ordinal()).apply();
+                inflateFactionLayout(false);
                 popupWindow.dismiss();
             }
-        });
-        popupView.findViewById(R.id.popup_add_card_cancel_button).setOnClickListener(view1 -> popupWindow.dismiss());
-
-        inflatePopup(view, popupView, false);
+        } else {
+            popupWindow.dismiss();
+        }
     }
 
     private void playAddCardSound(boolean epic, int rowType) {
