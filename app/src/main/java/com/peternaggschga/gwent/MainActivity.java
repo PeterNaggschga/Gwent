@@ -743,10 +743,10 @@ public class MainActivity extends AppCompatActivity {
                     textColorResourceId = R.color.color_text_nilfgaard;
                     break;
                 case THEME_NORTHERN_REALMS:
-                    factionButtonResourceId = R.drawable.icon_round_northern_realms;
+                    factionButtonResourceId = R.drawable.icon_round_northern_kingdoms;
                     ballImageResourceId = R.drawable.ball_blue;
-                    rowCardResourceId = R.drawable.card_northern_realms_landscape_free;
-                    textColorResourceId = R.color.color_text_northern_realms;
+                    rowCardResourceId = R.drawable.card_northern_kingdoms_landscape_free;
+                    textColorResourceId = R.color.color_text_northern_kingdoms;
                     break;
                 default:
                     factionButtonResourceId = R.drawable.icon_round_scoiatael;

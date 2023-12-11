@@ -79,11 +79,11 @@
         android:layout_marginStart="@dimen/border_margin"
         android:layout_marginTop="@dimen/card_margin_top"
         android:layout_marginEnd="@dimen/border_margin"
-        android:contentDescription="@string/content_description_factionpopup_northern_realms"
+        android:contentDescription="@string/content_description_factionpopup_northern_kingdoms"
         app:layout_constraintEnd_toStartOf="@+id/scoiataelCardView"
         app:layout_constraintStart_toEndOf="@id/nilfgaardCardView"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/card_northern_realms" />
+        app:srcCompat="@drawable/card_northern_kingdoms" />
 
     <Button
         android:id="@+id/northernRealmsButton"
@@ -92,11 +92,11 @@
         android:layout_marginStart="@dimen/border_margin"
         android:layout_marginTop="@dimen/border_margin"
         android:layout_marginBottom="@dimen/border_margin"
-        android:background="@drawable/rectangle_northern_realms"
+        android:background="@drawable/rectangle_northern_kingdoms"
         android:gravity="center"
-        android:text="@string/faction_northern_realms"
+        android:text="@string/faction_northern_kingdoms"
         android:textAllCaps="false"
-        android:textColor="@color/color_text_northern_realms"
+        android:textColor="@color/color_text_northern_kingdoms"
         android:textSize="@dimen/rectangle_textSize"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/northernRealmsCardView"

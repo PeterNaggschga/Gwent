@@ -29,13 +29,13 @@
     </style>
 
     <style name="NorthernRealmsTheme" parent="BaseTheme">
-        <item name="colorPrimary">@color/color_text_northern_realms</item>
-        <item name="colorAccent">@color/color_accent_northern_realms</item>
-        <item name="card_count_text_color">@color/color_text_northern_realms</item>
-        <item name="android:alertDialogIcon">@drawable/icon_round_northern_realms</item>
+        <item name="colorPrimary">@color/color_text_northern_kingdoms</item>
+        <item name="colorAccent">@color/color_accent_northern_kingdoms</item>
+        <item name="card_count_text_color">@color/color_text_northern_kingdoms</item>
+        <item name="android:alertDialogIcon">@drawable/icon_round_northern_kingdoms</item>
         <item name="point_ball_mipmap">@drawable/ball_blue</item>
-        <item name="card_view_mipmap">@drawable/card_northern_realms_landscape_free</item>
-        <item name="card_background_drawable">@drawable/rectangle_northern_realms</item>
+        <item name="card_view_mipmap">@drawable/card_northern_kingdoms_landscape_free</item>
+        <item name="card_background_drawable">@drawable/rectangle_northern_kingdoms</item>
     </style>
 
     <style name="ScoiataelTheme" parent="BaseTheme">

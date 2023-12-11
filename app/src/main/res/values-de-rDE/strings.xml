@@ -5,7 +5,7 @@
     <string name="settings_title">Einstellungen</string>
 
     <string name="faction_nilfgaard">Kaiserreich Nilfgaard</string>
-    <string name="faction_northern_realms">Nördliche Königreiche</string>
+    <string name="faction_northern_kingdoms">Nördliche Königreiche</string>
 
     <string name="popUp_cards_add">Karte hinzufügen</string>
     <string name="popUp_cards_save">Speichern</string>
@@ -100,7 +100,7 @@
     <string name="content_description_coinpopup_vin">Ein Bild von Vin aus der Mistborn-Reihe von Brandon Sanderson</string>
     <string name="content_description_factionpopup_monster">Karte mit Symbol der Monsterfraktion</string>
     <string name="content_description_factionpopup_nilfgaard">Karte mit Symbol der Kaiserreich-Nilfgaard-Fraktion</string>
-    <string name="content_description_factionpopup_northern_realms">Karte mit Symbol der Nördliche-Königreiche-Fraktion</string>
+    <string name="content_description_factionpopup_northern_kingdoms">Karte mit Symbol der Nördliche-Königreiche-Fraktion</string>
     <string name="content_description_factionpopup_scoiatael">Karte mit Symbol der Scoia\'taelfraktion</string>
     <string name="content_description_row_pointball">Punktanzeige der Angriffsreihe</string>
     <string name="content_description_row_weather">Wetteranzeige der Angriffsreihe</string>

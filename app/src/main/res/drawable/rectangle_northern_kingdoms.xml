@@ -4,13 +4,13 @@
 
     <stroke
         android:width="@dimen/rectangle_stroke_width"
-        android:color="@color/color_text_northern_realms" />
+        android:color="@color/color_text_northern_kingdoms" />
 
     <corners android:radius="@dimen/rectangle_corner_radius" />
 
     <gradient
         android:angle="90"
-        android:centerColor="@color/color_background_northern_realms"
-        android:endColor="@color/color_gradient_northern_realms"
-        android:startColor="@color/color_gradient_northern_realms" />
+        android:centerColor="@color/color_background_northern_kingdoms"
+        android:endColor="@color/color_gradient_northern_kingdoms"
+        android:startColor="@color/color_gradient_northern_kingdoms" />
 </shape>
