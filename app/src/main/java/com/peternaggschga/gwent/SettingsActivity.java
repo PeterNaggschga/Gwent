@@ -53,7 +53,7 @@ public class SettingsActivity extends AppCompatActivity implements
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        // Save current activity title so we can set it again after a configuration change
+        // Save the current activity title, so we can set it again after a configuration change
         outState.putCharSequence(TITLE_TAG, getTitle());
     }
 
@@ -146,9 +146,9 @@ public class SettingsActivity extends AppCompatActivity implements
                 startActivity(new Intent(getContext(), RuleActivity.class).putExtra(RuleActivity.INTENT_EXTRA_TAG, RuleActivity.PREFERENCE_KEY_COURSE));
                 return true;
             });
-            Preference rulesFactions = findPreference("rules_factions");
-            assert rulesFactions != null;
-            rulesFactions.setOnPreferenceClickListener(preference -> {
+            Preference ruleFactions = findPreference("rules_factions");
+            assert ruleFactions != null;
+            ruleFactions.setOnPreferenceClickListener(preference -> {
                 startActivity(new Intent(getContext(), RuleActivity.class).putExtra(RuleActivity.INTENT_EXTRA_TAG, RuleActivity.PREFERENCE_KEY_FACTIONS));
                 return true;
             });
@@ -164,9 +164,9 @@ public class SettingsActivity extends AppCompatActivity implements
                 startActivity(new Intent(getContext(), RuleActivity.class).putExtra(RuleActivity.INTENT_EXTRA_TAG, RuleActivity.PREFERENCE_KEY_CARDS));
                 return true;
             });
-            Preference rulesCardAbilities = findPreference("rules_card_abilities");
-            assert rulesCardAbilities != null;
-            rulesCardAbilities.setOnPreferenceClickListener(preference -> {
+            Preference ruleCardAbilities = findPreference("rules_card_abilities");
+            assert ruleCardAbilities != null;
+            ruleCardAbilities.setOnPreferenceClickListener(preference -> {
                 startActivity(new Intent(getContext(), RuleActivity.class).putExtra(RuleActivity.INTENT_EXTRA_TAG, RuleActivity.PREFERENCE_KEY_CARD_ABILITIES));
                 return true;
             });
