@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static final int THEME_MONSTER = R.style.MonsterTheme;
     public static final int THEME_NILFGAARD = R.style.NilfgaardTheme;
-    public static final int THEME_NORTHERN_REALMS = R.style.NorthernRealmsTheme;
+    public static final int THEME_NORTHERN_KINGDOMS = R.style.NorthernKingdomsTheme;
     public static final int THEME_SCOIATAEL = R.style.ScoiataelTheme;
     private static final String FILE_NAME_BACKUP_MELEE_ROW = "melee.json";
     private static final String FILE_NAME_BACKUP_RANGE_ROW = "range.json";
@@ -704,10 +704,10 @@ public class MainActivity extends AppCompatActivity {
                 changeTheme(THEME_NILFGAARD);
             }
         });
-        popupView.findViewById(R.id.northernRealmsButton).setOnClickListener(new View.OnClickListener() {
+        popupView.findViewById(R.id.northernKingdomsButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                changeTheme(THEME_NORTHERN_REALMS);
+                changeTheme(THEME_NORTHERN_KINGDOMS);
             }
         });
         popupView.findViewById(R.id.scoiataelButton).setOnClickListener(new View.OnClickListener() {
@@ -742,11 +742,11 @@ public class MainActivity extends AppCompatActivity {
                     rowCardResourceId = R.drawable.card_nilfgaard_landscape_free;
                     textColorResourceId = R.color.color_text_nilfgaard;
                     break;
-                case THEME_NORTHERN_REALMS:
-                    factionButtonResourceId = R.drawable.icon_round_northern_realms;
+                case THEME_NORTHERN_KINGDOMS:
+                    factionButtonResourceId = R.drawable.icon_round_northern_kingdoms;
                     ballImageResourceId = R.drawable.ball_blue;
-                    rowCardResourceId = R.drawable.card_northern_realms_landscape_free;
-                    textColorResourceId = R.color.color_text_northern_realms;
+                    rowCardResourceId = R.drawable.card_northern_kingdoms_landscape_free;
+                    textColorResourceId = R.color.color_text_northern_kingdoms;
                     break;
                 default:
                     factionButtonResourceId = R.drawable.icon_round_scoiatael;

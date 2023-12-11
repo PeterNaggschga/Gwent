@@ -1,11 +1,10 @@
-<!-- TODO: change realms to kingdoms -->
 <resources>
     <string name="app_name">Gwent</string>
     <string name="app_description">An app enabling you to play the Gwent card game from The Witcher 3 with analog cards.</string>
 
     <string name="faction_monster">Monsters</string>
     <string name="faction_nilfgaard">Nilfgaardian Empire</string>
-    <string name="faction_northern_realms">Northern Kingdoms</string>
+    <string name="faction_northern_kingdoms">Northern Kingdoms</string>
     <string name="faction_scoiatael" translatable="false">Scoia\'tael</string>
 
     <string name="popUp_cards_add">Add card</string>
@@ -128,7 +127,7 @@
     <string name="content_description_coinpopup_vin">A fan art showing Vin from Brandon Sanderson\'s Mistborn-series.</string>
     <string name="content_description_factionpopup_monster">Card with symbol of monster faction</string>
     <string name="content_description_factionpopup_nilfgaard">Card with symbol of nilfgaardian empire faction</string>
-    <string name="content_description_factionpopup_northern_realms">Card with symbol of Northern Kingdoms faction</string>
+    <string name="content_description_factionpopup_northern_kingdoms">Card with symbol of Northern Kingdoms faction</string>
     <string name="content_description_factionpopup_scoiatael">Card with symbol of Scoia\'tael faction</string>
     <string name="content_description_row_pointball">point display of combat row</string>
     <string name="content_description_row_weather">weather display of combat row</string>
