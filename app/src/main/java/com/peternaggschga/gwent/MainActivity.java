@@ -55,11 +55,132 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        if (sharedPreferences.getBoolean("firstUse", true)) {
+            startActivity(new Intent(this, OnboardingSupportActivity.class));
+        }
+        inflateFactionLayout(true);
+        initViews();
 
-    public static final int THEME_MONSTER = R.style.MonsterTheme;
-    public static final int THEME_NILFGAARD = R.style.NilfgaardTheme;
-    public static final int THEME_NORTHERN_KINGDOMS = R.style.NorthernKingdomsTheme;
-    public static final int THEME_SCOIATAEL = R.style.ScoiataelTheme;
+        try {
+            allRows.add(meleeRow = retrieveRow(FILE_NAME_BACKUP_MELEE_ROW, Row.ROW_MELEE));
+            allRows.add(rangeRow = retrieveRow(FILE_NAME_BACKUP_RANGE_ROW, Row.ROW_RANGE));
+            allRows.add(siegeRow = retrieveRow(FILE_NAME_BACKUP_SIEGE_ROW, Row.ROW_SIEGE));
+        } catch (@NonNull IOException | JSONException e) {
+            e.printStackTrace();
+            allRows.clear();
+            allRows.add(meleeRow = new Row(Row.ROW_MELEE));
+            allRows.add(rangeRow = new Row(Row.ROW_RANGE));
+            allRows.add(siegeRow = new Row(Row.ROW_SIEGE));
+        }
+
+        checkSidebarButtons();
+        setRowImages();
+
+        factionButton.setOnClickListener(this::inflateFactionPopup);
+        resetButton.setOnClickListener(view -> {
+            final boolean monster = THEME.MONSTER.ordinal() == sharedPreferences.getInt("faction", THEME.SCOIATAEL.ordinal());
+            AlertDialog.Builder builder = getAlertDialogBuilder();
+            if (sharedPreferences.getBoolean("warnings", true)) {
+                final View checkBoxView = View.inflate(MainActivity.this, R.layout.alertdialog_checkbox, null);
+                if (monster) {
+                    builder.setView(checkBoxView);
+                }
+                builder.setTitle(R.string.alertDialog_reset_title)
+                        .setMessage(R.string.alertDialog_reset_msg)
+                        .setPositiveButton(R.string.alertDialog_reset_positive, (dialogInterface, i) -> {
+                            if (monster) {
+                                CheckBox checkBox = checkBoxView.findViewById(R.id.alertDialog_checkbox);
+                                resetAll(checkBox.isChecked());
+                            } else {
+                                resetAll(false);
+                            }
+                        });
+                builder.create().show();
+            } else if (monster) {
+                builder.setTitle(R.string.alertDialog_monster_title)
+                        .setMessage(R.string.alertDialog_monster_msg)
+                        .setPositiveButton(R.string.alertDialog_monster_positive, (dialogInterface, i) -> resetAll(true))
+                        .setNegativeButton(R.string.alertDialog_monster_negative, (dialogInterface, i) -> resetAll(false));
+                builder.create().show();
+            } else {
+                resetAll(false);
+            }
+        });
+        weatherButton.setOnClickListener(view -> {
+            if (sharedPreferences.getBoolean("sound_weather", true)) {
+                playSound(R.raw.weather_good);
+            }
+            resetWeather();
+        });
+        burnButton.setOnClickListener(view -> {
+            final List<Unit> burnUnits = getBurnUnits();
+            int burnedRevenge = 0;
+            for (Unit unit : burnUnits) {
+                if (unit.isRevenge()) {
+                    burnedRevenge++;
+                }
+            }
+            if (sharedPreferences.getBoolean("warnings", true)) {
+                Map<String, Integer> unitStrings = new HashMap<>();
+                for (Unit unit : burnUnits) {
+                    String unitString = unit.toString(getApplicationContext(), null);
+                    if (unitStrings.containsKey(unitString)) {
+                        Integer currentValue = unitStrings.get(unitString);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && currentValue != null) {
+                            unitStrings.replace(unitString, currentValue, currentValue + 1);
+                        } else if (currentValue != null) {
+                            unitStrings.remove(unitString);
+                            unitStrings.put(unitString, currentValue + 1);
+                        }
+                    } else {
+                        unitStrings.put(unitString, 1);
+                    }
+                }
+                StringBuilder stringBuilder = new StringBuilder();
+                int k = unitStrings.size();
+                for (Map.Entry<String, Integer> entry : unitStrings.entrySet()) {
+                    if (unitStrings.size() != 1 || entry.getValue() != 1) {
+                        stringBuilder.append(entry.getValue());
+                        stringBuilder.append("x ");
+                    }
+                    stringBuilder.append(entry.getKey());
+                    if (k > 2) {
+                        stringBuilder.append(", ");
+                        k--;
+                    } else if (k == 2) {
+                        stringBuilder.append(" und ");
+                        k--;
+                    }
+                }
+                String msg = getString(R.string.alertDialog_burn_msg, stringBuilder.toString());
+                AlertDialog.Builder alertDialogBuilder = getAlertDialogBuilder();
+                final int finalBurnedRevenge = burnedRevenge;
+                alertDialogBuilder.setTitle(R.string.alertDialog_burn_title)
+                        .setMessage(msg)
+                        .setPositiveButton(R.string.alertDialog_burn_title, (dialogInterface, i) -> burn(burnUnits, finalBurnedRevenge));
+                alertDialogBuilder.create().show();
+            } else {
+                burn(burnUnits, burnedRevenge);
+            }
+        });
+        coinButton.setOnClickListener(this::inflateCoinflipPopup);
+        settingsButton.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, SettingsActivity.class)));
+        firstRowWeatherImageView.setOnClickListener(view -> changeWeather((ImageView) view, meleeRow));
+        secondRowWeatherImageView.setOnClickListener(view -> changeWeather((ImageView) view, rangeRow));
+        thirdRowWeatherImageView.setOnClickListener(view -> changeWeather((ImageView) view, siegeRow));
+        firstRowHornImageView.setOnClickListener(view -> changeHorn(meleeRow));
+        secondRowHornImageView.setOnClickListener(view -> changeHorn(rangeRow));
+        thirdRowHornImageView.setOnClickListener(view -> changeHorn(siegeRow));
+        firstRowCardImageView.setOnClickListener(view -> inflateCardPopup(meleeRow, view));
+        secondRowCardImageView.setOnClickListener(view -> inflateCardPopup(rangeRow, view));
+        thirdRowCardImageView.setOnClickListener(view -> inflateCardPopup(siegeRow, view));
+    }
+
     private static final String FILE_NAME_BACKUP_MELEE_ROW = "melee.json";
     private static final String FILE_NAME_BACKUP_RANGE_ROW = "range.json";
     private static final String FILE_NAME_BACKUP_SIEGE_ROW = "siege.json";
@@ -211,130 +332,14 @@ public class MainActivity extends AppCompatActivity {
         settingsButton = findViewById(R.id.settingsButton);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        if (sharedPreferences.getBoolean("firstUse", true)) {
-            startActivity(new Intent(this, OnboardingSupportActivity.class));
-        }
-        inflateFactionLayout(true);
-        initViews();
-
-        try {
-            allRows.add(meleeRow = retrieveRow(FILE_NAME_BACKUP_MELEE_ROW, Row.ROW_MELEE));
-            allRows.add(rangeRow = retrieveRow(FILE_NAME_BACKUP_RANGE_ROW, Row.ROW_RANGE));
-            allRows.add(siegeRow = retrieveRow(FILE_NAME_BACKUP_SIEGE_ROW, Row.ROW_SIEGE));
-        } catch (@NonNull IOException | JSONException e) {
-            e.printStackTrace();
-            allRows.clear();
-            allRows.add(meleeRow = new Row(Row.ROW_MELEE));
-            allRows.add(rangeRow = new Row(Row.ROW_RANGE));
-            allRows.add(siegeRow = new Row(Row.ROW_SIEGE));
-        }
-
-        checkSidebarButtons();
-        setRowImages();
-
-        factionButton.setOnClickListener(this::inflateFactionPopup);
-        resetButton.setOnClickListener(view -> {
-            final boolean monster = THEME_MONSTER == sharedPreferences.getInt("faction", THEME_SCOIATAEL);
-            AlertDialog.Builder builder = getAlertDialogBuilder();
-            if (sharedPreferences.getBoolean("warnings", true)) {
-                final View checkBoxView = View.inflate(MainActivity.this, R.layout.alertdialog_checkbox, null);
-                if (monster) {
-                    builder.setView(checkBoxView);
-                }
-                builder.setTitle(R.string.alertDialog_reset_title)
-                        .setMessage(R.string.alertDialog_reset_msg)
-                        .setPositiveButton(R.string.alertDialog_reset_positive, (dialogInterface, i) -> {
-                            if (monster) {
-                                CheckBox checkBox = checkBoxView.findViewById(R.id.alertDialog_checkbox);
-                                resetAll(checkBox.isChecked());
-                            } else {
-                                resetAll(false);
-                            }
-                        });
-                builder.create().show();
-            } else if (monster) {
-                builder.setTitle(R.string.alertDialog_monster_title)
-                        .setMessage(R.string.alertDialog_monster_msg)
-                        .setPositiveButton(R.string.alertDialog_monster_positive, (dialogInterface, i) -> resetAll(true))
-                        .setNegativeButton(R.string.alertDialog_monster_negative, (dialogInterface, i) -> resetAll(false));
-                builder.create().show();
-            } else {
-                resetAll(false);
-            }
-        });
-        weatherButton.setOnClickListener(view -> {
-            if (sharedPreferences.getBoolean("sound_weather", true)) {
-                playSound(R.raw.weather_good);
-            }
-            resetWeather();
-        });
-        burnButton.setOnClickListener(view -> {
-            final List<Unit> burnUnits = getBurnUnits();
-            int burnedRevenge = 0;
-            for (Unit unit : burnUnits) {
-                if (unit.isRevenge()) {
-                    burnedRevenge++;
-                }
-            }
-            if (sharedPreferences.getBoolean("warnings", true)) {
-                Map<String, Integer> unitStrings = new HashMap<>();
-                for (Unit unit : burnUnits) {
-                    String unitString = unit.toString(getApplicationContext(), null);
-                    if (unitStrings.containsKey(unitString)) {
-                        Integer currentValue = unitStrings.get(unitString);
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && currentValue != null) {
-                            unitStrings.replace(unitString, currentValue, currentValue + 1);
-                        } else if (currentValue != null) {
-                            unitStrings.remove(unitString);
-                            unitStrings.put(unitString, currentValue + 1);
-                        }
-                    } else {
-                        unitStrings.put(unitString, 1);
-                    }
-                }
-                StringBuilder stringBuilder = new StringBuilder();
-                int k = unitStrings.size();
-                for (Map.Entry<String, Integer> entry : unitStrings.entrySet()) {
-                    if (unitStrings.size() != 1 || entry.getValue() != 1) {
-                        stringBuilder.append(entry.getValue());
-                        stringBuilder.append("x ");
-                    }
-                    stringBuilder.append(entry.getKey());
-                    if (k > 2) {
-                        stringBuilder.append(", ");
-                        k--;
-                    } else if (k == 2) {
-                        stringBuilder.append(" und ");
-                        k--;
-                    }
-                }
-                String msg = getString(R.string.alertDialog_burn_msg, stringBuilder.toString());
-                AlertDialog.Builder alertDialogBuilder = getAlertDialogBuilder();
-                final int finalBurnedRevenge = burnedRevenge;
-                alertDialogBuilder.setTitle(R.string.alertDialog_burn_title)
-                        .setMessage(msg)
-                        .setPositiveButton(R.string.alertDialog_burn_title, (dialogInterface, i) -> burn(burnUnits, finalBurnedRevenge));
-                alertDialogBuilder.create().show();
-            } else {
-                burn(burnUnits, burnedRevenge);
-            }
-        });
-        coinButton.setOnClickListener(this::inflateCoinflipPopup);
-        settingsButton.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, SettingsActivity.class)));
-        firstRowWeatherImageView.setOnClickListener(view -> changeWeather((ImageView) view, meleeRow));
-        secondRowWeatherImageView.setOnClickListener(view -> changeWeather((ImageView) view, rangeRow));
-        thirdRowWeatherImageView.setOnClickListener(view -> changeWeather((ImageView) view, siegeRow));
-        firstRowHornImageView.setOnClickListener(view -> changeHorn(meleeRow));
-        secondRowHornImageView.setOnClickListener(view -> changeHorn(rangeRow));
-        thirdRowHornImageView.setOnClickListener(view -> changeHorn(siegeRow));
-        firstRowCardImageView.setOnClickListener(view -> inflateCardPopup(meleeRow, view));
-        secondRowCardImageView.setOnClickListener(view -> inflateCardPopup(rangeRow, view));
-        thirdRowCardImageView.setOnClickListener(view -> inflateCardPopup(siegeRow, view));
+    private void inflateFactionPopup(View view) {
+        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        View popupView = inflater.inflate(R.layout.popup_faction, (ViewGroup) getWindow().getDecorView(), false);
+        popupView.findViewById(R.id.monsterButton).setOnClickListener(view1 -> changeTheme(THEME.MONSTER));
+        popupView.findViewById(R.id.nilfgaardButton).setOnClickListener(view12 -> changeTheme(THEME.NILFGAARD));
+        popupView.findViewById(R.id.northernKingdomsButton).setOnClickListener(view13 -> changeTheme(THEME.NORTHERN_KINGDOMS));
+        popupView.findViewById(R.id.scoiataelButton).setOnClickListener(view14 -> changeTheme(THEME.SCOIATAEL));
+        inflatePopup(view, popupView, true);
     }
 
     private void changeHorn(@NonNull Row row) {
@@ -589,19 +594,21 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void inflateFactionPopup(View view) {
-        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-        View popupView = inflater.inflate(R.layout.popup_faction, (ViewGroup) getWindow().getDecorView(), false);
-        popupView.findViewById(R.id.monsterButton).setOnClickListener(view1 -> changeTheme(THEME_MONSTER));
-        popupView.findViewById(R.id.nilfgaardButton).setOnClickListener(view12 -> changeTheme(THEME_NILFGAARD));
-        popupView.findViewById(R.id.northernKingdomsButton).setOnClickListener(view13 -> changeTheme(THEME_NORTHERN_KINGDOMS));
-        popupView.findViewById(R.id.scoiataelButton).setOnClickListener(view14 -> changeTheme(THEME_SCOIATAEL));
-        inflatePopup(view, popupView, true);
-    }
-
     private void inflateFactionLayout(boolean init) {
-        int themeResourceId = sharedPreferences.getInt("faction", THEME_SCOIATAEL);
-        setTheme(themeResourceId);
+        THEME theme = THEME.values()[sharedPreferences.getInt("faction", THEME.SCOIATAEL.ordinal())];
+        switch (theme) {
+            case MONSTER:
+                setTheme(R.style.MonsterTheme);
+                break;
+            case NILFGAARD:
+                setTheme(R.style.NilfgaardTheme);
+                break;
+            case NORTHERN_KINGDOMS:
+                setTheme(R.style.NorthernKingdomsTheme);
+                break;
+            default:
+                setTheme(R.style.ScoiataelTheme);
+        }
         if (init) {
             setContentView(R.layout.activity_main);
         } else {
@@ -609,20 +616,20 @@ public class MainActivity extends AppCompatActivity {
             int ballImageResourceId;
             int rowCardResourceId;
             int textColorResourceId;
-            switch (themeResourceId) {
-                case THEME_MONSTER:
+            switch (theme) {
+                case MONSTER:
                     factionButtonResourceId = R.drawable.icon_round_monster;
                     ballImageResourceId = R.drawable.ball_red;
                     rowCardResourceId = R.drawable.card_monster_landscape_free;
                     textColorResourceId = R.color.color_text_monster;
                     break;
-                case THEME_NILFGAARD:
+                case NILFGAARD:
                     factionButtonResourceId = R.drawable.icon_round_nilfgaard;
                     ballImageResourceId = R.drawable.ball_grey;
                     rowCardResourceId = R.drawable.card_nilfgaard_landscape_free;
                     textColorResourceId = R.color.color_text_nilfgaard;
                     break;
-                case THEME_NORTHERN_KINGDOMS:
+                case NORTHERN_KINGDOMS:
                     factionButtonResourceId = R.drawable.icon_round_northern_kingdoms;
                     ballImageResourceId = R.drawable.ball_blue;
                     rowCardResourceId = R.drawable.card_northern_kingdoms_landscape_free;
@@ -1098,38 +1105,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void changeTheme(final int theme) {
-        if (sharedPreferences.getInt("faction", THEME_SCOIATAEL) != theme) {
-            if (sharedPreferences.getBoolean("factionReset", false) && sharedPreferences.getBoolean("warnings", true) && resetButton.isEnabled()) {
-                AlertDialog.Builder builder = getAlertDialogBuilder();
-                builder.setTitle(R.string.alertDialog_reset_title)
-                        .setMessage(R.string.alertDialog_factionreset_msg)
-                        .setCancelable(false)
-                        .setPositiveButton(R.string.alertDialog_reset_positive, (dialogInterface, i) -> {
-                            resetAll(false);
-                            sharedPreferences.edit().putInt("faction", theme).apply();
-                            inflateFactionLayout(false);
-                            popupWindow.dismiss();
-                        })
-                        .setNegativeButton(R.string.alertDialog_factionreset_negative, (dialogInterface, i) -> {
-                            sharedPreferences.edit().putInt("faction", theme).apply();
-                            inflateFactionLayout(false);
-                            popupWindow.dismiss();
-                        });
-                builder.create().show();
-            } else if (sharedPreferences.getBoolean("factionReset", false) && resetButton.isEnabled()) {
-                resetAll(false);
-                sharedPreferences.edit().putInt("faction", theme).apply();
-                inflateFactionLayout(false);
-                popupWindow.dismiss();
-            } else {
-                sharedPreferences.edit().putInt("faction", theme).apply();
-                inflateFactionLayout(false);
-                popupWindow.dismiss();
-            }
-        } else {
-            popupWindow.dismiss();
-        }
+    public enum THEME {
+        MONSTER, NILFGAARD, NORTHERN_KINGDOMS, SCOIATAEL
     }
 
     @Override

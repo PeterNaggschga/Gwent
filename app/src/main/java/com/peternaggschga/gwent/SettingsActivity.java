@@ -26,7 +26,7 @@ public class SettingsActivity extends AppCompatActivity implements
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        setTheme(sharedPreferences.getInt("faction", MainActivity.THEME_SCOIATAEL));
+        setTheme(sharedPreferences.getInt("faction", MainActivity.THEME.SCOIATAEL.ordinal()));
         setContentView(R.layout.activity_settings);
         setSupportActionBar(findViewById(R.id.settingsToolbar));
         MainActivity.hideSystemUI(getWindow());
