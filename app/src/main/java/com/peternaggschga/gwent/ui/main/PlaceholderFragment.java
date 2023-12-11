@@ -39,7 +39,7 @@ public class PlaceholderFragment extends Fragment {
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         int index = getArguments() != null ? getArguments().getInt(ARG_SECTION_NUMBER) : 1;
-        imageIds[4] = Locale.getDefault().getLanguage().equals(new Locale("de").getLanguage()) ? R.drawable.onboarding_support_5_ger : R.drawable.onboarding_support_5;
+        imageIds[4] = Locale.getDefault().getLanguage().equals(new Locale("de").getLanguage()) ? R.drawable.onboarding_support_5_de : R.drawable.onboarding_support_5;
         View root = inflater.inflate(R.layout.fragment_onboarding_support, container, false);
         TextView textView = root.findViewById(R.id.onboarding_textView);
         textView.setText(Html.fromHtml(getString(stringIds[index - 1])));
