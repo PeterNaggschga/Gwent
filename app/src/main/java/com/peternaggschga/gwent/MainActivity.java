@@ -1,7 +1,6 @@
 package com.peternaggschga.gwent;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.AudioAttributes;
@@ -10,7 +9,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -239,191 +237,104 @@ public class MainActivity extends AppCompatActivity {
         checkSidebarButtons();
         setRowImages();
 
-        factionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                inflateFactionPopup(view);
-            }
-        });
-        resetButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final boolean monster = THEME_MONSTER == sharedPreferences.getInt("faction", THEME_SCOIATAEL);
-                AlertDialog.Builder builder = getAlertDialogBuilder();
-                if (sharedPreferences.getBoolean("warnings", true)) {
-                    final View checkBoxView = View.inflate(MainActivity.this, R.layout.alertdialog_checkbox, null);
-                    if (monster) {
-                        builder.setView(checkBoxView);
-                    }
-                    builder.setTitle(R.string.alertDialog_reset_title)
-                            .setMessage(R.string.alertDialog_reset_msg)
-                            .setPositiveButton(R.string.alertDialog_reset_positive, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    if (monster) {
-                                        CheckBox checkBox = checkBoxView.findViewById(R.id.alertDialog_checkbox);
-                                        resetAll(checkBox.isChecked());
-                                    } else {
-                                        resetAll(false);
-                                    }
-                                }
-                            });
-                    builder.create().show();
-                } else if (monster) {
-                    builder.setTitle(R.string.alertDialog_monster_title)
-                            .setMessage(R.string.alertDialog_monster_msg)
-                            .setPositiveButton(R.string.alertDialog_monster_positive, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    resetAll(true);
-                                }
-                            })
-                            .setNegativeButton(R.string.alertDialog_monster_negative, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    resetAll(false);
-                                }
-                            });
-                    builder.create().show();
-                } else {
-                    resetAll(false);
+        factionButton.setOnClickListener(this::inflateFactionPopup);
+        resetButton.setOnClickListener(view -> {
+            final boolean monster = THEME_MONSTER == sharedPreferences.getInt("faction", THEME_SCOIATAEL);
+            AlertDialog.Builder builder = getAlertDialogBuilder();
+            if (sharedPreferences.getBoolean("warnings", true)) {
+                final View checkBoxView = View.inflate(MainActivity.this, R.layout.alertdialog_checkbox, null);
+                if (monster) {
+                    builder.setView(checkBoxView);
                 }
-            }
-        });
-        weatherButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (sharedPreferences.getBoolean("sound_weather", true)) {
-                    playSound(R.raw.weather_good);
-                }
-                resetWeather();
-            }
-        });
-        burnButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final List<Unit> burnUnits = getBurnUnits();
-                int burnedRevenge = 0;
-                for (Unit unit : burnUnits) {
-                    if (unit.isRevenge()) {
-                        burnedRevenge++;
-                    }
-                }
-                if (sharedPreferences.getBoolean("warnings", true)) {
-                    Map<String, Integer> unitStrings = new HashMap<>();
-                    for (Unit unit : burnUnits) {
-                        String unitString = unit.toString(getApplicationContext(), null);
-                        if (unitStrings.containsKey(unitString)) {
-                            Integer currentValue = unitStrings.get(unitString);
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && currentValue != null) {
-                                unitStrings.replace(unitString, currentValue, currentValue + 1);
-                            } else if (currentValue != null) {
-                                unitStrings.remove(unitString);
-                                unitStrings.put(unitString, currentValue + 1);
+                builder.setTitle(R.string.alertDialog_reset_title)
+                        .setMessage(R.string.alertDialog_reset_msg)
+                        .setPositiveButton(R.string.alertDialog_reset_positive, (dialogInterface, i) -> {
+                            if (monster) {
+                                CheckBox checkBox = checkBoxView.findViewById(R.id.alertDialog_checkbox);
+                                resetAll(checkBox.isChecked());
+                            } else {
+                                resetAll(false);
                             }
-                        } else {
-                            unitStrings.put(unitString, 1);
-                        }
-                    }
-                    StringBuilder stringBuilder = new StringBuilder();
-                    int k = unitStrings.size();
-                    for (Map.Entry<String, Integer> entry : unitStrings.entrySet()) {
-                        if (unitStrings.size() != 1 || entry.getValue() != 1) {
-                            stringBuilder.append(entry.getValue());
-                            stringBuilder.append("x ");
-                        }
-                        stringBuilder.append(entry.getKey());
-                        if (k > 2) {
-                            stringBuilder.append(", ");
-                            k--;
-                        } else if (k == 2) {
-                            stringBuilder.append(" und ");
-                            k--;
-                        }
-                    }
-                    String msg = getString(R.string.alertDialog_burn_msg, stringBuilder.toString());
-                    AlertDialog.Builder alertDialogBuilder = getAlertDialogBuilder();
-                    final int finalBurnedRevenge = burnedRevenge;
-                    alertDialogBuilder.setTitle(R.string.alertDialog_burn_title)
-                            .setMessage(msg)
-                            .setPositiveButton(R.string.alertDialog_burn_title, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    burn(burnUnits, finalBurnedRevenge);
-                                }
-                            });
-                    alertDialogBuilder.create().show();
-                } else {
-                    burn(burnUnits, burnedRevenge);
+                        });
+                builder.create().show();
+            } else if (monster) {
+                builder.setTitle(R.string.alertDialog_monster_title)
+                        .setMessage(R.string.alertDialog_monster_msg)
+                        .setPositiveButton(R.string.alertDialog_monster_positive, (dialogInterface, i) -> resetAll(true))
+                        .setNegativeButton(R.string.alertDialog_monster_negative, (dialogInterface, i) -> resetAll(false));
+                builder.create().show();
+            } else {
+                resetAll(false);
+            }
+        });
+        weatherButton.setOnClickListener(view -> {
+            if (sharedPreferences.getBoolean("sound_weather", true)) {
+                playSound(R.raw.weather_good);
+            }
+            resetWeather();
+        });
+        burnButton.setOnClickListener(view -> {
+            final List<Unit> burnUnits = getBurnUnits();
+            int burnedRevenge = 0;
+            for (Unit unit : burnUnits) {
+                if (unit.isRevenge()) {
+                    burnedRevenge++;
                 }
             }
-        });
-        coinButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                inflateCoinflipPopup(view);
+            if (sharedPreferences.getBoolean("warnings", true)) {
+                Map<String, Integer> unitStrings = new HashMap<>();
+                for (Unit unit : burnUnits) {
+                    String unitString = unit.toString(getApplicationContext(), null);
+                    if (unitStrings.containsKey(unitString)) {
+                        Integer currentValue = unitStrings.get(unitString);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && currentValue != null) {
+                            unitStrings.replace(unitString, currentValue, currentValue + 1);
+                        } else if (currentValue != null) {
+                            unitStrings.remove(unitString);
+                            unitStrings.put(unitString, currentValue + 1);
+                        }
+                    } else {
+                        unitStrings.put(unitString, 1);
+                    }
+                }
+                StringBuilder stringBuilder = new StringBuilder();
+                int k = unitStrings.size();
+                for (Map.Entry<String, Integer> entry : unitStrings.entrySet()) {
+                    if (unitStrings.size() != 1 || entry.getValue() != 1) {
+                        stringBuilder.append(entry.getValue());
+                        stringBuilder.append("x ");
+                    }
+                    stringBuilder.append(entry.getKey());
+                    if (k > 2) {
+                        stringBuilder.append(", ");
+                        k--;
+                    } else if (k == 2) {
+                        stringBuilder.append(" und ");
+                        k--;
+                    }
+                }
+                String msg = getString(R.string.alertDialog_burn_msg, stringBuilder.toString());
+                AlertDialog.Builder alertDialogBuilder = getAlertDialogBuilder();
+                final int finalBurnedRevenge = burnedRevenge;
+                alertDialogBuilder.setTitle(R.string.alertDialog_burn_title)
+                        .setMessage(msg)
+                        .setPositiveButton(R.string.alertDialog_burn_title, (dialogInterface, i) -> burn(burnUnits, finalBurnedRevenge));
+                alertDialogBuilder.create().show();
+            } else {
+                burn(burnUnits, burnedRevenge);
             }
         });
-        settingsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
-            }
-        });
-        firstRowWeatherImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeWeather((ImageView) view, meleeRow);
-            }
-        });
-        secondRowWeatherImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeWeather((ImageView) view, rangeRow);
-            }
-        });
-        thirdRowWeatherImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeWeather((ImageView) view, siegeRow);
-            }
-        });
-        firstRowHornImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeHorn(meleeRow);
-            }
-        });
-        secondRowHornImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeHorn(rangeRow);
-            }
-        });
-        thirdRowHornImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeHorn(siegeRow);
-            }
-        });
-        firstRowCardImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                inflateCardPopup(meleeRow, view);
-            }
-        });
-        secondRowCardImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                inflateCardPopup(rangeRow, view);
-            }
-        });
-        thirdRowCardImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                inflateCardPopup(siegeRow, view);
-            }
-        });
+        coinButton.setOnClickListener(this::inflateCoinflipPopup);
+        settingsButton.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, SettingsActivity.class)));
+        firstRowWeatherImageView.setOnClickListener(view -> changeWeather((ImageView) view, meleeRow));
+        secondRowWeatherImageView.setOnClickListener(view -> changeWeather((ImageView) view, rangeRow));
+        thirdRowWeatherImageView.setOnClickListener(view -> changeWeather((ImageView) view, siegeRow));
+        firstRowHornImageView.setOnClickListener(view -> changeHorn(meleeRow));
+        secondRowHornImageView.setOnClickListener(view -> changeHorn(rangeRow));
+        thirdRowHornImageView.setOnClickListener(view -> changeHorn(siegeRow));
+        firstRowCardImageView.setOnClickListener(view -> inflateCardPopup(meleeRow, view));
+        secondRowCardImageView.setOnClickListener(view -> inflateCardPopup(rangeRow, view));
+        thirdRowCardImageView.setOnClickListener(view -> inflateCardPopup(siegeRow, view));
     }
 
     private void changeHorn(@NonNull Row row) {
@@ -603,14 +514,11 @@ public class MainActivity extends AppCompatActivity {
             AlertDialog.Builder builder = getAlertDialogBuilder();
             builder.setTitle(R.string.alertDialog_revenge_title)
                     .setMessage(R.string.alertDialog_revenge_msg)
-                    .setPositiveButton(R.string.alertDialog_revenge_positive, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            for (int j = 0; j < revengeUnits; j++) {
-                                meleeRow.addUnit(new Unit(8, false, false, false, 0, false));
-                                updateRows();
-                                checkSidebarButtons();
-                            }
+                    .setPositiveButton(R.string.alertDialog_revenge_positive, (dialogInterface, i) -> {
+                        for (int j = 0; j < revengeUnits; j++) {
+                            meleeRow.addUnit(new Unit(8, false, false, false, 0, false));
+                            updateRows();
+                            checkSidebarButtons();
                         }
                     });
             builder.create().show();
@@ -663,12 +571,7 @@ public class MainActivity extends AppCompatActivity {
     private AlertDialog.Builder getAlertDialogBuilder() {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setIconAttribute(android.R.attr.alertDialogIcon)
-                .setNeutralButton(R.string.alertDialog_cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(@NonNull DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                });
+                .setNeutralButton(R.string.alertDialog_cancel, (dialogInterface, i) -> dialogInterface.dismiss());
         return builder;
     }
 
@@ -678,13 +581,10 @@ public class MainActivity extends AppCompatActivity {
         popupWindow.setAnimationStyle(R.style.popUpAnimation);
         popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
         if (dismissOnTouch) {
-            popupView.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(@NonNull View view, MotionEvent motionEvent) {
-                    view.performClick();
-                    popupWindow.dismiss();
-                    return true;
-                }
+            popupView.setOnTouchListener((view1, motionEvent) -> {
+                view1.performClick();
+                popupWindow.dismiss();
+                return true;
             });
         }
     }
@@ -692,30 +592,10 @@ public class MainActivity extends AppCompatActivity {
     private void inflateFactionPopup(View view) {
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         View popupView = inflater.inflate(R.layout.popup_faction, (ViewGroup) getWindow().getDecorView(), false);
-        popupView.findViewById(R.id.monsterButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeTheme(THEME_MONSTER);
-            }
-        });
-        popupView.findViewById(R.id.nilfgaardButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeTheme(THEME_NILFGAARD);
-            }
-        });
-        popupView.findViewById(R.id.northernKingdomsButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeTheme(THEME_NORTHERN_KINGDOMS);
-            }
-        });
-        popupView.findViewById(R.id.scoiataelButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeTheme(THEME_SCOIATAEL);
-            }
-        });
+        popupView.findViewById(R.id.monsterButton).setOnClickListener(view1 -> changeTheme(THEME_MONSTER));
+        popupView.findViewById(R.id.nilfgaardButton).setOnClickListener(view12 -> changeTheme(THEME_NILFGAARD));
+        popupView.findViewById(R.id.northernKingdomsButton).setOnClickListener(view13 -> changeTheme(THEME_NORTHERN_KINGDOMS));
+        popupView.findViewById(R.id.scoiataelButton).setOnClickListener(view14 -> changeTheme(THEME_SCOIATAEL));
         inflatePopup(view, popupView, true);
     }
 
@@ -868,80 +748,65 @@ public class MainActivity extends AppCompatActivity {
             }
 
             final ImageView copyButtonBackground = cardView.findViewById(R.id.copyButtonBackground);
-            cardView.findViewById(R.id.copyButton).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    boolean contained = copyUnits.contains(unit);
-                    ImageViewAnimatedChange(MainActivity.this, (ImageView) view, copyButtonBackground, contained ? R.drawable.icon_copy_grey : R.drawable.icon_copy);
-                    if (contained) {
-                        copyUnits.remove(unit);
-                    } else {
-                        copyUnits.add(unit);
-                    }
+            cardView.findViewById(R.id.copyButton).setOnClickListener(view1 -> {
+                boolean contained = copyUnits.contains(unit);
+                ImageViewAnimatedChange(MainActivity.this, (ImageView) view1, copyButtonBackground, contained ? R.drawable.icon_copy_grey : R.drawable.icon_copy);
+                if (contained) {
+                    copyUnits.remove(unit);
+                } else {
+                    copyUnits.add(unit);
                 }
             });
             final ImageView deleteButtonBackground = cardView.findViewById(R.id.deleteButtonBackground);
-            cardView.findViewById(R.id.deleteButton).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    boolean contained = deleteUnits.contains(unit);
-                    ImageViewAnimatedChange(MainActivity.this, (ImageView) view, deleteButtonBackground, contained ? R.drawable.icon_delete_grey : R.drawable.icon_delete);
-                    if (contained) {
-                        deleteUnits.remove(unit);
-                    } else {
-                        deleteUnits.add(unit);
-                    }
+            cardView.findViewById(R.id.deleteButton).setOnClickListener(view12 -> {
+                boolean contained = deleteUnits.contains(unit);
+                ImageViewAnimatedChange(MainActivity.this, (ImageView) view12, deleteButtonBackground, contained ? R.drawable.icon_delete_grey : R.drawable.icon_delete);
+                if (contained) {
+                    deleteUnits.remove(unit);
+                } else {
+                    deleteUnits.add(unit);
                 }
             });
             cardsList.addView(cardView);
         }
-        cardsList.findViewById(R.id.popup_cards_add).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                popupWindow.dismiss();
-                inflateAddCardPopup(row, view);
-            }
+        cardsList.findViewById(R.id.popup_cards_add).setOnClickListener(view13 -> {
+            popupWindow.dismiss();
+            inflateAddCardPopup(row, view13);
         });
         scrollView.addView(cardsList);
         ConstraintLayout buttonLayout = popupLayout.findViewById(R.id.popup_cards_button_view);
         popupLayout.removeAllViews();
         popupLayout.addView(scrollView);
-        buttonLayout.findViewById(R.id.popup_cards_cancel_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                copyUnits.clear();
-                deleteUnits.clear();
-                popupWindow.dismiss();
-            }
+        buttonLayout.findViewById(R.id.popup_cards_cancel_button).setOnClickListener(view14 -> {
+            copyUnits.clear();
+            deleteUnits.clear();
+            popupWindow.dismiss();
         });
-        buttonLayout.findViewById(R.id.popup_cards_save_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int revengeUnits = 0;
-                for (Unit unit : deleteUnits) {
-                    if (unit.isRevenge()) {
-                        revengeUnits++;
-                    }
-                    row.removeUnit(unit);
+        buttonLayout.findViewById(R.id.popup_cards_save_button).setOnClickListener(view15 -> {
+            int revengeUnits = 0;
+            for (Unit unit : deleteUnits) {
+                if (unit.isRevenge()) {
+                    revengeUnits++;
                 }
-                inflateRevengeDialog(revengeUnits);
-                boolean epic = false;
-                for (Unit unit : copyUnits) {
-                    row.addUnit(new Unit(unit));
-                    if (unit.isEpic()) {
-                        epic = true;
-                    }
-                }
-                if (copyUnits.size() > 0) {
-                    playAddCardSound(epic, row.getType());
-                } else if (deleteUnits.size() > 0 && sharedPreferences.getBoolean("sound_reset", true)) {
-                    playSound(R.raw.reset);
-                }
-                deleteUnits.clear();
-                copyUnits.clear();
-                checkSidebarButtons();
-                popupWindow.dismiss();
+                row.removeUnit(unit);
             }
+            inflateRevengeDialog(revengeUnits);
+            boolean epic = false;
+            for (Unit unit : copyUnits) {
+                row.addUnit(new Unit(unit));
+                if (unit.isEpic()) {
+                    epic = true;
+                }
+            }
+            if (copyUnits.size() > 0) {
+                playAddCardSound(epic, row.getType());
+            } else if (deleteUnits.size() > 0 && sharedPreferences.getBoolean("sound_reset", true)) {
+                playSound(R.raw.reset);
+            }
+            deleteUnits.clear();
+            copyUnits.clear();
+            checkSidebarButtons();
+            popupWindow.dismiss();
         });
         popupLayout.addView(buttonLayout);
         inflatePopup(view, popupLayout, false);
@@ -970,119 +835,104 @@ public class MainActivity extends AppCompatActivity {
         numberPicker.setMinValue(1);
         numberPicker.setMaxValue(5);
 
-        epicPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-            @Override
-            public void onValueChange(NumberPicker numberPicker, int i, int i1) {
-                boolean epic = i1 == 1;
-                dmgPicker.setDisplayedValues(null);
+        epicPicker.setOnValueChangedListener((numberPicker, i, i1) -> {
+            boolean epic = i1 == 1;
+            dmgPicker.setDisplayedValues(null);
+            dmgPicker.setMinValue(0);
+            dmgPicker.setMaxValue(epic ? 5 : 18);
+            dmgPicker.setValue(epic ? 3 : 5);
+            dmgPicker.setEnabled(epic);
+            if (epic) {
+                dmgPicker.setDisplayedValues(getResources().getStringArray(R.array.popup_add_card_dmg_values_epic));
+
+                abilityPicker.setMinValue(0);
+                abilityPicker.setMaxValue(1);
+                abilityPicker.setDisplayedValues(getResources().getStringArray(R.array.popup_add_card_ability_values_epic));
+
+                bindingPicker.setVisibility(View.GONE);
+                bindingPickerLabel.setVisibility(View.GONE);
+            } else {
+                abilityPicker.setDisplayedValues(getResources().getStringArray(R.array.popup_add_card_ability_values));
+                abilityPicker.setMinValue(0);
+                abilityPicker.setMaxValue(4);
+            }
+            int ability = abilityPicker.getValue();
+            abilityPicker.setValue(ability == 1 ? ability : 0);
+            if (ability == 1) {
                 dmgPicker.setMinValue(0);
-                dmgPicker.setMaxValue(epic ? 5 : 18);
-                dmgPicker.setValue(epic ? 3 : 5);
-                dmgPicker.setEnabled(epic);
-                if (epic) {
-                    dmgPicker.setDisplayedValues(getResources().getStringArray(R.array.popup_add_card_dmg_values_epic));
-
-                    abilityPicker.setMinValue(0);
-                    abilityPicker.setMaxValue(1);
-                    abilityPicker.setDisplayedValues(getResources().getStringArray(R.array.popup_add_card_ability_values_epic));
-
-                    bindingPicker.setVisibility(View.GONE);
-                    bindingPickerLabel.setVisibility(View.GONE);
-                } else {
-                    abilityPicker.setDisplayedValues(getResources().getStringArray(R.array.popup_add_card_ability_values));
-                    abilityPicker.setMinValue(0);
-                    abilityPicker.setMaxValue(4);
-                }
-                int ability = abilityPicker.getValue();
-                abilityPicker.setValue(ability == 1 ? ability : 0);
-                if (ability == 1) {
-                    dmgPicker.setMinValue(0);
-                    dmgPicker.setMaxValue(1);
-                    dmgPicker.setValue(0);
-                    dmgPicker.setDisplayedValues(getResources().getStringArray(i1 == 0 ? R.array.popup_add_card_dmg_values_moralboost_normal : R.array.popup_add_card_dmg_values_moralboost_epic));
-                }
+                dmgPicker.setMaxValue(1);
+                dmgPicker.setValue(0);
+                dmgPicker.setDisplayedValues(getResources().getStringArray(i1 == 0 ? R.array.popup_add_card_dmg_values_moralboost_normal : R.array.popup_add_card_dmg_values_moralboost_epic));
             }
         });
-        abilityPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-            @Override
-            public void onValueChange(NumberPicker numberPicker, int i, int i1) {
-                switch (i) {
-                    case 1:
-                        boolean epic = !(epicPicker.getValue() == 0);
-                        dmgPicker.setDisplayedValues(null);
-                        dmgPicker.setMinValue(0);
-                        dmgPicker.setMaxValue(epic ? 4 : 18);
-                        dmgPicker.setValue(epic ? 3 : 5);
-                        if (epic) {
-                            dmgPicker.setDisplayedValues(getResources().getStringArray(R.array.popup_add_card_dmg_values_epic));
-                        }
-                        dmgPicker.setEnabled(true);
-                        break;
-                    case 2:
-                    case 3:
-                        dmgPicker.setEnabled(true);
-                        dmgPicker.setValue(5);
-                        break;
-                    case 4:
-                        bindingPicker.setVisibility(View.GONE);
-                        bindingPickerLabel.setVisibility(View.GONE);
-                }
+        abilityPicker.setOnValueChangedListener((numberPicker, i, i1) -> {
+            switch (i) {
+                case 1:
+                    boolean epic = !(epicPicker.getValue() == 0);
+                    dmgPicker.setDisplayedValues(null);
+                    dmgPicker.setMinValue(0);
+                    dmgPicker.setMaxValue(epic ? 4 : 18);
+                    dmgPicker.setValue(epic ? 3 : 5);
+                    if (epic) {
+                        dmgPicker.setDisplayedValues(getResources().getStringArray(R.array.popup_add_card_dmg_values_epic));
+                    }
+                    dmgPicker.setEnabled(true);
+                    break;
+                case 2:
+                case 3:
+                    dmgPicker.setEnabled(true);
+                    dmgPicker.setValue(5);
+                    break;
+                case 4:
+                    bindingPicker.setVisibility(View.GONE);
+                    bindingPickerLabel.setVisibility(View.GONE);
+            }
 
-                switch (i1) {
-                    case 1:
-                        dmgPicker.setMinValue(0);
-                        boolean epic = !(epicPicker.getValue() == 0);
-                        dmgPicker.setMaxValue(epic ? 1 : 4);
-                        dmgPicker.setValue(1);
-                        dmgPicker.setDisplayedValues(getResources().getStringArray(epic ? R.array.popup_add_card_dmg_values_moralboost_epic : R.array.popup_add_card_dmg_values_moralboost_normal));
-                        break;
-                    case 2:
-                        dmgPicker.setValue(2);
+            switch (i1) {
+                case 1:
+                    dmgPicker.setMinValue(0);
+                    boolean epic = !(epicPicker.getValue() == 0);
+                    dmgPicker.setMaxValue(epic ? 1 : 4);
+                    dmgPicker.setValue(1);
+                    dmgPicker.setDisplayedValues(getResources().getStringArray(epic ? R.array.popup_add_card_dmg_values_moralboost_epic : R.array.popup_add_card_dmg_values_moralboost_normal));
+                    break;
+                case 2:
+                    dmgPicker.setValue(2);
+                    dmgPicker.setEnabled(false);
+                    break;
+                case 3:
+                    dmgPicker.setValue(0);
+                    dmgPicker.setEnabled(false);
+                    break;
+                case 4:
+                    bindingPicker.setVisibility(View.VISIBLE);
+                    bindingPickerLabel.setVisibility(View.VISIBLE);
+                    int binding = bindingPicker.getValue();
+                    List<Unit> bindingList = row.getBindingUnits(binding);
+                    Toast.makeText(MainActivity.this, getString(R.string.popUp_add_card_binding_count, binding, bindingList.size()), Toast.LENGTH_SHORT).show();
+                    if (bindingList.size() > 0) {
+                        dmgPicker.setValue(bindingList.get(0).getBaseAD());
                         dmgPicker.setEnabled(false);
-                        break;
-                    case 3:
-                        dmgPicker.setValue(0);
-                        dmgPicker.setEnabled(false);
-                        break;
-                    case 4:
-                        bindingPicker.setVisibility(View.VISIBLE);
-                        bindingPickerLabel.setVisibility(View.VISIBLE);
-                        int binding = bindingPicker.getValue();
-                        List<Unit> bindingList = row.getBindingUnits(binding);
-                        Toast.makeText(MainActivity.this, getString(R.string.popUp_add_card_binding_count, binding, bindingList.size()), Toast.LENGTH_SHORT).show();
+                    }
+            }
+        });
+        bindingPicker.setOnValueChangedListener((numberPicker, i, i1) -> new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                runOnUiThread(() -> {
+                    if (i1 == bindingPicker.getValue()) {
+                        List<Unit> bindingList = row.getBindingUnits(i1);
+                        Toast.makeText(MainActivity.this, getString(R.string.popUp_add_card_binding_count, i1, bindingList.size()), Toast.LENGTH_SHORT).show();
                         if (bindingList.size() > 0) {
                             dmgPicker.setValue(bindingList.get(0).getBaseAD());
                             dmgPicker.setEnabled(false);
+                        } else {
+                            dmgPicker.setEnabled(true);
                         }
-                }
-            }
-        });
-        bindingPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-            @Override
-            public void onValueChange(NumberPicker numberPicker, int i, final int i1) {
-                new Timer().schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (i1 == bindingPicker.getValue()) {
-                                    List<Unit> bindingList = row.getBindingUnits(i1);
-                                    Toast.makeText(MainActivity.this, getString(R.string.popUp_add_card_binding_count, i1, bindingList.size()), Toast.LENGTH_SHORT).show();
-                                    if (bindingList.size() > 0) {
-                                        dmgPicker.setValue(bindingList.get(0).getBaseAD());
-                                        dmgPicker.setEnabled(false);
-                                    } else {
-                                        dmgPicker.setEnabled(true);
-                                    }
-                                }
-                            }
-                        });
                     }
-                }, 250);
-
+                });
             }
-        });
+        }, 250));
 
         popupView.findViewById(R.id.popup_add_card_save_button).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1148,12 +998,7 @@ public class MainActivity extends AppCompatActivity {
                 popupWindow.dismiss();
             }
         });
-        popupView.findViewById(R.id.popup_add_card_cancel_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                popupWindow.dismiss();
-            }
-        });
+        popupView.findViewById(R.id.popup_add_card_cancel_button).setOnClickListener(view1 -> popupWindow.dismiss());
 
         inflatePopup(view, popupView, false);
     }
@@ -1180,12 +1025,7 @@ public class MainActivity extends AppCompatActivity {
     private void playSound(@RawRes int soundResourceId) {
         if (sharedPreferences.getBoolean("sound_all", true)) {
             final int soundId = soundPool.load(getApplicationContext(), soundResourceId, 1);
-            soundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
-                @Override
-                public void onLoadComplete(@NonNull SoundPool soundPool, int i, int i1) {
-                    soundPool.play(soundId, 1, 1, 1, 0, 1);
-                }
-            });
+            soundPool.setOnLoadCompleteListener((soundPool, i, i1) -> soundPool.play(soundId, 1, 1, 1, 0, 1));
         }
     }
 
@@ -1265,22 +1105,16 @@ public class MainActivity extends AppCompatActivity {
                 builder.setTitle(R.string.alertDialog_reset_title)
                         .setMessage(R.string.alertDialog_factionreset_msg)
                         .setCancelable(false)
-                        .setPositiveButton(R.string.alertDialog_reset_positive, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                resetAll(false);
-                                sharedPreferences.edit().putInt("faction", theme).apply();
-                                inflateFactionLayout(false);
-                                popupWindow.dismiss();
-                            }
+                        .setPositiveButton(R.string.alertDialog_reset_positive, (dialogInterface, i) -> {
+                            resetAll(false);
+                            sharedPreferences.edit().putInt("faction", theme).apply();
+                            inflateFactionLayout(false);
+                            popupWindow.dismiss();
                         })
-                        .setNegativeButton(R.string.alertDialog_factionreset_negative, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                sharedPreferences.edit().putInt("faction", theme).apply();
-                                inflateFactionLayout(false);
-                                popupWindow.dismiss();
-                            }
+                        .setNegativeButton(R.string.alertDialog_factionreset_negative, (dialogInterface, i) -> {
+                            sharedPreferences.edit().putInt("faction", theme).apply();
+                            inflateFactionLayout(false);
+                            popupWindow.dismiss();
                         });
                 builder.create().show();
             } else if (sharedPreferences.getBoolean("factionReset", false) && resetButton.isEnabled()) {
