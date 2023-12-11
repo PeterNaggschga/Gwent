@@ -30,17 +30,14 @@ public class OnboardingSupportActivity extends AppCompatActivity {
         final Button skipButton = findViewById(R.id.onboarding_button_skip);
         final ImageButton nextButton = findViewById(R.id.onboarding_button_next);
         final Button finishButton = findViewById(R.id.onboarding_button_finish);
-        indicators.add((ImageView) findViewById(R.id.onboarding_indicator_0));
-        indicators.add((ImageView) findViewById(R.id.onboarding_indicator_1));
-        indicators.add((ImageView) findViewById(R.id.onboarding_indicator_2));
-        indicators.add((ImageView) findViewById(R.id.onboarding_indicator_3));
-        indicators.add((ImageView) findViewById(R.id.onboarding_indicator_4));
-        View.OnClickListener onFinish = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putBoolean("firstUse", false).apply();
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
-            }
+        indicators.add(findViewById(R.id.onboarding_indicator_0));
+        indicators.add(findViewById(R.id.onboarding_indicator_1));
+        indicators.add(findViewById(R.id.onboarding_indicator_2));
+        indicators.add(findViewById(R.id.onboarding_indicator_3));
+        indicators.add(findViewById(R.id.onboarding_indicator_4));
+        View.OnClickListener onFinish = view -> {
+            PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putBoolean("firstUse", false).apply();
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
         };
         skipButton.setOnClickListener(onFinish);
         finishButton.setOnClickListener(onFinish);
@@ -66,12 +63,7 @@ public class OnboardingSupportActivity extends AppCompatActivity {
 
             }
         });
-        nextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                viewPager.arrowScroll(View.SCROLLBAR_POSITION_RIGHT);
-            }
-        });
+        nextButton.setOnClickListener(view -> viewPager.arrowScroll(View.SCROLLBAR_POSITION_RIGHT));
     }
 
     void updateIndicators(int position) {
