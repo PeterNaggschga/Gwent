@@ -81,7 +81,6 @@ public class SettingsActivity extends AppCompatActivity implements
 
         Fragment fragment = Objects.equals(pref.getFragment(), "com.peternaggschga.gwent.SettingsActivity$SoundFragment") ? getSupportFragmentManager().getFragmentFactory().instantiate(getClassLoader(), SoundFragment.class.getName()) : getSupportFragmentManager().getFragmentFactory().instantiate(getClassLoader(), RuleHeaderFragment.class.getName());
         fragment.setArguments(args);
-        fragment.setTargetFragment(caller, 0);
         // Replace the existing Fragment with the new Fragment
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.settingsFrameLayout, fragment)
