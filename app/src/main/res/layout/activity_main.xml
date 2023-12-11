@@ -126,11 +126,11 @@
             android:layout_weight="1">
 
             <ImageButton
-                android:id="@+id/fractionButton"
+                android:id="@+id/factionButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@null"
-                android:contentDescription="@string/content_description_activity_main_fraction_button"
+                android:contentDescription="@string/content_description_activity_main_faction_button"
                 android:src="?android:attr/alertDialogIcon"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/resetButton"
@@ -147,7 +147,7 @@
                 android:src="@drawable/icon_reset_grey"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/fractionButton"
+                app:layout_constraintStart_toEndOf="@+id/factionButton"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 

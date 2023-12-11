@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView backgroundOverallPointBall;
     private ImageView overallPointBall;
     private TextView overallPointView;
-    private ImageButton fractionButton;
+    private ImageButton factionButton;
     private ImageButton resetButton;
     private ImageButton weatherButton;
     private ImageButton burnButton;
@@ -205,7 +205,7 @@ public class MainActivity extends AppCompatActivity {
         backgroundOverallPointBall = findViewById(R.id.backgroundOverallPointBall);
         overallPointBall = findViewById(R.id.overallPointBall);
         overallPointView = findViewById(R.id.overallPointView);
-        fractionButton = findViewById(R.id.fractionButton);
+        factionButton = findViewById(R.id.factionButton);
         resetButton = findViewById(R.id.resetButton);
         weatherButton = findViewById(R.id.weatherButton);
         burnButton = findViewById(R.id.burnButton);
@@ -239,7 +239,7 @@ public class MainActivity extends AppCompatActivity {
         checkSidebarButtons();
         setRowImages();
 
-        fractionButton.setOnClickListener(new View.OnClickListener() {
+        factionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 inflateFractionPopup(view);
@@ -248,7 +248,7 @@ public class MainActivity extends AppCompatActivity {
         resetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final boolean monster = THEME_MONSTER == sharedPreferences.getInt("fraction", THEME_SCOIATAEL);
+                final boolean monster = THEME_MONSTER == sharedPreferences.getInt("faction", THEME_SCOIATAEL);
                 AlertDialog.Builder builder = getAlertDialogBuilder();
                 if (sharedPreferences.getBoolean("warnings", true)) {
                     final View checkBoxView = View.inflate(MainActivity.this, R.layout.alertdialog_checkbox, null);
@@ -572,13 +572,13 @@ public class MainActivity extends AppCompatActivity {
             for (Row row : allRows) {
                 row.clear(true);
                 Unit keepUnit = row.getAllUnits().get(0);
-                Toast.makeText(this, getString(R.string.alertDialog_fractionreset_monster_toast_keep, keepUnit.toString(this, null)), Toast.LENGTH_LONG).show();
+                Toast.makeText(this, getString(R.string.alertDialog_factionreset_monster_toast_keep, keepUnit.toString(this, null)), Toast.LENGTH_LONG).show();
                 if (keepUnit.isRevenge()) {
                     revengeCount--;
                 }
             }
             if (allRows.size() == 0) {
-                Toast.makeText(this, R.string.alertDialog_fractionreset_monster_toast_nokeep, Toast.LENGTH_LONG).show();
+                Toast.makeText(this, R.string.alertDialog_factionreset_monster_toast_nokeep, Toast.LENGTH_LONG).show();
             }
             for (Row row : fullClear) {
                 row.clear(false);
@@ -691,7 +691,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void inflateFractionPopup(View view) {
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-        View popupView = inflater.inflate(R.layout.popup_fraction, (ViewGroup) getWindow().getDecorView(), false);
+        View popupView = inflater.inflate(R.layout.popup_faction, (ViewGroup) getWindow().getDecorView(), false);
         popupView.findViewById(R.id.monsterButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -720,41 +720,41 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void inflateFractionLayout(boolean init) {
-        int themeResourceId = sharedPreferences.getInt("fraction", THEME_SCOIATAEL);
+        int themeResourceId = sharedPreferences.getInt("faction", THEME_SCOIATAEL);
         setTheme(themeResourceId);
         if (init) {
             setContentView(R.layout.activity_main);
         } else {
-            int fractionButtonResourceId;
+            int factionButtonResourceId;
             int ballImageResourceId;
             int rowCardResourceId;
             int textColorResourceId;
             switch (themeResourceId) {
                 case THEME_MONSTER:
-                    fractionButtonResourceId = R.drawable.icon_round_monster;
+                    factionButtonResourceId = R.drawable.icon_round_monster;
                     ballImageResourceId = R.drawable.ball_red;
                     rowCardResourceId = R.drawable.card_monster_landscape_free;
                     textColorResourceId = R.color.color_text_monster;
                     break;
                 case THEME_NILFGAARD:
-                    fractionButtonResourceId = R.drawable.icon_round_nilfgaard;
+                    factionButtonResourceId = R.drawable.icon_round_nilfgaard;
                     ballImageResourceId = R.drawable.ball_grey;
                     rowCardResourceId = R.drawable.card_nilfgaard_landscape_free;
                     textColorResourceId = R.color.color_text_nilfgaard;
                     break;
                 case THEME_NORTHERN_REALMS:
-                    fractionButtonResourceId = R.drawable.icon_round_northern_realms;
+                    factionButtonResourceId = R.drawable.icon_round_northern_realms;
                     ballImageResourceId = R.drawable.ball_blue;
                     rowCardResourceId = R.drawable.card_northern_realms_landscape_free;
                     textColorResourceId = R.color.color_text_northern_realms;
                     break;
                 default:
-                    fractionButtonResourceId = R.drawable.icon_round_scoiatael;
+                    factionButtonResourceId = R.drawable.icon_round_scoiatael;
                     ballImageResourceId = R.drawable.ball_green;
                     rowCardResourceId = R.drawable.card_scoiatael_landscape_free;
                     textColorResourceId = R.color.color_text_scoiatael;
             }
-            fractionButton.setImageResource(fractionButtonResourceId);
+            factionButton.setImageResource(factionButtonResourceId);
             ImageViewAnimatedChange(this, firstRowPointBall, firstRowBackgroundPointBall, ballImageResourceId);
             ImageViewAnimatedChange(this, secondRowPointBall, secondRowBackgroundPointBall, ballImageResourceId);
             ImageViewAnimatedChange(this, thirdRowPointBall, thirdRowBackgroundPointBall, ballImageResourceId);
@@ -1259,37 +1259,37 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void changeTheme(final int theme) {
-        if (sharedPreferences.getInt("fraction", THEME_SCOIATAEL) != theme) {
-            if (sharedPreferences.getBoolean("fractionReset", false) && sharedPreferences.getBoolean("warnings", true) && resetButton.isEnabled()) {
+        if (sharedPreferences.getInt("faction", THEME_SCOIATAEL) != theme) {
+            if (sharedPreferences.getBoolean("factionReset", false) && sharedPreferences.getBoolean("warnings", true) && resetButton.isEnabled()) {
                 AlertDialog.Builder builder = getAlertDialogBuilder();
                 builder.setTitle(R.string.alertDialog_reset_title)
-                        .setMessage(R.string.alertDialog_fractionreset_msg)
+                        .setMessage(R.string.alertDialog_factionreset_msg)
                         .setCancelable(false)
                         .setPositiveButton(R.string.alertDialog_reset_positive, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 resetAll(false);
-                                sharedPreferences.edit().putInt("fraction", theme).apply();
+                                sharedPreferences.edit().putInt("faction", theme).apply();
                                 inflateFractionLayout(false);
                                 popupWindow.dismiss();
                             }
                         })
-                        .setNegativeButton(R.string.alertDialog_fractionreset_negative, new DialogInterface.OnClickListener() {
+                        .setNegativeButton(R.string.alertDialog_factionreset_negative, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                sharedPreferences.edit().putInt("fraction", theme).apply();
+                                sharedPreferences.edit().putInt("faction", theme).apply();
                                 inflateFractionLayout(false);
                                 popupWindow.dismiss();
                             }
                         });
                 builder.create().show();
-            } else if (sharedPreferences.getBoolean("fractionReset", false) && resetButton.isEnabled()) {
+            } else if (sharedPreferences.getBoolean("factionReset", false) && resetButton.isEnabled()) {
                 resetAll(false);
-                sharedPreferences.edit().putInt("fraction", theme).apply();
+                sharedPreferences.edit().putInt("faction", theme).apply();
                 inflateFractionLayout(false);
                 popupWindow.dismiss();
             } else {
-                sharedPreferences.edit().putInt("fraction", theme).apply();
+                sharedPreferences.edit().putInt("faction", theme).apply();
                 inflateFractionLayout(false);
                 popupWindow.dismiss();
             }

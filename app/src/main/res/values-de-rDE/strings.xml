@@ -4,8 +4,8 @@
     <string name="app_description">Eine App, die es ermöglicht, das Kartenspiel Gwint aus The Witcher 3 mit analogen Karten zu spielen.</string>
     <string name="settings_title">Einstellungen</string>
 
-    <string name="fraction_nilfgaard">Kaiserreich Nilfgaard</string>
-    <string name="fraction_northern_realms">Nördliche Königreiche</string>
+    <string name="faction_nilfgaard">Kaiserreich Nilfgaard</string>
+    <string name="faction_northern_realms">Nördliche Königreiche</string>
 
     <string name="popUp_cards_add">Karte hinzufügen</string>
     <string name="popUp_cards_save">Speichern</string>
@@ -31,12 +31,12 @@
 
     <string name="alertDialog_reset_title">Spielfeld zurücksetzen</string>
     <string name="alertDialog_reset_msg">Willst du wirklich das gesamte Spielfeld zurücksetzen?</string>
-    <string name="alertDialog_fractionreset_msg">Du hast \"Zurücksetzen bei Fraktionswechsel\" aktiviert. Soll das Spielfeld wirklich zurückgesetzt werden?</string>
+    <string name="alertDialog_factionreset_msg">Du hast \"Zurücksetzen bei Fraktionswechsel\" aktiviert. Soll das Spielfeld wirklich zurückgesetzt werden?</string>
     <string name="alertDialog_reset_checkbox">Die Fähigkeit der Monsterfraktion auslösen (du behältst eine zufällige Einheit)</string>
-    <string name="alertDialog_fractionreset_monster_toast_keep">Du behältst: %1$s</string>
-    <string name="alertDialog_fractionreset_monster_toast_nokeep">Du behältst keine Einheit!</string>
+    <string name="alertDialog_factionreset_monster_toast_keep">Du behältst: %1$s</string>
+    <string name="alertDialog_factionreset_monster_toast_nokeep">Du behältst keine Einheit!</string>
     <string name="alertDialog_reset_positive">Zurücksetzen</string>
-    <string name="alertDialog_fractionreset_negative">Nicht zurücksetzen</string>
+    <string name="alertDialog_factionreset_negative">Nicht zurücksetzen</string>
 
     <string name="alertDialog_monster_title">Fähigkeit auslösen</string>
     <string name="alertDialog_monster_msg">Willst du die Fähigkeit der Monsterfraktion auslösen? Du kannst eine zufällig ausgewählte Einheit behalten.</string>
@@ -50,8 +50,8 @@
     <string name="preference_design">Hintergrundbild</string>
     <string name="preference_warnings_title">Warnungen</string>
     <string name="preference_warnings_desc">Legt fest, ob beim Zurücksetzen und Verbrennen eine Warnung erscheinen soll.</string>
-    <string name="preference_fraction_reset_title">Zurücksetzen bei Fraktionswechsel</string>
-    <string name="preference_fraction_reset_desc">Legt fest, ob das Spielfeld beim Fraktionswechsel automatisch zurückgesetzt werden soll.</string>
+    <string name="preference_faction_reset_title">Zurücksetzen bei Fraktionswechsel</string>
+    <string name="preference_faction_reset_desc">Legt fest, ob das Spielfeld beim Fraktionswechsel automatisch zurückgesetzt werden soll.</string>
     <string name="preference_unit_string_title">Kartenbeschreibung</string>
     <string name="preference_unit_string_desc">Legt fest, welche Daten bei der Kartenbeschreibung (zum Beispiel beim Verbrennen) angezeigt werden.</string>
     <string name="preference_unit_string_alert">Beispiel: %1$s</string>
@@ -70,7 +70,7 @@
     <string name="preference_rules_header">Spielregeln</string>
     <string name="preference_rules_general_title">Allgemein</string>
     <string name="preference_rules_course_title">Spielablauf</string>
-    <string name="preference_rules_fractions_title">Fraktionen</string>
+    <string name="preference_rules_factions_title">Fraktionen</string>
     <string name="preference_rules_commander_title">Anführer</string>
     <string name="preference_rules_cards_title">Kartensatz und Spielfeld</string>
     <string name="preference_rules_card_abilities_title">Kartenfähigkeiten</string>
@@ -82,7 +82,7 @@
     <string name="content_description_background_resource">Hintergrundelement</string>
     <string name="content_description_activity_main_background">Hintergrundbild</string>
     <string name="content_description_activity_main_point_ball">Gesamtpunktzahl</string>
-    <string name="content_description_activity_main_fraction_button">Fraktionslogo</string>
+    <string name="content_description_activity_main_faction_button">Fraktionslogo</string>
     <string name="content_description_activity_main_weather_button">Gutes-Wetter-Icon</string>
     <string name="content_description_activity_main_burn_button">Verbrennen-Icon</string>
     <string name="content_description_activity_main_coin_button">Münzen-Icon</string>
@@ -98,10 +98,10 @@
     <string name="content_description_coinpopup_terry_2">Jake Peralta (Andy Samberg), der erstaunt etwas sagt</string>
     <string name="content_description_coinpopup_terry_3">Terry Jeffords (Terry Crews), der wütend, mit erhobenem Finger etwas sagt und dabei von Charles Boyle (Joe Lo Truglio) erschrocken angesehen wird</string>
     <string name="content_description_coinpopup_vin">Ein Bild von Vin aus der Mistborn-Reihe von Brandon Sanderson</string>
-    <string name="content_description_fractionpopup_monster">Karte mit Symbol der Monsterfraktion</string>
-    <string name="content_description_fractionpopup_nilfgaard">Karte mit Symbol der Kaiserreich-Nilfgaard-Fraktion</string>
-    <string name="content_description_fractionpopup_northern_realms">Karte mit Symbol der Nördliche-Königreiche-Fraktion</string>
-    <string name="content_description_fractionpopup_scoiatael">Karte mit Symbol der Scoia\'taelfraktion</string>
+    <string name="content_description_factionpopup_monster">Karte mit Symbol der Monsterfraktion</string>
+    <string name="content_description_factionpopup_nilfgaard">Karte mit Symbol der Kaiserreich-Nilfgaard-Fraktion</string>
+    <string name="content_description_factionpopup_northern_realms">Karte mit Symbol der Nördliche-Königreiche-Fraktion</string>
+    <string name="content_description_factionpopup_scoiatael">Karte mit Symbol der Scoia\'taelfraktion</string>
     <string name="content_description_row_pointball">Punktanzeige der Angriffsreihe</string>
     <string name="content_description_row_weather">Wetteranzeige der Angriffsreihe</string>
     <string name="content_description_row_horn">Hornanzeige der Angriffsreihe</string>
@@ -115,7 +115,7 @@
     Die Spieler legen abwechselnd Karten. Es besteht Legezwang! Wenn ein Spieler keine Karte ausspielen möchte, muss er passen und darf den Rest der Runde keinen Spielzug mehr durchführen. Daraufhin kann der Gegner noch weitere Karten ausspielen, bis er selbst passt. Sollte ein Spieler keine Handkarten mehr haben, muss er ebenfalls passen.<br />
     Wenn beide Spieler gepasst haben, ist die Runde beendet und der Gewinner wird anhand der Gesamtstärke der Einheiten ermittelt. Sollte die Gesamtstärke gleich sein, zählt die Runde als Sieg für beide Spieler. Nun werden alle Karten vom Spielfeld auf den Ablagestapel gelegt. Die Handkarten werden in der nächsten Runde weiter verwendet, es werden keine neuen Karten gezogen. Der Gewinner hat in der nächsten Runde den ersten Zug. Bei Unentschieden beginnt derjenige, der in der vergangenen Runde den zweiten Zug hatte. Ziel des Spiels ist es, zwei Runden zu gewinnen.</p>
     ]]></string>
-    <string name="rules_fractions_text"><![CDATA[<p>
+    <string name="rules_factions_text"><![CDATA[<p>
     Bei Gwint unterscheidet man vier Fraktionen: Monster, Kaiserreich Nilfgaard, Nördliche Königreiche und die Scoia\'tael. Jede dieser Fraktionen besitzt einzigartige Karten, Anführer und jeweils einen bestimmten Fraktionsvorteil. Zusätzlich gibt es noch neutrale Einheiten, welche keiner Fraktion zugehörig sind und somit in jedem Deck auftauchen können.</p>
     Die Monster werden vom König der Wilden Jagd Eredin Bréacc Glas, auch Sperber genannt, angeführt. Ihr Vorteil ist die Eisenhaut, welche es ermöglicht, dass nach jeder Runde eine zufällige Einheit auf dem Feld verbleibt.<br />
     Emhyr var Emreis, der sich auch „Die Weiße Flamme, Die Auf den Grabhügeln Der Feinde tanzt“ nennt, ist Kaiser von Nilfgaard, dessen Stärke der Verrat ist. Dieser ermöglicht es, dass Spieler mit einem Nilfgaard-Deck jede Runde gewinnen, die sonst als Unentschieden enden würde.<br />
@@ -204,7 +204,7 @@
     <p>Weitere Informationen zum Spiel und seinen Regeln findest du in den Einstellungen. Dort kannst du diese Tour auch wiederholen!</p>
     <p>Doch jetzt erstmal: viel Spaß mit analogem Gwint! Über Verbesserungsvorschläge, Fehlermeldungen und sonstiges Feedback freue ich mich sehr, nutze dazu gerne den Google Play Store!</p>
     ]]></string> <!-- TODO: Github anbieten -->
-    <string name="fraction_monster">Monster</string>
+    <string name="faction_monster">Monster</string>
     <string name="array_design_jaskier">Rittersporn</string>
     <string name="array_design_default">Standard</string>
     <string name="array_design_geralt">Geralt von Riva</string>

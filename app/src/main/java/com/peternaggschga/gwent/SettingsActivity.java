@@ -26,7 +26,7 @@ public class SettingsActivity extends AppCompatActivity implements
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        setTheme(sharedPreferences.getInt("fraction", MainActivity.THEME_SCOIATAEL));
+        setTheme(sharedPreferences.getInt("faction", MainActivity.THEME_SCOIATAEL));
         setContentView(R.layout.activity_settings);
         setSupportActionBar(findViewById(R.id.settingsToolbar));
         MainActivity.hideSystemUI(getWindow());
@@ -146,7 +146,7 @@ public class SettingsActivity extends AppCompatActivity implements
                 startActivity(new Intent(getContext(), RuleActivity.class).putExtra(RuleActivity.INTENT_EXTRA_TAG, RuleActivity.PREFERENCE_KEY_COURSE));
                 return true;
             });
-            Preference rulesFractions = findPreference("rules_fractions");
+            Preference rulesFractions = findPreference("rules_factions");
             assert rulesFractions != null;
             rulesFractions.setOnPreferenceClickListener(preference -> {
                 startActivity(new Intent(getContext(), RuleActivity.class).putExtra(RuleActivity.INTENT_EXTRA_TAG, RuleActivity.PREFERENCE_KEY_FRACTIONS));

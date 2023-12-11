@@ -1,13 +1,12 @@
-<!-- TODO: change fraction to faction -->
 <!-- TODO: change realms to kingdoms -->
 <resources>
     <string name="app_name">Gwent</string>
     <string name="app_description">An app enabling you to play the Gwent card game from The Witcher 3 with analog cards.</string>
 
-    <string name="fraction_monster">Monsters</string>
-    <string name="fraction_nilfgaard">Nilfgaardian Empire</string>
-    <string name="fraction_northern_realms">Northern Kingdoms</string>
-    <string name="fraction_scoiatael" translatable="false">Scoia\'tael</string>
+    <string name="faction_monster">Monsters</string>
+    <string name="faction_nilfgaard">Nilfgaardian Empire</string>
+    <string name="faction_northern_realms">Northern Kingdoms</string>
+    <string name="faction_scoiatael" translatable="false">Scoia\'tael</string>
 
     <string name="popUp_cards_add">Add card</string>
     <string name="popUp_cards_save">Save</string>
@@ -48,12 +47,12 @@
 
     <string name="alertDialog_reset_title">Reset board</string>
     <string name="alertDialog_reset_msg">Do you really want to reset the board?</string>
-    <string name="alertDialog_fractionreset_msg">You activated \"Reset on change of faction\". Do you really want to reset the board?</string>
+    <string name="alertDialog_factionreset_msg">You activated \"Reset on change of faction\". Do you really want to reset the board?</string>
     <string name="alertDialog_reset_checkbox">Activate perk of monster faction (you keep one random unit)</string>
-    <string name="alertDialog_fractionreset_monster_toast_keep">You keep: %1$s</string>
-    <string name="alertDialog_fractionreset_monster_toast_nokeep">You don\'t keep any units!</string>
+    <string name="alertDialog_factionreset_monster_toast_keep">You keep: %1$s</string>
+    <string name="alertDialog_factionreset_monster_toast_nokeep">You don\'t keep any units!</string>
     <string name="alertDialog_reset_positive">Reset</string>
-    <string name="alertDialog_fractionreset_negative">Don\'t reset</string>
+    <string name="alertDialog_factionreset_negative">Don\'t reset</string>
 
     <string name="alertDialog_monster_title">Activate perk</string>
     <string name="alertDialog_monster_msg">Do you want to activate the perk of monsters faction? You can keep one randomly chosen unit.</string>
@@ -73,8 +72,8 @@
     <string name="preference_design">Background</string>
     <string name="preference_warnings_title">Warnings</string>
     <string name="preference_warnings_desc">Determines if warnings are shown before you can reset the board or scorch units.</string>
-    <string name="preference_fraction_reset_title">"Reset on change of faction"</string>
-    <string name="preference_fraction_reset_desc">Determines if the board is reset on change of faction.</string>
+    <string name="preference_faction_reset_title">"Reset on change of faction"</string>
+    <string name="preference_faction_reset_desc">Determines if the board is reset on change of faction.</string>
     <string name="array_unit_string_type">Type of unit (Close combat unit, etc.)</string>
     <string name="array_unit_string_baseAD">Base strength</string>
     <string name="array_unit_string_buffAD">Boosted strength</string>
@@ -98,7 +97,7 @@
     <string name="preference_rules_header">Rules</string>
     <string name="preference_rules_general_title">General</string>
     <string name="preference_rules_course_title">Gameplay</string>
-    <string name="preference_rules_fractions_title">Factions</string>
+    <string name="preference_rules_factions_title">Factions</string>
     <string name="preference_rules_commander_title">Leaders</string>
     <string name="preference_rules_cards_title">Deck and playboard</string>
     <string name="preference_rules_card_abilities_title">Card abilities</string>
@@ -110,7 +109,7 @@
     <string name="content_description_background_resource">background element</string>
     <string name="content_description_activity_main_background">background</string>
     <string name="content_description_activity_main_point_ball">total score</string>
-    <string name="content_description_activity_main_fraction_button">faction logo</string>
+    <string name="content_description_activity_main_faction_button">faction logo</string>
     <string name="content_description_activity_main_reset_button" translatable="false">Reset-Icon</string>
     <string name="content_description_activity_main_weather_button">Clear-Weather-Icon</string>
     <string name="content_description_activity_main_burn_button">Scorch-Icon</string>
@@ -127,10 +126,10 @@
     <string name="content_description_coinpopup_terry_2">Jake Peralta (Andy Samberg) who says something in astonishment</string>
     <string name="content_description_coinpopup_terry_3">Terry Jeffords (Terry Crews) who says something angrily and Charles Boyle (Joe Lo Truglio) looking at him in terror</string>
     <string name="content_description_coinpopup_vin">A fan art showing Vin from Brandon Sanderson\'s Mistborn-series.</string>
-    <string name="content_description_fractionpopup_monster">Card with symbol of monster faction</string>
-    <string name="content_description_fractionpopup_nilfgaard">Card with symbol of nilfgaardian empire faction</string>
-    <string name="content_description_fractionpopup_northern_realms">Card with symbol of Northern Kingdoms faction</string>
-    <string name="content_description_fractionpopup_scoiatael">Card with symbol of Scoia\'tael faction</string>
+    <string name="content_description_factionpopup_monster">Card with symbol of monster faction</string>
+    <string name="content_description_factionpopup_nilfgaard">Card with symbol of nilfgaardian empire faction</string>
+    <string name="content_description_factionpopup_northern_realms">Card with symbol of Northern Kingdoms faction</string>
+    <string name="content_description_factionpopup_scoiatael">Card with symbol of Scoia\'tael faction</string>
     <string name="content_description_row_pointball">point display of combat row</string>
     <string name="content_description_row_weather">weather display of combat row</string>
     <string name="content_description_row_horn">horn display of combat row</string>
@@ -141,7 +140,7 @@
 
     <string name="rules_general_text"><![CDATA[<p>Gwent is an old card game especially fancied by dwarfs. It represents the confrontation of two opposing armies. The players are generals and cards represent their units. Every player uses his own unique deck of cards. Decks can be created for each of the four factions: Monsters, Nilfgaardian Empire, Northern Kingdoms and Scoia\'tael. Each faction has unique cards which lead to different play styles. Moreover, there are cards that can be used for every faction. Your goal is to win two rounds out of three by having more strength than your opponent.</p>]]></string>
     <string name="rules_course_text"><![CDATA[<p>At the beginning of the first round each player draws ten cards from their deck. After drawing, you can discard two cards and draw a new card for each. This step is optional, discarded cards are put back into the deck. The beginning player is determined by flipping a coin.<br/>The players place cards alternately. You have to play one card every round! If a player doesn\'t want to play a card, they have to pass and aren\'t allowed to play another card until the round has ended. When one player passes, their opponent can still play cards until they pass too. If one of the opponents uses up all of his cards, he has to pass.<br />A round ends when both players pass. The player with the highest total score wins the round. When both opponents have the same number of points, the round is seen as a win for both sides. All cards are moved to the discard pile at the end of each round. Your hand is reused in the next round—you don\'t draw new cards. The winner of the last round gets the first turn. Goal of the game is to win two rounds.</p>]]></string>
-    <string name="rules_fractions_text"><![CDATA[<p>There are four factions: Monsters, Nilfgaardian Empire, Northern Kingdoms and Scoia\'tael. Every faction has got unique cards, leaders and perks. Moreover, there are some additional cards that are neutral and can be used in every faction.</p>Leader of monster faction is Eredin Bréacc Glas, also known as Sparrowhawk who is the King of the Wild Hunt. Their perk is iron skin which makes it possible to keep one unit at the end of each round.<br />Emhyr var Emreis, also known as \"The White Flame Dancing on the Barrows of his Enemies\", is emperor of Nilfgaard. Treachery causes any player with a nilfgaardian deck to win if points draw level.<br />Archenemy of Nilfgaard is Foltest, King of Temeria and leader of the Northern Kingdoms faction. They are able to draw one card after a won round.<br />In their fight, the Northern Kingdoms try to decimate Nonhumans which are represented by the Scoia\'tael faction. Scoia\'tael players may decide who gets the first turn in the first round. They are led by Francesca Findabair, also known as Enid an Gleanna (Daisy of the Valleys).]]></string>
+    <string name="rules_factions_text"><![CDATA[<p>There are four factions: Monsters, Nilfgaardian Empire, Northern Kingdoms and Scoia\'tael. Every faction has got unique cards, leaders and perks. Moreover, there are some additional cards that are neutral and can be used in every faction.</p>Leader of monster faction is Eredin Bréacc Glas, also known as Sparrowhawk who is the King of the Wild Hunt. Their perk is iron skin which makes it possible to keep one unit at the end of each round.<br />Emhyr var Emreis, also known as \"The White Flame Dancing on the Barrows of his Enemies\", is emperor of Nilfgaard. Treachery causes any player with a nilfgaardian deck to win if points draw level.<br />Archenemy of Nilfgaard is Foltest, King of Temeria and leader of the Northern Kingdoms faction. They are able to draw one card after a won round.<br />In their fight, the Northern Kingdoms try to decimate Nonhumans which are represented by the Scoia\'tael faction. Scoia\'tael players may decide who gets the first turn in the first round. They are led by Francesca Findabair, also known as Enid an Gleanna (Daisy of the Valleys).]]></string>
     <string name="rules_commander_text"><![CDATA[<p>
     <p>Each faction has certain leaders with different abilities. They are listed here.</p>
     <h1>Monsters: Eredin Bréacc Glas</h1>
