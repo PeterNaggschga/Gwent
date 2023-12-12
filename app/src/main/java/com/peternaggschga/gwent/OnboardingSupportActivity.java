@@ -7,10 +7,10 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
-import androidx.annotation.Px;
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
-import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.peternaggschga.gwent.ui.main.PlaceholderFragment;
 import com.peternaggschga.gwent.ui.main.SectionsPagerAdapter;
@@ -20,6 +20,7 @@ import java.util.List;
 
 public class OnboardingSupportActivity extends AppCompatActivity {
 
+    private OnBackPressedCallback callback;
     private final List<ImageView> indicators = new ArrayList<>();
 
     @Override
@@ -36,34 +37,45 @@ public class OnboardingSupportActivity extends AppCompatActivity {
         indicators.add(findViewById(R.id.onboarding_indicator_3));
         indicators.add(findViewById(R.id.onboarding_indicator_4));
         View.OnClickListener onFinish = view -> {
-            PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putBoolean("firstUse", false).apply();
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            if (PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean("firstUse", true)) {
+                PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putBoolean("firstUse", false).apply();
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                // TODO: Don't use an Intent here,
+                //  rather return to calling activity by calling onBackPressed()
+            }
+            callback.setEnabled(false);
+            getOnBackPressedDispatcher().onBackPressed();
         };
         skipButton.setOnClickListener(onFinish);
         finishButton.setOnClickListener(onFinish);
-        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        final ViewPager viewPager = findViewById(R.id.onboarding_viewPager);
+        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this);
+        final ViewPager2 viewPager = findViewById(R.id.onboarding_viewPager);
         viewPager.setAdapter(sectionsPagerAdapter);
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, @Px int positionOffsetPixels) {
-
-            }
-
+        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
                 updateIndicators(position);
                 skipButton.setVisibility(position == PlaceholderFragment.PAGES_COUNT - 1 ? View.GONE : View.VISIBLE);
                 nextButton.setVisibility(position == PlaceholderFragment.PAGES_COUNT - 1 ? View.GONE : View.VISIBLE);
                 finishButton.setVisibility(position == PlaceholderFragment.PAGES_COUNT - 1 ? View.VISIBLE : View.GONE);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
+                callback.setEnabled(position != 0);
             }
         });
-        nextButton.setOnClickListener(view -> viewPager.arrowScroll(View.SCROLLBAR_POSITION_RIGHT));
+        nextButton.setOnClickListener(v -> viewPager.setCurrentItem(viewPager.getCurrentItem() + 1));
+
+        callback = new OnBackPressedCallback(false) {
+            @Override
+            public void handleOnBackPressed() {
+                int item = viewPager.getCurrentItem();
+                if (item != 0) {
+                    viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
+                } else {
+                    callback.setEnabled(false);
+                    getOnBackPressedDispatcher().onBackPressed();
+                }
+            }
+        };
+        getOnBackPressedDispatcher().addCallback(callback);
     }
 
     void updateIndicators(int position) {
