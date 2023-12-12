@@ -186,7 +186,7 @@ public class Unit {
             if (baseAD) {
                 builder.append(this.baseAD);
                 if (buffAD && this.buffed) {
-                    builder.append("\u2192");
+                    builder.append("→");
                     builder.append(this.buffAD);
                 }
             } else if (buffAD) {
