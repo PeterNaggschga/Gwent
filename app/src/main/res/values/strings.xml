@@ -142,25 +142,25 @@
     <string name="rules_factions_text"><![CDATA[<p>There are four factions: Monsters, Nilfgaardian Empire, Northern Kingdoms and Scoia\'tael. Every faction has got unique cards, leaders and perks. Moreover, there are some additional cards that are neutral and can be used in every faction.</p>Leader of monster faction is Eredin Bréacc Glas, also known as Sparrowhawk who is the King of the Wild Hunt. Their perk is iron skin which makes it possible to keep one unit at the end of each round.<br />Emhyr var Emreis, also known as \"The White Flame Dancing on the Barrows of his Enemies\", is emperor of Nilfgaard. Treachery causes any player with a nilfgaardian deck to win if points draw level.<br />Archenemy of Nilfgaard is Foltest, King of Temeria and leader of the Northern Kingdoms faction. They are able to draw one card after a won round.<br />In their fight, the Northern Kingdoms try to decimate Nonhumans which are represented by the Scoia\'tael faction. Scoia\'tael players may decide who gets the first turn in the first round. They are led by Francesca Findabair, also known as Enid an Gleanna (Daisy of the Valleys).]]></string>
     <string name="rules_commander_text"><![CDATA[<p>
     <p>Each faction has certain leaders with different abilities. They are listed here.</p>
-    <h1>Monsters: Eredin Bréacc Glas</h1>
+    <h5>Monsters: Eredin Bréacc Glas</h5>
     <p>The Treacherous: <br />Passive - Doubles the strength of all spy cards (affects both players).</p>
     <p>Bringer of Death: <br />Restore a card from your discard pile to your hand.</p>
     <p>Commander of the Red Riders: <br />Double the strength of all your Close combat units (unless a Commander\'s horn is also present in that row).</p>
     <p>King of the Wild Hunt: <br />Pick any weather card from your deck and play it instantly.</p>
     <p>Destroyer of Worlds: <br />Discard two cards and draw one card of your choice from your deck.</p>
-    <h1>Nilfgaardian Empire: Emhyr var Emreis</h1>
+    <h5>Nilfgaardian Empire: Emhyr var Emreis</h5>
     <p>The Relentless: <br />Draw a card from your opponent\'s discard pile.</p>
     <p>The White Flame: <br />Cancel your opponent\'s Leader Ability.</p>
     <p>Invader of the North: <br />Abilities that restore a unit to the battlefield restore a randomly-chosen unit. Affects both players.</p>
     <p>Emperor of Nilfgaard: <br />Look at three random cards from your opponent\'s hand.</p>
     <p>His Imperial Majesty: <br />Pick a Torrential Rain card from your deck and play it instantly.</p>
-    <h1>Northern Kingdoms: Foltest</h1>
+    <h5>Northern Kingdoms: Foltest</h5>
     <p>The Steel-Forged: <br />Destroy your enemy\'s strongest Siege unit(s) if the combined strength of all their Siege units is 10 or more.</p>
     <p>Lord Commander of the North: <br />Clear any weather effects (resulting from Biting Frost, Torrential Rain or Impenetrable Fog cards) in play.</p>
     <p>The Siegesmaster: <br />Doubles the strength of all your Siege units (unless a Commander\'s Horn is also present on that row).</p>
     <p>King of Temeria: <br />Pick an Impenetrable Fog card from your deck and play it instantly.</p>
     <p>Son of Medell: <br />Destroy your enemy\'s strongest Ranged combat unit(s) if the combined strength of all their Ranged combat units is 10 or more.</p>
-    <h1>Scoia\'tael: Francesca Findabair</h1>
+    <h5>Scoia\'tael: Francesca Findabair</h5>
     <p>Daisy of the Valley: <br />Draw an extra card at the beginning of the battle.</p>
     <p>Hope of the Aen Seidhe: <br />Move agile units to whichever valid row maximizes their strength (don\'t move units already in optimal row).</p>
     <p>Queen of Dol Blathanna: <br />Destroy your enemy\'s strongest Close combat unit(s) if the combined strength of all their Close combat units is 10 or more.</p>
