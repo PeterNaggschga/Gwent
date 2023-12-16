@@ -29,22 +29,18 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: Install git-lfs
-        run: |
-          sudo apt-get install git-lfs -y
-        shell: bash
-
       - name: Install Doxygen
         run: |
-          sudo apt update
-          sudo apt install doxygen graphviz texlive texlive-latex-extra ghostscript -y
+          sudo apt-get update
+          sudo apt-get install doxygen graphviz texlive texlive-latex-extra ghostscript git-lfs -y
+          git lfs install
         shell: bash
 
       - name: Remove old documentation
         run: |
           cd docs
-          touch html documentation.pdf cards
-          rm -r html documentation.pdf cards
+          touch html documentation.pdf
+          rm -r html documentation.pdf
 
       - name: Run Doxygen
         run: |
