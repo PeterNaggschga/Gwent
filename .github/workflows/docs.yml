@@ -28,7 +28,12 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
-      
+
+      - name: Install git-lfs
+        run: |
+          sudo apt-get install git-lfs -y
+        shell: bash
+
       - name: Install Doxygen
         run: |
           sudo apt update
