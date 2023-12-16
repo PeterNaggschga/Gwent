@@ -13,6 +13,7 @@
         android:roundIcon="@mipmap/icon_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/ScoiataelTheme"
+        android:isGame="true"
         tools:targetApi="o">
         <activity
             android:name=".OnboardingSupportActivity"
