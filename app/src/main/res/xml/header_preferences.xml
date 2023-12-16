@@ -18,10 +18,10 @@
 
     <SwitchPreference
         app:defaultValue="false"
-        app:icon="@drawable/icon_fractionreset"
-        app:key="fractionReset"
-        app:summary="@string/preference_fraction_reset_desc"
-        app:title="@string/preference_fraction_reset_title" />
+        app:icon="@drawable/icon_factionreset"
+        app:key="factionReset"
+        app:summary="@string/preference_faction_reset_desc"
+        app:title="@string/preference_faction_reset_title" />
 
     <MultiSelectListPreference
         app:defaultValue="@array/preference_unit_string_defaultValues"

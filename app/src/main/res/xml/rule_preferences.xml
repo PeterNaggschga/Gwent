@@ -10,8 +10,8 @@
         app:title="@string/preference_rules_course_title" />
 
     <Preference
-        app:key="rules_fractions"
-        app:title="@string/preference_rules_fractions_title" />
+        app:key="rules_factions"
+        app:title="@string/preference_rules_factions_title" />
 
     <Preference
         app:key="rules_commander"

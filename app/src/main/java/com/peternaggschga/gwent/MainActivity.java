@@ -1,7 +1,6 @@
 package com.peternaggschga.gwent;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.AudioAttributes;
@@ -10,7 +9,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -57,11 +55,132 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        if (sharedPreferences.getBoolean("firstUse", true)) {
+            startActivity(new Intent(this, OnboardingSupportActivity.class));
+        }
+        inflateFactionLayout(true);
+        initViews();
 
-    public static final int THEME_MONSTER = R.style.MonsterTheme;
-    public static final int THEME_NILFGAARD = R.style.NilfgaardTheme;
-    public static final int THEME_NORTHERN_REALMS = R.style.NorthernRealmsTheme;
-    public static final int THEME_SCOIATAEL = R.style.ScoiataelTheme;
+        try {
+            allRows.add(meleeRow = retrieveRow(FILE_NAME_BACKUP_MELEE_ROW, Row.ROW_MELEE));
+            allRows.add(rangeRow = retrieveRow(FILE_NAME_BACKUP_RANGE_ROW, Row.ROW_RANGE));
+            allRows.add(siegeRow = retrieveRow(FILE_NAME_BACKUP_SIEGE_ROW, Row.ROW_SIEGE));
+        } catch (@NonNull IOException | JSONException e) {
+            e.printStackTrace();
+            allRows.clear();
+            allRows.add(meleeRow = new Row(Row.ROW_MELEE));
+            allRows.add(rangeRow = new Row(Row.ROW_RANGE));
+            allRows.add(siegeRow = new Row(Row.ROW_SIEGE));
+        }
+
+        checkSidebarButtons();
+        setRowImages();
+
+        factionButton.setOnClickListener(this::inflateFactionPopup);
+        resetButton.setOnClickListener(view -> {
+            final boolean monster = THEME.MONSTER.ordinal() == sharedPreferences.getInt("faction", THEME.SCOIATAEL.ordinal());
+            AlertDialog.Builder builder = getAlertDialogBuilder();
+            if (sharedPreferences.getBoolean("warnings", true)) {
+                final View checkBoxView = View.inflate(MainActivity.this, R.layout.alertdialog_checkbox, null);
+                if (monster) {
+                    builder.setView(checkBoxView);
+                }
+                builder.setTitle(R.string.alertDialog_reset_title)
+                        .setMessage(R.string.alertDialog_reset_msg)
+                        .setPositiveButton(R.string.alertDialog_reset_positive, (dialogInterface, i) -> {
+                            if (monster) {
+                                CheckBox checkBox = checkBoxView.findViewById(R.id.alertDialog_checkbox);
+                                resetAll(checkBox.isChecked());
+                            } else {
+                                resetAll(false);
+                            }
+                        });
+                builder.create().show();
+            } else if (monster) {
+                builder.setTitle(R.string.alertDialog_monster_title)
+                        .setMessage(R.string.alertDialog_monster_msg)
+                        .setPositiveButton(R.string.alertDialog_monster_positive, (dialogInterface, i) -> resetAll(true))
+                        .setNegativeButton(R.string.alertDialog_monster_negative, (dialogInterface, i) -> resetAll(false));
+                builder.create().show();
+            } else {
+                resetAll(false);
+            }
+        });
+        weatherButton.setOnClickListener(view -> {
+            if (sharedPreferences.getBoolean("sound_weather", true)) {
+                playSound(R.raw.weather_good);
+            }
+            resetWeather();
+        });
+        burnButton.setOnClickListener(view -> {
+            final List<Unit> burnUnits = getBurnUnits();
+            int burnedRevenge = 0;
+            for (Unit unit : burnUnits) {
+                if (unit.isRevenge()) {
+                    burnedRevenge++;
+                }
+            }
+            if (sharedPreferences.getBoolean("warnings", true)) {
+                Map<String, Integer> unitStrings = new HashMap<>();
+                for (Unit unit : burnUnits) {
+                    String unitString = unit.toString(getApplicationContext(), null);
+                    if (unitStrings.containsKey(unitString)) {
+                        Integer currentValue = unitStrings.get(unitString);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && currentValue != null) {
+                            unitStrings.replace(unitString, currentValue, currentValue + 1);
+                        } else if (currentValue != null) {
+                            unitStrings.remove(unitString);
+                            unitStrings.put(unitString, currentValue + 1);
+                        }
+                    } else {
+                        unitStrings.put(unitString, 1);
+                    }
+                }
+                StringBuilder stringBuilder = new StringBuilder();
+                int k = unitStrings.size();
+                for (Map.Entry<String, Integer> entry : unitStrings.entrySet()) {
+                    if (unitStrings.size() != 1 || entry.getValue() != 1) {
+                        stringBuilder.append(entry.getValue());
+                        stringBuilder.append("x ");
+                    }
+                    stringBuilder.append(entry.getKey());
+                    if (k > 2) {
+                        stringBuilder.append(", ");
+                        k--;
+                    } else if (k == 2) {
+                        stringBuilder.append(" und ");
+                        k--;
+                    }
+                }
+                String msg = getString(R.string.alertDialog_burn_msg, stringBuilder.toString());
+                AlertDialog.Builder alertDialogBuilder = getAlertDialogBuilder();
+                final int finalBurnedRevenge = burnedRevenge;
+                alertDialogBuilder.setTitle(R.string.alertDialog_burn_title)
+                        .setMessage(msg)
+                        .setPositiveButton(R.string.alertDialog_burn_title, (dialogInterface, i) -> burn(burnUnits, finalBurnedRevenge));
+                alertDialogBuilder.create().show();
+            } else {
+                burn(burnUnits, burnedRevenge);
+            }
+        });
+        coinButton.setOnClickListener(this::inflateCoinflipPopup);
+        settingsButton.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, SettingsActivity.class)));
+        firstRowWeatherImageView.setOnClickListener(view -> changeWeather((ImageView) view, meleeRow));
+        secondRowWeatherImageView.setOnClickListener(view -> changeWeather((ImageView) view, rangeRow));
+        thirdRowWeatherImageView.setOnClickListener(view -> changeWeather((ImageView) view, siegeRow));
+        firstRowHornImageView.setOnClickListener(view -> changeHorn(meleeRow));
+        secondRowHornImageView.setOnClickListener(view -> changeHorn(rangeRow));
+        thirdRowHornImageView.setOnClickListener(view -> changeHorn(siegeRow));
+        firstRowCardImageView.setOnClickListener(view -> inflateCardPopup(meleeRow, view));
+        secondRowCardImageView.setOnClickListener(view -> inflateCardPopup(rangeRow, view));
+        thirdRowCardImageView.setOnClickListener(view -> inflateCardPopup(siegeRow, view));
+    }
+
     private static final String FILE_NAME_BACKUP_MELEE_ROW = "melee.json";
     private static final String FILE_NAME_BACKUP_RANGE_ROW = "range.json";
     private static final String FILE_NAME_BACKUP_SIEGE_ROW = "siege.json";
@@ -118,7 +237,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView backgroundOverallPointBall;
     private ImageView overallPointBall;
     private TextView overallPointView;
-    private ImageButton fractionButton;
+    private ImageButton factionButton;
     private ImageButton resetButton;
     private ImageButton weatherButton;
     private ImageButton burnButton;
@@ -205,7 +324,7 @@ public class MainActivity extends AppCompatActivity {
         backgroundOverallPointBall = findViewById(R.id.backgroundOverallPointBall);
         overallPointBall = findViewById(R.id.overallPointBall);
         overallPointView = findViewById(R.id.overallPointView);
-        fractionButton = findViewById(R.id.fractionButton);
+        factionButton = findViewById(R.id.factionButton);
         resetButton = findViewById(R.id.resetButton);
         weatherButton = findViewById(R.id.weatherButton);
         burnButton = findViewById(R.id.burnButton);
@@ -213,217 +332,14 @@ public class MainActivity extends AppCompatActivity {
         settingsButton = findViewById(R.id.settingsButton);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        if (sharedPreferences.getBoolean("firstUse", true)) {
-            startActivity(new Intent(this, OnboardingSupportActivity.class));
-        }
-        inflateFractionLayout(true);
-        initViews();
-
-        try {
-            allRows.add(meleeRow = retrieveRow(FILE_NAME_BACKUP_MELEE_ROW, Row.ROW_MELEE));
-            allRows.add(rangeRow = retrieveRow(FILE_NAME_BACKUP_RANGE_ROW, Row.ROW_RANGE));
-            allRows.add(siegeRow = retrieveRow(FILE_NAME_BACKUP_SIEGE_ROW, Row.ROW_SIEGE));
-        } catch (@NonNull IOException | JSONException e) {
-            e.printStackTrace();
-            allRows.clear();
-            allRows.add(meleeRow = new Row(Row.ROW_MELEE));
-            allRows.add(rangeRow = new Row(Row.ROW_RANGE));
-            allRows.add(siegeRow = new Row(Row.ROW_SIEGE));
-        }
-
-        checkSidebarButtons();
-        setRowImages();
-
-        fractionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                inflateFractionPopup(view);
-            }
-        });
-        resetButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final boolean monster = THEME_MONSTER == sharedPreferences.getInt("fraction", THEME_SCOIATAEL);
-                AlertDialog.Builder builder = getAlertDialogBuilder();
-                if (sharedPreferences.getBoolean("warnings", true)) {
-                    final View checkBoxView = View.inflate(MainActivity.this, R.layout.alertdialog_checkbox, null);
-                    if (monster) {
-                        builder.setView(checkBoxView);
-                    }
-                    builder.setTitle(R.string.alertDialog_reset_title)
-                            .setMessage(R.string.alertDialog_reset_msg)
-                            .setPositiveButton(R.string.alertDialog_reset_positive, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    if (monster) {
-                                        CheckBox checkBox = checkBoxView.findViewById(R.id.alertDialog_checkbox);
-                                        resetAll(checkBox.isChecked());
-                                    } else {
-                                        resetAll(false);
-                                    }
-                                }
-                            });
-                    builder.create().show();
-                } else if (monster) {
-                    builder.setTitle(R.string.alertDialog_monster_title)
-                            .setMessage(R.string.alertDialog_monster_msg)
-                            .setPositiveButton(R.string.alertDialog_monster_positive, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    resetAll(true);
-                                }
-                            })
-                            .setNegativeButton(R.string.alertDialog_monster_negative, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    resetAll(false);
-                                }
-                            });
-                    builder.create().show();
-                } else {
-                    resetAll(false);
-                }
-            }
-        });
-        weatherButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (sharedPreferences.getBoolean("sound_weather", true)) {
-                    playSound(R.raw.weather_good);
-                }
-                resetWeather();
-            }
-        });
-        burnButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final List<Unit> burnUnits = getBurnUnits();
-                int burnedRevenge = 0;
-                for (Unit unit : burnUnits) {
-                    if (unit.isRevenge()) {
-                        burnedRevenge++;
-                    }
-                }
-                if (sharedPreferences.getBoolean("warnings", true)) {
-                    Map<String, Integer> unitStrings = new HashMap<>();
-                    for (Unit unit : burnUnits) {
-                        String unitString = unit.toString(getApplicationContext(), null);
-                        if (unitStrings.containsKey(unitString)) {
-                            Integer currentValue = unitStrings.get(unitString);
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && currentValue != null) {
-                                unitStrings.replace(unitString, currentValue, currentValue + 1);
-                            } else if (currentValue != null) {
-                                unitStrings.remove(unitString);
-                                unitStrings.put(unitString, currentValue + 1);
-                            }
-                        } else {
-                            unitStrings.put(unitString, 1);
-                        }
-                    }
-                    StringBuilder stringBuilder = new StringBuilder();
-                    int k = unitStrings.size();
-                    for (Map.Entry<String, Integer> entry : unitStrings.entrySet()) {
-                        if (unitStrings.size() != 1 || entry.getValue() != 1) {
-                            stringBuilder.append(entry.getValue());
-                            stringBuilder.append("x ");
-                        }
-                        stringBuilder.append(entry.getKey());
-                        if (k > 2) {
-                            stringBuilder.append(", ");
-                            k--;
-                        } else if (k == 2) {
-                            stringBuilder.append(" und ");
-                            k--;
-                        }
-                    }
-                    String msg = getString(R.string.alertDialog_burn_msg, stringBuilder.toString());
-                    AlertDialog.Builder alertDialogBuilder = getAlertDialogBuilder();
-                    final int finalBurnedRevenge = burnedRevenge;
-                    alertDialogBuilder.setTitle(R.string.alertDialog_burn_title)
-                            .setMessage(msg)
-                            .setPositiveButton(R.string.alertDialog_burn_title, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    burn(burnUnits, finalBurnedRevenge);
-                                }
-                            });
-                    alertDialogBuilder.create().show();
-                } else {
-                    burn(burnUnits, burnedRevenge);
-                }
-            }
-        });
-        coinButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                inflateCoinflipPopup(view);
-            }
-        });
-        settingsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
-            }
-        });
-        firstRowWeatherImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeWeather((ImageView) view, meleeRow);
-            }
-        });
-        secondRowWeatherImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeWeather((ImageView) view, rangeRow);
-            }
-        });
-        thirdRowWeatherImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeWeather((ImageView) view, siegeRow);
-            }
-        });
-        firstRowHornImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeHorn(meleeRow);
-            }
-        });
-        secondRowHornImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeHorn(rangeRow);
-            }
-        });
-        thirdRowHornImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeHorn(siegeRow);
-            }
-        });
-        firstRowCardImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                inflateCardPopup(meleeRow, view);
-            }
-        });
-        secondRowCardImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                inflateCardPopup(rangeRow, view);
-            }
-        });
-        thirdRowCardImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                inflateCardPopup(siegeRow, view);
-            }
-        });
+    private void inflateFactionPopup(View view) {
+        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        View popupView = inflater.inflate(R.layout.popup_faction, (ViewGroup) getWindow().getDecorView(), false);
+        popupView.findViewById(R.id.monsterButton).setOnClickListener(view1 -> changeTheme(THEME.MONSTER));
+        popupView.findViewById(R.id.nilfgaardButton).setOnClickListener(view12 -> changeTheme(THEME.NILFGAARD));
+        popupView.findViewById(R.id.northernKingdomsButton).setOnClickListener(view13 -> changeTheme(THEME.NORTHERN_KINGDOMS));
+        popupView.findViewById(R.id.scoiataelButton).setOnClickListener(view14 -> changeTheme(THEME.SCOIATAEL));
+        inflatePopup(view, popupView, true);
     }
 
     private void changeHorn(@NonNull Row row) {
@@ -572,13 +488,13 @@ public class MainActivity extends AppCompatActivity {
             for (Row row : allRows) {
                 row.clear(true);
                 Unit keepUnit = row.getAllUnits().get(0);
-                Toast.makeText(this, getString(R.string.alertDialog_fractionreset_monster_toast_keep, keepUnit.toString(this, null)), Toast.LENGTH_LONG).show();
+                Toast.makeText(this, getString(R.string.alertDialog_factionreset_monster_toast_keep, keepUnit.toString(this, null)), Toast.LENGTH_LONG).show();
                 if (keepUnit.isRevenge()) {
                     revengeCount--;
                 }
             }
             if (allRows.size() == 0) {
-                Toast.makeText(this, R.string.alertDialog_fractionreset_monster_toast_nokeep, Toast.LENGTH_LONG).show();
+                Toast.makeText(this, R.string.alertDialog_factionreset_monster_toast_nokeep, Toast.LENGTH_LONG).show();
             }
             for (Row row : fullClear) {
                 row.clear(false);
@@ -603,14 +519,11 @@ public class MainActivity extends AppCompatActivity {
             AlertDialog.Builder builder = getAlertDialogBuilder();
             builder.setTitle(R.string.alertDialog_revenge_title)
                     .setMessage(R.string.alertDialog_revenge_msg)
-                    .setPositiveButton(R.string.alertDialog_revenge_positive, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            for (int j = 0; j < revengeUnits; j++) {
-                                meleeRow.addUnit(new Unit(8, false, false, false, 0, false));
-                                updateRows();
-                                checkSidebarButtons();
-                            }
+                    .setPositiveButton(R.string.alertDialog_revenge_positive, (dialogInterface, i) -> {
+                        for (int j = 0; j < revengeUnits; j++) {
+                            meleeRow.addUnit(new Unit(8, false, false, false, 0, false));
+                            updateRows();
+                            checkSidebarButtons();
                         }
                     });
             builder.create().show();
@@ -663,12 +576,7 @@ public class MainActivity extends AppCompatActivity {
     private AlertDialog.Builder getAlertDialogBuilder() {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setIconAttribute(android.R.attr.alertDialogIcon)
-                .setNeutralButton(R.string.alertDialog_cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(@NonNull DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                });
+                .setNeutralButton(R.string.alertDialog_cancel, (dialogInterface, i) -> dialogInterface.dismiss());
         return builder;
     }
 
@@ -678,83 +586,62 @@ public class MainActivity extends AppCompatActivity {
         popupWindow.setAnimationStyle(R.style.popUpAnimation);
         popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
         if (dismissOnTouch) {
-            popupView.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(@NonNull View view, MotionEvent motionEvent) {
-                    view.performClick();
-                    popupWindow.dismiss();
-                    return true;
-                }
+            popupView.setOnTouchListener((view1, motionEvent) -> {
+                view1.performClick();
+                popupWindow.dismiss();
+                return true;
             });
         }
     }
 
-    private void inflateFractionPopup(View view) {
-        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-        View popupView = inflater.inflate(R.layout.popup_fraction, (ViewGroup) getWindow().getDecorView(), false);
-        popupView.findViewById(R.id.monsterButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeTheme(THEME_MONSTER);
-            }
-        });
-        popupView.findViewById(R.id.nilfgaardButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeTheme(THEME_NILFGAARD);
-            }
-        });
-        popupView.findViewById(R.id.northernRealmsButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeTheme(THEME_NORTHERN_REALMS);
-            }
-        });
-        popupView.findViewById(R.id.scoiataelButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeTheme(THEME_SCOIATAEL);
-            }
-        });
-        inflatePopup(view, popupView, true);
-    }
-
-    private void inflateFractionLayout(boolean init) {
-        int themeResourceId = sharedPreferences.getInt("fraction", THEME_SCOIATAEL);
-        setTheme(themeResourceId);
+    private void inflateFactionLayout(boolean init) {
+        THEME theme = THEME.values()[sharedPreferences.getInt("faction", THEME.SCOIATAEL.ordinal())];
+        switch (theme) {
+            case MONSTER:
+                setTheme(R.style.MonsterTheme);
+                break;
+            case NILFGAARD:
+                setTheme(R.style.NilfgaardTheme);
+                break;
+            case NORTHERN_KINGDOMS:
+                setTheme(R.style.NorthernKingdomsTheme);
+                break;
+            default:
+                setTheme(R.style.ScoiataelTheme);
+        }
         if (init) {
             setContentView(R.layout.activity_main);
         } else {
-            int fractionButtonResourceId;
+            int factionButtonResourceId;
             int ballImageResourceId;
             int rowCardResourceId;
             int textColorResourceId;
-            switch (themeResourceId) {
-                case THEME_MONSTER:
-                    fractionButtonResourceId = R.drawable.icon_round_monster;
+            switch (theme) {
+                case MONSTER:
+                    factionButtonResourceId = R.drawable.icon_round_monster;
                     ballImageResourceId = R.drawable.ball_red;
                     rowCardResourceId = R.drawable.card_monster_landscape_free;
                     textColorResourceId = R.color.color_text_monster;
                     break;
-                case THEME_NILFGAARD:
-                    fractionButtonResourceId = R.drawable.icon_round_nilfgaard;
+                case NILFGAARD:
+                    factionButtonResourceId = R.drawable.icon_round_nilfgaard;
                     ballImageResourceId = R.drawable.ball_grey;
                     rowCardResourceId = R.drawable.card_nilfgaard_landscape_free;
                     textColorResourceId = R.color.color_text_nilfgaard;
                     break;
-                case THEME_NORTHERN_REALMS:
-                    fractionButtonResourceId = R.drawable.icon_round_northern_realms;
+                case NORTHERN_KINGDOMS:
+                    factionButtonResourceId = R.drawable.icon_round_northern_kingdoms;
                     ballImageResourceId = R.drawable.ball_blue;
-                    rowCardResourceId = R.drawable.card_northern_realms_landscape_free;
-                    textColorResourceId = R.color.color_text_northern_realms;
+                    rowCardResourceId = R.drawable.card_northern_kingdoms_landscape_free;
+                    textColorResourceId = R.color.color_text_northern_kingdoms;
                     break;
                 default:
-                    fractionButtonResourceId = R.drawable.icon_round_scoiatael;
+                    factionButtonResourceId = R.drawable.icon_round_scoiatael;
                     ballImageResourceId = R.drawable.ball_green;
                     rowCardResourceId = R.drawable.card_scoiatael_landscape_free;
                     textColorResourceId = R.color.color_text_scoiatael;
             }
-            fractionButton.setImageResource(fractionButtonResourceId);
+            factionButton.setImageResource(factionButtonResourceId);
             ImageViewAnimatedChange(this, firstRowPointBall, firstRowBackgroundPointBall, ballImageResourceId);
             ImageViewAnimatedChange(this, secondRowPointBall, secondRowBackgroundPointBall, ballImageResourceId);
             ImageViewAnimatedChange(this, thirdRowPointBall, thirdRowBackgroundPointBall, ballImageResourceId);
@@ -772,6 +659,191 @@ public class MainActivity extends AppCompatActivity {
             }
             ImageViewAnimatedChange(this, overallPointBall, backgroundOverallPointBall, ballImageResourceId);
         }
+    }
+
+    private void inflateAddCardPopup(@NonNull final Row row, View view) {
+        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        View popupView = inflater.inflate(R.layout.popup_add_card, (ViewGroup) getWindow().getDecorView(), false);
+        epicPicker = popupView.findViewById(R.id.popup_add_card_epic_picker);
+        dmgPicker = popupView.findViewById(R.id.popup_add_card_dmg_picker);
+        abilityPicker = popupView.findViewById(R.id.popup_add_card_ability_picker);
+        bindingPickerLabel = popupView.findViewById(R.id.popup_add_card_binding_picker_label);
+        bindingPicker = popupView.findViewById(R.id.popup_add_card_binding_picker);
+        numberPicker = popupView.findViewById(R.id.popup_add_card_number_picker);
+        epicPicker.setMinValue(0);
+        epicPicker.setMaxValue(1);
+        epicPicker.setDisplayedValues(getResources().getStringArray(R.array.popup_add_card_epic_values));
+        dmgPicker.setMinValue(0);
+        dmgPicker.setMaxValue(18);
+        dmgPicker.setValue(5);
+        abilityPicker.setMinValue(0);
+        abilityPicker.setMaxValue(4);
+        abilityPicker.setDisplayedValues(getResources().getStringArray(R.array.popup_add_card_ability_values));
+        bindingPicker.setMinValue(1);
+        bindingPicker.setMaxValue(3);
+        numberPicker.setMinValue(1);
+        numberPicker.setMaxValue(5);
+
+        epicPicker.setOnValueChangedListener((numberPicker, i, i1) -> {
+            boolean epic = i1 == 1;
+            dmgPicker.setDisplayedValues(null);
+            dmgPicker.setMinValue(0);
+            dmgPicker.setMaxValue(epic ? 5 : 18);
+            dmgPicker.setValue(epic ? 3 : 5);
+            dmgPicker.setEnabled(epic);
+            if (epic) {
+                dmgPicker.setDisplayedValues(getResources().getStringArray(R.array.popup_add_card_dmg_values_epic));
+
+                abilityPicker.setMinValue(0);
+                abilityPicker.setMaxValue(1);
+                abilityPicker.setDisplayedValues(getResources().getStringArray(R.array.popup_add_card_ability_values_epic));
+
+                bindingPicker.setVisibility(View.GONE);
+                bindingPickerLabel.setVisibility(View.GONE);
+            } else {
+                abilityPicker.setDisplayedValues(getResources().getStringArray(R.array.popup_add_card_ability_values));
+                abilityPicker.setMinValue(0);
+                abilityPicker.setMaxValue(4);
+            }
+            int ability = abilityPicker.getValue();
+            abilityPicker.setValue(ability == 1 ? ability : 0);
+            if (ability == 1) {
+                dmgPicker.setMinValue(0);
+                dmgPicker.setMaxValue(1);
+                dmgPicker.setValue(0);
+                dmgPicker.setDisplayedValues(getResources().getStringArray(i1 == 0 ? R.array.popup_add_card_dmg_values_moralboost_normal : R.array.popup_add_card_dmg_values_moralboost_epic));
+            }
+        });
+        abilityPicker.setOnValueChangedListener((numberPicker, i, i1) -> {
+            switch (i) {
+                case 1:
+                    boolean epic = !(epicPicker.getValue() == 0);
+                    dmgPicker.setDisplayedValues(null);
+                    dmgPicker.setMinValue(0);
+                    dmgPicker.setMaxValue(epic ? 4 : 18);
+                    dmgPicker.setValue(epic ? 3 : 5);
+                    if (epic) {
+                        dmgPicker.setDisplayedValues(getResources().getStringArray(R.array.popup_add_card_dmg_values_epic));
+                    }
+                    dmgPicker.setEnabled(true);
+                    break;
+                case 2:
+                case 3:
+                    dmgPicker.setEnabled(true);
+                    dmgPicker.setValue(5);
+                    break;
+                case 4:
+                    bindingPicker.setVisibility(View.GONE);
+                    bindingPickerLabel.setVisibility(View.GONE);
+            }
+
+            switch (i1) {
+                case 1:
+                    dmgPicker.setMinValue(0);
+                    boolean epic = !(epicPicker.getValue() == 0);
+                    dmgPicker.setMaxValue(epic ? 1 : 4);
+                    dmgPicker.setValue(1);
+                    dmgPicker.setDisplayedValues(getResources().getStringArray(epic ? R.array.popup_add_card_dmg_values_moralboost_epic : R.array.popup_add_card_dmg_values_moralboost_normal));
+                    break;
+                case 2:
+                    dmgPicker.setValue(2);
+                    dmgPicker.setEnabled(false);
+                    break;
+                case 3:
+                    dmgPicker.setValue(0);
+                    dmgPicker.setEnabled(false);
+                    break;
+                case 4:
+                    bindingPicker.setVisibility(View.VISIBLE);
+                    bindingPickerLabel.setVisibility(View.VISIBLE);
+                    int binding = bindingPicker.getValue();
+                    List<Unit> bindingList = row.getBindingUnits(binding);
+                    Toast.makeText(MainActivity.this, getString(R.string.popUp_add_card_binding_count, binding, bindingList.size()), Toast.LENGTH_SHORT).show();
+                    if (bindingList.size() > 0) {
+                        dmgPicker.setValue(bindingList.get(0).getBaseAD());
+                        dmgPicker.setEnabled(false);
+                    }
+            }
+        });
+        bindingPicker.setOnValueChangedListener((numberPicker, i, i1) -> new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                runOnUiThread(() -> {
+                    if (i1 == bindingPicker.getValue()) {
+                        List<Unit> bindingList = row.getBindingUnits(i1);
+                        Toast.makeText(MainActivity.this, getString(R.string.popUp_add_card_binding_count, i1, bindingList.size()), Toast.LENGTH_SHORT).show();
+                        if (bindingList.size() > 0) {
+                            dmgPicker.setValue(bindingList.get(0).getBaseAD());
+                            dmgPicker.setEnabled(false);
+                        } else {
+                            dmgPicker.setEnabled(true);
+                        }
+                    }
+                });
+            }
+        }, 250));
+
+        popupView.findViewById(R.id.popup_add_card_save_button).setOnClickListener(view12 -> {
+            boolean epic = epicPicker.getValue() == 1;
+            boolean moralBoost = abilityPicker.getValue() == 1;
+            boolean jaskier = abilityPicker.getValue() == 2;
+            boolean revenge = abilityPicker.getValue() == 3;
+            int binding = abilityPicker.getValue() == 4 ? bindingPicker.getValue() : 0;
+            int damage = 0;
+            if (moralBoost) {
+                if (epic) {
+                    damage = dmgPicker.getValue() == 0 ? 8 : 10;
+                } else {
+                    switch (dmgPicker.getValue()) {
+                        case 0:
+                            damage = 1;
+                            break;
+                        case 1:
+                            damage = 6;
+                            break;
+                        case 2:
+                            damage = 10;
+                            break;
+                        case 3:
+                            damage = 12;
+                            break;
+                        case 4:
+                            damage = 14;
+                    }
+                }
+            } else {
+                if (epic) {
+                    switch (dmgPicker.getValue()) {
+                        case 1:
+                            damage = 7;
+                            break;
+                        case 2:
+                            damage = 8;
+                            break;
+                        case 3:
+                            damage = 10;
+                            break;
+                        case 4:
+                            damage = 11;
+                            break;
+                        case 5:
+                            damage = 15;
+                    }
+                } else {
+                    damage = dmgPicker.getValue();
+                }
+            }
+            Unit unit = new Unit(damage, epic, jaskier, revenge, binding, moralBoost);
+            for (int i = 0; i < numberPicker.getValue(); i++) {
+                row.addUnit(new Unit(unit));
+            }
+            playAddCardSound(epic, row.getType());
+            checkSidebarButtons();
+            popupWindow.dismiss();
+        });
+        popupView.findViewById(R.id.popup_add_card_cancel_button).setOnClickListener(view1 -> popupWindow.dismiss());
+
+        inflatePopup(view, popupView, false);
     }
 
     private void inflateCoinflipPopup(View view) {
@@ -868,294 +940,102 @@ public class MainActivity extends AppCompatActivity {
             }
 
             final ImageView copyButtonBackground = cardView.findViewById(R.id.copyButtonBackground);
-            cardView.findViewById(R.id.copyButton).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    boolean contained = copyUnits.contains(unit);
-                    ImageViewAnimatedChange(MainActivity.this, (ImageView) view, copyButtonBackground, contained ? R.drawable.icon_copy_grey : R.drawable.icon_copy);
-                    if (contained) {
-                        copyUnits.remove(unit);
-                    } else {
-                        copyUnits.add(unit);
-                    }
+            cardView.findViewById(R.id.copyButton).setOnClickListener(view1 -> {
+                boolean contained = copyUnits.contains(unit);
+                ImageViewAnimatedChange(MainActivity.this, (ImageView) view1, copyButtonBackground, contained ? R.drawable.icon_copy_grey : R.drawable.icon_copy);
+                if (contained) {
+                    copyUnits.remove(unit);
+                } else {
+                    copyUnits.add(unit);
                 }
             });
             final ImageView deleteButtonBackground = cardView.findViewById(R.id.deleteButtonBackground);
-            cardView.findViewById(R.id.deleteButton).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    boolean contained = deleteUnits.contains(unit);
-                    ImageViewAnimatedChange(MainActivity.this, (ImageView) view, deleteButtonBackground, contained ? R.drawable.icon_delete_grey : R.drawable.icon_delete);
-                    if (contained) {
-                        deleteUnits.remove(unit);
-                    } else {
-                        deleteUnits.add(unit);
-                    }
+            cardView.findViewById(R.id.deleteButton).setOnClickListener(view12 -> {
+                boolean contained = deleteUnits.contains(unit);
+                ImageViewAnimatedChange(MainActivity.this, (ImageView) view12, deleteButtonBackground, contained ? R.drawable.icon_delete_grey : R.drawable.icon_delete);
+                if (contained) {
+                    deleteUnits.remove(unit);
+                } else {
+                    deleteUnits.add(unit);
                 }
             });
             cardsList.addView(cardView);
         }
-        cardsList.findViewById(R.id.popup_cards_add).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                popupWindow.dismiss();
-                inflateAddCardPopup(row, view);
-            }
+        cardsList.findViewById(R.id.popup_cards_add).setOnClickListener(view13 -> {
+            popupWindow.dismiss();
+            inflateAddCardPopup(row, view13);
         });
         scrollView.addView(cardsList);
         ConstraintLayout buttonLayout = popupLayout.findViewById(R.id.popup_cards_button_view);
         popupLayout.removeAllViews();
         popupLayout.addView(scrollView);
-        buttonLayout.findViewById(R.id.popup_cards_cancel_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                copyUnits.clear();
-                deleteUnits.clear();
-                popupWindow.dismiss();
-            }
+        buttonLayout.findViewById(R.id.popup_cards_cancel_button).setOnClickListener(view14 -> {
+            copyUnits.clear();
+            deleteUnits.clear();
+            popupWindow.dismiss();
         });
-        buttonLayout.findViewById(R.id.popup_cards_save_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int revengeUnits = 0;
-                for (Unit unit : deleteUnits) {
-                    if (unit.isRevenge()) {
-                        revengeUnits++;
-                    }
-                    row.removeUnit(unit);
+        buttonLayout.findViewById(R.id.popup_cards_save_button).setOnClickListener(view15 -> {
+            int revengeUnits = 0;
+            for (Unit unit : deleteUnits) {
+                if (unit.isRevenge()) {
+                    revengeUnits++;
                 }
-                inflateRevengeDialog(revengeUnits);
-                boolean epic = false;
-                for (Unit unit : copyUnits) {
-                    row.addUnit(new Unit(unit));
-                    if (unit.isEpic()) {
-                        epic = true;
-                    }
-                }
-                if (copyUnits.size() > 0) {
-                    playAddCardSound(epic, row.getType());
-                } else if (deleteUnits.size() > 0 && sharedPreferences.getBoolean("sound_reset", true)) {
-                    playSound(R.raw.reset);
-                }
-                deleteUnits.clear();
-                copyUnits.clear();
-                checkSidebarButtons();
-                popupWindow.dismiss();
+                row.removeUnit(unit);
             }
+            inflateRevengeDialog(revengeUnits);
+            boolean epic = false;
+            for (Unit unit : copyUnits) {
+                row.addUnit(new Unit(unit));
+                if (unit.isEpic()) {
+                    epic = true;
+                }
+            }
+            if (copyUnits.size() > 0) {
+                playAddCardSound(epic, row.getType());
+            } else if (deleteUnits.size() > 0 && sharedPreferences.getBoolean("sound_reset", true)) {
+                playSound(R.raw.reset);
+            }
+            deleteUnits.clear();
+            copyUnits.clear();
+            checkSidebarButtons();
+            popupWindow.dismiss();
         });
         popupLayout.addView(buttonLayout);
         inflatePopup(view, popupLayout, false);
     }
 
-    private void inflateAddCardPopup(@NonNull final Row row, View view) {
-        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-        View popupView = inflater.inflate(R.layout.popup_add_card, (ViewGroup) getWindow().getDecorView(), false);
-        epicPicker = popupView.findViewById(R.id.popup_add_card_epic_picker);
-        dmgPicker = popupView.findViewById(R.id.popup_add_card_dmg_picker);
-        abilityPicker = popupView.findViewById(R.id.popup_add_card_ability_picker);
-        bindingPickerLabel = popupView.findViewById(R.id.popup_add_card_binding_picker_label);
-        bindingPicker = popupView.findViewById(R.id.popup_add_card_binding_picker);
-        numberPicker = popupView.findViewById(R.id.popup_add_card_number_picker);
-        epicPicker.setMinValue(0);
-        epicPicker.setMaxValue(1);
-        epicPicker.setDisplayedValues(getResources().getStringArray(R.array.popup_add_card_epic_values));
-        dmgPicker.setMinValue(0);
-        dmgPicker.setMaxValue(18);
-        dmgPicker.setValue(5);
-        abilityPicker.setMinValue(0);
-        abilityPicker.setMaxValue(4);
-        abilityPicker.setDisplayedValues(getResources().getStringArray(R.array.popup_add_card_ability_values));
-        bindingPicker.setMinValue(1);
-        bindingPicker.setMaxValue(3);
-        numberPicker.setMinValue(1);
-        numberPicker.setMaxValue(5);
-
-        epicPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-            @Override
-            public void onValueChange(NumberPicker numberPicker, int i, int i1) {
-                boolean epic = i1 == 1;
-                dmgPicker.setDisplayedValues(null);
-                dmgPicker.setMinValue(0);
-                dmgPicker.setMaxValue(epic ? 5 : 18);
-                dmgPicker.setValue(epic ? 3 : 5);
-                dmgPicker.setEnabled(epic);
-                if (epic) {
-                    dmgPicker.setDisplayedValues(getResources().getStringArray(R.array.popup_add_card_dmg_values_epic));
-
-                    abilityPicker.setMinValue(0);
-                    abilityPicker.setMaxValue(1);
-                    abilityPicker.setDisplayedValues(getResources().getStringArray(R.array.popup_add_card_ability_values_epic));
-
-                    bindingPicker.setVisibility(View.GONE);
-                    bindingPickerLabel.setVisibility(View.GONE);
-                } else {
-                    abilityPicker.setDisplayedValues(getResources().getStringArray(R.array.popup_add_card_ability_values));
-                    abilityPicker.setMinValue(0);
-                    abilityPicker.setMaxValue(4);
-                }
-                int ability = abilityPicker.getValue();
-                abilityPicker.setValue(ability == 1 ? ability : 0);
-                if (ability == 1) {
-                    dmgPicker.setMinValue(0);
-                    dmgPicker.setMaxValue(1);
-                    dmgPicker.setValue(0);
-                    dmgPicker.setDisplayedValues(getResources().getStringArray(i1 == 0 ? R.array.popup_add_card_dmg_values_moralboost_normal : R.array.popup_add_card_dmg_values_moralboost_epic));
-                }
-            }
-        });
-        abilityPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-            @Override
-            public void onValueChange(NumberPicker numberPicker, int i, int i1) {
-                switch (i) {
-                    case 1:
-                        boolean epic = !(epicPicker.getValue() == 0);
-                        dmgPicker.setDisplayedValues(null);
-                        dmgPicker.setMinValue(0);
-                        dmgPicker.setMaxValue(epic ? 4 : 18);
-                        dmgPicker.setValue(epic ? 3 : 5);
-                        if (epic) {
-                            dmgPicker.setDisplayedValues(getResources().getStringArray(R.array.popup_add_card_dmg_values_epic));
-                        }
-                        dmgPicker.setEnabled(true);
-                        break;
-                    case 2:
-                    case 3:
-                        dmgPicker.setEnabled(true);
-                        dmgPicker.setValue(5);
-                        break;
-                    case 4:
-                        bindingPicker.setVisibility(View.GONE);
-                        bindingPickerLabel.setVisibility(View.GONE);
-                }
-
-                switch (i1) {
-                    case 1:
-                        dmgPicker.setMinValue(0);
-                        boolean epic = !(epicPicker.getValue() == 0);
-                        dmgPicker.setMaxValue(epic ? 1 : 4);
-                        dmgPicker.setValue(1);
-                        dmgPicker.setDisplayedValues(getResources().getStringArray(epic ? R.array.popup_add_card_dmg_values_moralboost_epic : R.array.popup_add_card_dmg_values_moralboost_normal));
-                        break;
-                    case 2:
-                        dmgPicker.setValue(2);
-                        dmgPicker.setEnabled(false);
-                        break;
-                    case 3:
-                        dmgPicker.setValue(0);
-                        dmgPicker.setEnabled(false);
-                        break;
-                    case 4:
-                        bindingPicker.setVisibility(View.VISIBLE);
-                        bindingPickerLabel.setVisibility(View.VISIBLE);
-                        int binding = bindingPicker.getValue();
-                        List<Unit> bindingList = row.getBindingUnits(binding);
-                        Toast.makeText(MainActivity.this, getString(R.string.popUp_add_card_binding_count, binding, bindingList.size()), Toast.LENGTH_SHORT).show();
-                        if (bindingList.size() > 0) {
-                            dmgPicker.setValue(bindingList.get(0).getBaseAD());
-                            dmgPicker.setEnabled(false);
-                        }
-                }
-            }
-        });
-        bindingPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-            @Override
-            public void onValueChange(NumberPicker numberPicker, int i, final int i1) {
-                new Timer().schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (i1 == bindingPicker.getValue()) {
-                                    List<Unit> bindingList = row.getBindingUnits(i1);
-                                    Toast.makeText(MainActivity.this, getString(R.string.popUp_add_card_binding_count, i1, bindingList.size()), Toast.LENGTH_SHORT).show();
-                                    if (bindingList.size() > 0) {
-                                        dmgPicker.setValue(bindingList.get(0).getBaseAD());
-                                        dmgPicker.setEnabled(false);
-                                    } else {
-                                        dmgPicker.setEnabled(true);
-                                    }
-                                }
-                            }
+    private void changeTheme(final THEME theme) {
+        if (sharedPreferences.getInt("faction", THEME.SCOIATAEL.ordinal()) != theme.ordinal()) {
+            if (sharedPreferences.getBoolean("factionReset", false) && sharedPreferences.getBoolean("warnings", true) && resetButton.isEnabled()) {
+                AlertDialog.Builder builder = getAlertDialogBuilder();
+                builder.setTitle(R.string.alertDialog_reset_title)
+                        .setMessage(R.string.alertDialog_factionreset_msg)
+                        .setCancelable(false)
+                        .setPositiveButton(R.string.alertDialog_reset_positive, (dialogInterface, i) -> {
+                            resetAll(false);
+                            sharedPreferences.edit().putInt("faction", theme.ordinal()).apply();
+                            inflateFactionLayout(false);
+                            popupWindow.dismiss();
+                        })
+                        .setNegativeButton(R.string.alertDialog_factionreset_negative, (dialogInterface, i) -> {
+                            sharedPreferences.edit().putInt("faction", theme.ordinal()).apply();
+                            inflateFactionLayout(false);
+                            popupWindow.dismiss();
                         });
-                    }
-                }, 250);
-
-            }
-        });
-
-        popupView.findViewById(R.id.popup_add_card_save_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                boolean epic = epicPicker.getValue() == 1;
-                boolean moralBoost = abilityPicker.getValue() == 1;
-                boolean jaskier = abilityPicker.getValue() == 2;
-                boolean revenge = abilityPicker.getValue() == 3;
-                int binding = abilityPicker.getValue() == 4 ? bindingPicker.getValue() : 0;
-                int damage = 0;
-                if (moralBoost) {
-                    if (epic) {
-                        damage = dmgPicker.getValue() == 0 ? 8 : 10;
-                    } else {
-                        switch (dmgPicker.getValue()) {
-                            case 0:
-                                damage = 1;
-                                break;
-                            case 1:
-                                damage = 6;
-                                break;
-                            case 2:
-                                damage = 10;
-                                break;
-                            case 3:
-                                damage = 12;
-                                break;
-                            case 4:
-                                damage = 14;
-                        }
-                    }
-                } else {
-                    if (epic) {
-                        switch (dmgPicker.getValue()) {
-                            case 0:
-                                damage = 0;
-                                break;
-                            case 1:
-                                damage = 7;
-                                break;
-                            case 2:
-                                damage = 8;
-                                break;
-                            case 3:
-                                damage = 10;
-                                break;
-                            case 4:
-                                damage = 11;
-                                break;
-                            case 5:
-                                damage = 15;
-                        }
-                    } else {
-                        damage = dmgPicker.getValue();
-                    }
-                }
-                Unit unit = new Unit(damage, epic, jaskier, revenge, binding, moralBoost);
-                for (int i = 0; i < numberPicker.getValue(); i++) {
-                    row.addUnit(new Unit(unit));
-                }
-                playAddCardSound(epic, row.getType());
-                checkSidebarButtons();
+                builder.create().show();
+            } else if (sharedPreferences.getBoolean("factionReset", false) && resetButton.isEnabled()) {
+                resetAll(false);
+                sharedPreferences.edit().putInt("faction", theme.ordinal()).apply();
+                inflateFactionLayout(false);
+                popupWindow.dismiss();
+            } else {
+                sharedPreferences.edit().putInt("faction", theme.ordinal()).apply();
+                inflateFactionLayout(false);
                 popupWindow.dismiss();
             }
-        });
-        popupView.findViewById(R.id.popup_add_card_cancel_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                popupWindow.dismiss();
-            }
-        });
-
-        inflatePopup(view, popupView, false);
+        } else {
+            popupWindow.dismiss();
+        }
     }
 
     private void playAddCardSound(boolean epic, int rowType) {
@@ -1180,12 +1060,7 @@ public class MainActivity extends AppCompatActivity {
     private void playSound(@RawRes int soundResourceId) {
         if (sharedPreferences.getBoolean("sound_all", true)) {
             final int soundId = soundPool.load(getApplicationContext(), soundResourceId, 1);
-            soundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
-                @Override
-                public void onLoadComplete(@NonNull SoundPool soundPool, int i, int i1) {
-                    soundPool.play(soundId, 1, 1, 1, 0, 1);
-                }
-            });
+            soundPool.setOnLoadCompleteListener((soundPool, i, i1) -> soundPool.play(soundId, 1, 1, 1, 0, 1));
         }
     }
 
@@ -1200,13 +1075,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateBackground() {
-        int backgroundKey;
-        try { //TODO: Entfernen, wenn alle das letzte Update haben
-            backgroundKey = Integer.parseInt(Objects.requireNonNull(sharedPreferences.getString("design", "0")));
-        }catch (RuntimeException e){
-            e.printStackTrace();
-            backgroundKey = 0;
-        }
+        int backgroundKey = Integer.parseInt(Objects.requireNonNull(sharedPreferences.getString("design", "0")));
         int[] imageResIds = {R.drawable.background_geralt, R.drawable.background_ciri, R.drawable.background_jaskier, R.drawable.background_yennefer, R.drawable.background_eredin};
         backgroundImageView.setImageResource(backgroundKey > 1 ? imageResIds[backgroundKey - 1] : imageResIds[0]);
         backgroundImageView.setVisibility(backgroundKey == 0 ? View.GONE : View.VISIBLE);
@@ -1264,44 +1133,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void changeTheme(final int theme) {
-        if (sharedPreferences.getInt("fraction", THEME_SCOIATAEL) != theme) {
-            if (sharedPreferences.getBoolean("fractionReset", false) && sharedPreferences.getBoolean("warnings", true) && resetButton.isEnabled()) {
-                AlertDialog.Builder builder = getAlertDialogBuilder();
-                builder.setTitle(R.string.alertDialog_reset_title)
-                        .setMessage(R.string.alertDialog_fractionreset_msg)
-                        .setCancelable(false)
-                        .setPositiveButton(R.string.alertDialog_reset_positive, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                resetAll(false);
-                                sharedPreferences.edit().putInt("fraction", theme).apply();
-                                inflateFractionLayout(false);
-                                popupWindow.dismiss();
-                            }
-                        })
-                        .setNegativeButton(R.string.alertDialog_fractionreset_negative, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                sharedPreferences.edit().putInt("fraction", theme).apply();
-                                inflateFractionLayout(false);
-                                popupWindow.dismiss();
-                            }
-                        });
-                builder.create().show();
-            } else if (sharedPreferences.getBoolean("fractionReset", false) && resetButton.isEnabled()) {
-                resetAll(false);
-                sharedPreferences.edit().putInt("fraction", theme).apply();
-                inflateFractionLayout(false);
-                popupWindow.dismiss();
-            } else {
-                sharedPreferences.edit().putInt("fraction", theme).apply();
-                inflateFractionLayout(false);
-                popupWindow.dismiss();
-            }
-        } else {
-            popupWindow.dismiss();
-        }
+    public enum THEME {
+        MONSTER, NILFGAARD, NORTHERN_KINGDOMS, SCOIATAEL
     }
 
     @Override
