@@ -26,7 +26,7 @@ public class SettingsActivity extends AppCompatActivity implements
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        setTheme(sharedPreferences.getInt("fraction", MainActivity.THEME_SCOIATAEL));
+        setTheme(sharedPreferences.getInt("faction", MainActivity.THEME.SCOIATAEL.ordinal()));
         setContentView(R.layout.activity_settings);
         setSupportActionBar(findViewById(R.id.settingsToolbar));
         MainActivity.hideSystemUI(getWindow());
@@ -53,7 +53,7 @@ public class SettingsActivity extends AppCompatActivity implements
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        // Save current activity title so we can set it again after a configuration change
+        // Save the current activity title, so we can set it again after a configuration change
         outState.putCharSequence(TITLE_TAG, getTitle());
     }
 
@@ -68,7 +68,7 @@ public class SettingsActivity extends AppCompatActivity implements
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            onBackPressed();
+            getOnBackPressedDispatcher().onBackPressed();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -81,7 +81,6 @@ public class SettingsActivity extends AppCompatActivity implements
 
         Fragment fragment = Objects.equals(pref.getFragment(), "com.peternaggschga.gwent.SettingsActivity$SoundFragment") ? getSupportFragmentManager().getFragmentFactory().instantiate(getClassLoader(), SoundFragment.class.getName()) : getSupportFragmentManager().getFragmentFactory().instantiate(getClassLoader(), RuleHeaderFragment.class.getName());
         fragment.setArguments(args);
-        fragment.setTargetFragment(caller, 0);
         // Replace the existing Fragment with the new Fragment
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.settingsFrameLayout, fragment)
@@ -137,43 +136,43 @@ public class SettingsActivity extends AppCompatActivity implements
             Preference rulesGeneral = findPreference("rules_general");
             assert rulesGeneral != null;
             rulesGeneral.setOnPreferenceClickListener(preference -> {
-                startActivity(new Intent(getContext(), RuleActivity.class).putExtra(RuleActivity.INTENT_EXTRA_TAG, RuleActivity.PREFERENCE_KEY_GENERAL));
+                startActivity(new Intent(getContext(), RuleActivity.class).putExtra(RuleActivity.INTENT_EXTRA_TAG, RuleActivity.RULES.GENERAL));
                 return true;
             });
             Preference rulesCourse = findPreference("rules_course");
             assert rulesCourse != null;
             rulesCourse.setOnPreferenceClickListener(preference -> {
-                startActivity(new Intent(getContext(), RuleActivity.class).putExtra(RuleActivity.INTENT_EXTRA_TAG, RuleActivity.PREFERENCE_KEY_COURSE));
+                startActivity(new Intent(getContext(), RuleActivity.class).putExtra(RuleActivity.INTENT_EXTRA_TAG, RuleActivity.RULES.COURSE));
                 return true;
             });
-            Preference rulesFractions = findPreference("rules_fractions");
-            assert rulesFractions != null;
-            rulesFractions.setOnPreferenceClickListener(preference -> {
-                startActivity(new Intent(getContext(), RuleActivity.class).putExtra(RuleActivity.INTENT_EXTRA_TAG, RuleActivity.PREFERENCE_KEY_FRACTIONS));
+            Preference ruleFactions = findPreference("rules_factions");
+            assert ruleFactions != null;
+            ruleFactions.setOnPreferenceClickListener(preference -> {
+                startActivity(new Intent(getContext(), RuleActivity.class).putExtra(RuleActivity.INTENT_EXTRA_TAG, RuleActivity.RULES.FACTIONS));
                 return true;
             });
             Preference rulesCommander = findPreference("rules_commander");
             assert rulesCommander != null;
             rulesCommander.setOnPreferenceClickListener(preference -> {
-                startActivity(new Intent(getContext(), RuleActivity.class).putExtra(RuleActivity.INTENT_EXTRA_TAG, RuleActivity.PREFERENCE_KEY_COMMANDER));
+                startActivity(new Intent(getContext(), RuleActivity.class).putExtra(RuleActivity.INTENT_EXTRA_TAG, RuleActivity.RULES.COMMANDER));
                 return true;
             });
             Preference rulesCards = findPreference("rules_cards");
             assert rulesCards != null;
             rulesCards.setOnPreferenceClickListener(preference -> {
-                startActivity(new Intent(getContext(), RuleActivity.class).putExtra(RuleActivity.INTENT_EXTRA_TAG, RuleActivity.PREFERENCE_KEY_CARDS));
+                startActivity(new Intent(getContext(), RuleActivity.class).putExtra(RuleActivity.INTENT_EXTRA_TAG, RuleActivity.RULES.CARDS));
                 return true;
             });
-            Preference rulesCardAbilities = findPreference("rules_card_abilities");
-            assert rulesCardAbilities != null;
-            rulesCardAbilities.setOnPreferenceClickListener(preference -> {
-                startActivity(new Intent(getContext(), RuleActivity.class).putExtra(RuleActivity.INTENT_EXTRA_TAG, RuleActivity.PREFERENCE_KEY_CARD_ABILITIES));
+            Preference ruleCardAbilities = findPreference("rules_card_abilities");
+            assert ruleCardAbilities != null;
+            ruleCardAbilities.setOnPreferenceClickListener(preference -> {
+                startActivity(new Intent(getContext(), RuleActivity.class).putExtra(RuleActivity.INTENT_EXTRA_TAG, RuleActivity.RULES.CARD_ABILITIES));
                 return true;
             });
             Preference rulesSpecialCards = findPreference("rules_special_cards");
             assert rulesSpecialCards != null;
             rulesSpecialCards.setOnPreferenceClickListener(preference -> {
-                startActivity(new Intent(getContext(), RuleActivity.class).putExtra(RuleActivity.INTENT_EXTRA_TAG, RuleActivity.PREFERENCE_KEY_SPECIAL_CARDS));
+                startActivity(new Intent(getContext(), RuleActivity.class).putExtra(RuleActivity.INTENT_EXTRA_TAG, RuleActivity.RULES.SPECIAL_CARDS));
                 return true;
             });
         }

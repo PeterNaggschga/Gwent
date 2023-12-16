@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Gwint</string>
-    <string name="app_description">Eine App, die es erleichtert, Gwint mit analogen Karten zu spielen.</string>
+    <string name="app_description">Eine App, die es ermöglicht, das Kartenspiel Gwint aus The Witcher 3 mit analogen Karten zu spielen.</string>
     <string name="settings_title">Einstellungen</string>
 
-    <string name="fraction_nilfgaard">Kaiserreich Nilfgaard</string>
-    <string name="fraction_northern_realms">Nördliche Königreiche</string>
+    <string name="faction_nilfgaard">Kaiserreich Nilfgaard</string>
+    <string name="faction_northern_kingdoms">Nördliche Königreiche</string>
 
-    <string name="popUp_cards_add">Eine Karte hinzufügen</string>
+    <string name="popUp_cards_add">Karte hinzufügen</string>
     <string name="popUp_cards_save">Speichern</string>
     <string name="popUp_add_card_label_dmg">Stärke</string>
     <string name="popUp_add_card_label_ability">Fähigkeit</string>
@@ -16,9 +16,9 @@
 
     <string name="popUp_coin_normal_win">Du beginnst.</string>
     <string name="popUp_coin_normal_lose">Dein Gegner beginnt.</string>
-    <string name="popUp_coin_terry_1">Terry Jeffords hat die Münze gefalten!</string>
+    <string name="popUp_coin_terry_1">Terry Jeffords hat die Münze verbogen!</string>
     <string name="popUp_coin_stewie_1">Chris Griffin hat die Münze gegessen!</string>
-    <string name="popUp_coin_vin">Vin hat Stahl verbrannt und die Münze weg gedrückt!</string>
+    <string name="popUp_coin_vin">Vin hat Stahl verbrannt und die Münze weggedrückt!</string>
 
     <string name="unit_toString_melee">Nahkampfeinheit</string>
     <string name="unit_toString_range">Fernkampfeinheit</string>
@@ -31,12 +31,12 @@
 
     <string name="alertDialog_reset_title">Spielfeld zurücksetzen</string>
     <string name="alertDialog_reset_msg">Willst du wirklich das gesamte Spielfeld zurücksetzen?</string>
-    <string name="alertDialog_fractionreset_msg">Du hast \"Zurücksetzen bei Fraktionswechsel\" aktiviert. Soll das Spielfeld wirklich zurückgesetzt werden?</string>
-    <string name="alertDialog_reset_checkbox">Die Fähigkeit der Monsterfraktion auslösen (du behältst eine zufällig ausgewählte Einheit)</string>
-    <string name="alertDialog_fractionreset_monster_toast_keep">Du behältst: %1$s</string>
-    <string name="alertDialog_fractionreset_monster_toast_nokeep">Du behältst keine Einheit!</string>
+    <string name="alertDialog_factionreset_msg">Du hast \"Zurücksetzen bei Fraktionswechsel\" aktiviert. Soll das Spielfeld wirklich zurückgesetzt werden?</string>
+    <string name="alertDialog_reset_checkbox">Die Fähigkeit der Monsterfraktion auslösen (du behältst eine zufällige Einheit)</string>
+    <string name="alertDialog_factionreset_monster_toast_keep">Du behältst: %1$s</string>
+    <string name="alertDialog_factionreset_monster_toast_nokeep">Du behältst keine Einheit!</string>
     <string name="alertDialog_reset_positive">Zurücksetzen</string>
-    <string name="alertDialog_fractionreset_negative">Nicht zurücksetzen</string>
+    <string name="alertDialog_factionreset_negative">Nicht zurücksetzen</string>
 
     <string name="alertDialog_monster_title">Fähigkeit auslösen</string>
     <string name="alertDialog_monster_msg">Willst du die Fähigkeit der Monsterfraktion auslösen? Du kannst eine zufällig ausgewählte Einheit behalten.</string>
@@ -50,8 +50,8 @@
     <string name="preference_design">Hintergrundbild</string>
     <string name="preference_warnings_title">Warnungen</string>
     <string name="preference_warnings_desc">Legt fest, ob beim Zurücksetzen und Verbrennen eine Warnung erscheinen soll.</string>
-    <string name="preference_fraction_reset_title">Zurücksetzen bei Fraktionswechsel</string>
-    <string name="preference_fraction_reset_desc">Legt fest, ob das Spielfeld beim Fraktionswechsel automatisch zurückgesetzt werden soll.</string>
+    <string name="preference_faction_reset_title">Zurücksetzen bei Fraktionswechsel</string>
+    <string name="preference_faction_reset_desc">Legt fest, ob das Spielfeld beim Fraktionswechsel automatisch zurückgesetzt werden soll.</string>
     <string name="preference_unit_string_title">Kartenbeschreibung</string>
     <string name="preference_unit_string_desc">Legt fest, welche Daten bei der Kartenbeschreibung (zum Beispiel beim Verbrennen) angezeigt werden.</string>
     <string name="preference_unit_string_alert">Beispiel: %1$s</string>
@@ -65,12 +65,12 @@
     <string name="preference_sounds_burn">Verbrennen</string>
     <string name="preference_sounds_coin">Münzwurf</string>
 
-    <string name="preference_info_onboardingSupport">App-Einführung</string>
+    <string name="preference_info_onboardingSupport">Einführung</string>
 
     <string name="preference_rules_header">Spielregeln</string>
     <string name="preference_rules_general_title">Allgemein</string>
     <string name="preference_rules_course_title">Spielablauf</string>
-    <string name="preference_rules_fractions_title">Fraktionen</string>
+    <string name="preference_rules_factions_title">Fraktionen</string>
     <string name="preference_rules_commander_title">Anführer</string>
     <string name="preference_rules_cards_title">Kartensatz und Spielfeld</string>
     <string name="preference_rules_card_abilities_title">Kartenfähigkeiten</string>
@@ -81,10 +81,10 @@
 
     <string name="content_description_background_resource">Hintergrundelement</string>
     <string name="content_description_activity_main_background">Hintergrundbild</string>
-    <string name="content_description_activity_main_point_ball">Gesamtpunktanzeige</string>
-    <string name="content_description_activity_main_fraction_button">Fraktionslogo</string>
-    <string name="content_description_activity_main_weather_button">Sonnen-Icon</string>
-    <string name="content_description_activity_main_burn_button">Totenkopf-Icon</string>
+    <string name="content_description_activity_main_point_ball">Gesamtpunktzahl</string>
+    <string name="content_description_activity_main_faction_button">Fraktionslogo</string>
+    <string name="content_description_activity_main_weather_button">Gutes-Wetter-Icon</string>
+    <string name="content_description_activity_main_burn_button">Verbrennen-Icon</string>
     <string name="content_description_activity_main_coin_button">Münzen-Icon</string>
     <string name="content_description_activity_main_settings_button">Einstellungs-Icon</string>
     <string name="content_description_card_ability">Fähigkeits-Icon</string>
@@ -98,10 +98,10 @@
     <string name="content_description_coinpopup_terry_2">Jake Peralta (Andy Samberg), der erstaunt etwas sagt</string>
     <string name="content_description_coinpopup_terry_3">Terry Jeffords (Terry Crews), der wütend, mit erhobenem Finger etwas sagt und dabei von Charles Boyle (Joe Lo Truglio) erschrocken angesehen wird</string>
     <string name="content_description_coinpopup_vin">Ein Bild von Vin aus der Mistborn-Reihe von Brandon Sanderson</string>
-    <string name="content_description_fractionpopup_monster">Karte mit Symbol der Monsterfraktion</string>
-    <string name="content_description_fractionpopup_nilfgaard">Karte mit Symbol der Kaiserreich Nilfgaard-Fraktion</string>
-    <string name="content_description_fractionpopup_northern_realms">Karte mit Symbol der Nördliche Königreiche-Fraktion</string>
-    <string name="content_description_fractionpopup_scoiatael">Karte mit Symbol der Scoia\'taelfraktion</string>
+    <string name="content_description_factionpopup_monster">Karte mit Symbol der Monsterfraktion</string>
+    <string name="content_description_factionpopup_nilfgaard">Karte mit Symbol der Kaiserreich-Nilfgaard-Fraktion</string>
+    <string name="content_description_factionpopup_northern_kingdoms">Karte mit Symbol der Nördliche-Königreiche-Fraktion</string>
+    <string name="content_description_factionpopup_scoiatael">Karte mit Symbol der Scoia\'taelfraktion</string>
     <string name="content_description_row_pointball">Punktanzeige der Angriffsreihe</string>
     <string name="content_description_row_weather">Wetteranzeige der Angriffsreihe</string>
     <string name="content_description_row_horn">Hornanzeige der Angriffsreihe</string>
@@ -110,17 +110,17 @@
     <string name="content_description_onboardingSupport_indicator">Punkt, der den Fortschritt der Einführung zeigt</string>
     <string name="content_description_onboardingSupport_next">Pfeil, der zum nächsten Schritt führt</string>
 
-    <string name="rules_general_text"><![CDATA[<p>Gwint ist ein altes Kartenspiel für zwei Spieler, das vor allem bei Zwergen sehr beliebt ist. Es stellt die Konfrontation zweier Armeen in einer Schlacht nach. Die Spieler sind die Generäle und die Karten ihre Streitkräfte. Jeder Gwintspieler verwendet seinen eigenen, individuell zusammengestellten Kartensatz. Für jede der vier Fraktionen lässt sich ein eigenes Deck erstellen: Monster, Kaiserreich Nilfgaard, Nördliche Königreiche und Scoia\'tael. Jede Fraktion enthält einige einzigartige Karten, die eine unterschiedliche Spielweise ermöglichen. Des Weiteren gibt es eine Anzahl Neutraler Karten, die in allen vier Fraktionen eingesetzt werden können. Ziel des Spiels ist es, den Gegner zu besiegen, indem man in zwei von drei Runden mehr Stärkepunkte ausspielt als der Gegner.</p>]]></string>
+    <string name="rules_general_text"><![CDATA[<p>Gwint ist ein altes Kartenspiel für zwei Spieler, das vor allem bei Zwergen beliebt ist. Es stellt die Konfrontation zweier Armeen in einer Schlacht nach. Die Spieler sind die Generäle und die Karten ihre Streitkräfte. Jeder Gwintspieler verwendet seinen eigenen, individuell zusammengestellten Kartensatz. Für jede der vier Fraktionen lässt sich ein eigenes Deck erstellen: Monster, Kaiserreich Nilfgaard, Nördliche Königreiche und Scoia\'tael. Jede Fraktion enthält einige einzigartige Karten, die eine unterschiedliche Spielweise ermöglichen. Des Weiteren gibt es eine Anzahl neutraler Karten, die in allen vier Fraktionen eingesetzt werden können. Ziel des Spiels ist es, den Gegner zu besiegen, indem man in zwei von drei Runden eine höhere Punktzahl als der Gegner erreicht.</p>]]></string>
     <string name="rules_course_text"><![CDATA[<p>Zu Beginn der ersten Runde ziehen beide Spieler jeweils 10 Karten aus ihrem Deck. Danach dürfen zwei Karten abgelegt und neu gezogen werden. Dieser Schritt ist optional, die abgelegten Karten werden wieder in den Nachziehstapel eingemischt. Der Spieler, der den ersten Zug macht, wird per Münzwurf ermittelt.<br/>
     Die Spieler legen abwechselnd Karten. Es besteht Legezwang! Wenn ein Spieler keine Karte ausspielen möchte, muss er passen und darf den Rest der Runde keinen Spielzug mehr durchführen. Daraufhin kann der Gegner noch weitere Karten ausspielen, bis er selbst passt. Sollte ein Spieler keine Handkarten mehr haben, muss er ebenfalls passen.<br />
     Wenn beide Spieler gepasst haben, ist die Runde beendet und der Gewinner wird anhand der Gesamtstärke der Einheiten ermittelt. Sollte die Gesamtstärke gleich sein, zählt die Runde als Sieg für beide Spieler. Nun werden alle Karten vom Spielfeld auf den Ablagestapel gelegt. Die Handkarten werden in der nächsten Runde weiter verwendet, es werden keine neuen Karten gezogen. Der Gewinner hat in der nächsten Runde den ersten Zug. Bei Unentschieden beginnt derjenige, der in der vergangenen Runde den zweiten Zug hatte. Ziel des Spiels ist es, zwei Runden zu gewinnen.</p>
     ]]></string>
-    <string name="rules_fractions_text"><![CDATA[<p>
+    <string name="rules_factions_text"><![CDATA[<p>
     Bei Gwint unterscheidet man vier Fraktionen: Monster, Kaiserreich Nilfgaard, Nördliche Königreiche und die Scoia\'tael. Jede dieser Fraktionen besitzt einzigartige Karten, Anführer und jeweils einen bestimmten Fraktionsvorteil. Zusätzlich gibt es noch neutrale Einheiten, welche keiner Fraktion zugehörig sind und somit in jedem Deck auftauchen können.</p>
     Die Monster werden vom König der Wilden Jagd Eredin Bréacc Glas, auch Sperber genannt, angeführt. Ihr Vorteil ist die Eisenhaut, welche es ermöglicht, dass nach jeder Runde eine zufällige Einheit auf dem Feld verbleibt.<br />
     Emhyr var Emreis, der sich auch „Die Weiße Flamme, Die Auf den Grabhügeln Der Feinde tanzt“ nennt, ist Kaiser von Nilfgaard, dessen Stärke der Verrat ist. Dieser ermöglicht es, dass Spieler mit einem Nilfgaard-Deck jede Runde gewinnen, die sonst als Unentschieden enden würde.<br />
-    Den expandierenden Nilfgaardern stellen sich die Nördlichen Königreiche unter Foltest, König Temeriens, entgegen. Diese erhalten nach einer gewonnen Runde eine Verstärkung, dürfen also eine Karte vom Nachziehstapel ziehen.<br />
-    In ihrem Kampf versuchen die Königreiche, Anderlinge zu dezimieren, darunter die Scoia\'tael, welche als nicht-menschliche Rebellen gegen die Repressionen aufbegehren und sich dafür den Hinterhalt zu Nutze machen: Die Scoia\'tael können in der ersten Runde entscheiden, wer den ersten Zug macht. Sie werden von der Elfin Francesca Findabair angeführt, die auch als Enid an Gleanna (Gänseblümchen des Tals) bekannt ist.
+    Den expandierenden Nilfgaardern stellen sich die Nördlichen Königreiche unter Foltest, König Temeriens, entgegen. Diese erhalten nach einer gewonnenen Runde eine Verstärkung, dürfen also eine Karte vom Nachziehstapel ziehen.<br />
+    In ihrem Kampf versuchen die Königreiche, Anderlinge zu dezimieren, darunter die Scoia\'tael, welche als nicht-menschliche Rebellen gegen die Repressionen aufbegehren und sich dafür den Hinterhalt zunutze machen: Die Scoia\'tael können in der ersten Runde entscheiden, wer den ersten Zug macht. Sie werden von der Elfin Francesca Findabair angeführt, die auch als Enid an Gleanna (Gänseblümchen des Tals) bekannt ist.
     ]]></string>
     <string name="rules_commander_text"><![CDATA[<p>
     <p>Jede Fraktion besitzt bestimmte Anführer mit unterschiedlichen Fähigkeiten. Diese werden hier aufgezählt.</p>
@@ -178,7 +178,7 @@
     ]]></string>
     <string name="onboarding_page1"><![CDATA[
     <p>Danke, dass du „Gwint - Eine Rechenhilfe“ installiert hast! Bitte beachte, dass diese App nur dazu da ist, dich bei einem Spiel mit analogen Gwintkarten zu unterstützen, indem sie deinen Punktestand errechnet. Du kannst in dieser App nicht gegen KI-Gegner oder ohne analoge Gwintkarten spielen!</p>
-    <p>Also falls du es noch nicht getan hast: Drucke dir einen Satz Gwintkarten aus und suche dir einen Gegner, der das selbe tut (ihr braucht beide diese App)!</p>
+    <p>Also falls du es noch nicht getan hast: Drucke dir einen Satz Gwintkarten aus (<a href="https://github.com/PeterNaggschga/Gwent#overview">Anleitung hier</a>) und suche dir einen Gegner, der dasselbe tut (ihr braucht beide diese App)!</p>
     ]]></string>
     <string name="onboarding_page2"><![CDATA[
     <p>Dein Spielfeld besteht aus drei Angriffsreihen: Nahkampfreihe, Fernkampfreihe und Belagerungsreihe (von links nach rechts). In diese Reihen werden die Einheitenkarten beim Ausspielen gelegt. Jede Angriffsreihe kann außerdem durch eine bestimmte Wetterlage geschwächt oder durch ein Horn des Kommandanten verstärkt werden.</p>
@@ -188,10 +188,10 @@
     <p>1: Die Gesamtstärke aller Einheiten in der Reihe.</p>
     <p>2: Das aktuelle Wetter (kann durch antippen geändert werden).</p>
     <p>3: Die Verstärkung durch ein Horn des Kommandanten (kann durch antippen geändert werden).</p>
-    <p>4: Die Anzahl der Einheiten in dieser Reihe (durch tippen können Einheiten hinzugefügt oder entfernt werden).</p>
+    <p>4: Die Anzahl der Einheiten in dieser Reihe (durch Tippen können Einheiten hinzugefügt oder entfernt werden).</p>
     ]]></string>
     <string name="onboarding_page4"><![CDATA[
-    <p>Neben deinem eigentlichen Spielfeld gibt es an der Seite einige Schaltflächen mit weiteren nützlichen Funktionen:</p>
+    <p>Neben deinem eigentlichen Spielfeld gibt es an der Seite ein Menü mit weiteren nützlichen Funktionen:</p>
     <p>1: Gesamtstärke aller Einheiten auf dem Spielfeld</p>
     <p>2: Fraktion ändern</p>
     <p>3: Spielfeld zurücksetzen</p>
@@ -202,9 +202,9 @@
     ]]></string>
     <string name="onboarding_page5"><![CDATA[
     <p>Weitere Informationen zum Spiel und seinen Regeln findest du in den Einstellungen. Dort kannst du diese Tour auch wiederholen!</p>
-    <p>Doch jetzt erstmal: Viel Spaß mit analogem Gwint! Über Verbesserungsvorschläge, Fehlermeldungen und sonstiges Feedback freue ich mich sehr, nutze dazu gerne den Google Play Store!</p>
+    <p>Doch jetzt erstmal: viel Spaß mit analogem Gwint! Über Verbesserungsvorschläge, Fehlermeldungen und sonstiges Feedback freue ich mich sehr, nutze dazu gerne den <a href="https://play.google.com/store/apps/details?id=com.peternaggschga.gwint">Google Play Store</a> oder <a href="https://github.com/PeterNaggschga/Gwent/issues/new/choose">GitHub</a>!</p>
     ]]></string>
-    <string name="fraction_monster">Monster</string>
+    <string name="faction_monster">Monster</string>
     <string name="array_design_jaskier">Rittersporn</string>
     <string name="array_design_default">Standard</string>
     <string name="array_design_geralt">Geralt von Riva</string>
