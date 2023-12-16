@@ -206,7 +206,7 @@
     ]]></string>
     <string name="onboarding_page1"><![CDATA[
     <p>Thanks for installing \"Gwent - A Calculator\"! Please note that this app is made to support you in playing Gwent using analog cards by calculating your points. This app does not allow you to play Gwent against AI or without analog cards!</p>
-    <p>So if you didn\'t do so yet: Print out a deck of Gwent cards and find an opponent who does the same (both of you need to install this app).</p>
+    <p>So if you didn\'t do so yet: Print out a deck of Gwent cards (<a href="https://github.com/PeterNaggschga/Gwent#overview">guidance here</a>) and find an opponent who does the same (both of you need to install this app).</p>
     ]]></string>
     <string name="onboarding_page2"><![CDATA[
     <p>Your game board consists of three combat rows: Close combat, Ranged combat and Siege row
@@ -233,7 +233,7 @@
     ]]></string>
     <string name="onboarding_page5"><![CDATA[
     <p>More information on Gwent and its rules can be found in the settings. There you can repeat this introduction too!</p>
-    <p>But first: Have fun with analog Gwent! Please use the Google Play Store to share improvement suggestions, bugs and other feedback with me!</p>
+    <p>But first: Have fun with analog Gwent! Please use the <a href="https://play.google.com/store/apps/details?id=com.peternaggschga.gwint">Google Play Store</a> or <a href="https://github.com/PeterNaggschga/Gwent/issues/new/choose">GitHub</a> to share improvement suggestions, bugs and other feedback with me!</p>
     ]]></string>
     <string name="settings_title">Settings</string>
 </resources>

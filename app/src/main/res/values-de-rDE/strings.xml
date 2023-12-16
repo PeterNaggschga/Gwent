@@ -178,8 +178,8 @@
     ]]></string>
     <string name="onboarding_page1"><![CDATA[
     <p>Danke, dass du „Gwint - Eine Rechenhilfe“ installiert hast! Bitte beachte, dass diese App nur dazu da ist, dich bei einem Spiel mit analogen Gwintkarten zu unterstützen, indem sie deinen Punktestand errechnet. Du kannst in dieser App nicht gegen KI-Gegner oder ohne analoge Gwintkarten spielen!</p>
-    <p>Also falls du es noch nicht getan hast: Drucke dir einen Satz Gwintkarten aus und suche dir einen Gegner, der dasselbe tut (ihr braucht beide diese App)!</p>
-    ]]></string> <!-- TODO: Link zu Github-Page -->
+    <p>Also falls du es noch nicht getan hast: Drucke dir einen Satz Gwintkarten aus (<a href="https://github.com/PeterNaggschga/Gwent#overview">Anleitung hier</a>) und suche dir einen Gegner, der dasselbe tut (ihr braucht beide diese App)!</p>
+    ]]></string>
     <string name="onboarding_page2"><![CDATA[
     <p>Dein Spielfeld besteht aus drei Angriffsreihen: Nahkampfreihe, Fernkampfreihe und Belagerungsreihe (von links nach rechts). In diese Reihen werden die Einheitenkarten beim Ausspielen gelegt. Jede Angriffsreihe kann außerdem durch eine bestimmte Wetterlage geschwächt oder durch ein Horn des Kommandanten verstärkt werden.</p>
     ]]></string>
@@ -202,8 +202,8 @@
     ]]></string>
     <string name="onboarding_page5"><![CDATA[
     <p>Weitere Informationen zum Spiel und seinen Regeln findest du in den Einstellungen. Dort kannst du diese Tour auch wiederholen!</p>
-    <p>Doch jetzt erstmal: viel Spaß mit analogem Gwint! Über Verbesserungsvorschläge, Fehlermeldungen und sonstiges Feedback freue ich mich sehr, nutze dazu gerne den Google Play Store!</p>
-    ]]></string> <!-- TODO: Github anbieten -->
+    <p>Doch jetzt erstmal: viel Spaß mit analogem Gwint! Über Verbesserungsvorschläge, Fehlermeldungen und sonstiges Feedback freue ich mich sehr, nutze dazu gerne den <a href="https://play.google.com/store/apps/details?id=com.peternaggschga.gwint">Google Play Store</a> oder <a href="https://github.com/PeterNaggschga/Gwent/issues/new/choose">GitHub</a>!</p>
+    ]]></string>
     <string name="faction_monster">Monster</string>
     <string name="array_design_jaskier">Rittersporn</string>
     <string name="array_design_default">Standard</string>

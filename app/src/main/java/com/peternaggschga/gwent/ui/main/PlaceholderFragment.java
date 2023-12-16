@@ -2,6 +2,7 @@ package com.peternaggschga.gwent.ui.main;
 
 import android.os.Bundle;
 import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +44,7 @@ public class PlaceholderFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_onboarding_support, container, false);
         TextView textView = root.findViewById(R.id.onboarding_textView);
         textView.setText(Html.fromHtml(getString(stringIds[index - 1])));
+        textView.setMovementMethod(LinkMovementMethod.getInstance());
         ImageView imageView = root.findViewById(R.id.onboarding_imageView);
         imageView.setImageResource(imageIds[index - 1]);
         return root;
