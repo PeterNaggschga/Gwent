@@ -16,7 +16,7 @@
         tools:targetApi="o">
         <activity
             android:name=".OnboardingSupportActivity"
-            android:screenOrientation="sensorPortrait" />
+            android:screenOrientation="fullSensor" />
         <activity
             android:name=".MainActivity"
             android:screenOrientation="sensorLandscape"
