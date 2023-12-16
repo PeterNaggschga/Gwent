@@ -43,7 +43,7 @@ public class Row {
                 this.units.add(new Unit(unit));
             }
         } else {
-            throw new IllegalArgumentException("Rowtype must be 1, 2 or 3");
+            throw new IllegalArgumentException("Row-type must be 1, 2 or 3");
         }
 
     }
@@ -52,7 +52,7 @@ public class Row {
         if (type == ROW_MELEE || type == ROW_SIEGE || type == ROW_RANGE) {
             this.type = type;
         } else {
-            throw new IllegalArgumentException("Rowtype must be 1, 2 or 3");
+            throw new IllegalArgumentException("Row-type must be 1, 2 or 3");
         }
     }
 
