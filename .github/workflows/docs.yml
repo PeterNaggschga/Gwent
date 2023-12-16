@@ -28,7 +28,12 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
-      
+
+      - name: Install git-lfs
+        run: |
+          curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
+          sudo apt install git-lfs
+
       - name: Install Doxygen
         run: |
           sudo apt update
