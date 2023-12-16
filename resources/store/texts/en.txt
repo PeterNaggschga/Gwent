@@ -5,6 +5,8 @@ Short Description:
 An app that simplifies playing Gwent using analog cards.
 
 Description:
-With Gwent - A Calculator you are able to play the card game Gwent from The Witcher 3: Wild Hunt using analog cards. Print out some cards, download this app and start playing!
+With Gwent - A Calculator you are able to play the card game Gwent from The Witcher 3: Wild Hunt using analog cards. Print out some cards (guide below), download this app and start playing!
 Usually a computer, console or smartphone calculates your points, but with a real life opponent this calculation can get very complicated. Gwent - A Calculator is solving this problem!
 Simply add some cards to your combat row, change the weather or activate a Commander's Horn, and the app determines your points. Additionally, an extensive rulebook can be found in the app.
+
+To print the cards, you can follow the instructions given here: https://github.com/PeterNaggschga/Gwent#overview
