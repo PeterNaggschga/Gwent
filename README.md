@@ -1,9 +1,11 @@
 # Gwent - A Calculator
 
 ---
+
 1. [Overview](#overview)
 2. [Printing analog cards](#printing-analog-cards)
 3. [Documentation](#documentation)
+
 ---
 
 ## Overview
