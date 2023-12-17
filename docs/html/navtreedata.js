@@ -26,7 +26,6 @@ var NAVTREE =
 [
   [ "Gwent", "index.xhtml", [
     [ "Gwent - A Calculator", "index.xhtml", [
-      [ "3. <a href=\"#documentation\">Documentation</a>", "index.xhtml#autotoc_md2", null ],
       [ "Overview", "index.xhtml#autotoc_md3", null ],
       [ "Printing analog cards", "index.xhtml#autotoc_md5", null ],
       [ "Documentation", "index.xhtml#autotoc_md7", null ]
