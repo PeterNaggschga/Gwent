@@ -56,10 +56,10 @@ jobs:
           rm -r latex
         shell: bash
 
-      - name: Copy PDF to website
+      - name: Copy PDFs to website
         run: |
-          cd docs
-          cp documentation.pdf html/
+          cp docs/documentation.pdf docs/html/
+          cp resources/cards/printing-layout.pdf docs/html
         shell: bash
 
       - name: Push changes
