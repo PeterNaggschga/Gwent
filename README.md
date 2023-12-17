@@ -1,11 +1,9 @@
 # Gwent - A Calculator
 
 ---
-<!-- TOC -->
 1. [Overview](#overview)
 2. [Printing analog cards](#printing-analog-cards)
 3. [Documentation](#documentation)
-<!-- TOC -->
 ---
 
 ## Overview
@@ -23,13 +21,13 @@ To see what this looks like, please visit the [Play Store entry](https://play.go
 
 To actually play Gwent using *Gwent - A Calculator*, you need to print out analog Gwent cards. The card images can be downloaded from the following links:
 
-| Language |                                         `zip`                                         |                                            `tar`                                            |
-|:--------:|:-------------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------------------:|
-| English  | [gwent_cards_en.zip](https://peternaggschga.github.io/Gwent/cards/gwent_cards_en.zip) | [gwent_cards_en.tar.gz](https://peternaggschga.github.io/Gwent/cards/gwent_cards_en.tar.gz) |
-|  German  | [gwent_cards_de.zip](https://peternaggschga.github.io/Gwent/cards/gwent_cards_de.zip) | [gwent_cards_de.tar.gz](https://peternaggschga.github.io/Gwent/cards/gwent_cards_de.tar.gz) |
+| Language |                                                   `zip`                                                   |                                                      `tar`                                                      |
+|:--------:|:---------------------------------------------------------------------------------------------------------:|:---------------------------------------------------------------------------------------------------------------:|
+| English  | [gwent_cards_en.zip](https://github.com/PeterNaggschga/Gwent/releases/download/v1.2.5/gwent_cards_en.zip) | [gwent_cards_en.tar.gz](https://github.com/PeterNaggschga/Gwent/releases/download/v1.2.5/gwent_cards_en.tar.gz) |
+|  German  | [gwent_cards_de.zip](https://github.com/PeterNaggschga/Gwent/releases/download/v1.2.5/gwent_cards_de.zip) | [gwent_cards_de.tar.gz](https://github.com/PeterNaggschga/Gwent/releases/download/v1.2.5/gwent_cards_de.tar.gz) |
 
 Please be aware that the Skellige faction is only available in the german
-packages! [This PDF](https://peternaggschga.github.io/Gwent/cards/printing-layout.pdf) summarizes in
+packages! [This PDF](https://peternaggschga.github.io/Gwent/printing-layout.pdf) summarizes in
 which quantity you need to print which card.
 
 When you installed the app, printed out your deck and found a friend, you are ready to go and can
