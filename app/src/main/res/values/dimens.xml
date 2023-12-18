@@ -37,6 +37,7 @@
 
     <dimen name="alertDialog_checkBox_marginStart">40dp</dimen>
     <dimen name="alertDialog_checkBox_marginEnd">25dp</dimen>
+    <dimen name="alertDialog_checkBox_minHeight">48dp</dimen>
 
     <dimen name="rules_textSize">20sp</dimen>
 
