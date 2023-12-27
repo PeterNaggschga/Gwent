@@ -1,25 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/popup_cards_add"
+    <LinearLayout
+        android:id="@+id/cardListLayout"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_gravity="center_vertical"
-        android:layout_marginStart="@dimen/border_margin"
-        android:layout_marginTop="@dimen/border_margin"
-        android:layout_marginEnd="@dimen/border_margin"
-        android:layout_marginBottom="@dimen/border_margin"
-        android:width="@dimen/popUp_card_width"
-        android:height="@dimen/popUp_card_height"
-        android:background="@drawable/rectangle_add_card"
-        android:clickable="true"
-        android:focusable="true"
-        android:gravity="center"
-        android:text="@string/popUp_cards_add"
-        android:textColor="@color/color_add_card_text"
-        android:textSize="@dimen/popUp_card_textSize" />
-</LinearLayout>
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/popup_cards_add"
+            android:layout_width="@dimen/popUp_card_width"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="@dimen/border_margin"
+            android:background="@drawable/rectangle_add_card"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:text="@string/popUp_cards_add"
+            android:textColor="@color/color_add_card_text"
+            android:textSize="@dimen/popUp_card_textSize" />
+    </LinearLayout>
+</HorizontalScrollView>
