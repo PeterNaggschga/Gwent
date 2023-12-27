@@ -26,7 +26,8 @@
     <dimen name="popUp_card_image_diameter">50dp</dimen>
 
     <dimen name="popUp_add_card_label_textSize">21sp</dimen>
-    <dimen name="popUp_add_card_label_marginBottom">64dp</dimen>
+    <dimen name="popUp_add_card_label_marginBottom">24dp</dimen>
+    <dimen name="popUp_add_card_max_card_height">300dp</dimen>
 
     <dimen name="popUp_coin_diameter">90dp</dimen>
     <dimen name="popUp_coin_window_width">500dp</dimen>
