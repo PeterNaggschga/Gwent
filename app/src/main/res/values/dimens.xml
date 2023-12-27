@@ -8,7 +8,7 @@
 
     <dimen name="border_margin">8dp</dimen>
     <dimen name="margin_row_buttons">16dp</dimen>
-    <dimen name="margin_menu_buttons">16dp</dimen>
+    <dimen name="margin_menu_buttons">12dp</dimen>
 
     <dimen name="card_height">200dp</dimen>
     <dimen name="card_margin_top">32dp</dimen>
