@@ -1,141 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/pointBall"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="@dimen/point_circle_diameter"
         android:layout_height="@dimen/point_circle_diameter"
-        android:background="@null"
-        android:contentDescription="@string/content_description_row_pointball"
-        android:scaleType="fitXY"
-        android:src="?attr/point_ball_mipmap"
-        android:translationZ="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/backgroundPointBall"
-        android:layout_width="@dimen/point_circle_diameter"
-        android:layout_height="@dimen/point_circle_diameter"
-        android:contentDescription="@string/content_description_background_resource"
-        android:scaleType="fitXY"
-        android:translationZ="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/pointView"
-        android:layout_width="@dimen/point_circle_diameter"
-        android:layout_height="@dimen/point_circle_diameter"
-        android:gravity="center"
-        android:textColor="@color/circle_text"
-        android:textSize="@dimen/point_circle_textSize"
-        android:translationZ="20dp"
-        app:layout_constraintBottom_toBottomOf="@id/pointBall"
-        app:layout_constraintEnd_toEndOf="@id/pointBall"
-        app:layout_constraintStart_toStartOf="@id/pointBall"
-        app:layout_constraintTop_toTopOf="@id/pointBall" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="@dimen/point_circle_diameter_div2"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:translationZ="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <ImageView
+            android:id="@+id/pointBall"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:contentDescription="@string/content_description_row_pointball"
+            android:scaleType="fitXY"
+            android:src="?attr/point_ball_mipmap"
+            android:translationZ="5dp" />
 
-            <ImageView
-                android:id="@+id/weatherImage"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:contentDescription="@string/content_description_row_weather"
-                android:scaleType="centerCrop"
-                android:translationZ="5dp"
-                app:srcCompat="@drawable/good_weather" />
-
-            <ImageView
-                android:id="@+id/backgroundWeatherImage"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:contentDescription="@string/content_description_background_resource"
-                android:scaleType="centerCrop" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <ImageView
+            android:id="@+id/backgroundPointBall"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_height="match_parent"
+            android:contentDescription="@string/content_description_background_resource"
+            android:scaleType="fitXY" />
 
-            <ImageView
-                android:id="@+id/hornImage"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:contentDescription="@string/content_description_row_horn"
-                android:scaleType="centerCrop"
-                android:translationZ="5dp"
-                app:srcCompat="@drawable/horn_grey" />
-
-            <ImageView
-                android:id="@+id/backgroundHornImage"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:contentDescription="@string/content_description_background_resource"
-                android:scaleType="centerCrop" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <TextView
+            android:id="@+id/pointView"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textColor="@color/circle_text"
+            android:textSize="@dimen/point_circle_textSize"
+            android:translationZ="10dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <ImageView
-                android:id="@+id/cardsImage"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:contentDescription="@string/content_description_row_card"
-                android:scaleType="fitXY"
-                android:src="?attr/card_view_mipmap"
-                android:translationZ="5dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/weatherView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/point_circle_diameter_div2"
+        app:layout_constraintBottom_toTopOf="@id/hornView"
+        app:layout_constraintDimensionRatio="1048:674"
+        app:layout_constraintEnd_toEndOf="@id/cardView"
+        app:layout_constraintStart_toStartOf="@id/cardView"
+        app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
-                android:id="@+id/backgroundCardsImage"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:contentDescription="@string/content_description_background_resource"
-                android:scaleType="fitXY"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        <ImageView
+            android:id="@+id/weatherImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/content_description_row_weather"
+            android:scaleType="centerCrop"
+            android:translationZ="5dp"
+            app:srcCompat="@drawable/good_weather" />
 
-            <TextView
-                android:id="@+id/cardCountView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textColor="?attr/card_count_text_color"
-                android:textSize="@dimen/card_count_textSize"
-                android:translationZ="10dp"
-                app:layout_constraintBottom_toBottomOf="@id/cardsImage"
-                app:layout_constraintEnd_toEndOf="@+id/cardsImage"
-                app:layout_constraintStart_toStartOf="@+id/cardsImage"
-                app:layout_constraintTop_toTopOf="@+id/cardsImage" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </LinearLayout>
+        <ImageView
+            android:id="@+id/backgroundWeatherImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/content_description_background_resource"
+            android:scaleType="centerCrop" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/hornView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/cardView"
+        app:layout_constraintDimensionRatio="1048:674"
+        app:layout_constraintEnd_toEndOf="@id/cardView"
+        app:layout_constraintStart_toStartOf="@id/cardView"
+        app:layout_constraintTop_toBottomOf="@id/weatherView">
+
+        <ImageView
+            android:id="@+id/hornImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/content_description_row_horn"
+            android:scaleType="centerCrop"
+            android:translationZ="5dp"
+            app:srcCompat="@drawable/horn_grey" />
+
+        <ImageView
+            android:id="@+id/backgroundHornImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/content_description_background_resource"
+            android:scaleType="centerCrop" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cardView"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/hornView">
+
+        <ImageView
+            android:id="@+id/cardsImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/content_description_row_card"
+            android:src="?attr/card_view_mipmap"
+            android:translationZ="5dp" />
+
+        <ImageView
+            android:id="@+id/backgroundCardsImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/content_description_background_resource" />
+
+        <TextView
+            android:id="@+id/cardCountView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?attr/card_count_text_color"
+            android:textSize="@dimen/card_count_textSize"
+            android:translationZ="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
