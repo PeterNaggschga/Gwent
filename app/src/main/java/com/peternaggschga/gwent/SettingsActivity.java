@@ -26,10 +26,10 @@ public class SettingsActivity extends AppCompatActivity implements
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        setTheme(sharedPreferences.getInt("faction", MainActivity.THEME.SCOIATAEL.ordinal()));
+        setTheme(sharedPreferences.getInt("faction", OldMainActivity.THEME.SCOIATAEL.ordinal()));
         setContentView(R.layout.activity_settings);
         setSupportActionBar(findViewById(R.id.settingsToolbar));
-        MainActivity.hideSystemUI(getWindow());
+        OldMainActivity.hideSystemUI(getWindow());
 
         if (savedInstanceState == null) {
             getSupportFragmentManager()
@@ -98,7 +98,7 @@ public class SettingsActivity extends AppCompatActivity implements
             Preference design = findPreference("design");
             assert design != null;
             design.setOnPreferenceChangeListener((preference, newValue) -> {
-                MainActivity.hideSystemUI(requireActivity().getWindow());
+                OldMainActivity.hideSystemUI(requireActivity().getWindow());
                 return true;
             });
             Preference unitString = findPreference("unit_string");
