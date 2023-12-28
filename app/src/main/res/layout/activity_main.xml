@@ -30,7 +30,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="@dimen/border_margin"
+            android:layout_marginHorizontal="@dimen/border_margin"
+            android:layout_marginVertical="@dimen/activity_vertical_margin"
             android:layout_weight="1" />
 
         <include
@@ -39,7 +40,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="@dimen/border_margin"
+            android:layout_marginHorizontal="@dimen/border_margin"
+            android:layout_marginVertical="@dimen/activity_vertical_margin"
             android:layout_weight="1" />
 
         <include
@@ -48,7 +50,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginVertical="@dimen/border_margin"
+            android:layout_marginVertical="@dimen/activity_vertical_margin"
             android:layout_marginStart="@dimen/border_margin"
             android:layout_marginEnd="@dimen/margin_row_buttons"
             android:layout_weight="1" />
@@ -57,7 +59,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:layout_marginVertical="@dimen/border_margin"
+            android:layout_marginVertical="@dimen/activity_vertical_margin"
             android:layout_marginStart="@dimen/margin_row_buttons"
             android:layout_marginEnd="@dimen/border_margin"
             android:layout_weight="1">
