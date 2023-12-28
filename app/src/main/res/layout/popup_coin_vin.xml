@@ -4,32 +4,38 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="@dimen/popUp_coin_window_width"
-        android:layout_height="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/activity_vertical_margin"
         android:background="@drawable/rectangle_add_card"
-        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_max="@dimen/popUp_coin_window_max_height"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:layout_width="0dp"
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/border_margin"
-            android:layout_weight="1"
+            android:layout_margin="@dimen/activity_vertical_margin"
             android:contentDescription="@string/content_description_coinpopup_vin"
-            android:src="@drawable/vin" />
+            android:src="@drawable/vin"
+            app:layout_constraintEnd_toStartOf="@id/textView"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:layout_width="0dp"
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginEnd="@dimen/border_margin"
-            android:layout_weight="1"
+            android:layout_margin="@dimen/activity_horizontal_margin"
             android:gravity="center"
             android:text="@string/popUp_coin_vin"
             android:textColor="@color/color_coin_text"
-            android:textSize="@dimen/popUp_coin_title_textSize" />
-    </LinearLayout>
+            android:textSize="@dimen/popUp_coin_title_textSize"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/imageView"
+            app:layout_constraintWidth_max="@dimen/popUp_coin_textview_max_width" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

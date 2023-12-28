@@ -29,12 +29,11 @@
     <dimen name="popUp_add_card_label_marginBottom">24dp</dimen>
     <dimen name="popUp_add_card_max_card_height">300dp</dimen>
 
+    <dimen name="popUp_coin_textview_max_width">275dp</dimen>
     <dimen name="popUp_coin_diameter">90dp</dimen>
-    <dimen name="popUp_coin_window_width">500dp</dimen>
+    <dimen name="popUp_coin_window_max_height">400dp</dimen>
     <dimen name="popUp_coin_title_textSize">24sp</dimen>
     <dimen name="popUp_coin_dialog_textSize">18sp</dimen>
-    <dimen name="popUp_coin_dialog_image_height">120dp</dimen>
-    <dimen name="popUp_coin_dialog_image_width">250dp</dimen>
 
     <dimen name="alertDialog_checkBox_marginStart">40dp</dimen>
     <dimen name="alertDialog_checkBox_marginEnd">25dp</dimen>
