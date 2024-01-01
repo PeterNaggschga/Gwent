@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+@Deprecated
 public class Row {
     public static final int ROW_ALL = 0;
     public static final int ROW_MELEE = 1;

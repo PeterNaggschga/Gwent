@@ -14,6 +14,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+@Deprecated
 public class Unit {
 
     private static final String JSON_KEY_BASE_AD = "baseAD";
