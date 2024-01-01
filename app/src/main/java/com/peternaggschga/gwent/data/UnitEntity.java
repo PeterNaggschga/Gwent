@@ -1,5 +1,6 @@
 package com.peternaggschga.gwent.data;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
@@ -19,7 +20,17 @@ public class UnitEntity {
 
     public int damage;
 
+    @NonNull
     public Ability ability;
 
-    public byte row;
+    @ColumnInfo(index = true)
+    @NonNull
+    public Row row;
+
+    public UnitEntity(boolean epic, int damage, @NonNull Ability ability, @NonNull Row row) {
+        this.epic = epic;
+        this.damage = damage;
+        this.ability = ability;
+        this.row = row;
+    }
 }

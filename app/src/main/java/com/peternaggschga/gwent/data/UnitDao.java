@@ -16,11 +16,11 @@ public interface UnitDao {
     @Delete
     void deleteUnit(UnitEntity unit);
 
-    @Query("SELECT * FROM units WHERE id = :rowId")
-    UnitEntity getUnit(int rowId);
+    @Query("SELECT * FROM units WHERE id = :id")
+    UnitEntity getUnit(int id);
 
-    @Query("SELECT * FROM units WHERE `row` = :rowId")
-    List<UnitEntity> getUnits(byte rowId);
+    @Query("SELECT * FROM units WHERE `row` = :row")
+    List<UnitEntity> getUnits(Row row);
 
     @Query("SELECT * FROM units")
     List<UnitEntity> getUnits();
