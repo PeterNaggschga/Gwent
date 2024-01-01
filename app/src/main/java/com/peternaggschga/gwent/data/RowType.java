@@ -1,13 +1,13 @@
 package com.peternaggschga.gwent.data;
 
-public enum Row {
+public enum RowType {
     MELEE(0),
     RANGE(1),
     SIEGE(2);
 
     private final Integer index;
 
-    Row(final Integer index) {
+    RowType(final Integer index) {
         this.index = index;
     }
 

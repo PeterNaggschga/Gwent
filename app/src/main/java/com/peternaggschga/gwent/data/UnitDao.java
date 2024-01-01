@@ -20,7 +20,7 @@ public interface UnitDao {
     UnitEntity getUnit(int id);
 
     @Query("SELECT * FROM units WHERE `row` = :row")
-    List<UnitEntity> getUnits(Row row);
+    List<UnitEntity> getUnits(RowType row);
 
     @Query("SELECT * FROM units")
     List<UnitEntity> getUnits();

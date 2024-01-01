@@ -14,13 +14,13 @@ public interface RowDao {
     void clearRows();
 
     @Query("UPDATE rows SET weather = NOT weather WHERE id = :row")
-    void updateWeather(Row row);
+    void updateWeather(RowType row);
 
     @Query("UPDATE rows SET horn = NOT horn WHERE id = :row")
-    void updateHorn(Row row);
+    void updateHorn(RowType row);
 
     @Query("SELECT * FROM rows WHERE id = :row")
-    RowEntity getRow(Row row);
+    RowEntity getRow(RowType row);
 
     @Query("SELECT * FROM rows")
     RowEntity[] getRows();

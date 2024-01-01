@@ -25,9 +25,9 @@ public class UnitEntity {
 
     @ColumnInfo(index = true)
     @NonNull
-    public Row row;
+    public RowType row;
 
-    public UnitEntity(boolean epic, int damage, @NonNull Ability ability, @NonNull Row row) {
+    public UnitEntity(boolean epic, int damage, @NonNull Ability ability, @NonNull RowType row) {
         this.epic = epic;
         this.damage = damage;
         this.ability = ability;

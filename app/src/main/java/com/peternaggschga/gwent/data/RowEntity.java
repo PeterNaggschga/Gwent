@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey;
 public class RowEntity {
     @PrimaryKey
     @NonNull
-    public Row id;
+    public RowType id;
 
     @ColumnInfo(defaultValue = "false")
     public boolean weather;
@@ -17,7 +17,7 @@ public class RowEntity {
     @ColumnInfo(defaultValue = "false")
     public boolean horn;
 
-    public RowEntity(@NonNull Row id) {
+    public RowEntity(@NonNull RowType id) {
         this.id = id;
     }
 }
