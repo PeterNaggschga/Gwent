@@ -1,18 +1,14 @@
 package com.peternaggschga.gwent.data;
 
+import static com.peternaggschga.gwent.data.AppDatabase.ID_MELEE_ROW;
+import static com.peternaggschga.gwent.data.AppDatabase.ID_RANGE_ROW;
+import static com.peternaggschga.gwent.data.AppDatabase.ID_SIEGE_ROW;
+
 import androidx.room.Dao;
-import androidx.room.Insert;
 import androidx.room.Query;
 
 @Dao
 public interface RowDao {
-    byte ID_MELEE_ROW = 0;
-    byte ID_RANGE_ROW = 1;
-    byte ID_SIEGE_ROW = 2;
-
-    @Insert
-    void insertRow(RowEntity row);
-
     @Query("DELETE FROM rows")
     void clearRows();
 
