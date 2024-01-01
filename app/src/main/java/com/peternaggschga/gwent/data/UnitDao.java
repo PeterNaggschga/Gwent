@@ -9,7 +9,7 @@ import androidx.room.Query;
 import java.util.List;
 
 @Dao
-public interface UnitDao {
+interface UnitDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insertUnit(UnitEntity unit);
 

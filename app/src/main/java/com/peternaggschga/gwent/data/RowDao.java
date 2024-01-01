@@ -6,7 +6,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 @Dao
-public interface RowDao {
+interface RowDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insertRow(RowEntity row);
 
