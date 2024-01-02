@@ -3,9 +3,12 @@ package com.peternaggschga.gwent.data;
 import static org.junit.Assert.fail;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 import org.valid4j.errors.RequireViolation;
 
 public class UnitEntityUnitTest {
+    @RunWith(JUnit4.class)
     public static class ConstructorTests {
         @Test
         public void constructorAssertsNonNegativeDamage() {
@@ -62,6 +65,7 @@ public class UnitEntityUnitTest {
         }
     }
 
+    @RunWith(JUnit4.class)
     public static class SetDamageTests {
         @Test
         public void setDamageAssertsNonNegative() {
@@ -82,6 +86,7 @@ public class UnitEntityUnitTest {
         }
     }
 
+    @RunWith(JUnit4.class)
     public static class SetSquadTests {
         private final UnitEntity testEntity = new UnitEntity(false, 0, Ability.BINDING, 0, RowType.MELEE);
 
