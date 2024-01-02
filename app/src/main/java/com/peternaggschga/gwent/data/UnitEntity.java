@@ -20,6 +20,7 @@ public class UnitEntity {
 
     public int damage;
 
+    @ColumnInfo(defaultValue = "NONE")
     @NonNull
     public Ability ability;
 
