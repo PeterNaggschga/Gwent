@@ -11,7 +11,7 @@ import io.reactivex.rxjava3.core.Single;
 @Dao
 interface RowDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insertRow(RowEntity row);
+    Completable insertRow(RowEntity row);
 
     @Query("DELETE FROM rows")
     Completable clearRows();
