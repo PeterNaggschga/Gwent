@@ -63,7 +63,7 @@ class RowEntity {
      * Getter for #weather.
      * Only used by Room extension.
      *
-     * @return boolean representing the current status of the weather debuff.
+     * @return Boolean representing the current status of the weather debuff.
      */
     boolean isWeather() {
         return weather;
@@ -73,7 +73,7 @@ class RowEntity {
      * Setter for #weather.
      * Only used by Room extension.
      *
-     * @param weather boolean representing the new status of the weather debuff.
+     * @param weather Boolean representing the new status of the weather debuff.
      */
     void setWeather(boolean weather) {
         this.weather = weather;
@@ -83,7 +83,7 @@ class RowEntity {
      * Getter for #horn.
      * Only used by Room extension.
      *
-     * @return boolean representing the current status of the horn buff.
+     * @return Boolean representing the current status of the horn buff.
      */
     boolean isHorn() {
         return horn;
@@ -93,7 +93,7 @@ class RowEntity {
      * Setter for #horn.
      * Only used by Room extension.
      *
-     * @param horn boolean representing the new status of the horn buff.
+     * @param horn Boolean representing the new status of the horn buff.
      */
     void setHorn(boolean horn) {
         this.horn = horn;
