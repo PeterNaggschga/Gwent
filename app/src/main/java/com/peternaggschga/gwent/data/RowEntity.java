@@ -9,15 +9,36 @@ import androidx.room.PrimaryKey;
 public class RowEntity {
     @PrimaryKey
     @NonNull
-    public RowType id;
+    private final RowType id;
 
     @ColumnInfo(defaultValue = "false")
-    public boolean weather;
+    private boolean weather;
 
     @ColumnInfo(defaultValue = "false")
-    public boolean horn;
+    private boolean horn;
 
     public RowEntity(@NonNull RowType id) {
         this.id = id;
+    }
+
+    @NonNull
+    public RowType getId() {
+        return id;
+    }
+
+    public boolean isWeather() {
+        return weather;
+    }
+
+    public void setWeather(boolean weather) {
+        this.weather = weather;
+    }
+
+    public boolean isHorn() {
+        return horn;
+    }
+
+    public void setHorn(boolean horn) {
+        this.horn = horn;
     }
 }
