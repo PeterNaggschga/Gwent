@@ -46,4 +46,7 @@ dependencies {
 
     // RxJava3 support for Room
     implementation "androidx.room:room-rxjava3:$room_version"
+
+    // Test helpers
+    testImplementation "androidx.room:room-testing:$room_version"
 }
