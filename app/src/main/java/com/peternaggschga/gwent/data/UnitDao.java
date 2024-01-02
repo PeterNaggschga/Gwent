@@ -1,5 +1,7 @@
 package com.peternaggschga.gwent.data;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -14,17 +16,23 @@ import io.reactivex.rxjava3.core.Single;
 @Dao
 interface UnitDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    Completable insertUnit(UnitEntity unit);
+    Completable insertUnit(@NonNull UnitEntity unit);
+
+    @Query("INSERT INTO units (epic, damage, ability, squad, `row`) VALUES (:epic, :damage, :ability, :squad, :row)")
+    Completable insertUnit(boolean epic, int damage, @NonNull Ability ability, @Nullable Integer squad, @NonNull RowType row);
 
     @Delete
-    Completable deleteUnit(UnitEntity unit);
-
-    @Query("SELECT * FROM units WHERE id = :id")
-    Single<UnitEntity> getUnit(int id);
+    Completable deleteUnits(@NonNull List<UnitEntity> units);
 
     @Query("SELECT * FROM units WHERE `row` = :row")
-    Single<List<UnitEntity>> getUnits(RowType row);
+    Single<List<UnitEntity>> getUnits(@NonNull RowType row);
 
     @Query("SELECT * FROM units")
     Single<List<UnitEntity>> getUnits();
+
+    @Query("SELECT COUNT(*) FROM units WHERE `row` = :row")
+    Single<Integer> countUnits(@NonNull RowType row);
+
+    @Query("SELECT COUNT(*) FROM units")
+    Single<Integer> countUnits();
 }
