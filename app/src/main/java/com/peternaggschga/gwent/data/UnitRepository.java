@@ -1,5 +1,7 @@
 package com.peternaggschga.gwent.data;
 
+import static org.valid4j.Assertive.require;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -67,8 +69,8 @@ public class UnitRepository {
     }
 
     public Completable insertUnit(boolean epic, int damage, @NonNull Ability ability, @Nullable Integer squad, @NonNull RowType row) {
-        assert damage >= 0;
-        assert squad == null || (ability == Ability.BINDING && squad >= 0);
+        require(damage >= 0);
+        require(squad == null || (ability == Ability.BINDING && squad >= 0));
         return database.units().insertUnit(epic, damage, ability, squad, row);
     }
 
