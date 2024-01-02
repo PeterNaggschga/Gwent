@@ -5,23 +5,26 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Single;
+
 @Dao
 interface RowDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insertRow(RowEntity row);
 
     @Query("DELETE FROM rows")
-    void clearRows();
+    Completable clearRows();
 
     @Query("UPDATE rows SET weather = NOT weather WHERE id = :row")
-    void updateWeather(RowType row);
+    Completable updateWeather(RowType row);
 
     @Query("UPDATE rows SET horn = NOT horn WHERE id = :row")
-    void updateHorn(RowType row);
+    Completable updateHorn(RowType row);
 
     @Query("SELECT * FROM rows WHERE id = :row")
-    RowEntity getRow(RowType row);
+    Single<RowEntity> getRow(RowType row);
 
     @Query("SELECT * FROM rows")
-    RowEntity[] getRows();
+    Single<RowEntity[]> getRows();
 }
