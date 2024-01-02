@@ -42,6 +42,6 @@ dependencies {
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
 
-    // optional - RxJava3 support for Room
+    // RxJava3 support for Room
     implementation "androidx.room:room-rxjava3:$room_version"
 }
