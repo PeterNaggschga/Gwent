@@ -18,7 +18,6 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.CheckBox;
-import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -880,9 +879,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void inflateCardPopup(@NonNull final Row row, View view) {
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-        LinearLayout popupLayout = (LinearLayout) inflater.inflate(R.layout.popup_cards, (ViewGroup) getWindow().getDecorView(), false);
-        HorizontalScrollView scrollView = new HorizontalScrollView(this);
-        LinearLayout cardsList = (LinearLayout) inflater.inflate(R.layout.cards_list, (ViewGroup) getWindow().getDecorView(), false);
+        ConstraintLayout popupLayout = (ConstraintLayout) inflater.inflate(R.layout.popup_cards, (ViewGroup) getWindow().getDecorView(), false);
+        LinearLayout cardsList = popupLayout.findViewById(R.id.cardsList).findViewById(R.id.cardListLayout);
         for (final Unit unit : row.getAllUnits()) {
             final View cardView = inflater.inflate(R.layout.card, cardsList, false);
             TextView damageView = cardView.findViewById(R.id.damageView);
@@ -965,16 +963,12 @@ public class MainActivity extends AppCompatActivity {
             popupWindow.dismiss();
             inflateAddCardPopup(row, view13);
         });
-        scrollView.addView(cardsList);
-        ConstraintLayout buttonLayout = popupLayout.findViewById(R.id.popup_cards_button_view);
-        popupLayout.removeAllViews();
-        popupLayout.addView(scrollView);
-        buttonLayout.findViewById(R.id.popup_cards_cancel_button).setOnClickListener(view14 -> {
+        popupLayout.findViewById(R.id.popup_cards_cancel_button).setOnClickListener(view14 -> {
             copyUnits.clear();
             deleteUnits.clear();
             popupWindow.dismiss();
         });
-        buttonLayout.findViewById(R.id.popup_cards_save_button).setOnClickListener(view15 -> {
+        popupLayout.findViewById(R.id.popup_cards_save_button).setOnClickListener(view15 -> {
             int revengeUnits = 0;
             for (Unit unit : deleteUnits) {
                 if (unit.isRevenge()) {
@@ -1000,7 +994,6 @@ public class MainActivity extends AppCompatActivity {
             checkSidebarButtons();
             popupWindow.dismiss();
         });
-        popupLayout.addView(buttonLayout);
         inflatePopup(view, popupLayout, false);
     }
 

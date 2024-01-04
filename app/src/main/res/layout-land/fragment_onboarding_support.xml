@@ -31,7 +31,7 @@
             android:id="@+id/onboarding_textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
             android:textSize="@dimen/rules_textSize" />
     </ScrollView>
 

@@ -11,5 +11,6 @@
         android:layout_marginEnd="@dimen/alertDialog_checkBox_marginEnd"
         android:checked="true"
         android:layoutDirection="rtl"
+        android:minHeight="@dimen/alertDialog_checkBox_minHeight"
         android:text="@string/alertDialog_reset_checkbox" />
 </FrameLayout>

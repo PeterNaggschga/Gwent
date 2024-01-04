@@ -13,15 +13,13 @@
         android:layout_marginTop="@dimen/activity_vertical_margin"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constraintBottom_toTopOf="@id/onboarding_bottomLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/divider_strength"
         android:alpha="0.12"
-        android:background="@color/color_add_card_text"
+        android:background="@android:color/white"
         app:layout_constraintBottom_toTopOf="@id/onboarding_bottomLayout" />
 
     <FrameLayout
@@ -37,9 +35,8 @@
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="start|center"
-            android:text="@string/onboardingSupport_button_skip"
-            android:textColor="@android:color/primary_text_dark" />
+            android:layout_gravity="start|center_vertical"
+            android:text="@string/onboardingSupport_button_skip" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -52,7 +49,7 @@
                 android:layout_width="@dimen/indicator_radius"
                 android:layout_height="@dimen/indicator_radius"
                 android:layout_marginEnd="@dimen/border_margin"
-                android:background="@drawable/indicator_selected"
+                app:srcCompat="@drawable/indicator_selected"
                 android:contentDescription="@string/content_description_onboardingSupport_indicator" />
 
             <ImageView
@@ -60,7 +57,7 @@
                 android:layout_width="@dimen/indicator_radius"
                 android:layout_height="@dimen/indicator_radius"
                 android:layout_marginEnd="@dimen/border_margin"
-                android:background="@drawable/indicator_unselected"
+                app:srcCompat="@drawable/indicator_unselected"
                 android:contentDescription="@string/content_description_onboardingSupport_indicator" />
 
             <ImageView
@@ -68,7 +65,7 @@
                 android:layout_width="@dimen/indicator_radius"
                 android:layout_height="@dimen/indicator_radius"
                 android:layout_marginEnd="@dimen/border_margin"
-                android:background="@drawable/indicator_unselected"
+                app:srcCompat="@drawable/indicator_unselected"
                 android:contentDescription="@string/content_description_onboardingSupport_indicator" />
 
             <ImageView
@@ -76,15 +73,14 @@
                 android:layout_width="@dimen/indicator_radius"
                 android:layout_height="@dimen/indicator_radius"
                 android:layout_marginEnd="@dimen/border_margin"
-                android:background="@drawable/indicator_unselected"
+                app:srcCompat="@drawable/indicator_unselected"
                 android:contentDescription="@string/content_description_onboardingSupport_indicator" />
 
             <ImageView
                 android:id="@+id/onboarding_indicator_4"
                 android:layout_width="@dimen/indicator_radius"
                 android:layout_height="@dimen/indicator_radius"
-                android:layout_marginEnd="@dimen/border_margin"
-                android:background="@drawable/indicator_unselected"
+                app:srcCompat="@drawable/indicator_unselected"
                 android:contentDescription="@string/content_description_onboardingSupport_indicator" />
         </LinearLayout>
 
@@ -93,9 +89,8 @@
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end|center"
+            android:layout_gravity="end|center_vertical"
             android:text="@string/onboardingSupport_button_finish"
-            android:textColor="@android:color/white"
             android:visibility="gone" />
 
         <ImageButton
@@ -103,11 +98,10 @@
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end|center"
+            android:layout_gravity="end|center_vertical"
             android:contentDescription="@string/content_description_onboardingSupport_next"
             android:padding="@dimen/activity_horizontal_margin"
-            android:src="@drawable/icon_next" />
-
+            app:srcCompat="@drawable/icon_next" />
     </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

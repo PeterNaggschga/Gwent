@@ -6,8 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_drawable"
-    tools:context=".MainActivity"
-    tools:ignore="Overdraw">
+    tools:context=".MainActivity">
 
     <ImageView
         android:id="@+id/backgroundImageView"
@@ -17,200 +16,188 @@
         android:scaleType="centerCrop"
         android:visibility="gone" />
 
-    <include
-        android:id="@+id/firstRow"
-        layout="@layout/row"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_marginStart="@dimen/border_margin"
-        android:layout_marginTop="@dimen/border_margin"
-        android:layout_marginEnd="@dimen/border_margin"
-        android:layout_marginBottom="@dimen/border_margin"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/secondRow"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <include
-        android:id="@+id/secondRow"
-        layout="@layout/row"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_marginStart="@dimen/border_margin"
-        android:layout_marginTop="@dimen/border_margin"
-        android:layout_marginEnd="@dimen/border_margin"
-        android:layout_marginBottom="@dimen/border_margin"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/thirdRow"
-        app:layout_constraintStart_toEndOf="@+id/firstRow"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <include
-        android:id="@+id/thirdRow"
-        layout="@layout/row"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_marginStart="@dimen/border_margin"
-        android:layout_marginTop="@dimen/border_margin"
-        android:layout_marginEnd="@dimen/margin_row_buttons"
-        android:layout_marginBottom="@dimen/border_margin"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/buttonSection"
-        app:layout_constraintStart_toEndOf="@+id/secondRow"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
     <LinearLayout
-        android:id="@+id/buttonSection"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_marginStart="@dimen/margin_row_buttons"
-        android:layout_marginTop="@dimen/border_margin"
-        android:layout_marginEnd="@dimen/border_margin"
-        android:layout_marginBottom="@dimen/border_margin"
-        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:baselineAligned="false"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/thirdRow"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
+        <include
+            android:id="@+id/firstRow"
+            layout="@layout/row"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5">
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="@dimen/border_margin"
+            android:layout_marginVertical="@dimen/activity_vertical_margin"
+            android:layout_weight="1" />
 
-            <ImageView
-                android:id="@+id/overallPointBall"
-                android:layout_width="@dimen/overall_point_circle_diameter"
-                android:layout_height="@dimen/overall_point_circle_diameter"
-                android:background="@null"
-                android:contentDescription="@string/content_description_activity_main_point_ball"
-                android:scaleType="fitXY"
-                android:src="?attr/point_ball_mipmap"
-                android:translationZ="5dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+        <include
+            android:id="@+id/secondRow"
+            layout="@layout/row"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="@dimen/border_margin"
+            android:layout_marginVertical="@dimen/activity_vertical_margin"
+            android:layout_weight="1" />
+
+        <include
+            android:id="@+id/thirdRow"
+            layout="@layout/row"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginVertical="@dimen/activity_vertical_margin"
+            android:layout_marginStart="@dimen/border_margin"
+            android:layout_marginEnd="@dimen/margin_row_buttons"
+            android:layout_weight="1" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginVertical="@dimen/activity_vertical_margin"
+            android:layout_marginStart="@dimen/margin_row_buttons"
+            android:layout_marginEnd="@dimen/border_margin"
+            android:layout_weight="1">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/overallPointLayout"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="@dimen/margin_menu_buttons"
+                app:layout_constraintBottom_toTopOf="@id/menuView"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="?attr/point_ball_mipmap" />
+                app:layout_constraintVertical_weight="1">
 
-            <ImageView
-                android:id="@+id/backgroundOverallPointBall"
-                android:layout_width="@dimen/overall_point_circle_diameter"
-                android:layout_height="@dimen/overall_point_circle_diameter"
-                android:contentDescription="@string/content_description_background_resource"
-                android:scaleType="fitXY"
+                <ImageView
+                    android:id="@+id/overallPointBall"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:contentDescription="@string/content_description_activity_main_point_ball"
+                    android:scaleType="fitCenter"
+                    android:src="?attr/point_ball_mipmap"
+                    android:translationZ="5dp" />
+
+                <ImageView
+                    android:id="@+id/backgroundOverallPointBall"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/content_description_background_resource"
+                    android:scaleType="fitCenter" />
+
+                <TextView
+                    android:id="@+id/overallPointView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/circle_text"
+                    android:textSize="@dimen/overall_point_circle_textSize"
+                    android:translationZ="10dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/menuView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/overallPointLayout"
+                app:layout_constraintVertical_weight="3">
 
-            <TextView
-                android:id="@+id/overallPointView"
-                android:layout_width="@dimen/overall_point_circle_diameter"
-                android:layout_height="@dimen/overall_point_circle_diameter"
-                android:gravity="center"
-                android:textColor="@color/circle_text"
-                android:textSize="@dimen/overall_point_circle_textSize"
-                android:translationZ="10dp"
-                app:layout_constraintBottom_toBottomOf="@id/overallPointBall"
-                app:layout_constraintLeft_toLeftOf="@id/overallPointBall"
-                app:layout_constraintRight_toRightOf="@id/overallPointBall"
-                app:layout_constraintTop_toTopOf="@id/overallPointBall" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <ImageButton
+                    android:id="@+id/factionButton"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_margin="@dimen/margin_menu_buttons"
+                    android:background="@null"
+                    android:contentDescription="@string/content_description_activity_main_faction_button"
+                    android:scaleType="fitCenter"
+                    android:src="?android:attr/alertDialogIcon"
+                    app:layout_constraintBottom_toTopOf="@id/weatherButton"
+                    app:layout_constraintEnd_toStartOf="@id/resetButton"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
+                <ImageButton
+                    android:id="@+id/resetButton"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_margin="@dimen/margin_menu_buttons"
+                    android:background="@null"
+                    android:clickable="false"
+                    android:contentDescription="@string/content_description_activity_main_reset_button"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/icon_reset_grey"
+                    app:layout_constraintBottom_toTopOf="@id/burnButton"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/factionButton"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageButton
-                android:id="@+id/factionButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:contentDescription="@string/content_description_activity_main_faction_button"
-                android:src="?android:attr/alertDialogIcon"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/resetButton"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                <ImageButton
+                    android:id="@+id/weatherButton"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_margin="@dimen/margin_menu_buttons"
+                    android:background="@null"
+                    android:clickable="false"
+                    android:contentDescription="@string/content_description_activity_main_weather_button"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/icon_weather_grey"
+                    app:layout_constraintBottom_toTopOf="@id/coinButton"
+                    app:layout_constraintEnd_toStartOf="@id/burnButton"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/factionButton" />
 
-            <ImageButton
-                android:id="@+id/resetButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:clickable="false"
-                android:contentDescription="@string/content_description_activity_main_reset_button"
-                android:src="@drawable/icon_reset_grey"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/factionButton"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <ImageButton
+                    android:id="@+id/burnButton"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_margin="@dimen/margin_menu_buttons"
+                    android:background="@null"
+                    android:clickable="false"
+                    android:contentDescription="@string/content_description_activity_main_burn_button"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/icon_burn_grey"
+                    app:layout_constraintBottom_toTopOf="@id/settingsButton"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/weatherButton"
+                    app:layout_constraintTop_toBottomOf="@id/resetButton" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
+                <ImageButton
+                    android:id="@+id/coinButton"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_margin="@dimen/margin_menu_buttons"
+                    android:background="@null"
+                    android:contentDescription="@string/content_description_activity_main_coin_button"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/icon_coin"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/settingsButton"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/weatherButton" />
 
-            <ImageButton
-                android:id="@+id/weatherButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:clickable="false"
-                android:contentDescription="@string/content_description_activity_main_weather_button"
-                android:src="@drawable/icon_weather_grey"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/burnButton"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageButton
-                android:id="@+id/burnButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:clickable="false"
-                android:contentDescription="@string/content_description_activity_main_burn_button"
-                android:src="@drawable/icon_burn_grey"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/weatherButton"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
-
-            <ImageButton
-                android:id="@+id/coinButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:contentDescription="@string/content_description_activity_main_coin_button"
-                android:src="@drawable/icon_coin"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/settingsButton"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageButton
-                android:id="@+id/settingsButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:contentDescription="@string/content_description_activity_main_settings_button"
-                android:src="@drawable/icon_settings"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/coinButton"
-                app:layout_constraintTop_toTopOf="parent" />
+                <ImageButton
+                    android:id="@+id/settingsButton"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_margin="@dimen/margin_menu_buttons"
+                    android:background="@null"
+                    android:contentDescription="@string/content_description_activity_main_settings_button"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/icon_settings"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/coinButton"
+                    app:layout_constraintTop_toBottomOf="@id/burnButton" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

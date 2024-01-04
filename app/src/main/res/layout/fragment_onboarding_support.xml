@@ -15,23 +15,25 @@
         app:layout_constraintBottom_toTopOf="@id/onboarding_scrollView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintHeight_percent=".5"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_weight="1" />
 
     <ScrollView
         android:id="@+id/onboarding_scrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/onboarding_imageView">
+        app:layout_constraintTop_toBottomOf="@id/onboarding_imageView"
+        app:layout_constraintVertical_weight="2">
 
         <TextView
             android:id="@+id/onboarding_textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
             android:textSize="@dimen/rules_textSize" />
     </ScrollView>
 
