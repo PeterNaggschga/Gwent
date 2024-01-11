@@ -80,7 +80,7 @@ public class OnboardingSupportActivity extends AppCompatActivity {
 
     void updateIndicators(int position) {
         for (int i = 0; i < indicators.size(); i++) {
-            indicators.get(i).setBackgroundResource(i == position ? R.drawable.indicator_selected : R.drawable.indicator_unselected);
+            indicators.get(i).setImageResource(i == position ? R.drawable.indicator_selected : R.drawable.indicator_unselected);
         }
     }
 }
