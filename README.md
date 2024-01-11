@@ -25,8 +25,8 @@ To actually play Gwent using *Gwent - A Calculator*, you need to print out analo
 
 | Language |                                                   `zip`                                                   |                                                      `tar`                                                      |
 |:--------:|:---------------------------------------------------------------------------------------------------------:|:---------------------------------------------------------------------------------------------------------------:|
-| English  | [gwent_cards_en.zip](https://github.com/PeterNaggschga/Gwent/releases/download/v1.2.6/gwent_cards_en.zip) | [gwent_cards_en.tar.gz](https://github.com/PeterNaggschga/Gwent/releases/download/v1.2.6/gwent_cards_en.tar.gz) |
-|  German  | [gwent_cards_de.zip](https://github.com/PeterNaggschga/Gwent/releases/download/v1.2.6/gwent_cards_de.zip) | [gwent_cards_de.tar.gz](https://github.com/PeterNaggschga/Gwent/releases/download/v1.2.6/gwent_cards_de.tar.gz) |
+| English  | [gwent_cards_en.zip](https://github.com/PeterNaggschga/Gwent/releases/download/v2.0.0/gwent_cards_en.zip) | [gwent_cards_en.tar.gz](https://github.com/PeterNaggschga/Gwent/releases/download/v2.0.0/gwent_cards_en.tar.gz) |
+|  German  | [gwent_cards_de.zip](https://github.com/PeterNaggschga/Gwent/releases/download/v2.0.0/gwent_cards_de.zip) | [gwent_cards_de.tar.gz](https://github.com/PeterNaggschga/Gwent/releases/download/v2.0.0/gwent_cards_de.tar.gz) |
 
 Please be aware that the Skellige faction is only available in the german
 packages! [This PDF](https://peternaggschga.github.io/Gwent/printing-layout.pdf) summarizes in
