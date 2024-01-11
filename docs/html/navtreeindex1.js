@@ -35,7 +35,7 @@ var NAVTREEINDEX1 =
 "popup__faction_8xml_source.xhtml":[2,0,1,2,14],
 "popup__hide_8xml_source.xhtml":[2,0,1,0,0],
 "popup__show_8xml_source.xhtml":[2,0,1,0,1],
-"rectangle__add__card_8xml_source.xhtml":[2,0,1,1,15],
+"rectangle__black__transparent_8xml_source.xhtml":[2,0,1,1,15],
 "rectangle__cancel__popup_8xml_source.xhtml":[2,0,1,1,16],
 "rectangle__monster_8xml_source.xhtml":[2,0,1,1,17],
 "rectangle__nilfgaard_8xml_source.xhtml":[2,0,1,1,18],

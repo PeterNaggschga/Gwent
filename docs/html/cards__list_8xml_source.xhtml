@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="icon.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Gwent
-   &#160;<span id="projectnumber">1.2.5</span>
+   &#160;<span id="projectnumber">1.2.6</span>
    </div>
    <div id="projectbrief">An app enabling you to play the Gwent card game from The Witcher 3 with analog cards.</div>
   </td>
@@ -89,30 +89,31 @@ $(document).ready(function(){initNavTree('cards__list_8xml_source.xhtml',''); in
 </div><!--header-->
 <div class="contents">
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;&lt;?<span class="keyword">xml</span> <span class="keyword">version</span>=<span class="stringliteral">&quot;1.0&quot;</span> <span class="keyword">encoding</span>=<span class="stringliteral">&quot;utf-8&quot;</span>?&gt;</div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;&lt;<span class="keywordtype">LinearLayout</span> <span class="keyword">xmlns:android</span>=<span class="stringliteral">&quot;http://schemas.android.com/apk/res/android&quot;</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;&lt;<span class="keywordtype">HorizontalScrollView</span> <span class="keyword">xmlns:android</span>=<span class="stringliteral">&quot;http://schemas.android.com/apk/res/android&quot;</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;    <span class="keyword">android:layout_width</span>=<span class="stringliteral">&quot;match_parent&quot;</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;    <span class="keyword">android:layout_height</span>=<span class="stringliteral">&quot;wrap_content&quot;</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;    <span class="keyword">android:orientation</span>=<span class="stringliteral">&quot;horizontal&quot;</span>&gt;</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;    &lt;<span class="keywordtype">TextView</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;        <span class="keyword">android:id</span>=<span class="stringliteral">&quot;@+id/popup_cards_add&quot;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;        <span class="keyword">android:layout_width</span>=<span class="stringliteral">&quot;wrap_content&quot;</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;        <span class="keyword">android:layout_height</span>=<span class="stringliteral">&quot;match_parent&quot;</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;        <span class="keyword">android:layout_gravity</span>=<span class="stringliteral">&quot;center_vertical&quot;</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        <span class="keyword">android:layout_marginStart</span>=<span class="stringliteral">&quot;@dimen/border_margin&quot;</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        <span class="keyword">android:layout_marginTop</span>=<span class="stringliteral">&quot;@dimen/border_margin&quot;</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;        <span class="keyword">android:layout_marginEnd</span>=<span class="stringliteral">&quot;@dimen/border_margin&quot;</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        <span class="keyword">android:layout_marginBottom</span>=<span class="stringliteral">&quot;@dimen/border_margin&quot;</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        <span class="keyword">android:width</span>=<span class="stringliteral">&quot;@dimen/popUp_card_width&quot;</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        <span class="keyword">android:height</span>=<span class="stringliteral">&quot;@dimen/popUp_card_height&quot;</span></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        <span class="keyword">android:background</span>=<span class="stringliteral">&quot;@drawable/rectangle_add_card&quot;</span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        <span class="keyword">android:clickable</span>=<span class="stringliteral">&quot;true&quot;</span></div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        <span class="keyword">android:focusable</span>=<span class="stringliteral">&quot;true&quot;</span></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        <span class="keyword">android:gravity</span>=<span class="stringliteral">&quot;center&quot;</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <span class="keyword">android:text</span>=<span class="stringliteral">&quot;@string/popUp_cards_add&quot;</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <span class="keyword">android:textColor</span>=<span class="stringliteral">&quot;@color/color_add_card_text&quot;</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        <span class="keyword">android:textSize</span>=<span class="stringliteral">&quot;@dimen/popUp_card_textSize&quot;</span> /&gt;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;&lt;/<span class="keywordtype">LinearLayout</span>&gt;</div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;    <span class="keyword">android:layout_height</span>=<span class="stringliteral">&quot;match_parent&quot;</span>&gt;</div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;    &lt;<span class="keywordtype">LinearLayout</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;        <span class="keyword">android:id</span>=<span class="stringliteral">&quot;@+id/cardListLayout&quot;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;        <span class="keyword">android:layout_width</span>=<span class="stringliteral">&quot;wrap_content&quot;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;        <span class="keyword">android:layout_height</span>=<span class="stringliteral">&quot;match_parent&quot;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;        <span class="keyword">android:orientation</span>=<span class="stringliteral">&quot;horizontal&quot;</span>&gt;</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        &lt;<span class="keywordtype">TextView</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;            <span class="keyword">android:id</span>=<span class="stringliteral">&quot;@+id/popup_cards_add&quot;</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;            <span class="keyword">android:layout_width</span>=<span class="stringliteral">&quot;@dimen/popUp_card_width&quot;</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;            <span class="keyword">android:layout_height</span>=<span class="stringliteral">&quot;match_parent&quot;</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;            <span class="keyword">android:layout_gravity</span>=<span class="stringliteral">&quot;center_vertical&quot;</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;            <span class="keyword">android:layout_margin</span>=<span class="stringliteral">&quot;@dimen/border_margin&quot;</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;            <span class="keyword">android:background</span>=<span class="stringliteral">&quot;@drawable/rectangle_black_transparent&quot;</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;            <span class="keyword">android:clickable</span>=<span class="stringliteral">&quot;true&quot;</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;            <span class="keyword">android:focusable</span>=<span class="stringliteral">&quot;true&quot;</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;            <span class="keyword">android:gravity</span>=<span class="stringliteral">&quot;center&quot;</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;            <span class="keyword">android:text</span>=<span class="stringliteral">&quot;@string/popUp_cards_add&quot;</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;            <span class="keyword">android:textColor</span>=<span class="stringliteral">&quot;@color/color_add_card_text&quot;</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;            <span class="keyword">android:textSize</span>=<span class="stringliteral">&quot;@dimen/popUp_card_textSize&quot;</span> /&gt;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    &lt;/<span class="keywordtype">LinearLayout</span>&gt;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;&lt;/<span class="keywordtype">HorizontalScrollView</span>&gt;</div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
