@@ -103,7 +103,7 @@ public class UnitRepository {
      */
     public Completable insertUnit(boolean epic, @IntRange(from = 0) int damage, @NonNull Ability ability, @IntRange(from = 0) @Nullable Integer squad, @NonNull RowType row) {
         require(damage >= 0);
-        require(squad == null || (ability == Ability.BINDING && squad >= 0));
+        require((ability != Ability.BINDING && squad == null) || (ability == Ability.BINDING && squad != null && squad >= 0));
         return database.units().insertUnit(epic, damage, ability, squad, row);
     }
 
