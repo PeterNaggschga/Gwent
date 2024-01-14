@@ -2,6 +2,7 @@ package com.peternaggschga.gwent.data;
 
 import static org.valid4j.Assertive.require;
 
+import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -100,7 +101,7 @@ public class UnitRepository {
      * @param row     RowType representing the combat type of the card.
      * @return A Completable tracking operation status.
      */
-    public Completable insertUnit(boolean epic, int damage, @NonNull Ability ability, @Nullable Integer squad, @NonNull RowType row) {
+    public Completable insertUnit(boolean epic, @IntRange(from = 0) int damage, @NonNull Ability ability, @IntRange(from = 0) @Nullable Integer squad, @NonNull RowType row) {
         require(damage >= 0);
         require(squad == null || (ability == Ability.BINDING && squad >= 0));
         return database.units().insertUnit(epic, damage, ability, squad, row);
@@ -119,7 +120,7 @@ public class UnitRepository {
      * @return A Completable tracking operation status.
      * @see #insertUnit(boolean, int, Ability, Integer, RowType)
      */
-    public Completable insertUnit(boolean epic, int damage, @NonNull Ability ability, @Nullable Integer squad, @NonNull RowType row, int number) {
+    public Completable insertUnit(boolean epic, @IntRange(from = 0) int damage, @NonNull Ability ability, @IntRange(from = 0) @Nullable Integer squad, @NonNull RowType row, int number) {
         Completable result = Completable.complete();
         for (int i = 0; i < number; i++) {
             result = result.andThen(insertUnit(epic, damage, ability, squad, row));
