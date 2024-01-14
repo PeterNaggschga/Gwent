@@ -103,12 +103,17 @@ public class UnitDaoUnitTest {
     public void getUnitsReturnsAllUnits() {
         for (RowType row : RowType.values()) {
             for (int i = 0; i < 5; i++) {
-                unitDao.insertUnit(false, i, Ability.values()[i / 2], null, row)
-                        .blockingAwait();
+                assertThat(
+                        unitDao.insertUnit(false, i, Ability.values()[i / 2], null, row)
+                                .andThen(unitDao.getUnits(row))
+                                .blockingGet())
+                        .hasSize(i + 1);
             }
-            assertThat(unitDao.getUnits(row).blockingGet()).hasSize(5);
         }
-        assertThat(unitDao.getUnits().blockingGet()).hasSize(RowType.values().length * 5);
+        assertThat(
+                unitDao.getUnits()
+                        .blockingGet())
+                .hasSize(RowType.values().length * 5);
     }
 
     @Test
