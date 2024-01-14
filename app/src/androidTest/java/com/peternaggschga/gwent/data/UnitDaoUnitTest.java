@@ -35,7 +35,7 @@ public class UnitDaoUnitTest {
     }
 
     @Test
-    public void insertUnitAssertsNull() {
+    public void insertUnitAssertsNonNull() {
         try {
             //noinspection DataFlowIssue
             unitDao.insertUnit(null)
@@ -89,7 +89,7 @@ public class UnitDaoUnitTest {
     }
 
     @Test
-    public void deleteUnitsAssertsNull() {
+    public void deleteUnitsAssertsNonNull() {
         try {
             //noinspection DataFlowIssue
             unitDao.deleteUnits(null)
@@ -112,7 +112,7 @@ public class UnitDaoUnitTest {
     }
 
     @Test
-    public void getUnitsAssertsNull() {
+    public void getUnitsAssertsNonNull() {
         try {
             //noinspection DataFlowIssue
             unitDao.getUnits(null)
@@ -147,7 +147,7 @@ public class UnitDaoUnitTest {
     }
 
     @Test
-    public void countUnitsAssertsNull() {
+    public void countUnitsAssertsNonNull() {
         try {
             //noinspection DataFlowIssue
             unitDao.countUnits(null)
@@ -158,4 +158,3 @@ public class UnitDaoUnitTest {
         }
     }
 }
-

@@ -30,7 +30,7 @@ public class RowDaoUnitTest {
     }
 
     @Test
-    public void insertRowAssertsNull() {
+    public void insertRowAssertsNonNull() {
         try {
             //noinspection DataFlowIssue
             rowDao.insertRow(null).blockingAwait();
@@ -80,7 +80,7 @@ public class RowDaoUnitTest {
     }
 
     @Test
-    public void updateWeatherAssertsNull() {
+    public void updateWeatherAssertsNonNull() {
         try {
             //noinspection DataFlowIssue
             rowDao.insertRow(new RowEntity(RowType.MELEE))
@@ -125,7 +125,7 @@ public class RowDaoUnitTest {
     }
 
     @Test
-    public void updateHornAssertsNull() {
+    public void updateHornAssertsNonNull() {
         try {
             //noinspection DataFlowIssue
             rowDao.insertRow(new RowEntity(RowType.MELEE))
@@ -137,7 +137,7 @@ public class RowDaoUnitTest {
     }
 
     @Test
-    public void isWeatherAssertsNull() {
+    public void isWeatherAssertsNonNull() {
         try {
             //noinspection DataFlowIssue
             rowDao.insertRow(new RowEntity(RowType.MELEE))
@@ -150,7 +150,7 @@ public class RowDaoUnitTest {
     }
 
     @Test
-    public void isHornAssertsNull() {
+    public void isHornAssertsNonNull() {
         try {
             //noinspection DataFlowIssue
             rowDao.insertRow(new RowEntity(RowType.MELEE))
