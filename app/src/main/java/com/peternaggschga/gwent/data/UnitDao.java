@@ -9,6 +9,7 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
+import java.util.Collection;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Completable;
@@ -52,7 +53,7 @@ interface UnitDao {
      * @return A Completable tracking operation status.
      */
     @Delete
-    Completable deleteUnits(@NonNull List<UnitEntity> units);
+    Completable deleteUnits(@NonNull Collection<UnitEntity> units);
 
     /**
      * Fetches all UnitEntity objects from `units` in the given row asynchronously.

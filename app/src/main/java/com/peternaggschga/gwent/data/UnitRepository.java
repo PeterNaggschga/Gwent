@@ -5,6 +5,7 @@ import static org.valid4j.Assertive.require;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.util.Collection;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Completable;
@@ -181,7 +182,7 @@ public class UnitRepository {
      * @param units List of units to be removed.
      * @return A Completable tracking operation status.
      */
-    public Completable delete(@NonNull List<UnitEntity> units) {
+    public Completable delete(@NonNull Collection<UnitEntity> units) {
         return database.units().deleteUnits(units);
     }
 
@@ -191,7 +192,7 @@ public class UnitRepository {
      * @param units List of UnitEntity elements that should be copied.
      * @return A Completable tracking operation status.
      */
-    public Completable copy(@NonNull List<UnitEntity> units) {
+    public Completable copy(@NonNull Collection<UnitEntity> units) {
         Completable result = Completable.complete();
         for (UnitEntity unit : units) {
             result = result.andThen(insertUnit(unit.isEpic(), unit.getDamage(), unit.getAbility(), unit.getSquad(), unit.getRow()));
