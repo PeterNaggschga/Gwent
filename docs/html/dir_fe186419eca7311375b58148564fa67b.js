@@ -15,7 +15,7 @@ var dir_fe186419eca7311375b58148564fa67b =
     [ "icon_warnings.xml", "icon__warnings_8xml_source.xhtml", null ],
     [ "indicator_selected.xml", "indicator__selected_8xml_source.xhtml", null ],
     [ "indicator_unselected.xml", "indicator__unselected_8xml_source.xhtml", null ],
-    [ "rectangle_add_card.xml", "rectangle__add__card_8xml_source.xhtml", null ],
+    [ "rectangle_black_transparent.xml", "rectangle__black__transparent_8xml_source.xhtml", null ],
     [ "rectangle_cancel_popup.xml", "rectangle__cancel__popup_8xml_source.xhtml", null ],
     [ "rectangle_monster.xml", "rectangle__monster_8xml_source.xhtml", null ],
     [ "rectangle_nilfgaard.xml", "rectangle__nilfgaard_8xml_source.xhtml", null ],
