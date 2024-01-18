@@ -36,7 +36,7 @@ public class UnitRepository {
      */
     public UnitRepository(@NonNull AppDatabase database) {
         this.database = database;
-        reset().blockingAwait(); // TODO: check if Transaction serialization is enough here
+        reset().blockingAwait();
     }
 
     /**
