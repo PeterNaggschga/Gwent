@@ -29,20 +29,33 @@ public class UnitRepository {
     /**
      * Constructor of a UnitRepository.
      * Depends on the given AppDatabase as a data source.
-     * Three attack rows are initialized, if not yet done so, via #reset().
+     * Three attack rows are initialized, if not yet done so, via #initializeRows().
      *
      * @param database AppDatabase that is injected for the repository.
-     * @see #reset()
+     * @see #initializeRows()
      */
     public UnitRepository(@NonNull AppDatabase database) {
         this.database = database;
-        reset().blockingAwait();
+        initializeRows().blockingAwait();
+    }
+
+    /**
+     * Adds one attack row for each RowType asynchronously.
+     * If an attack row already exists, it is not inserted again.
+     *
+     * @return A Completable tracking operation status.
+     */
+    private Completable initializeRows() {
+        Completable result = Completable.complete();
+        for (RowType row : RowType.values()) {
+            result = result.andThen(database.rows().insertRow(new RowEntity(row)));
+        }
+        return result;
     }
 
     /**
      * Resets the board asynchronously by removing all units and resetting row status.
-     * Resetting row status is equivalent to removing the old rows
-     * and inserting new RowEntity objects for each RowType.
+     * Resetting row status is equivalent to removing the old rows and calling #initializeRows().
      * Method is a wrapper for #reset(UnitEntity).
      *
      * @return A Completable tracking operation status.
@@ -54,17 +67,14 @@ public class UnitRepository {
 
     /**
      * Resets the board asynchronously by removing all units but the given one and resetting row status.
-     * Resetting row status is equivalent to removing the old rows
-     * and inserting new RowEntity objects for each RowType.
+     * Resetting row status is equivalent to removing the old rows and calling #initializeRows().
      *
      * @param keptUnit UnitEntity that should be kept.
      * @return A Completable tracking operation status.
+     * @see #initializeRows()
      */
     public Completable reset(@Nullable UnitEntity keptUnit) {
-        Completable result = database.rows().clearRows();
-        for (RowType row : RowType.values()) {
-            result = result.andThen(database.rows().insertRow(new RowEntity(row)));
-        }
+        Completable result = database.rows().clearRows().andThen(initializeRows());
         if (keptUnit != null) {
             result = result.andThen(insertUnit(keptUnit));
         }
