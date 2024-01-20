@@ -8,14 +8,14 @@ import androidx.lifecycle.Observer;
 import com.peternaggschga.gwent.data.RowType;
 import com.peternaggschga.gwent.ui.RowUiState;
 
-public class RowObserver implements Observer<RowUiState> {
+public class RowUiStateObserver implements Observer<RowUiState> {
     private final RowType row;
     private final TextView damageView;
     private final ImageView weatherView;
     private final ImageView hornView;
     private final TextView unitView;
 
-    public RowObserver(RowType row, TextView damageView, ImageView weatherView, ImageView hornView, TextView unitView) {
+    public RowUiStateObserver(RowType row, TextView damageView, ImageView weatherView, ImageView hornView, TextView unitView) {
         this.row = row;
         this.damageView = damageView;
         this.weatherView = weatherView;
