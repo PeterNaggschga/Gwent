@@ -34,4 +34,12 @@ public class MenuUiState {
     public boolean isBurn() {
         return burn;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MenuUiState that = (MenuUiState) o;
+        return damage == that.damage && reset == that.reset && weather == that.weather && burn == that.burn;
+    }
 }
