@@ -4,20 +4,26 @@ import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
-import java.util.ArrayList;
+import com.peternaggschga.gwent.data.RowType;
+
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class MenuUpdateObserver implements Observer<RowUiState> {
     private final MediatorLiveData<MenuUiState> menuObserver;
-    private final List<MutableLiveData<RowUiState>> rowStates = new ArrayList<>();
+    private final List<MutableLiveData<RowUiState>> rowStates;
 
-    public MenuUpdateObserver(MediatorLiveData<MenuUiState> menuObserver, MutableLiveData<RowUiState> rowState1, MutableLiveData<RowUiState> rowState2) {
+    private MenuUpdateObserver(MediatorLiveData<MenuUiState> menuObserver, List<MutableLiveData<RowUiState>> rowStates) {
         this.menuObserver = menuObserver;
-        rowStates.add(rowState1);
-        rowStates.add(rowState2);
+        this.rowStates = rowStates;
+    }
+
+    public static MenuUpdateObserver getObserver(RowType row, MediatorLiveData<MenuUiState> menuObserver, Map<RowType, MutableLiveData<RowUiState>> rowObservers) {
+        List<MutableLiveData<RowUiState>> rowStates = rowObservers.values().stream().filter(rowUiStateMutableLiveData -> rowUiStateMutableLiveData != rowObservers.get(row)).collect(Collectors.toList());
+        return new MenuUpdateObserver(menuObserver, rowStates);
     }
 
     @Override
