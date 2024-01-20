@@ -7,13 +7,13 @@ import androidx.lifecycle.Observer;
 
 import com.peternaggschga.gwent.ui.MenuUiState;
 
-public class MenuObserver implements Observer<MenuUiState> {
+public class MenuUiStateObserver implements Observer<MenuUiState> {
     private final TextView damageView;
     private final ImageButton resetButton;
     private final ImageButton weatherButton;
     private final ImageButton burnButton;
 
-    public MenuObserver(TextView damageView, ImageButton resetButton, ImageButton weatherButton, ImageButton burnButton) {
+    public MenuUiStateObserver(TextView damageView, ImageButton resetButton, ImageButton weatherButton, ImageButton burnButton) {
         this.damageView = damageView;
         this.resetButton = resetButton;
         this.weatherButton = weatherButton;
