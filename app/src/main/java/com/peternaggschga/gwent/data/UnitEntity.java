@@ -10,6 +10,8 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
+import com.peternaggschga.gwent.domain.damage.DamageCalculator;
+
 /**
  * A class representing a card on the game board.
  * Is a persistent Entity and is therefore saved in a database table named `units`.
@@ -89,6 +91,20 @@ public class UnitEntity {
     }
 
     /**
+     * Calculates the damage of this unit when (de-)buffed.
+     * Returns #damage if #epic is true.
+     * Otherwise, the damage is calculated through the given DamageCalculator,
+     * which follows the visitor pattern.
+     *
+     * @param calculator DamageCalculator visitor used for damage calculation.
+     * @return Integer representing the units (de-)buffed damage.
+     * @see #getDamage()
+     */
+    public int calculateDamage(@NonNull DamageCalculator calculator) { // TODO: add test cases
+        return epic ? damage : calculator.calculateDamage(id, damage);
+    }
+
+    /**
      * Getter for #id.
      *
      * @return Integer representing the units' id.
@@ -132,6 +148,7 @@ public class UnitEntity {
      * Only used by Room extension.
      *
      * @return Integer representing the card's base-damage.
+     * @see #calculateDamage(DamageCalculator)
      */
     int getDamage() {
         return damage;
