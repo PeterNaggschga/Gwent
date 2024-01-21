@@ -6,9 +6,9 @@ import java.util.Objects;
 class BondDamageCalculatorDecorator extends DamageCalculatorDecorator {
     private final Map<Integer, Integer> idToSquad;
 
-    BondDamageCalculatorDecorator(DamageCalculator component, Map<Integer, Integer> idToSquad) {
+    BondDamageCalculatorDecorator(DamageCalculator component, Map<Integer, Integer> idToSquadSize) {
         super(component);
-        this.idToSquad = idToSquad;
+        this.idToSquad = idToSquadSize;
     }
 
     @Override
