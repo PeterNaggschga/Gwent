@@ -1,5 +1,9 @@
 package com.peternaggschga.gwent.domain.damage;
 
+import static org.valid4j.Assertive.require;
+
+import androidx.annotation.IntRange;
+
 /**
  * A DamageCalculator class responsible for calculating the weather debuff if necessary,
  * i.e., if #weather is true.
@@ -30,7 +34,11 @@ class WeatherDamageCalculator implements DamageCalculator {
      * @return Integer representing the (de-)buffed damage of the unit.
      */
     @Override
-    public int calculateDamage(int id, int damage) {
+    public int calculateDamage(int id, @IntRange(from = 0) int damage) {
+        require(damage >= 0);
+        if (damage == 0) {
+            return damage;
+        }
         return weather ? 1 : damage;
     }
 }
