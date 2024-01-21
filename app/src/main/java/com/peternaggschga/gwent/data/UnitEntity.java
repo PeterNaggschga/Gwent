@@ -90,11 +90,10 @@ public class UnitEntity {
 
     /**
      * Getter for #id.
-     * Only used by Room extension.
      *
      * @return Integer representing the units' id.
      */
-    int getId() {
+    public int getId() {
         return id;
     }
 
@@ -151,12 +150,11 @@ public class UnitEntity {
 
     /**
      * Getter for #ability.
-     * Only used by Room extension.
      *
      * @return Ability representing the units' ability.
      */
     @NonNull
-    Ability getAbility() {
+    public Ability getAbility() {
         return ability;
     }
 
@@ -172,12 +170,11 @@ public class UnitEntity {
 
     /**
      * Getter for #squad.
-     * Only used by Room extension.
      *
      * @return Integer representing the units' squad if #ability is Ability#BINDING or `null`.
      */
     @Nullable
-    Integer getSquad() {
+    public Integer getSquad() {
         return squad;
     }
 
