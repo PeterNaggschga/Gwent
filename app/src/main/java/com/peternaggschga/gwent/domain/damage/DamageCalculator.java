@@ -1,5 +1,7 @@
 package com.peternaggschga.gwent.domain.damage;
 
+import androidx.annotation.IntRange;
+
 import java.util.Collection;
 
 /**
@@ -25,5 +27,5 @@ public interface DamageCalculator {
      * @see DamageCalculatorDecorator
      * @see WeatherDamageCalculator
      */
-    int calculateDamage(int id, int damage);
+    int calculateDamage(int id, @IntRange(from = 0) int damage);
 }
