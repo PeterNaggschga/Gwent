@@ -18,8 +18,10 @@ class WeatherDamageCalculator implements DamageCalculator {
 
     /**
      * Constructor of a WeatherDamageCalculator.
+     * Should only be called by DamageCalculatorBuilder.
      *
      * @param weather Boolean defining whether the weather debuff should be applied.
+     * @see DamageCalculatorBuilder
      */
     WeatherDamageCalculator(boolean weather) {
         this.weather = weather;
