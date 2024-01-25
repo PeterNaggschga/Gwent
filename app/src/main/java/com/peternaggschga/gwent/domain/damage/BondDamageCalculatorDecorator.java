@@ -30,6 +30,7 @@ class BondDamageCalculatorDecorator extends DamageCalculatorDecorator {
      */
     BondDamageCalculatorDecorator(@NonNull WeatherDamageCalculator component, @NonNull Map<Integer, Integer> idToSquadSize) {
         super(component);
+        require(idToSquadSize.values().stream().noneMatch(integer -> integer == null || integer <= 0));
         this.idToSquadSize = idToSquadSize;
     }
 
