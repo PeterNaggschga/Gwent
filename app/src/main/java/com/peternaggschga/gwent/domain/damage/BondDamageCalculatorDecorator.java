@@ -28,7 +28,7 @@ class BondDamageCalculatorDecorator extends DamageCalculatorDecorator {
      * @param idToSquadSize Map mapping the ids of all units with the com.peternaggschga.gwent.data.Ability#BINDING ability to the respective squad size.
      * @see DamageCalculatorBuilder
      */
-    BondDamageCalculatorDecorator(@NonNull WeatherDamageCalculator component, @NonNull Map<Integer, Integer> idToSquadSize) {
+    BondDamageCalculatorDecorator(@NonNull DamageCalculator component, @NonNull Map<Integer, Integer> idToSquadSize) {
         super(component);
         require(idToSquadSize.values().stream().noneMatch(integer -> integer == null || integer <= 0));
         this.idToSquadSize = idToSquadSize;

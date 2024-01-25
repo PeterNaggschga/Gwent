@@ -13,7 +13,7 @@ class DamageCalculatorBuilder {
     }
 
     void setBond(@NonNull Map<Integer, Integer> idToSquad) {
-        calculator = new BondDamageCalculatorDecorator((WeatherDamageCalculator) calculator, idToSquad);
+        calculator = new BondDamageCalculatorDecorator(calculator, idToSquad);
     }
 
     void setMoral(@NonNull List<Integer> unitIds) {
