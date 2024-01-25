@@ -15,13 +15,13 @@ public class WeatherDamageCalculatorUnitTest {
     private final WeatherDamageCalculator falseWeather = new WeatherDamageCalculator(false);
 
     @Test
-    public void zeroDamageAlwaysReturnsZero() {
+    public void calculateDamageZeroDamageAlwaysReturnsZero() {
         assertThat(falseWeather.calculateDamage(0, 0)).isEqualTo(0);
         assertThat(trueWeather.calculateDamage(0, 0)).isEqualTo(0);
     }
 
     @Test
-    public void assertsNonNegativeDamage() {
+    public void calculateDamageAssertsNonNegativeDamage() {
         try {
             trueWeather.calculateDamage(0, -1);
             fail();
@@ -35,7 +35,7 @@ public class WeatherDamageCalculatorUnitTest {
     }
 
     @Test
-    public void falseWeatherAlwaysReturnsDamage() {
+    public void calculateDamageFalseWeatherAlwaysReturnsDamage() {
         for (int i = 0; i < TESTING_DEPTH; i++) {
             for (int j = 0; j < TESTING_DEPTH; j++) {
                 assertThat(falseWeather.calculateDamage(i, j)).isEqualTo(j);
@@ -44,7 +44,7 @@ public class WeatherDamageCalculatorUnitTest {
     }
 
     @Test
-    public void trueWeatherAlwaysReturnsOne() {
+    public void calculateDamageTrueWeatherAlwaysReturnsOne() {
         for (int i = 0; i < TESTING_DEPTH; i++) {
             for (int j = 1; j <= TESTING_DEPTH; j++) {
                 assertThat(trueWeather.calculateDamage(i, j)).isEqualTo(1);
