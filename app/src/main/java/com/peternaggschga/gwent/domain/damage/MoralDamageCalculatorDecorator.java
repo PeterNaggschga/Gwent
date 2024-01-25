@@ -33,7 +33,6 @@ class MoralDamageCalculatorDecorator extends DamageCalculatorDecorator {
      */
     MoralDamageCalculatorDecorator(@NonNull DamageCalculator component, @NonNull List<Integer> unitIds) {
         super(component);
-        require(component.getClass() == WeatherDamageCalculator.class || component.getClass() == BondDamageCalculatorDecorator.class);
         require(!unitIds.contains(null));
         this.unitIds = unitIds;
     }

@@ -22,26 +22,6 @@ public class MoralDamageCalculatorDecoratorUnitTest {
     private final WeatherDamageCalculator component = new WeatherDamageCalculator(false);
 
     @Test
-    public void constructorAssertsComponentType() {
-        try {
-            new MoralDamageCalculatorDecorator(component, Collections.emptyList());
-            new MoralDamageCalculatorDecorator(new BondDamageCalculatorDecorator(component, Collections.emptyMap()), Collections.emptyList());
-        } catch (Exception ignored) {
-            fail();
-        }
-        try {
-            new MoralDamageCalculatorDecorator(new HornDamageCalculatorDecorator(component, Collections.emptyList()), Collections.emptyList());
-            fail();
-        } catch (RequireViolation ignored) {
-        }
-        try {
-            new MoralDamageCalculatorDecorator(new MoralDamageCalculatorDecorator(component, Collections.emptyList()), Collections.emptyList());
-            fail();
-        } catch (RequireViolation ignored) {
-        }
-    }
-
-    @Test
     public void constructorAssertsNoNullInList() {
         List<Integer> list = new ArrayList<>();
         list.add(null);
