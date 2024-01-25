@@ -11,6 +11,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.valid4j.errors.RequireViolation;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -35,6 +36,17 @@ public class MoralDamageCalculatorDecoratorUnitTest {
         }
         try {
             new MoralDamageCalculatorDecorator(new MoralDamageCalculatorDecorator(component, Collections.emptyList()), Collections.emptyList());
+            fail();
+        } catch (RequireViolation ignored) {
+        }
+    }
+
+    @Test
+    public void constructorAssertsNoNullInList() {
+        List<Integer> list = new ArrayList<>();
+        list.add(null);
+        try {
+            new MoralDamageCalculatorDecorator(component, list);
             fail();
         } catch (RequireViolation ignored) {
         }
