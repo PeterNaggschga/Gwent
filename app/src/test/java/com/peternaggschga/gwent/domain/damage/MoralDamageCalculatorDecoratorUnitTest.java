@@ -63,7 +63,7 @@ public class MoralDamageCalculatorDecoratorUnitTest {
     @Test
     public void calculateDamageAssertsNonNegativeDamage() {
         try {
-            component.calculateDamage(0, -1);
+            new MoralDamageCalculatorDecorator(component, Collections.emptyList()).calculateDamage(0, -1);
             fail();
         } catch (RequireViolation ignored) {
         }
