@@ -5,6 +5,7 @@ import static org.junit.Assert.fail;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -19,7 +20,12 @@ import java.util.List;
 public class MoralDamageCalculatorDecoratorUnitTest {
     private static final int TESTING_DEPTH = 500;
     private static final int TESTING_DAMAGE = 5;
-    private final WeatherDamageCalculator component = new WeatherDamageCalculator(false);
+    private final WeatherDamageCalculator component = Mockito.mock(WeatherDamageCalculator.class);
+
+    @Before
+    public void initMock() {
+        when(component.calculateDamage(anyInt(), anyInt())).thenReturn(TESTING_DAMAGE);
+    }
 
     @Test
     public void constructorAssertsNoNullInList() {
@@ -36,7 +42,7 @@ public class MoralDamageCalculatorDecoratorUnitTest {
     public void calculateDamageEmptyListReturnsInput() {
         MoralDamageCalculatorDecorator decorator = new MoralDamageCalculatorDecorator(component, Collections.emptyList());
         for (int i = 0; i < TESTING_DEPTH; i++) {
-            assertThat(decorator.calculateDamage(i, TESTING_DAMAGE)).isEqualTo(TESTING_DAMAGE);
+            assertThat(decorator.calculateDamage(i, 0)).isEqualTo(TESTING_DAMAGE);
         }
     }
 
@@ -56,7 +62,7 @@ public class MoralDamageCalculatorDecoratorUnitTest {
         MoralDamageCalculatorDecorator decorator = new MoralDamageCalculatorDecorator(component, list);
         for (int i = 1; i <= TESTING_DEPTH; i++) {
             when(list.size()).thenReturn(i);
-            assertThat(decorator.calculateDamage(i, TESTING_DAMAGE)).isEqualTo(TESTING_DAMAGE + i);
+            assertThat(decorator.calculateDamage(i, 0)).isEqualTo(TESTING_DAMAGE + i);
         }
     }
 
@@ -67,6 +73,6 @@ public class MoralDamageCalculatorDecoratorUnitTest {
         when(list.contains(anyInt())).thenReturn(true);
         when(list.size()).thenReturn(TESTING_DEPTH);
         MoralDamageCalculatorDecorator decorator = new MoralDamageCalculatorDecorator(component, list);
-        assertThat(decorator.calculateDamage(0, TESTING_DAMAGE)).isEqualTo(TESTING_DAMAGE + TESTING_DEPTH - 1);
+        assertThat(decorator.calculateDamage(0, 0)).isEqualTo(TESTING_DAMAGE + TESTING_DEPTH - 1);
     }
 }
