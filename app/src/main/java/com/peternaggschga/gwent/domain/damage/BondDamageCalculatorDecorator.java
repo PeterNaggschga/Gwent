@@ -11,7 +11,8 @@ import java.util.Objects;
 /**
  * A DamageCalculator class responsible for calculating the tight bond buff if necessary,
  * i.e., if there are units with the com.peternaggschga.gwent.data.Ability#BINDING ability.
- * Acts as a ConcreteDecorator in the implemented decorator pattern and must decorate a WeatherDamageCalculator.
+ * Acts as a ConcreteDecorator in the implemented decorator pattern
+ * and should decorate a WeatherDamageCalculator for correct calculation.
  */
 class BondDamageCalculatorDecorator extends DamageCalculatorDecorator {
     /**
@@ -23,8 +24,10 @@ class BondDamageCalculatorDecorator extends DamageCalculatorDecorator {
     /**
      * Constructor of a BondDamageCalculatorDecorator.
      * Should only be called by DamageCalculatorBuilder.
+     * The given damage calculator should be of type WeatherDamageCalculator for correct damage calculation.
+     * The values of the given Map must contain non-``null`` or positive Integers.
      *
-     * @param component     WeatherDamageCalculator that is being decorated by this decorator.
+     * @param component     DamageCalculator that is being decorated by this decorator.
      * @param idToSquadSize Map mapping the ids of all units with the com.peternaggschga.gwent.data.Ability#BINDING ability to the respective squad size.
      * @see DamageCalculatorBuilder
      */
