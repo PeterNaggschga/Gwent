@@ -60,6 +60,13 @@ public class UnitRepositoryIntegrationTest {
     }
 
     @Test
+    public void constructorDoesntResetDatabase() {
+        insertDummys();
+        repository = new UnitRepository(database);
+        assertThat(database.units().countUnits().blockingGet()).isGreaterThan(0);
+    }
+
+    @Test
     public void resetNullDeletesUnits() {
         for (int i = 0; i < TESTING_DEPTH; i++) {
             for (RowType row : RowType.values()) {
