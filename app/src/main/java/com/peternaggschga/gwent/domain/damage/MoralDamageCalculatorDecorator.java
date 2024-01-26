@@ -11,8 +11,8 @@ import java.util.List;
  * A DamageCalculator class responsible for calculating the moral buff if necessary,
  * i.e., if there are units with the com.peternaggschga.gwent.data.Ability#MORAL_BOOST ability
  * that are not the unit the damage is calculated for.
- * Acts as a ConcreteDecorator in the implemented decorator pattern and must decorate a
- * WeatherDamageCalculator or a BondDamageCalculatorDecorator.
+ * Acts as a ConcreteDecorator in the implemented decorator pattern and should decorate a
+ * WeatherDamageCalculator or a BondDamageCalculatorDecorator for correct damage calculation.
  */
 class MoralDamageCalculatorDecorator extends DamageCalculatorDecorator {
     /**
@@ -24,7 +24,8 @@ class MoralDamageCalculatorDecorator extends DamageCalculatorDecorator {
     /**
      * Constructor of a MoralDamageCalculatorDecorator.
      * Should only be called by DamageCalculatorBuilder.
-     * The given damage calculator must be of type WeatherDamageCalculator or BondDamageCalculatorDecorator.
+     * The given damage calculator should be of type WeatherDamageCalculator or BondDamageCalculatorDecorator for correct damage calculation.
+     * The given List must not contain ``null``.
      *
      * @param component DamageCalculator that is being decorated by this decorator.
      * @param unitIds   List of Integers
