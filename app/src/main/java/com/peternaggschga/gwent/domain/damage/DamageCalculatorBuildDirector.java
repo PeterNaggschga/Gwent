@@ -5,15 +5,12 @@ import androidx.annotation.NonNull;
 import com.peternaggschga.gwent.data.Ability;
 import com.peternaggschga.gwent.data.UnitEntity;
 
-import org.jetbrains.annotations.Contract;
-
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
@@ -36,15 +33,15 @@ public class DamageCalculatorBuildDirector {
         DamageCalculatorBuilder builder = new DamageCalculatorBuilder();
         builder.setWeather(weather);
 
-        if (units.stream().anyMatch(getAbilityPredicate(Ability.BINDING))) {
+        if (units.stream().anyMatch(unit -> unit.getAbility() == Ability.BINDING)) {
             setSquads(units, builder);
         }
 
-        if (units.stream().anyMatch(getAbilityPredicate(Ability.MORAL_BOOST))) {
+        if (units.stream().anyMatch(unit -> unit.getAbility() == Ability.MORAL_BOOST)) {
             setMoralBoosts(units, builder);
         }
 
-        if (horn || units.stream().anyMatch(getAbilityPredicate(Ability.HORN))) {
+        if (horn || units.stream().anyMatch(unit -> unit.getAbility() == Ability.HORN)) {
             setHorns(horn, units, builder);
         }
 
@@ -64,7 +61,7 @@ public class DamageCalculatorBuildDirector {
      */
     private static void setSquads(@NonNull Collection<UnitEntity> units, @NonNull DamageCalculatorBuilder builder) {
         Optional<Map<Integer, List<Integer>>> mapOptional = units.stream()
-                .filter(getAbilityPredicate(Ability.BINDING)) // filter for binding units only
+                .filter(unit -> unit.getAbility() == Ability.BINDING) // filter for binding units only
                 .map(unit -> {
                     // create a map from squad to list of id for each unit
                     Map<Integer, List<Integer>> result = new HashMap<>();
@@ -101,7 +98,7 @@ public class DamageCalculatorBuildDirector {
      */
     private static void setMoralBoosts(@NonNull Collection<UnitEntity> units, @NonNull DamageCalculatorBuilder builder) {
         List<Integer> unitIds = units.stream()
-                .filter(getAbilityPredicate(Ability.MORAL_BOOST))
+                .filter(unit -> unit.getAbility() == Ability.MORAL_BOOST)
                 .map(UnitEntity::getId)
                 .collect(Collectors.toList());
         builder.setMoral(unitIds);
@@ -122,25 +119,12 @@ public class DamageCalculatorBuildDirector {
      */
     private static void setHorns(boolean horn, @NonNull Collection<UnitEntity> units, @NonNull DamageCalculatorBuilder builder) {
         List<Integer> unitIds = units.stream()
-                .filter(getAbilityPredicate(Ability.HORN))
+                .filter(unit -> unit.getAbility() == Ability.HORN)
                 .map(UnitEntity::getId)
                 .collect(Collectors.toList());
         if (horn) {
             unitIds.add(null);
         }
         builder.setHorn(unitIds);
-    }
-
-    /**
-     * Returns a Predicate checking if a UnitEntity has the given Ability.
-     *
-     * @param ability Ability for which units are checked.
-     * @return A Predicate checking whether a unit has the given Ability.
-     * @see Ability
-     */
-    @NonNull
-    @Contract(pure = true)
-    private static Predicate<UnitEntity> getAbilityPredicate(Ability ability) {
-        return unit -> unit.getAbility() == ability;
     }
 }
