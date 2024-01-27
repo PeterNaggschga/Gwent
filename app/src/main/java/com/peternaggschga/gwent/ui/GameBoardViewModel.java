@@ -2,6 +2,7 @@ package com.peternaggschga.gwent.ui;
 
 import static androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -10,9 +11,12 @@ import androidx.lifecycle.viewmodel.ViewModelInitializer;
 import com.peternaggschga.gwent.GwentApplication;
 import com.peternaggschga.gwent.data.RowType;
 import com.peternaggschga.gwent.data.UnitRepository;
+import com.peternaggschga.gwent.domain.RowStateUseCase;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import io.reactivex.rxjava3.core.Completable;
 
 public class GameBoardViewModel extends ViewModel {
     public static final ViewModelInitializer<GameBoardViewModel> initializer = new ViewModelInitializer<>(
@@ -54,6 +58,22 @@ public class GameBoardViewModel extends ViewModel {
             }
         }
         return menuUiState;
+    }
+
+    public Completable updateUiState() {
+        Completable result = Completable.complete();
+        for (RowType row : RowType.values()) {
+            result = result.andThen(updateUiState(row));
+        }
+        return result;
+    }
+
+    public Completable updateUiState(@NonNull RowType row) {
+        return Completable.create(emitter -> {
+            getRowUiState(row).postValue(RowStateUseCase.getRowState(repository, row).blockingGet());
+            emitter.onComplete();
+        });
+
     }
 
     public void onWeatherViewPressed(RowType row) {
