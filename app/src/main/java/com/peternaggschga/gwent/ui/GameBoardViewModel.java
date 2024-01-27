@@ -35,7 +35,7 @@ public class GameBoardViewModel extends ViewModel {
         this.repository = repository;
     }
 
-    public MutableLiveData<RowUiState> getRowUiState(RowType row) {
+    public MutableLiveData<RowUiState> getRowUiState(@NonNull RowType row) {
         if (!rowUiStates.containsKey(row)) {
             return rowUiStates.put(row, new MutableLiveData<>());
         }
@@ -76,25 +76,25 @@ public class GameBoardViewModel extends ViewModel {
 
     }
 
-    public void onWeatherViewPressed(RowType row) {
-        repository.switchWeather(row);
-        // TODO: State updaten
+    public Completable onWeatherViewPressed(@NonNull RowType row) {
+        return repository.switchWeather(row)
+                .andThen(updateUiState(row));
     }
 
-    public void onHornViewPressed(RowType row) {
-        repository.switchHorn(row);
-        // TODO: State updaten
+    public Completable onHornViewPressed(@NonNull RowType row) {
+        return repository.switchHorn(row)
+                .andThen(updateUiState(row));
     }
 
-    public void onResetButtonPressed() {
+    public Completable onResetButtonPressed() {
         // TODO: Warnung
-        repository.reset();
-        // TODO: State updaten
+        return repository.reset()
+                .andThen(updateUiState());
     }
 
-    public void onWeatherButtonPressed() {
-        repository.clearWeather();
-        // TODO: State updaten
+    public Completable onWeatherButtonPressed() {
+        return repository.clearWeather()
+                .andThen(updateUiState());
     }
 
     public void onBurnButtonPressed() {
