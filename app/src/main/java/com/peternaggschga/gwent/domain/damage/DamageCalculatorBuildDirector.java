@@ -6,11 +6,10 @@ import com.peternaggschga.gwent.data.Ability;
 import com.peternaggschga.gwent.data.UnitEntity;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -60,28 +59,15 @@ public class DamageCalculatorBuildDirector {
      * @see DamageCalculatorBuilder#setBond(Map)
      */
     private static void setSquads(@NonNull Collection<UnitEntity> units, @NonNull DamageCalculatorBuilder builder) {
-        Optional<Map<Integer, List<Integer>>> mapOptional = units.stream()
-                .filter(unit -> unit.getAbility() == Ability.BINDING) // filter for binding units only
-                .map(unit -> {
-                    // create a map from squad to list of id for each unit
-                    Map<Integer, List<Integer>> result = new HashMap<>();
-                    result.put(unit.getSquad(), Collections.singletonList(unit.getId()));
-                    return result;
-                }).reduce((integerListMap, integerListMap2) -> {
-                    // merge maps
-                    for (Map.Entry<Integer, List<Integer>> entry : integerListMap2.entrySet()) {
-                        integerListMap.merge(entry.getKey(), entry.getValue(), (integers, integers2) -> {
-                            integers.addAll(integers2);
-                            return integers;
-                        });
-                    }
-                    return integerListMap;
-                });
-        assert mapOptional.isPresent();
-        // create a new map from mapOptional which maps Unit ids to the respective squad size
+        List<UnitEntity> bindingUnits = units.stream().filter(unit -> unit.getAbility() == Ability.BINDING).collect(Collectors.toList());
+        Map<Integer, Integer> squadToSquadSize = new HashMap<>();
+        for (UnitEntity unit : bindingUnits) {
+            squadToSquadSize.putIfAbsent(unit.getSquad(), 0);
+            squadToSquadSize.put(unit.getSquad(), Objects.requireNonNull(squadToSquadSize.get(unit.getSquad())) + 1);
+        }
         Map<Integer, Integer> idToSquadSize = new HashMap<>();
-        for (List<Integer> list : mapOptional.get().values()) {
-            list.forEach(integer -> idToSquadSize.put(integer, list.size()));
+        for (UnitEntity unit : bindingUnits) {
+            idToSquadSize.put(unit.getId(), squadToSquadSize.get(unit.getSquad()));
         }
         builder.setBond(idToSquadSize);
     }
