@@ -42,5 +42,6 @@ public class MainActivity extends AppCompatActivity {
                 findViewById(R.id.weatherButton),
                 findViewById(R.id.burnButton));
         gameBoard.getMenuUiState().observe(this, observer);
+        gameBoard.updateUiState().blockingAwait();
     }
 }
