@@ -100,7 +100,7 @@ public class UnitEntity {
      * @return Integer representing the units (de-)buffed damage.
      * @see #getDamage()
      */
-    public int calculateDamage(@NonNull DamageCalculator calculator) { // TODO: add test cases
+    public int calculateDamage(@NonNull DamageCalculator calculator) {
         return epic ? damage : calculator.calculateDamage(id, damage);
     }
 
