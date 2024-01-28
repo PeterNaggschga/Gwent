@@ -31,7 +31,7 @@ public class GameBoardViewModel extends ViewModel {
     private final Map<RowType, MutableLiveData<RowUiState>> rowUiStates = new HashMap<>();
     private MediatorLiveData<MenuUiState> menuUiState;
 
-    public GameBoardViewModel(UnitRepository repository) {
+    private GameBoardViewModel(UnitRepository repository) {
         this.repository = repository;
     }
 
