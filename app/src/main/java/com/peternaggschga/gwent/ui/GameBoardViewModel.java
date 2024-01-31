@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class GameBoardViewModel extends ViewModel {
     public static final ViewModelInitializer<GameBoardViewModel> initializer = new ViewModelInitializer<>(
@@ -64,8 +65,13 @@ public class GameBoardViewModel extends ViewModel {
         return menuUiState;
     }
 
+    public void updateUi() {
+        updateUiState().subscribeOn(Schedulers.io())
+                .subscribe();
+    }
+
     @NonNull
-    public Completable updateUiState() {
+    private Completable updateUiState() {
         Completable result = Completable.complete();
         for (RowType row : RowType.values()) {
             result = result.andThen(updateUiState(row));
@@ -74,43 +80,47 @@ public class GameBoardViewModel extends ViewModel {
     }
 
     @NonNull
-    public Completable updateUiState(@NonNull RowType row) {
+    private Completable updateUiState(@NonNull RowType row) {
         return Completable.create(emitter -> {
             getRowUiState(row).postValue(RowStateUseCase.getRowState(repository, row).blockingGet());
             emitter.onComplete();
         });
-
     }
 
-    @NonNull
-    public Completable onWeatherViewPressed(@NonNull RowType row) {
-        return repository.switchWeather(row)
-                .andThen(updateUiState(row));
+    public void onWeatherViewPressed(@NonNull RowType row) {
+        repository.switchWeather(row)
+                .andThen(updateUiState(row))
+                .subscribeOn(Schedulers.io())
+                .subscribe();
     }
 
-    @NonNull
-    public Completable onHornViewPressed(@NonNull RowType row) {
-        return repository.switchHorn(row)
-                .andThen(updateUiState(row));
+    public void onHornViewPressed(@NonNull RowType row) {
+        repository.switchHorn(row)
+                .andThen(updateUiState(row))
+                .subscribeOn(Schedulers.io())
+                .subscribe();
     }
 
-    @NonNull
-    public Completable onResetButtonPressed() {
+    public void onResetButtonPressed() {
         // TODO: Warnung
-        return repository.reset()
-                .andThen(updateUiState());
+        repository.reset()
+                .andThen(updateUiState())
+                .subscribeOn(Schedulers.io())
+                .subscribe();
     }
 
-    @NonNull
-    public Completable onWeatherButtonPressed() {
-        return repository.clearWeather()
-                .andThen(updateUiState());
+    public void onWeatherButtonPressed() {
+        repository.clearWeather()
+                .andThen(updateUiState())
+                .subscribeOn(Schedulers.io())
+                .subscribe();
     }
 
-    @NonNull
-    public Completable onBurnButtonPressed() {
+    public void onBurnButtonPressed() {
         // TODO: Warnung
-        return new BurnUnitsUseCase(repository).removeBurnUnits()
-                .andThen(updateUiState());
+        new BurnUnitsUseCase(repository).removeBurnUnits()
+                .andThen(updateUiState())
+                .subscribeOn(Schedulers.io())
+                .subscribe();
     }
 }

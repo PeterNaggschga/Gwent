@@ -57,6 +57,6 @@ public class MainActivity extends AppCompatActivity {
         weather.setOnClickListener(v -> gameBoard.onWeatherButtonPressed());
         burn.setOnClickListener(v -> gameBoard.onBurnButtonPressed());
 
-        gameBoard.updateUiState();
+        gameBoard.updateUi();
     }
 }
