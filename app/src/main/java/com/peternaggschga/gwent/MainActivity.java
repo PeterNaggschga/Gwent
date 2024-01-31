@@ -1,6 +1,8 @@
 package com.peternaggschga.gwent;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.widget.ImageButton;
 
 import androidx.annotation.Nullable;
@@ -19,14 +21,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        new Thread(this::initializeViewModel).start();
+        new Thread(() -> {
+            gameBoard = new ViewModelProvider(MainActivity.this,
+                    ViewModelProvider.Factory.from(GameBoardViewModel.initializer)
+            ).get(GameBoardViewModel.class);
+            new Handler(Looper.getMainLooper()).post(this::initializeViewModel);
+        }).start();
     }
 
     private void initializeViewModel() {
-        gameBoard = new ViewModelProvider(this,
-                ViewModelProvider.Factory.from(GameBoardViewModel.initializer)
-        ).get(GameBoardViewModel.class);
-
         int[] rowIds = {R.id.firstRow, R.id.secondRow, R.id.thirdRow};
         for (int i = 0; i < rowIds.length; i++) {
             RowType row = RowType.values()[i];
@@ -50,6 +53,6 @@ public class MainActivity extends AppCompatActivity {
         weather.setOnClickListener(v -> gameBoard.onWeatherButtonPressed());
         burn.setOnClickListener(v -> gameBoard.onBurnButtonPressed());
 
-        gameBoard.updateUiState().blockingAwait();
+        gameBoard.updateUiState();
     }
 }
