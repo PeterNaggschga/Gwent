@@ -209,12 +209,11 @@ public class UnitEntity {
 
     /**
      * Getter for #row.
-     * Only used by Room extension.
      *
      * @return RowType representing the units combat row.
      */
     @NonNull
-    RowType getRow() {
+    public RowType getRow() {
         return row;
     }
 

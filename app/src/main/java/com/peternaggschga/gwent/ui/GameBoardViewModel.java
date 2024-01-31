@@ -97,9 +97,9 @@ public class GameBoardViewModel extends ViewModel {
                 .andThen(updateUiState());
     }
 
-    public void onBurnButtonPressed() {
+    public Completable onBurnButtonPressed() {
         // TODO: Warnung
-        // TODO: Ausführung
-        // TODO: State updaten
+        return new BurnUnitsUseCase(repository).removeBurnUnits()
+                .andThen(updateUiState());
     }
 }
