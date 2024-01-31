@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,11 +35,14 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < rowIds.length; i++) {
             RowType row = RowType.values()[i];
             ConstraintLayout rowLayout = findViewById(rowIds[i]);
-            final RowUiStateObserver observer = new RowUiStateObserver(row,
-                    rowLayout.findViewById(R.id.pointView),
-                    rowLayout.findViewById(R.id.weatherImage),
-                    rowLayout.findViewById(R.id.hornImage),
-                    rowLayout.findViewById(R.id.cardCountView));
+
+            ImageView weather = rowLayout.findViewById(R.id.weatherImage);
+            ImageView horn = rowLayout.findViewById(R.id.hornImage);
+
+            weather.setOnClickListener(v -> gameBoard.onWeatherViewPressed(row));
+            horn.setOnClickListener(v -> gameBoard.onHornViewPressed(row));
+
+            final RowUiStateObserver observer = new RowUiStateObserver(row, rowLayout.findViewById(R.id.pointView), weather, horn, rowLayout.findViewById(R.id.cardCountView));
             gameBoard.getRowUiState(row).observe(this, observer);
         }
 
