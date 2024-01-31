@@ -1,6 +1,7 @@
 package com.peternaggschga.gwent;
 
 import android.os.Bundle;
+import android.widget.ImageButton;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,11 +38,18 @@ public class MainActivity extends AppCompatActivity {
                     rowLayout.findViewById(R.id.cardCountView));
             gameBoard.getRowUiState(row).observe(this, observer);
         }
-        final MenuUiStateObserver observer = new MenuUiStateObserver(findViewById(R.id.overallPointView),
-                findViewById(R.id.resetButton),
-                findViewById(R.id.weatherButton),
-                findViewById(R.id.burnButton));
+
+        ImageButton reset = findViewById(R.id.resetButton);
+        ImageButton weather = findViewById(R.id.weatherButton);
+        ImageButton burn = findViewById(R.id.burnButton);
+
+        final MenuUiStateObserver observer = new MenuUiStateObserver(findViewById(R.id.overallPointView), reset, weather, burn);
         gameBoard.getMenuUiState().observe(this, observer);
+
+        reset.setOnClickListener(v -> gameBoard.onResetButtonPressed());
+        weather.setOnClickListener(v -> gameBoard.onWeatherButtonPressed());
+        burn.setOnClickListener(v -> gameBoard.onBurnButtonPressed());
+
         gameBoard.updateUiState().blockingAwait();
     }
 }
