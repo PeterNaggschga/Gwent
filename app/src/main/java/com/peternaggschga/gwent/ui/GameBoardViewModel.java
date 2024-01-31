@@ -11,10 +11,12 @@ import androidx.lifecycle.viewmodel.ViewModelInitializer;
 import com.peternaggschga.gwent.GwentApplication;
 import com.peternaggschga.gwent.data.RowType;
 import com.peternaggschga.gwent.data.UnitRepository;
+import com.peternaggschga.gwent.domain.BurnUnitsUseCase;
 import com.peternaggschga.gwent.domain.RowStateUseCase;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import io.reactivex.rxjava3.core.Completable;
 
@@ -27,21 +29,23 @@ public class GameBoardViewModel extends ViewModel {
                 return new GameBoardViewModel(app.getRepository());
             });
 
+    @NonNull
     private final UnitRepository repository;
+    @NonNull
     private final Map<RowType, MutableLiveData<RowUiState>> rowUiStates = new HashMap<>();
     private MediatorLiveData<MenuUiState> menuUiState;
 
-    private GameBoardViewModel(UnitRepository repository) {
+    private GameBoardViewModel(@NonNull UnitRepository repository) {
         this.repository = repository;
     }
 
+    @NonNull
     public MutableLiveData<RowUiState> getRowUiState(@NonNull RowType row) {
-        if (!rowUiStates.containsKey(row)) {
-            return rowUiStates.put(row, new MutableLiveData<>());
-        }
-        return rowUiStates.get(row);
+        rowUiStates.putIfAbsent(row, new MutableLiveData<>());
+        return Objects.requireNonNull(rowUiStates.get(row));
     }
 
+    @NonNull
     public MutableLiveData<MenuUiState> getMenuUiState() {
         if (menuUiState == null) {
             menuUiState = new MediatorLiveData<>();
@@ -60,6 +64,7 @@ public class GameBoardViewModel extends ViewModel {
         return menuUiState;
     }
 
+    @NonNull
     public Completable updateUiState() {
         Completable result = Completable.complete();
         for (RowType row : RowType.values()) {
@@ -68,6 +73,7 @@ public class GameBoardViewModel extends ViewModel {
         return result;
     }
 
+    @NonNull
     public Completable updateUiState(@NonNull RowType row) {
         return Completable.create(emitter -> {
             getRowUiState(row).postValue(RowStateUseCase.getRowState(repository, row).blockingGet());
@@ -76,27 +82,32 @@ public class GameBoardViewModel extends ViewModel {
 
     }
 
+    @NonNull
     public Completable onWeatherViewPressed(@NonNull RowType row) {
         return repository.switchWeather(row)
                 .andThen(updateUiState(row));
     }
 
+    @NonNull
     public Completable onHornViewPressed(@NonNull RowType row) {
         return repository.switchHorn(row)
                 .andThen(updateUiState(row));
     }
 
+    @NonNull
     public Completable onResetButtonPressed() {
         // TODO: Warnung
         return repository.reset()
                 .andThen(updateUiState());
     }
 
+    @NonNull
     public Completable onWeatherButtonPressed() {
         return repository.clearWeather()
                 .andThen(updateUiState());
     }
 
+    @NonNull
     public Completable onBurnButtonPressed() {
         // TODO: Warnung
         return new BurnUnitsUseCase(repository).removeBurnUnits()
