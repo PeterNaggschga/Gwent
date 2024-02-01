@@ -30,6 +30,7 @@ class MoralDamageCalculatorDecorator extends DamageCalculatorDecorator {
      * @param component DamageCalculator that is being decorated by this decorator.
      * @param unitIds   List of Integers
      *                  representing ids of units with the com.peternaggschga.gwent.data.Ability#MORAL_BOOST ability.
+     * @throws org.valid4j.errors.RequireViolation When unitIds contains null values.
      * @see DamageCalculatorBuilder
      */
     MoralDamageCalculatorDecorator(@NonNull DamageCalculator component, @NonNull List<Integer> unitIds) {
@@ -47,6 +48,7 @@ class MoralDamageCalculatorDecorator extends DamageCalculatorDecorator {
      * @param id     Integer representing the UnitEntity#id of the unit whose (de-)buff damage is calculated.
      * @param damage Integer representing the base-damage of the unit whose (de-)buff damage is calculated.
      * @return Integer representing the (de-)buffed damage of the unit.
+     * @throws org.valid4j.errors.RequireViolation When damage is negative.
      */
     @Override
     public int calculateDamage(int id, @IntRange(from = 0) int damage) {

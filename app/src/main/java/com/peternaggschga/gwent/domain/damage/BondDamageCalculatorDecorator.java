@@ -29,6 +29,7 @@ class BondDamageCalculatorDecorator extends DamageCalculatorDecorator {
      *
      * @param component     DamageCalculator that is being decorated by this decorator.
      * @param idToSquadSize Map mapping the ids of all units with the com.peternaggschga.gwent.data.Ability#BINDING ability to the respective squad size.
+     * @throws org.valid4j.errors.RequireViolation When idToSquadSize contains negative or null values.
      * @see DamageCalculatorBuilder
      */
     BondDamageCalculatorDecorator(@NonNull DamageCalculator component, @NonNull Map<Integer, Integer> idToSquadSize) {
@@ -45,6 +46,7 @@ class BondDamageCalculatorDecorator extends DamageCalculatorDecorator {
      * @param id     Integer representing the UnitEntity#id of the unit whose (de-)buff damage is calculated.
      * @param damage Integer representing the base-damage of the unit whose (de-)buff damage is calculated.
      * @return Integer representing the (de-)buffed damage of the unit.
+     * @throws org.valid4j.errors.RequireViolation When damage is negative.
      */
     @Override
     public int calculateDamage(int id, @IntRange(from = 0) int damage) {

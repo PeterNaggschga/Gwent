@@ -100,6 +100,7 @@ public class UnitRepository {
      * @param squad   Integer representing the #squad of a card that has the Ability#BINDING #ability.
      * @param row     RowType representing the combat type of the card.
      * @return A Completable tracking operation status.
+     * @throws org.valid4j.errors.RequireViolation When damage is less than zero or if ability is Ability#BINDING and squad is null or less than zero or if ability is not Ability#BINDING and squad is not null.
      */
     public Completable insertUnit(boolean epic, @IntRange(from = 0) int damage, @NonNull Ability ability, @IntRange(from = 0) @Nullable Integer squad, @NonNull RowType row) {
         require(damage >= 0);

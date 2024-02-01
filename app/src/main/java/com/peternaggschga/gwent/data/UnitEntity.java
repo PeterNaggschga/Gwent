@@ -78,6 +78,7 @@ public class UnitEntity {
      * @param ability Ability representing the #ability of the card.
      * @param squad   Integer representing the #squad of a card that has the Ability#BINDING #ability.
      * @param row     RowType representing the combat type of the card.
+     * @throws org.valid4j.errors.RequireViolation When damage is less than zero or if ability is Ability#BINDING and squad is null or less than zero or if ability is not Ability#BINDING and squad is not null.
      */
     UnitEntity(boolean epic, @IntRange(from = 0) int damage, @NonNull Ability ability, @IntRange(from = 0) @Nullable Integer squad, @NonNull RowType row) {
         require(damage >= 0);
@@ -159,6 +160,7 @@ public class UnitEntity {
      * Only used by Room extension.
      *
      * @param damage Integer representing the card's base-damage.
+     * @throws org.valid4j.errors.RequireViolation When damage is less than zero.
      */
     void setDamage(@IntRange(from = 0) int damage) {
         require(damage >= 0);
@@ -200,6 +202,7 @@ public class UnitEntity {
      * Only used by Room extension.
      *
      * @param squad Integer representing the units' squad if #ability is Ability#BINDING or `null`.
+     * @throws org.valid4j.errors.RequireViolation When #ability is Ability#BINDING and squad is null or less than zero or if #ability is not Ability#BINDING and squad is not null.
      */
     void setSquad(@IntRange(from = 0) @Nullable Integer squad) {
         require(ability == Ability.BINDING || squad == null);
