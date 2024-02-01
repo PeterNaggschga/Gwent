@@ -10,11 +10,23 @@ import com.peternaggschga.gwent.domain.damage.DamageCalculatorBuildDirector;
 import com.peternaggschga.gwent.ui.RowUiState;
 
 import java.util.Collection;
-import java.util.function.Function;
 
 import io.reactivex.rxjava3.core.Single;
 
+/**
+ * A use case class responsible for creating RowUiState objects.
+ * Is used as a factory for RowUiState.
+ *
+ * @see RowUiState
+ */
 public class RowStateUseCase {
+    /**
+     * Returns a Single emitting an up-to-date RowUiState object for the given row
+     * retrieved from the given UnitRepository.
+     * @param repository UnitRepository used for data collection.
+     * @param row RowType defining which row is queried for status generation.
+     * @return A Single emitting an up-to-date RowUiState for the given row.
+     */
     @NonNull
     public static Single<RowUiState> getRowState(@NonNull UnitRepository repository, @NonNull RowType row) {
         return Single.fromCallable(() -> {
@@ -23,7 +35,7 @@ public class RowStateUseCase {
             Collection<UnitEntity> units = repository.getUnits(row).blockingGet();
             DamageCalculator calculator = DamageCalculatorBuildDirector.getCalculator(weather, horn, units);
             int damage = units.stream()
-                    .map((Function<UnitEntity, Integer>) unit -> unit.calculateDamage(calculator))
+                    .map(unit -> unit.calculateDamage(calculator))
                     .reduce(0, Integer::sum);
             return new RowUiState(damage, weather, horn, units.size());
         });
