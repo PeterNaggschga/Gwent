@@ -1,10 +1,12 @@
 package com.peternaggschga.gwent;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,6 +32,10 @@ public class MainActivity extends AppCompatActivity {
             ).get(GameBoardViewModel.class);
             new Handler(Looper.getMainLooper()).post(MainActivity.this::initializeViewModel);
         });
+
+        findViewById(R.id.factionButton).setOnClickListener(v -> inflateFactionPopup());
+        findViewById(R.id.coinButton).setOnClickListener(v -> inflateCoinFlipPopup());
+        findViewById(R.id.settingsButton).setOnClickListener(v -> startActivity(new Intent(MainActivity.this, SettingsActivity.class)));
     }
 
     private void initializeViewModel() {
@@ -44,7 +50,11 @@ public class MainActivity extends AppCompatActivity {
             weather.setOnClickListener(v -> gameBoard.onWeatherViewPressed(row));
             horn.setOnClickListener(v -> gameBoard.onHornViewPressed(row));
 
-            final RowUiStateObserver observer = new RowUiStateObserver(row, rowLayout.findViewById(R.id.pointView), weather, horn, rowLayout.findViewById(R.id.cardCountView));
+            final RowUiStateObserver observer = new RowUiStateObserver(row,
+                    rowLayout.findViewById(R.id.pointView),
+                    weather,
+                    horn,
+                    rowLayout.findViewById(R.id.cardCountView));
             gameBoard.getRowUiState(row).observe(this, observer);
         }
 
@@ -52,7 +62,10 @@ public class MainActivity extends AppCompatActivity {
         ImageButton weather = findViewById(R.id.weatherButton);
         ImageButton burn = findViewById(R.id.burnButton);
 
-        final MenuUiStateObserver observer = new MenuUiStateObserver(findViewById(R.id.overallPointView), reset, weather, burn);
+        final MenuUiStateObserver observer = new MenuUiStateObserver(findViewById(R.id.overallPointView),
+                reset,
+                weather,
+                burn);
         gameBoard.getMenuUiState().observe(this, observer);
 
         reset.setOnClickListener(v -> gameBoard.onResetButtonPressed());
@@ -60,5 +73,15 @@ public class MainActivity extends AppCompatActivity {
         burn.setOnClickListener(v -> gameBoard.onBurnButtonPressed());
 
         gameBoard.updateUi();
+    }
+
+    private void inflateFactionPopup() {
+        Toast.makeText(this, "Not yet implemented!", Toast.LENGTH_SHORT).show();
+        // TODO
+    }
+
+    private void inflateCoinFlipPopup() {
+        Toast.makeText(this, "Not yet implemented!", Toast.LENGTH_SHORT).show();
+        // TODO
     }
 }
