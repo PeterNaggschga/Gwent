@@ -35,4 +35,12 @@ public class RowUiState {
     public int getUnits() {
         return units;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof RowUiState)) return false;
+        RowUiState state = (RowUiState) o;
+        return damage == state.damage && weather == state.weather && horn == state.horn && units == state.units;
+    }
 }

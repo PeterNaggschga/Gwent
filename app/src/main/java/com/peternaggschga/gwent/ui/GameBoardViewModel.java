@@ -84,10 +84,15 @@ public class GameBoardViewModel extends ViewModel {
 
     @NonNull
     private Completable updateUiState(@NonNull RowType row) {
-        return Completable.create(emitter ->
-                getRowUiState(row).postValue(RowStateUseCase.getRowState(repository, row)
-                        .doAfterTerminate(emitter::onComplete)
-                        .blockingGet()));
+        return Completable.create(emitter -> {
+            MutableLiveData<RowUiState> rowState = getRowUiState(row);
+            RowUiState state = RowStateUseCase.getRowState(repository, row).blockingGet();
+            if (!state.equals(rowState.getValue())) {
+                rowState.postValue(state);
+            }
+            emitter.onComplete();
+        });
+
     }
 
     public void onWeatherViewPressed(@NonNull RowType row) {
