@@ -55,7 +55,9 @@ public class BurnUnitsUseCase {
 
     @NonNull
     public Completable removeBurnUnits() {
-        return Completable.fromSingle(getBurnUnits())
-                .andThen(repository.delete(burnUnits));
+        return Completable.create(emitter ->
+                repository.delete(getBurnUnits().blockingGet())
+                        .doAfterTerminate(emitter::onComplete)
+                        .blockingAwait());
     }
 }
