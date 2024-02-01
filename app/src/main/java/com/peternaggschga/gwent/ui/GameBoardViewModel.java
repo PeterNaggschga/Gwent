@@ -40,6 +40,10 @@ public class GameBoardViewModel extends ViewModel {
         this.repository = repository;
     }
 
+    private static void runOnUiThread(@NonNull Completable toBeRun) {
+        toBeRun.subscribeOn(Schedulers.io()).subscribe();
+    }
+
     @NonNull
     public MutableLiveData<RowUiState> getRowUiState(@NonNull RowType row) {
         rowUiStates.putIfAbsent(row, new MutableLiveData<>());
@@ -66,8 +70,7 @@ public class GameBoardViewModel extends ViewModel {
     }
 
     public void updateUi() {
-        updateUiState().subscribeOn(Schedulers.io())
-                .subscribe();
+        runOnUiThread(updateUiState());
     }
 
     @NonNull
@@ -88,39 +91,30 @@ public class GameBoardViewModel extends ViewModel {
     }
 
     public void onWeatherViewPressed(@NonNull RowType row) {
-        repository.switchWeather(row)
-                .andThen(updateUiState(row))
-                .subscribeOn(Schedulers.io())
-                .subscribe();
+        runOnUiThread(repository.switchWeather(row)
+                .andThen(updateUiState(row)));
     }
 
     public void onHornViewPressed(@NonNull RowType row) {
-        repository.switchHorn(row)
-                .andThen(updateUiState(row))
-                .subscribeOn(Schedulers.io())
-                .subscribe();
+        runOnUiThread(repository.switchHorn(row)
+                .andThen(updateUiState(row)));
     }
 
     public void onResetButtonPressed() {
         // TODO: Warnung
-        repository.reset()
-                .andThen(updateUiState())
-                .subscribeOn(Schedulers.io())
-                .subscribe();
+        runOnUiThread(repository.reset()
+                .andThen(updateUiState()));
     }
 
     public void onWeatherButtonPressed() {
-        repository.clearWeather()
-                .andThen(updateUiState())
-                .subscribeOn(Schedulers.io())
-                .subscribe();
+        runOnUiThread(repository.clearWeather()
+                .andThen(updateUiState()));
     }
 
     public void onBurnButtonPressed() {
         // TODO: Warnung
-        new BurnUnitsUseCase(repository).removeBurnUnits()
-                .andThen(updateUiState())
-                .subscribeOn(Schedulers.io())
-                .subscribe();
+        runOnUiThread(new BurnUnitsUseCase(repository)
+                .removeBurnUnits()
+                .andThen(updateUiState()));
     }
 }
