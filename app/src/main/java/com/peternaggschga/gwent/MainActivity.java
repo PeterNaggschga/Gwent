@@ -14,6 +14,8 @@ import androidx.lifecycle.ViewModelProvider;
 import com.peternaggschga.gwent.data.RowType;
 import com.peternaggschga.gwent.ui.GameBoardViewModel;
 
+import io.reactivex.rxjava3.schedulers.Schedulers;
+
 public class MainActivity extends AppCompatActivity {
     private GameBoardViewModel gameBoard;
 
@@ -22,12 +24,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        new Thread(() -> {
+        Schedulers.io().scheduleDirect(() -> {
             gameBoard = new ViewModelProvider(MainActivity.this,
                     ViewModelProvider.Factory.from(GameBoardViewModel.initializer)
             ).get(GameBoardViewModel.class);
-            new Handler(Looper.getMainLooper()).post(this::initializeViewModel);
-        }).start();
+            new Handler(Looper.getMainLooper()).post(MainActivity.this::initializeViewModel);
+        });
     }
 
     private void initializeViewModel() {
