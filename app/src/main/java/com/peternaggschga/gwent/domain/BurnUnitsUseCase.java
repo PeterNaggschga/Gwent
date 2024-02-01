@@ -17,15 +17,38 @@ import java.util.stream.Collectors;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 
+/**
+ * A use case class responsible for the execution of the burn operation.
+ */
 public class BurnUnitsUseCase {
+    /**
+     * UnitRepository that is queried
+     * when searching for the units to be burned and where the units are deleted.
+     */
     @NonNull
     private final UnitRepository repository;
+
+    /**
+     * List of UnitEntity objects that are to be burned.
+     * Are lazily computed when #getBurnUnits() or #removeBurnUnits() is called.
+     */
     private List<UnitEntity> burnUnits;
 
+    /**
+     * Constructor of a BurnUnitsUseCase.
+     *
+     * @param repository UnitRepository where units are searched and deleted.
+     */
     public BurnUnitsUseCase(@NonNull UnitRepository repository) {
         this.repository = repository;
     }
 
+    /**
+     * Returns the list of units that would be affected by a burn operation, i.e. #burnUnits.
+     * Lazily calculates #burnUnits if this method hasn't been called already.
+     *
+     * @return A Single emitting the List of UnitEntity objects that would be affected by the operation.
+     */
     @NonNull
     public Single<List<UnitEntity>> getBurnUnits() {
         if (burnUnits != null) {
@@ -53,6 +76,13 @@ public class BurnUnitsUseCase {
         });
     }
 
+    /**
+     * Deletes units in #burnUnits.
+     * Calculates #burnUnits lazily beforehand by calling #getBurnUnits() if not yet done so.
+     *
+     * @return A Completable tracking operation status
+     * @see #getBurnUnits()
+     */
     @NonNull
     public Completable removeBurnUnits() {
         return Completable.create(emitter ->
