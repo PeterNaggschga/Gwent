@@ -21,6 +21,7 @@ class DamageCalculatorBuilder {
      * The DamageCalculator instance that is being built by this DamageCalculatorBuilder.
      * Starts as a WeatherDamageCalculator, since this is always at the end of the decorator chain.
      */
+    @NonNull
     private DamageCalculator calculator = new WeatherDamageCalculator(false);
 
     /**
