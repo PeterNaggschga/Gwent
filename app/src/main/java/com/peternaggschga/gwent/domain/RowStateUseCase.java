@@ -6,7 +6,6 @@ import com.peternaggschga.gwent.data.RowType;
 import com.peternaggschga.gwent.data.UnitEntity;
 import com.peternaggschga.gwent.data.UnitRepository;
 import com.peternaggschga.gwent.domain.damage.DamageCalculator;
-import com.peternaggschga.gwent.domain.damage.DamageCalculatorBuildDirector;
 import com.peternaggschga.gwent.ui.RowUiState;
 
 import java.util.Collection;
@@ -33,7 +32,7 @@ public class RowStateUseCase {
             boolean weather = repository.isWeather(row).blockingGet();
             boolean horn = repository.isHorn(row).blockingGet();
             Collection<UnitEntity> units = repository.getUnits(row).blockingGet();
-            DamageCalculator calculator = DamageCalculatorBuildDirector.getCalculator(weather, horn, units);
+            DamageCalculator calculator = DamageCalculatorUseCase.getDamageCalculator(weather, horn, units);
             int damage = units.stream()
                     .map(unit -> unit.calculateDamage(calculator))
                     .reduce(0, Integer::sum);

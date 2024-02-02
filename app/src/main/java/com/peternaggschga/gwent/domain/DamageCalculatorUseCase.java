@@ -32,7 +32,22 @@ public class DamageCalculatorUseCase {
             boolean weather = repository.isWeather(row).blockingGet();
             boolean horn = repository.isHorn(row).blockingGet();
             Collection<UnitEntity> units = repository.getUnits(row).blockingGet();
-            return DamageCalculatorBuildDirector.getCalculator(weather, horn, units);
+            return getDamageCalculator(weather, horn, units);
         });
+    }
+
+    /**
+     * Creates a DamageCalculator for a row with the given weather status, horn status and units.
+     * Basically calls DamageCalculatorBuildDirector#getCalculator with the given parameters.
+     *
+     * @param weather Boolean defining whether the calculation encompasses the weather debuff.
+     * @param horn    Boolean defining whether a commander's horn is in the row.
+     * @param units   Collection of UnitEntity objects that are in the row.
+     * @return A DamageCalculator object capable of calculating damage for the given units.
+     * @see DamageCalculatorBuildDirector#getCalculator(boolean, boolean, Collection)
+     */
+    @NonNull
+    public static DamageCalculator getDamageCalculator(boolean weather, boolean horn, @NonNull Collection<UnitEntity> units) {
+        return DamageCalculatorBuildDirector.getCalculator(weather, horn, units);
     }
 }
