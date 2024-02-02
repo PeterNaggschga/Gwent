@@ -1,4 +1,4 @@
-package com.peternaggschga.gwent.domain;
+package com.peternaggschga.gwent.domain.cases;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;

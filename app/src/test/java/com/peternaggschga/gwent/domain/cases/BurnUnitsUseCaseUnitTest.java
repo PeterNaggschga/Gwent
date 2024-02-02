@@ -1,4 +1,4 @@
-package com.peternaggschga.gwent.domain;
+package com.peternaggschga.gwent.domain.cases;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.atLeastOnce;

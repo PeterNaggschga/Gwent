@@ -1,4 +1,4 @@
-package com.peternaggschga.gwent.domain;
+package com.peternaggschga.gwent.domain.cases;
 
 import androidx.annotation.NonNull;
 
