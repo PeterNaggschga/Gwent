@@ -36,18 +36,18 @@ public class WeatherDamageCalculatorUnitTest {
 
     @Test
     public void calculateDamageFalseWeatherAlwaysReturnsDamage() {
-        for (int i = 0; i < TESTING_DEPTH; i++) {
-            for (int j = 0; j < TESTING_DEPTH; j++) {
-                assertThat(falseWeather.calculateDamage(i, j)).isEqualTo(j);
+        for (int id = 0; id < TESTING_DEPTH; id++) {
+            for (int damage = 0; damage < TESTING_DEPTH; damage++) {
+                assertThat(falseWeather.calculateDamage(id, damage)).isEqualTo(damage);
             }
         }
     }
 
     @Test
     public void calculateDamageTrueWeatherAlwaysReturnsOne() {
-        for (int i = 0; i < TESTING_DEPTH; i++) {
-            for (int j = 1; j <= TESTING_DEPTH; j++) {
-                assertThat(trueWeather.calculateDamage(i, j)).isEqualTo(1);
+        for (int id = 0; id < TESTING_DEPTH; id++) {
+            for (int damage = 1; damage <= TESTING_DEPTH; damage++) {
+                assertThat(trueWeather.calculateDamage(id, damage)).isEqualTo(1);
             }
         }
     }

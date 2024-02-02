@@ -98,18 +98,18 @@ public class BurnUnitsUseCaseUnitTest {
 
     @Test
     public void getBurnUnitsReturnsMaxDamageUnit() {
-        for (int i = 1; i <= TESTING_DEPTH; i++) {
-            for (int j = 1; j <= TESTING_DEPTH; j++) {
+        for (int listSize = 1; listSize <= TESTING_DEPTH; listSize++) {
+            for (int maxDamage = 1; maxDamage <= TESTING_DEPTH; maxDamage++) {
                 initUseCase();
-                List<UnitEntity> testList = getTestList(i, j, 1);
+                List<UnitEntity> testList = getTestList(listSize, maxDamage, 1);
                 when(repository.getUnits()).thenReturn(Single.just(testList));
-                int maxDamage = j;
+                int finalMaxDamage = maxDamage;
                 testUseCase.getBurnUnits()
                         .test()
                         .assertValue(unitEntities -> unitEntities.size() == 1)
                         .assertValue(unitEntities ->
                                 unitEntities.stream().allMatch(unitEntity ->
-                                        unitEntity.calculateDamage(mock(DamageCalculator.class)) == maxDamage))
+                                        unitEntity.calculateDamage(mock(DamageCalculator.class)) == finalMaxDamage))
                         .dispose();
             }
         }

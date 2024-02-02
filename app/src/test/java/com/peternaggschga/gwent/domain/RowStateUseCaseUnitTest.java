@@ -36,11 +36,11 @@ public class RowStateUseCaseUnitTest {
                     when(repository.isWeather(row)).thenReturn(Single.just(weather));
                     when(repository.isHorn(row)).thenReturn(Single.just(horn));
                     List<UnitEntity> entities = new ArrayList<>(TESTING_DEPTH);
-                    for (int i = 0; i < TESTING_DEPTH; i++) {
+                    for (int unitNumber = 0; unitNumber < TESTING_DEPTH; unitNumber++) {
                         when(repository.getUnits(row)).thenReturn(Single.just(entities));
                         RowStateUseCase.getRowState(repository, row)
                                 .test()
-                                .assertValue(new RowUiState(i * TESTING_DAMAGE, weather, horn, i))
+                                .assertValue(new RowUiState(unitNumber * TESTING_DAMAGE, weather, horn, unitNumber))
                                 .dispose();
                         entities.add(entity);
                     }

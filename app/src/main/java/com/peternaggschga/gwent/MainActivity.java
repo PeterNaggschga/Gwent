@@ -40,9 +40,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void initializeViewModel() {
         int[] rowIds = {R.id.firstRow, R.id.secondRow, R.id.thirdRow};
-        for (int i = 0; i < rowIds.length; i++) {
-            RowType row = RowType.values()[i];
-            ConstraintLayout rowLayout = findViewById(rowIds[i]);
+        for (int rowId = 0; rowId < rowIds.length; rowId++) {
+            RowType row = RowType.values()[rowId];
+            ConstraintLayout rowLayout = findViewById(rowIds[rowId]);
 
             ImageView weather = rowLayout.findViewById(R.id.weatherImage);
             ImageView horn = rowLayout.findViewById(R.id.hornImage);

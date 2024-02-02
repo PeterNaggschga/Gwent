@@ -35,8 +35,8 @@ public class UnitRepositoryIntegrationTest {
 
     private void insertDummys() {
         for (RowType row : RowType.values()) {
-            for (int i = 0; i < 5; i++) {
-                database.units().insertUnit(false, i, Ability.values()[i / 2], null, row)
+            for (int dummyNumber = 0; dummyNumber < 5; dummyNumber++) {
+                database.units().insertUnit(false, dummyNumber, Ability.values()[dummyNumber / 2], null, row)
                         .blockingAwait();
             }
         }
@@ -102,8 +102,12 @@ public class UnitRepositoryIntegrationTest {
 
     @Test
     public void insertUnitAddsUnits() {
-        for (int i = 0; i < TESTING_DEPTH; i++) {
-            repository.insertUnit(i % 5 == 0, i % 10, Ability.values()[i % 3], null, RowType.values()[i % 3]).blockingAwait();
+        for (int unitNumber = 0; unitNumber < TESTING_DEPTH; unitNumber++) {
+            repository.insertUnit(unitNumber % 5 == 0,
+                    unitNumber % 10,
+                    Ability.values()[unitNumber % 3],
+                    null,
+                    RowType.values()[unitNumber % 3]).blockingAwait();
         }
         database.units().countUnits().test().assertValue(TESTING_DEPTH);
     }
@@ -357,23 +361,23 @@ public class UnitRepositoryIntegrationTest {
 
     @Test
     public void countUnitsCountsCorrectly() {
-        for (int i = 0; i < RowType.values().length; i++) {
-            RowType row = RowType.values()[i];
+        for (int rowNumber = 0; rowNumber < RowType.values().length; rowNumber++) {
+            RowType row = RowType.values()[rowNumber];
             repository.countUnits(row)
                     .test()
                     .assertValue(0);
-            for (int j = 0; j < 5; j++) {
+            for (int unitNumber = 0; unitNumber < 5; unitNumber++) {
                 repository.countUnits()
                         .test()
-                        .assertValue(i * 5 + j);
-                database.units().insertUnit(false, j, Ability.values()[j / 2], null, row)
+                        .assertValue(rowNumber * 5 + unitNumber);
+                database.units().insertUnit(false, unitNumber, Ability.values()[unitNumber / 2], null, row)
                         .andThen(repository.countUnits(row))
                         .test()
-                        .assertValue(j + 1);
+                        .assertValue(unitNumber + 1);
             }
             repository.countUnits()
                     .test()
-                    .assertValue((i + 1) * 5);
+                    .assertValue((rowNumber + 1) * 5);
         }
 
     }
@@ -393,12 +397,12 @@ public class UnitRepositoryIntegrationTest {
     @Test
     public void getUnitsReturnsAllUnits() {
         for (RowType row : RowType.values()) {
-            for (int i = 0; i < 5; i++) {
+            for (int unitNumber = 0; unitNumber < 5; unitNumber++) {
                 assertThat(
-                        database.units().insertUnit(false, i, Ability.values()[i / 2], null, row)
+                        database.units().insertUnit(false, unitNumber, Ability.values()[unitNumber / 2], null, row)
                                 .andThen(repository.getUnits(row))
                                 .blockingGet())
-                        .hasSize(i + 1);
+                        .hasSize(unitNumber + 1);
             }
             assertThat(repository.getUnits(row).blockingGet()).hasSize(5);
         }

@@ -102,12 +102,12 @@ public class UnitDaoUnitTest {
     @Test
     public void getUnitsReturnsAllUnits() {
         for (RowType row : RowType.values()) {
-            for (int i = 0; i < 5; i++) {
+            for (int unitNumber = 0; unitNumber < 5; unitNumber++) {
                 assertThat(
-                        unitDao.insertUnit(false, i, Ability.values()[i / 2], null, row)
+                        unitDao.insertUnit(false, unitNumber, Ability.values()[unitNumber / 2], null, row)
                                 .andThen(unitDao.getUnits(row))
                                 .blockingGet())
-                        .hasSize(i + 1);
+                        .hasSize(unitNumber + 1);
             }
         }
         assertThat(
@@ -130,23 +130,23 @@ public class UnitDaoUnitTest {
 
     @Test
     public void countUnitsCountsCorrectly() {
-        for (int i = 0; i < RowType.values().length; i++) {
-            RowType row = RowType.values()[i];
+        for (int rowTypeNumber = 0; rowTypeNumber < RowType.values().length; rowTypeNumber++) {
+            RowType row = RowType.values()[rowTypeNumber];
             unitDao.countUnits(row)
                     .test()
                     .assertValue(0);
-            for (int j = 0; j < 5; j++) {
+            for (int unitNumber = 0; unitNumber < 5; unitNumber++) {
                 unitDao.countUnits()
                         .test()
-                        .assertValue(i * 5 + j);
-                unitDao.insertUnit(false, j, Ability.values()[j / 2], null, row)
+                        .assertValue(rowTypeNumber * 5 + unitNumber);
+                unitDao.insertUnit(false, unitNumber, Ability.values()[unitNumber / 2], null, row)
                         .andThen(unitDao.countUnits(row))
                         .test()
-                        .assertValue(j + 1);
+                        .assertValue(unitNumber + 1);
             }
             unitDao.countUnits()
                     .test()
-                    .assertValue((i + 1) * 5);
+                    .assertValue((rowTypeNumber + 1) * 5);
         }
 
     }

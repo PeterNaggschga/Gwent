@@ -41,8 +41,8 @@ public class MoralDamageCalculatorDecoratorUnitTest {
     @Test
     public void calculateDamageEmptyListReturnsInput() {
         MoralDamageCalculatorDecorator decorator = new MoralDamageCalculatorDecorator(component, Collections.emptyList());
-        for (int i = 0; i < TESTING_DEPTH; i++) {
-            assertThat(decorator.calculateDamage(i, 0)).isEqualTo(TESTING_DAMAGE);
+        for (int id = 0; id < TESTING_DEPTH; id++) {
+            assertThat(decorator.calculateDamage(id, 0)).isEqualTo(TESTING_DAMAGE);
         }
     }
 
@@ -60,9 +60,9 @@ public class MoralDamageCalculatorDecoratorUnitTest {
         // noinspection unchecked cast
         List<Integer> list = (List<Integer>) Mockito.mock(List.class);
         MoralDamageCalculatorDecorator decorator = new MoralDamageCalculatorDecorator(component, list);
-        for (int i = 1; i <= TESTING_DEPTH; i++) {
-            when(list.size()).thenReturn(i);
-            assertThat(decorator.calculateDamage(i, 0)).isEqualTo(TESTING_DAMAGE + i);
+        for (int moralUnitNumber = 1; moralUnitNumber <= TESTING_DEPTH; moralUnitNumber++) {
+            when(list.size()).thenReturn(moralUnitNumber);
+            assertThat(decorator.calculateDamage(moralUnitNumber, 0)).isEqualTo(TESTING_DAMAGE + moralUnitNumber);
         }
     }
 

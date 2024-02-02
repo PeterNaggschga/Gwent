@@ -24,11 +24,11 @@ public class DamageCalculatorIntegrationTest {
 
     public List<UnitEntity> getUnitEntityList(@NonNull Ability ability, boolean horn) {
         List<UnitEntity> list = new ArrayList<>();
-        for (int i = 0; i < UNIT_NUMBER; i++) {
+        for (int id = 0; id < UNIT_NUMBER; id++) {
             UnitEntity entity = Mockito.mock(UnitEntity.class);
             when(entity.getAbility()).thenReturn(ability);
             when(entity.getSquad()).thenReturn(ability == Ability.BINDING ? 0 : null);
-            when(entity.getId()).thenReturn(i);
+            when(entity.getId()).thenReturn(id);
             list.add(entity);
         }
         if (horn) {

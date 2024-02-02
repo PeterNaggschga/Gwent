@@ -52,8 +52,8 @@ public class BondDamageCalculatorDecoratorUnitTest {
     @Test
     public void calculateDamageEmptyMapReturnsInput() {
         BondDamageCalculatorDecorator decorator = new BondDamageCalculatorDecorator(component, Collections.emptyMap());
-        for (int i = 0; i < TESTING_DEPTH; i++) {
-            assertThat(decorator.calculateDamage(i, 0)).isEqualTo(TESTING_DAMAGE);
+        for (int id = 0; id < TESTING_DEPTH; id++) {
+            assertThat(decorator.calculateDamage(id, 0)).isEqualTo(TESTING_DAMAGE);
         }
     }
 
@@ -72,9 +72,9 @@ public class BondDamageCalculatorDecoratorUnitTest {
         Map<Integer, Integer> map = (Map<Integer, Integer>) Mockito.mock(Map.class);
         when(map.containsKey(anyInt())).thenReturn(true);
         BondDamageCalculatorDecorator decorator = new BondDamageCalculatorDecorator(component, map);
-        for (int i = 1; i <= TESTING_DEPTH; i++) {
-            when(map.get(anyInt())).thenReturn(i);
-            assertThat(decorator.calculateDamage(0, TESTING_DAMAGE)).isEqualTo(TESTING_DAMAGE * i);
+        for (int squadSize = 1; squadSize <= TESTING_DEPTH; squadSize++) {
+            when(map.get(anyInt())).thenReturn(squadSize);
+            assertThat(decorator.calculateDamage(0, TESTING_DAMAGE)).isEqualTo(TESTING_DAMAGE * squadSize);
         }
     }
 

@@ -29,8 +29,8 @@ public class HornDamageCalculatorDecoratorUnitTest {
     @Test
     public void calculateDamageEmptyListReturnsInput() {
         HornDamageCalculatorDecorator decorator = new HornDamageCalculatorDecorator(component, Collections.emptyList());
-        for (int i = 0; i < TESTING_DEPTH; i++) {
-            assertThat(decorator.calculateDamage(i, 0)).isEqualTo(TESTING_DAMAGE);
+        for (int id = 0; id < TESTING_DEPTH; id++) {
+            assertThat(decorator.calculateDamage(id, 0)).isEqualTo(TESTING_DAMAGE);
         }
     }
 
