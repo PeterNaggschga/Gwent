@@ -8,7 +8,7 @@ import com.peternaggschga.gwent.data.Ability;
 import com.peternaggschga.gwent.data.RowType;
 import com.peternaggschga.gwent.data.UnitEntity;
 import com.peternaggschga.gwent.data.UnitRepository;
-import com.peternaggschga.gwent.ui.RowUiState;
+import com.peternaggschga.gwent.ui.main.RowUiState;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -1,11 +1,11 @@
-package com.peternaggschga.gwent;
+package com.peternaggschga.gwent.ui.main;
 
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.lifecycle.Observer;
 
-import com.peternaggschga.gwent.ui.MenuUiState;
+import com.peternaggschga.gwent.R;
 
 public class MenuUiStateObserver implements Observer<MenuUiState> {
     private final TextView damageView;

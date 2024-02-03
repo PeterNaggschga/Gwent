@@ -1,4 +1,4 @@
-package com.peternaggschga.gwent.ui;
+package com.peternaggschga.gwent.ui.main;
 
 import static org.valid4j.Assertive.require;
 

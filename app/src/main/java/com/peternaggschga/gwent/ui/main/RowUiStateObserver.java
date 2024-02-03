@@ -1,12 +1,12 @@
-package com.peternaggschga.gwent;
+package com.peternaggschga.gwent.ui.main;
 
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.lifecycle.Observer;
 
+import com.peternaggschga.gwent.R;
 import com.peternaggschga.gwent.data.RowType;
-import com.peternaggschga.gwent.ui.RowUiState;
 
 public class RowUiStateObserver implements Observer<RowUiState> {
     private final RowType row;
