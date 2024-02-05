@@ -16,7 +16,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
- * An observer class responsible for updating the menu when notified,
+ * An observer class responsible for creating and posting MenuUiState when notified,
  * i.e., when the state of the observed row changes.
  *
  * @see MenuUiState
