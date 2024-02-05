@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
             weather.setOnClickListener(v -> gameBoard.onWeatherViewPressed(row));
             horn.setOnClickListener(v -> gameBoard.onHornViewPressed(row));
 
-            final RowUiStateObserver observer = new RowUiStateObserver(row,
+            final RowUiStateObserver observer = RowUiStateObserver.getObserver(row,
                     rowLayout.findViewById(R.id.pointView),
                     weather,
                     horn,
