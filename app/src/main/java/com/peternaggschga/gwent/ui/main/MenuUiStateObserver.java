@@ -17,7 +17,7 @@ import com.peternaggschga.gwent.R;
  */
 public class MenuUiStateObserver implements Observer<MenuUiState> {
     /**
-     * A TextView showing the user the overall damage of all units, i.e., MenuUiState#damage.
+     * A TextView showing the user the summed-up damage of all units, i.e., MenuUiState#damage.
      */
     @NonNull
     private final TextView damageView;
@@ -44,7 +44,16 @@ public class MenuUiStateObserver implements Observer<MenuUiState> {
     @NonNull
     private final ImageButton burnButton;
 
-    public MenuUiStateObserver(@NonNull TextView damageView, @NonNull ImageButton resetButton, @NonNull ImageButton weatherButton, @NonNull ImageButton burnButton) {
+    /**
+     * Constructor of a MenuUiStateObserver updating the given views when #onChanged() is called.
+     *
+     * @param damageView    TextView showing the summed-up damage of all units.
+     * @param resetButton   ImageButton used to reset the whole game board.
+     * @param weatherButton ImageButton used to reset the weather debuff in all rows.
+     * @param burnButton    ImageButton used to delete the strongest units from the game board.
+     */
+    public MenuUiStateObserver(@NonNull TextView damageView, @NonNull ImageButton resetButton,
+                               @NonNull ImageButton weatherButton, @NonNull ImageButton burnButton) {
         this.damageView = damageView;
         this.resetButton = resetButton;
         this.weatherButton = weatherButton;
