@@ -28,19 +28,24 @@ public class RowUiStateObserver implements Observer<RowUiState> {
         if (rowUiState.isWeather()) {
             switch (row) {
                 case MELEE:
-                    weatherView.setImageResource(R.drawable.frost_weather); // TODO: animate
+                    ImageViewSwitchAnimator.animatedSwitch(weatherView, R.drawable.frost_weather)
+                            .subscribe();
                     break;
                 case RANGE:
-                    weatherView.setImageResource(R.drawable.fog_weather); // TODO: animate
+                    ImageViewSwitchAnimator.animatedSwitch(weatherView, R.drawable.fog_weather)
+                            .subscribe();
                     break;
                 case SIEGE:
-                    weatherView.setImageResource(R.drawable.rain_weather); // TODO: animate
+                    ImageViewSwitchAnimator.animatedSwitch(weatherView, R.drawable.rain_weather)
+                            .subscribe();
                     break;
             }
         } else {
-            weatherView.setImageResource(R.drawable.good_weather); // TODO: animate
+            ImageViewSwitchAnimator.animatedSwitch(weatherView, R.drawable.good_weather)
+                    .subscribe();
         }
-        hornView.setImageResource(rowUiState.isHorn() ? R.drawable.horn : R.drawable.horn_grey); // TODO: animate
+        ImageViewSwitchAnimator.animatedSwitch(hornView, rowUiState.isHorn() ? R.drawable.horn : R.drawable.horn_grey)
+                .subscribe();
         unitView.setText(String.valueOf(rowUiState.getUnits()));
     }
 }
