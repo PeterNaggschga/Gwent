@@ -24,10 +24,13 @@ public class MenuUiStateObserver implements Observer<MenuUiState> {
     public void onChanged(MenuUiState menuUiState) {
         damageView.setText(String.valueOf(menuUiState.getDamage()));
         resetButton.setClickable(menuUiState.isReset());
-        resetButton.setImageResource(menuUiState.isReset() ? R.drawable.icon_reset : R.drawable.icon_reset_grey); // TODO: animate
+        ImageViewSwitchAnimator.animatedSwitch(resetButton, menuUiState.isReset() ? R.drawable.icon_reset : R.drawable.icon_reset_grey)
+                .subscribe();
         weatherButton.setClickable(menuUiState.isWeather());
-        weatherButton.setImageResource(menuUiState.isWeather() ? R.drawable.icon_weather : R.drawable.icon_weather_grey); // TODO: animate
+        ImageViewSwitchAnimator.animatedSwitch(weatherButton, menuUiState.isWeather() ? R.drawable.icon_weather : R.drawable.icon_weather_grey)
+                .subscribe();
         burnButton.setClickable(menuUiState.isBurn());
-        burnButton.setImageResource(menuUiState.isBurn() ? R.drawable.icon_burn : R.drawable.icon_burn_grey); // TODO: animate
+        ImageViewSwitchAnimator.animatedSwitch(burnButton, menuUiState.isBurn() ? R.drawable.icon_burn : R.drawable.icon_burn_grey)
+                .subscribe();
     }
 }
