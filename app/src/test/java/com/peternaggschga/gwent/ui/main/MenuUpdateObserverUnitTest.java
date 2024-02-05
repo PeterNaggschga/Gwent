@@ -58,6 +58,16 @@ public class MenuUpdateObserverUnitTest {
             fail();
         } catch (RequireViolation ignored) {
         }
+        rowObservers.remove(null);
+        rowObservers.put(RowType.MELEE, null);
+        try {
+            //noinspection unchecked
+            MenuUpdateObserver.getObserver(RowType.MELEE,
+                    (MutableLiveData<MenuUiState>) mock(MutableLiveData.class),
+                    rowObservers);
+            fail();
+        } catch (RequireViolation ignored) {
+        }
     }
 
     @Test

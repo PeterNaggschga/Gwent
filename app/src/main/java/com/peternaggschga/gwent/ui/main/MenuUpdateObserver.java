@@ -51,12 +51,13 @@ public class MenuUpdateObserver implements Observer<RowUiState> {
     /**
      * Returns a new MenuUpdateObserver for the given row.
      * Factory method for MenuUpdateObserver.
-     * @see MenuUpdateObserver#MenuUpdateObserver(MutableLiveData, List)
-     * @param row RowType defining which row is being observed.
+     *
+     * @param row          RowType defining which row is being observed.
      * @param menuObserver MutableLiveData object that updates are pushed to.
      * @param rowObservers Map from RowType to the MutableLiveData object associated with that row.
      * @return A MenuUpdateObserver for the given row.
-     * @throws org.valid4j.errors.RequireViolation When rowObservers does not contain values for each RowType.
+     * @throws org.valid4j.errors.RequireViolation When rowObservers does not contain non-null values for each RowType.
+     * @see MenuUpdateObserver#MenuUpdateObserver(MutableLiveData, List)
      */
     @NonNull
     public static MenuUpdateObserver getObserver(@NonNull RowType row,
@@ -64,6 +65,7 @@ public class MenuUpdateObserver implements Observer<RowUiState> {
                                                  @NonNull Map<RowType, MutableLiveData<RowUiState>> rowObservers) {
         require(rowObservers.size() == RowType.values().length);
         require(!rowObservers.containsKey(null));
+        require(!rowObservers.containsValue(null));
         return new MenuUpdateObserver(menuObserver,
                 rowObservers.values()
                         .stream()
