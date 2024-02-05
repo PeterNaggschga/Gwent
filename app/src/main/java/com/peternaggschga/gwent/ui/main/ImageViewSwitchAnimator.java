@@ -14,9 +14,11 @@ public class ImageViewSwitchAnimator {
     @NonNull
     private static ImageView getOverlayView(@NonNull ImageView template) {
         ImageView result = new ImageView(template.getContext());
-        result.setLayoutParams(new ViewGroup.LayoutParams(template.getLayoutParams()));
+        result.setLayoutParams(new ViewGroup.LayoutParams(template.getWidth(), template.getHeight()));
         result.setImageDrawable(template.getDrawable());
         result.setScaleType(template.getScaleType());
+        result.setX(template.getX());
+        result.setY(template.getY());
         result.setTranslationZ(template.getTranslationZ() + 1);
         return result;
     }

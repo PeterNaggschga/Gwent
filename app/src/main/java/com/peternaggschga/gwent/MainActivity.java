@@ -46,8 +46,8 @@ public class MainActivity extends AppCompatActivity {
             RowType row = RowType.values()[rowId];
             ConstraintLayout rowLayout = findViewById(rowIds[rowId]);
 
-            ImageView weather = rowLayout.findViewById(R.id.weatherImage);
-            ImageView horn = rowLayout.findViewById(R.id.hornImage);
+            ImageView weather = rowLayout.findViewById(R.id.weatherView);
+            ImageView horn = rowLayout.findViewById(R.id.hornView);
 
             weather.setOnClickListener(v -> gameBoard.onWeatherViewPressed(row));
             horn.setOnClickListener(v -> gameBoard.onHornViewPressed(row));
