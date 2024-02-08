@@ -13,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.peternaggschga.gwent.data.RowType;
 import com.peternaggschga.gwent.ui.main.GameBoardViewModel;
 import com.peternaggschga.gwent.ui.main.MenuUiStateObserver;
 import com.peternaggschga.gwent.ui.main.RowUiStateObserver;

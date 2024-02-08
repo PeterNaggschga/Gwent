@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.Observer;
 
 import com.peternaggschga.gwent.R;
-import com.peternaggschga.gwent.data.RowType;
+import com.peternaggschga.gwent.RowType;
 
 /**
  * An observer class responsible for updating the views of the row defined in #row when notified,

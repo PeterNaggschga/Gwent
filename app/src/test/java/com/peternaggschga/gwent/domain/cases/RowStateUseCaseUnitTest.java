@@ -5,7 +5,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import com.peternaggschga.gwent.Ability;
-import com.peternaggschga.gwent.data.RowType;
+import com.peternaggschga.gwent.RowType;
 import com.peternaggschga.gwent.data.UnitEntity;
 import com.peternaggschga.gwent.data.UnitRepository;
 import com.peternaggschga.gwent.ui.main.RowUiState;

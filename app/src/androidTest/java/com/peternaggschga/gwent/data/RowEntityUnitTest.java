@@ -4,6 +4,8 @@ import androidx.room.Room;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import com.peternaggschga.gwent.RowType;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

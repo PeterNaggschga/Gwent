@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.viewmodel.ViewModelInitializer;
 
 import com.peternaggschga.gwent.GwentApplication;
-import com.peternaggschga.gwent.data.RowType;
+import com.peternaggschga.gwent.RowType;
 import com.peternaggschga.gwent.data.UnitRepository;
 import com.peternaggschga.gwent.domain.cases.BurnUnitsUseCase;
 import com.peternaggschga.gwent.domain.cases.RowStateUseCase;

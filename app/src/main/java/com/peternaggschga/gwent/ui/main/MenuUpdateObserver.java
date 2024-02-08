@@ -7,7 +7,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
-import com.peternaggschga.gwent.data.RowType;
+import com.peternaggschga.gwent.RowType;
 
 import java.util.Arrays;
 import java.util.List;

@@ -10,7 +10,7 @@ import static org.mockito.Mockito.when;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.peternaggschga.gwent.data.RowType;
+import com.peternaggschga.gwent.RowType;
 
 import org.junit.Before;
 import org.junit.Test;

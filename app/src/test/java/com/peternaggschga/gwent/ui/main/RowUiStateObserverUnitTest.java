@@ -7,7 +7,7 @@ import static org.mockito.Mockito.verify;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.peternaggschga.gwent.data.RowType;
+import com.peternaggschga.gwent.RowType;
 
 import org.junit.Before;
 import org.junit.Test;
