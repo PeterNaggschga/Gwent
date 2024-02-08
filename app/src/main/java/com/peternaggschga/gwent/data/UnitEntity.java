@@ -10,6 +10,7 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
+import com.peternaggschga.gwent.Ability;
 import com.peternaggschga.gwent.domain.damage.DamageCalculator;
 
 /**

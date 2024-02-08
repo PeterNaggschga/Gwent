@@ -10,14 +10,14 @@ import java.util.Objects;
 
 /**
  * A DamageCalculator class responsible for calculating the tight bond buff if necessary,
- * i.e., if there are units with the com.peternaggschga.gwent.data.Ability#BINDING ability.
+ * i.e., if there are units with the com.peternaggschga.gwent.Ability#BINDING ability.
  * Acts as a ConcreteDecorator in the implemented decorator pattern
  * and should decorate a WeatherDamageCalculator for correct calculation.
  */
 class BondDamageCalculatorDecorator extends DamageCalculatorDecorator {
     /**
      * A Map
-     * mapping the ids of all units with the com.peternaggschga.gwent.data.Ability#BINDING ability to the respective squad size.
+     * mapping the ids of all units with the com.peternaggschga.gwent.Ability#BINDING ability to the respective squad size.
      */
     private final Map<Integer, Integer> idToSquadSize;
 
@@ -28,7 +28,7 @@ class BondDamageCalculatorDecorator extends DamageCalculatorDecorator {
      * The values of the given Map must contain non-``null`` or positive Integers.
      *
      * @param component     DamageCalculator that is being decorated by this decorator.
-     * @param idToSquadSize Map mapping the ids of all units with the com.peternaggschga.gwent.data.Ability#BINDING ability to the respective squad size.
+     * @param idToSquadSize Map mapping the ids of all units with the com.peternaggschga.gwent.Ability#BINDING ability to the respective squad size.
      * @throws org.valid4j.errors.RequireViolation When idToSquadSize contains negative or null values.
      * @see DamageCalculatorBuilder
      */
@@ -41,7 +41,7 @@ class BondDamageCalculatorDecorator extends DamageCalculatorDecorator {
     /**
      * Calculates the (de-)buffed damage of unit with the given id and the given base-damage.
      * Returns the given damage times the number of units with the same squad
-     * if the unit has the com.peternaggschga.gwent.data.Ability#BINDING ability.
+     * if the unit has the com.peternaggschga.gwent.Ability#BINDING ability.
      *
      * @param id     Integer representing the UnitEntity#id of the unit whose (de-)buff damage is calculated.
      * @param damage Integer representing the base-damage of the unit whose (de-)buff damage is calculated.

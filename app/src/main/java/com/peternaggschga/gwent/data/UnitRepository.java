@@ -6,6 +6,8 @@ import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.peternaggschga.gwent.Ability;
+
 import java.util.Collection;
 import java.util.List;
 

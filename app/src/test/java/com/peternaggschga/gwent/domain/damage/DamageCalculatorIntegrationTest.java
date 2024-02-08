@@ -5,7 +5,7 @@ import static org.mockito.Mockito.when;
 
 import androidx.annotation.NonNull;
 
-import com.peternaggschga.gwent.data.Ability;
+import com.peternaggschga.gwent.Ability;
 import com.peternaggschga.gwent.data.UnitEntity;
 
 import org.junit.Test;

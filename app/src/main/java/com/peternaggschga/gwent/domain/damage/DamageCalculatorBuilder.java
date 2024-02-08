@@ -36,7 +36,7 @@ class DamageCalculatorBuilder {
     /**
      * Sets the tight bond buff for the calculation. Should be called after #setWeather() or never.
      *
-     * @param idToSquad Map mapping the ids of all units with the com.peternaggschga.gwent.data.Ability#BINDING ability to the respective squad size.
+     * @param idToSquad Map mapping the ids of all units with the com.peternaggschga.gwent.Ability#BINDING ability to the respective squad size.
      */
     void setBond(@NonNull Map<Integer, Integer> idToSquad) {
         calculator = new BondDamageCalculatorDecorator(calculator, idToSquad);
@@ -46,7 +46,7 @@ class DamageCalculatorBuilder {
      * Sets the moral boost buff for the calculation. Should be called after #setBond() or never.
      *
      * @param unitIds List of Integers
-     *                representing ids of units with the com.peternaggschga.gwent.data.Ability#MORAL_BOOST ability.
+     *                representing ids of units with the com.peternaggschga.gwent.Ability#MORAL_BOOST ability.
      */
     void setMoral(@NonNull List<Integer> unitIds) {
         calculator = new MoralDamageCalculatorDecorator(calculator, unitIds);
@@ -57,7 +57,7 @@ class DamageCalculatorBuilder {
      * Should be called after #setMoral() or never.
      *
      * @param unitIds List of Integers
-     *                representing ids of units with the com.peternaggschga.gwent.data.Ability#HORN ability.
+     *                representing ids of units with the com.peternaggschga.gwent.Ability#HORN ability.
      */
     void setHorn(@NonNull List<Integer> unitIds) {
         calculator = new HornDamageCalculatorDecorator(calculator, unitIds);

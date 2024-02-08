@@ -4,7 +4,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import com.peternaggschga.gwent.data.Ability;
+import com.peternaggschga.gwent.Ability;
 import com.peternaggschga.gwent.data.RowType;
 import com.peternaggschga.gwent.data.UnitEntity;
 import com.peternaggschga.gwent.data.UnitRepository;
