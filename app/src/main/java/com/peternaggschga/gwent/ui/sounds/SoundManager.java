@@ -13,10 +13,7 @@ import androidx.preference.PreferenceManager;
 import com.peternaggschga.gwent.R;
 import com.peternaggschga.gwent.RowType;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -38,6 +35,9 @@ public class SoundManager {
     private final SoundPool soundPool;
     @NonNull
     private final Map<Integer, Sound> sounds = new HashMap<>(12);
+    @NonNull
+    @SuppressWarnings("FieldCanBeLocal")
+    private final SharedPreferences.OnSharedPreferenceChangeListener changeListener;
 
 
     public SoundManager(@NonNull Context context) {
@@ -53,7 +53,7 @@ public class SoundManager {
         }
 
         sounds.put(SOUND_WEATHER_GOOD, Sound.createSound(context, R.string.preference_key_sounds_weather, soundPool, R.raw.weather_good));
-        sounds.put(SOUND_WEATHER_FROST, Sound.createSound(context, R.string.preference_sounds_weather, soundPool, R.raw.weather_frost));
+        sounds.put(SOUND_WEATHER_FROST, Sound.createSound(context, R.string.preference_key_sounds_weather, soundPool, R.raw.weather_frost));
         sounds.put(SOUND_WEATHER_FOG, Sound.createSound(context, R.string.preference_key_sounds_weather, soundPool, R.raw.weather_fog));
         sounds.put(SOUND_WEATHER_RAIN, Sound.createSound(context, R.string.preference_key_sounds_weather, soundPool, R.raw.weather_rain));
         sounds.put(SOUND_HORN, Sound.createSound(context, R.string.preference_key_sounds_horn, soundPool, R.raw.horn));
@@ -66,35 +66,21 @@ public class SoundManager {
         sounds.put(SOUND_COIN, Sound.createSound(context, R.string.preference_key_sounds_coin, soundPool, R.raw.coin));
 
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-        pref.registerOnSharedPreferenceChangeListener((sharedPreferences, key) -> {
-            List<Integer> changedSounds = new ArrayList<>(12);
-            if (context.getString(R.string.preference_key_sounds_all).equals(key)) {
-                changedSounds.addAll(sounds.keySet());
-            } else if (Objects.requireNonNull(sounds.get(SOUND_WEATHER_GOOD)).getPreferenceKey().equals(key)) {
-                changedSounds.addAll(Arrays.asList(SOUND_WEATHER_GOOD, SOUND_WEATHER_FROST, SOUND_WEATHER_FOG, SOUND_WEATHER_RAIN));
-            } else if (Objects.requireNonNull(sounds.get(SOUND_HORN)).getPreferenceKey().equals(key)) {
-                changedSounds.add(SOUND_HORN);
-            } else if (Objects.requireNonNull(sounds.get(SOUND_CARDS_EPIC)).getPreferenceKey().equals(key)) {
-                changedSounds.addAll(Arrays.asList(SOUND_CARDS_EPIC, SOUND_CARDS_MELEE, SOUND_CARDS_RANGE, SOUND_CARDS_SIEGE));
-            } else if (Objects.requireNonNull(sounds.get(SOUND_RESET)).getPreferenceKey().equals(key)) {
-                changedSounds.add(SOUND_RESET);
-            } else if (Objects.requireNonNull(sounds.get(SOUND_BURN)).getPreferenceKey().equals(key)) {
-                changedSounds.add(SOUND_BURN);
-            } else if (Objects.requireNonNull(sounds.get(SOUND_COIN)).getPreferenceKey().equals(key)) {
-                changedSounds.add(SOUND_COIN);
+        changeListener = (sharedPreferences, key) -> {
+            if (context.getResources().getString(R.string.preference_key_sounds_all).equals(key)
+                    && !sharedPreferences.getBoolean(key, context.getResources().getBoolean(R.bool.sound_preference_default))) {
+                sounds.values().forEach(sound -> sound.setActivated(false));
+            } else {
+                sounds.values().forEach(sound -> sound.setActivated(sharedPreferences));
             }
-
-            boolean value = sharedPreferences.getBoolean(key, context.getResources().getBoolean(R.bool.sound_preference_default));
-            for (Integer sound : changedSounds) {
-                Objects.requireNonNull(sounds.get(sound)).setMuted(value);
-            }
-        });
+        };
+        pref.registerOnSharedPreferenceChangeListener(changeListener);
     }
 
     // throws NullPointerException
     public void playSound(@IntRange(from = 0, to = 11) int soundId) {
         Sound sound = Objects.requireNonNull(sounds.get(soundId));
-        if (!sound.isMuted()) {
+        if (sound.isActivated()) {
             soundPool.play(sound.getSoundId(), 1, 1, 0, 0, 1);
         }
     }

@@ -15,12 +15,12 @@ class Sound {
     @NonNull
     private final String preferenceKey;
     private final int soundId;
-    private boolean muted;
+    private boolean activated;
 
-    private Sound(@NonNull String preferenceKey, int soundId, boolean muted) {
+    private Sound(@NonNull String preferenceKey, int soundId, boolean activated) {
         this.preferenceKey = preferenceKey;
         this.soundId = soundId;
-        this.muted = muted;
+        this.activated = activated;
     }
 
     @NonNull
@@ -29,26 +29,25 @@ class Sound {
         String preferenceKey = context.getString(preferenceRes);
         int soundId = soundPool.load(context, resId, 1);
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-        boolean muted = context.getResources().getBoolean(R.bool.sound_preference_default);
-        muted = pref.getBoolean(context.getString(R.string.preference_key_sounds_all), muted)
-                && pref.getBoolean(preferenceKey, muted);
-        return new Sound(preferenceKey, soundId, muted);
-    }
-
-    @NonNull
-    String getPreferenceKey() {
-        return preferenceKey;
+        boolean activated = context.getResources().getBoolean(R.bool.sound_preference_default);
+        activated = pref.getBoolean(context.getString(R.string.preference_key_sounds_all), activated)
+                && pref.getBoolean(preferenceKey, activated);
+        return new Sound(preferenceKey, soundId, activated);
     }
 
     int getSoundId() {
         return soundId;
     }
 
-    boolean isMuted() {
-        return muted;
+    boolean isActivated() {
+        return activated;
     }
 
-    void setMuted(boolean muted) {
-        this.muted = muted;
+    void setActivated(boolean activated) {
+        this.activated = activated;
+    }
+
+    void setActivated(@NonNull SharedPreferences sharedPreferences) {
+        setActivated(sharedPreferences.getBoolean(preferenceKey, activated));
     }
 }
