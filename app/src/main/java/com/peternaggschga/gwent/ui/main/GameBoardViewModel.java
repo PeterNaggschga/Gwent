@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class GameBoardViewModel extends ViewModel {
@@ -95,9 +96,12 @@ public class GameBoardViewModel extends ViewModel {
 
     }
 
-    public void onWeatherViewPressed(@NonNull RowType row) {
-        runOnUiThread(repository.switchWeather(row)
-                .andThen(updateUiState(row)));
+    @NonNull
+    public Single<Boolean> onWeatherViewPressed(@NonNull RowType row) {
+        return repository.switchWeather(row)
+                .andThen(updateUiState(row))
+                .andThen(repository.isWeather(row))
+                .subscribeOn(Schedulers.io());
     }
 
     public void onHornViewPressed(@NonNull RowType row) {
@@ -105,10 +109,11 @@ public class GameBoardViewModel extends ViewModel {
                 .andThen(updateUiState(row)));
     }
 
-    public void onResetButtonPressed() {
+    public boolean onResetButtonPressed() {
         // TODO: Warnung
         runOnUiThread(repository.reset()
                 .andThen(updateUiState()));
+        return true;
     }
 
     public void onWeatherButtonPressed() {
@@ -116,10 +121,11 @@ public class GameBoardViewModel extends ViewModel {
                 .andThen(updateUiState()));
     }
 
-    public void onBurnButtonPressed() {
+    public boolean onBurnButtonPressed() {
         // TODO: Warnung
         runOnUiThread(new BurnUnitsUseCase(repository)
                 .removeBurnUnits()
                 .andThen(updateUiState()));
+        return true;
     }
 }

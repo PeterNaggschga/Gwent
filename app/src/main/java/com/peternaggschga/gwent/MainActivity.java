@@ -16,16 +16,20 @@ import androidx.lifecycle.ViewModelProvider;
 import com.peternaggschga.gwent.ui.main.GameBoardViewModel;
 import com.peternaggschga.gwent.ui.main.MenuUiStateObserver;
 import com.peternaggschga.gwent.ui.main.RowUiStateObserver;
+import com.peternaggschga.gwent.ui.sounds.SoundManager;
 
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity {
+    private SoundManager soundManager;
     private GameBoardViewModel gameBoard;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        soundManager = new SoundManager(this);
 
         Schedulers.io().scheduleDirect(() -> {
             gameBoard = new ViewModelProvider(MainActivity.this,
@@ -48,8 +52,18 @@ public class MainActivity extends AppCompatActivity {
             ImageView weather = rowLayout.findViewById(R.id.weatherView);
             ImageView horn = rowLayout.findViewById(R.id.hornView);
 
-            weather.setOnClickListener(v -> gameBoard.onWeatherViewPressed(row));
-            horn.setOnClickListener(v -> gameBoard.onHornViewPressed(row));
+            weather.setOnClickListener(v -> {
+                // noinspection CheckResult, ResultOfMethodCallIgnored
+                gameBoard.onWeatherViewPressed(row).subscribe(aBoolean -> {
+                    if (aBoolean) {
+                        soundManager.playWeatherSound(row);
+                    }
+                });
+            });
+            horn.setOnClickListener(v -> {
+                gameBoard.onHornViewPressed(row);
+                soundManager.playHornSound();
+            });
 
             final RowUiStateObserver observer = RowUiStateObserver.getObserver(row,
                     rowLayout.findViewById(R.id.pointView),
@@ -69,9 +83,20 @@ public class MainActivity extends AppCompatActivity {
                 burn);
         gameBoard.getMenuUiState().observe(this, observer);
 
-        reset.setOnClickListener(v -> gameBoard.onResetButtonPressed());
-        weather.setOnClickListener(v -> gameBoard.onWeatherButtonPressed());
-        burn.setOnClickListener(v -> gameBoard.onBurnButtonPressed());
+        reset.setOnClickListener(v -> {
+            if (gameBoard.onResetButtonPressed()) {
+                soundManager.playResetSound();
+            }
+        });
+        weather.setOnClickListener(v -> {
+            gameBoard.onWeatherButtonPressed();
+            soundManager.playClearWeatherSound();
+        });
+        burn.setOnClickListener(v -> {
+            if (gameBoard.onBurnButtonPressed()) {
+                soundManager.playBurnSound();
+            }
+        });
 
         gameBoard.updateUi();
     }
@@ -82,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void inflateCoinFlipPopup() {
+        soundManager.playCoinSound();
         Toast.makeText(this, "Not yet implemented!", Toast.LENGTH_SHORT).show();
         // TODO
     }
