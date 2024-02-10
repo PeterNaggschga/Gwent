@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <bool name="sound_preference_default">true</bool>
+
+    <string name="preference_key_sounds_all" translatable="false">sound_all</string>
+    <string name="preference_key_sounds_cards" translatable="false">sound_cards</string>
+    <string name="preference_key_sounds_reset" translatable="false">sound_reset</string>
+    <string name="preference_key_sounds_weather" translatable="false">sound_weather</string>
+    <string name="preference_key_sounds_horn" translatable="false">sound_horn</string>
+    <string name="preference_key_sounds_burn" translatable="false">sound_burn</string>
+    <string name="preference_key_sounds_coin" translatable="false">sound_coin</string>
+</resources>
