@@ -123,6 +123,10 @@ public class SoundManager {
         }
     }
 
+    public void playCardRemovedSound() {
+        playSound(SOUND_RESET);
+    }
+
     public void playResetSound() {
         playSound(SOUND_RESET);
     }
