@@ -2,13 +2,18 @@ package com.peternaggschga.gwent.ui.main;
 
 import static androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.viewmodel.ViewModelInitializer;
+import androidx.preference.PreferenceManager;
 
 import com.peternaggschga.gwent.GwentApplication;
+import com.peternaggschga.gwent.R;
 import com.peternaggschga.gwent.RowType;
 import com.peternaggschga.gwent.data.UnitRepository;
 import com.peternaggschga.gwent.domain.cases.BurnUnitsUseCase;
@@ -28,7 +33,7 @@ public class GameBoardViewModel extends ViewModel {
             creationExtras -> {
                 GwentApplication app = (GwentApplication) creationExtras.get(APPLICATION_KEY);
                 assert app != null;
-                return new GameBoardViewModel(app.getRepository());
+                return new GameBoardViewModel(app.getApplicationContext(), app.getRepository());
             });
 
     @NonNull
@@ -36,9 +41,23 @@ public class GameBoardViewModel extends ViewModel {
     @NonNull
     private final Map<RowType, MutableLiveData<RowUiState>> rowUiStates = new HashMap<>();
     private MediatorLiveData<MenuUiState> menuUiState;
+    @NonNull
+    @SuppressWarnings("FieldCanBeLocal")
+    private final SharedPreferences.OnSharedPreferenceChangeListener changeListener;
+    private boolean showWarnings;
 
-    private GameBoardViewModel(@NonNull UnitRepository repository) {
+    private GameBoardViewModel(@NonNull Context context, @NonNull UnitRepository repository) {
         this.repository = repository;
+
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        String warningPrefKey = context.getString(R.string.preference_key_warning);
+        showWarnings = pref.getBoolean(warningPrefKey, context.getResources().getBoolean(R.bool.warning_preference_default));
+        changeListener = (sharedPreferences, key) -> {
+            if (warningPrefKey.equals(key)) {
+                showWarnings = sharedPreferences.getBoolean(key, showWarnings);
+            }
+        };
+        pref.registerOnSharedPreferenceChangeListener(changeListener);
     }
 
     private static void runOnUiThread(@NonNull Completable toBeRun) {

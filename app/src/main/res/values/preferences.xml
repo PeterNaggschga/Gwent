@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <bool name="warning_preference_default">true</bool>
+    <string name="preference_key_warning" translatable="false">warnings</string>
+
+    <!-- Sound preferences -->
     <bool name="sound_preference_default">true</bool>
 
     <string name="preference_key_sounds_all" translatable="false">sound_all</string>
