@@ -13,9 +13,7 @@ import androidx.preference.PreferenceManager;
 import com.peternaggschga.gwent.R;
 import com.peternaggschga.gwent.RowType;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.Arrays;
 
 public class SoundManager {
     public static final int SOUND_WEATHER_GOOD = 0;
@@ -34,7 +32,7 @@ public class SoundManager {
     @NonNull
     private final SoundPool soundPool;
     @NonNull
-    private final Map<Integer, Sound> sounds = new HashMap<>(12);
+    private final Sound[] sounds = new Sound[12];
     @NonNull
     @SuppressWarnings("FieldCanBeLocal")
     private final SharedPreferences.OnSharedPreferenceChangeListener changeListener;
@@ -52,36 +50,34 @@ public class SoundManager {
             soundPool = new SoundPool.Builder().setMaxStreams(5).setAudioAttributes(attributes).build();
         }
 
-        sounds.put(SOUND_WEATHER_GOOD, Sound.createSound(context, R.string.preference_key_sounds_weather, soundPool, R.raw.weather_good));
-        sounds.put(SOUND_WEATHER_FROST, Sound.createSound(context, R.string.preference_key_sounds_weather, soundPool, R.raw.weather_frost));
-        sounds.put(SOUND_WEATHER_FOG, Sound.createSound(context, R.string.preference_key_sounds_weather, soundPool, R.raw.weather_fog));
-        sounds.put(SOUND_WEATHER_RAIN, Sound.createSound(context, R.string.preference_key_sounds_weather, soundPool, R.raw.weather_rain));
-        sounds.put(SOUND_HORN, Sound.createSound(context, R.string.preference_key_sounds_horn, soundPool, R.raw.horn));
-        sounds.put(SOUND_CARDS_EPIC, Sound.createSound(context, R.string.preference_key_sounds_cards, soundPool, R.raw.card_epic));
-        sounds.put(SOUND_CARDS_MELEE, Sound.createSound(context, R.string.preference_key_sounds_cards, soundPool, R.raw.card_melee));
-        sounds.put(SOUND_CARDS_RANGE, Sound.createSound(context, R.string.preference_key_sounds_cards, soundPool, R.raw.card_range));
-        sounds.put(SOUND_CARDS_SIEGE, Sound.createSound(context, R.string.preference_key_sounds_cards, soundPool, R.raw.card_siege));
-        sounds.put(SOUND_RESET, Sound.createSound(context, R.string.preference_key_sounds_reset, soundPool, R.raw.reset));
-        sounds.put(SOUND_BURN, Sound.createSound(context, R.string.preference_key_sounds_burn, soundPool, R.raw.burn));
-        sounds.put(SOUND_COIN, Sound.createSound(context, R.string.preference_key_sounds_coin, soundPool, R.raw.coin));
+        sounds[SOUND_WEATHER_GOOD] = Sound.createSound(context, R.string.preference_key_sounds_weather, soundPool, R.raw.weather_good);
+        sounds[SOUND_WEATHER_FROST] = Sound.createSound(context, R.string.preference_key_sounds_weather, soundPool, R.raw.weather_frost);
+        sounds[SOUND_WEATHER_FOG] = Sound.createSound(context, R.string.preference_key_sounds_weather, soundPool, R.raw.weather_fog);
+        sounds[SOUND_WEATHER_RAIN] = Sound.createSound(context, R.string.preference_key_sounds_weather, soundPool, R.raw.weather_rain);
+        sounds[SOUND_HORN] = Sound.createSound(context, R.string.preference_key_sounds_horn, soundPool, R.raw.horn);
+        sounds[SOUND_CARDS_EPIC] = Sound.createSound(context, R.string.preference_key_sounds_cards, soundPool, R.raw.card_epic);
+        sounds[SOUND_CARDS_MELEE] = Sound.createSound(context, R.string.preference_key_sounds_cards, soundPool, R.raw.card_melee);
+        sounds[SOUND_CARDS_RANGE] = Sound.createSound(context, R.string.preference_key_sounds_cards, soundPool, R.raw.card_range);
+        sounds[SOUND_CARDS_SIEGE] = Sound.createSound(context, R.string.preference_key_sounds_cards, soundPool, R.raw.card_siege);
+        sounds[SOUND_RESET] = Sound.createSound(context, R.string.preference_key_sounds_reset, soundPool, R.raw.reset);
+        sounds[SOUND_BURN] = Sound.createSound(context, R.string.preference_key_sounds_burn, soundPool, R.raw.burn);
+        sounds[SOUND_COIN] = Sound.createSound(context, R.string.preference_key_sounds_coin, soundPool, R.raw.coin);
 
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
         changeListener = (sharedPreferences, key) -> {
             if (context.getResources().getString(R.string.preference_key_sounds_all).equals(key)
                     && !sharedPreferences.getBoolean(key, context.getResources().getBoolean(R.bool.sound_preference_default))) {
-                sounds.values().forEach(sound -> sound.setActivated(false));
+                Arrays.stream(sounds).forEach(sound -> sound.setActivated(false));
             } else {
-                sounds.values().forEach(sound -> sound.setActivated(sharedPreferences));
+                Arrays.stream(sounds).forEach(sound -> sound.setActivated(sharedPreferences));
             }
         };
         pref.registerOnSharedPreferenceChangeListener(changeListener);
     }
 
-    // throws NullPointerException
     public void playSound(@IntRange(from = 0, to = 11) int soundId) {
-        Sound sound = Objects.requireNonNull(sounds.get(soundId));
-        if (sound.isActivated()) {
-            soundPool.play(sound.getSoundId(), 1, 1, 0, 0, 1);
+        if (sounds[soundId].isActivated()) {
+            soundPool.play(sounds[soundId].getSoundId(), 1, 1, 0, 0, 1);
         }
     }
 
