@@ -65,11 +65,18 @@ public class SoundManager {
 
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
         changeListener = (sharedPreferences, key) -> {
-            if (context.getResources().getString(R.string.preference_key_sounds_all).equals(key)
-                    && !sharedPreferences.getBoolean(key, context.getResources().getBoolean(R.bool.sound_preference_default))) {
-                Arrays.stream(sounds).forEach(sound -> sound.setActivated(false));
+            boolean newValue = sharedPreferences.getBoolean(key,
+                    context.getResources().getBoolean(R.bool.sound_preference_default));
+            if (context.getResources().getString(R.string.preference_key_sounds_all).equals(key)) {
+                if (newValue) {
+                    Arrays.stream(sounds).forEach(sound -> sound.setActivated(sharedPreferences));
+                } else {
+                    Arrays.stream(sounds).forEach(sound -> sound.setActivated(false));
+                }
             } else {
-                Arrays.stream(sounds).forEach(sound -> sound.setActivated(sharedPreferences));
+                Arrays.stream(sounds)
+                        .filter(sound -> sound.getPreferenceKey().equals(key))
+                        .forEach(sound -> sound.setActivated(newValue));
             }
         };
         pref.registerOnSharedPreferenceChangeListener(changeListener);

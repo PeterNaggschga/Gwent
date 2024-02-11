@@ -37,6 +37,14 @@ public class SoundUnitTest {
     }
 
     @Test
+    public void createSoundInitializesPreferenceKeyAttribute() {
+        assertThat(Sound.createSound(context,
+                R.string.preference_key_sounds_weather,
+                new SoundPool.Builder().build(),
+                R.raw.weather_good).getPreferenceKey()).isEqualTo(context.getString(R.string.preference_key_sounds_weather));
+    }
+
+    @Test
     public void setActivatedSharedPreferencesSetsCorrectActiveValue() {
         Sound testSound = Sound.createSound(context, R.string.preference_key_sounds_weather, new SoundPool.Builder().build(), R.raw.weather_good);
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);

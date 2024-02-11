@@ -75,6 +75,16 @@ class Sound {
     }
 
     /**
+     * Returns the key where this Sound is activated in the SharedPreferences.
+     *
+     * @return A String referencing the activation option.
+     */
+    @NonNull
+    String getPreferenceKey() {
+        return preferenceKey;
+    }
+
+    /**
      * Returns the id of this sound effect at the SoundPool.
      *
      * @return An Integer referencing the sound effect at the SoundPool.
