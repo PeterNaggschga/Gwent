@@ -201,12 +201,14 @@ public class SoundManager {
      * Plays the given Sound if it is #activated.
      * Given soundId must be either #SOUND_WEATHER_GOOD, #SOUND_WEATHER_FROST, #SOUND_WEATHER_FOG,
      * #SOUND_WEATHER_RAIN, #SOUND_HORN, #SOUND_CARDS_EPIC, #SOUND_CARDS_MELEE,
-     * #SOUND_CARDS_RANGE, #SOUND_CARDS_SIEGE, #SOUND_RESET, #SOUND_BURN, or #SOUND_COIN.
+     * #SOUND_CARDS_RANGE, #SOUND_CARDS_SIEGE, #SOUND_RESET, #SOUND_BURN, or #SOUND_COIN,
+     * i.e., \f$ 0 \leq \mathit{soundId} \leq 11 \f$ must be true.
      * Alternately, #playClearWeatherSound(), #playWeatherSound(), #playHornSound(),
      * #playCardAddSound(), #playCardRemovedSound(), #playResetSound(), #playBurnSound(),
      * or #playCoinSound() may be used.
      *
      * @param soundId Integer representing the Sound that should be played.
+     * @throws IndexOutOfBoundsException When \f$ 0 \leq \mathit{soundId} \leq 11 \f$ is not true.
      */
     public void playSound(@IntRange(from = 0, to = 11) int soundId) {
         if (sounds[soundId].isActivated()) {
