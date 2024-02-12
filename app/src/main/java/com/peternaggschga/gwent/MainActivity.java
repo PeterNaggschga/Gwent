@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
                 });
             });
             horn.setOnClickListener(v -> {
-                gameBoard.onHornViewPressed(row);
+                gameBoard.onHornViewPressed(row).subscribe();
                 soundManager.playHornSound();
             });
 
@@ -84,21 +84,27 @@ public class MainActivity extends AppCompatActivity {
         gameBoard.getMenuUiState().observe(this, observer);
 
         reset.setOnClickListener(v -> {
-            if (gameBoard.onResetButtonPressed()) {
-                soundManager.playResetSound();
-            }
+            // noinspection CheckResult, ResultOfMethodCallIgnored
+            gameBoard.onResetButtonPressed().subscribe(aBoolean -> {
+                if (aBoolean) {
+                    soundManager.playResetSound();
+                }
+            });
         });
         weather.setOnClickListener(v -> {
-            gameBoard.onWeatherButtonPressed();
+            gameBoard.onWeatherButtonPressed().subscribe();
             soundManager.playClearWeatherSound();
         });
         burn.setOnClickListener(v -> {
-            if (gameBoard.onBurnButtonPressed()) {
-                soundManager.playBurnSound();
-            }
+            // noinspection CheckResult, ResultOfMethodCallIgnored
+            gameBoard.onBurnButtonPressed().subscribe(aBoolean -> {
+                if (aBoolean) {
+                    soundManager.playBurnSound();
+                }
+            });
         });
 
-        gameBoard.updateUi();
+        gameBoard.updateUi().subscribe();
     }
 
     private void inflateFactionPopup() {

@@ -60,10 +60,6 @@ public class GameBoardViewModel extends ViewModel {
         pref.registerOnSharedPreferenceChangeListener(changeListener);
     }
 
-    private static void runOnUiThread(@NonNull Completable toBeRun) {
-        toBeRun.subscribeOn(Schedulers.io()).subscribe();
-    }
-
     @NonNull
     public MutableLiveData<RowUiState> getRowUiState(@NonNull RowType row) {
         rowUiStates.putIfAbsent(row, new MutableLiveData<>());
@@ -89,8 +85,8 @@ public class GameBoardViewModel extends ViewModel {
         return menuUiState;
     }
 
-    public void updateUi() {
-        runOnUiThread(updateUiState());
+    public Completable updateUi() {
+        return updateUiState().subscribeOn(Schedulers.io());
     }
 
     @NonNull
@@ -123,28 +119,32 @@ public class GameBoardViewModel extends ViewModel {
                 .subscribeOn(Schedulers.io());
     }
 
-    public void onHornViewPressed(@NonNull RowType row) {
-        runOnUiThread(repository.switchHorn(row)
-                .andThen(updateUiState(row)));
+    public Completable onHornViewPressed(@NonNull RowType row) {
+        return repository.switchHorn(row)
+                .andThen(updateUiState(row))
+                .subscribeOn(Schedulers.io());
     }
 
-    public boolean onResetButtonPressed() {
+    public Single<Boolean> onResetButtonPressed() {
         // TODO: Warnung
-        runOnUiThread(repository.reset()
-                .andThen(updateUiState()));
-        return true;
+        return repository.reset()
+                .andThen(updateUiState())
+                .andThen(Single.just(true))
+                .subscribeOn(Schedulers.io());
     }
 
-    public void onWeatherButtonPressed() {
-        runOnUiThread(repository.clearWeather()
-                .andThen(updateUiState()));
+    public Completable onWeatherButtonPressed() {
+        return repository.clearWeather()
+                .andThen(updateUiState())
+                .subscribeOn(Schedulers.io());
     }
 
-    public boolean onBurnButtonPressed() {
+    public Single<Boolean> onBurnButtonPressed() {
         // TODO: Warnung
-        runOnUiThread(new BurnUnitsUseCase(repository)
+        return new BurnUnitsUseCase(repository)
                 .removeBurnUnits()
-                .andThen(updateUiState()));
-        return true;
+                .andThen(updateUiState())
+                .andThen(Single.just(true))
+                .subscribeOn(Schedulers.io());
     }
 }
