@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.preference.PreferenceManager;
 
 import com.peternaggschga.gwent.ui.main.GameBoardViewModel;
 import com.peternaggschga.gwent.ui.main.MenuUiStateObserver;
@@ -27,6 +28,20 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        int theme = PreferenceManager.getDefaultSharedPreferences(this)
+                .getInt(getString(R.string.preference_key_theme),
+                        getResources().getInteger(R.integer.theme_id_scoiatael));
+        if (theme == getResources().getInteger(R.integer.theme_id_monster)) {
+            setTheme(R.style.MonsterTheme);
+        } else if (theme == getResources().getInteger(R.integer.theme_id_nilfgaard)) {
+            setTheme(R.style.NilfgaardTheme);
+        } else if (theme == getResources().getInteger(R.integer.theme_id_northern_kingdoms)) {
+            setTheme(R.style.NorthernKingdomsTheme);
+        } else if (theme == getResources().getInteger(R.integer.theme_id_scoiatael)) {
+            setTheme(R.style.ScoiataelTheme);
+        }
+
         setContentView(R.layout.activity_main);
 
         soundManager = new SoundManager(this);
