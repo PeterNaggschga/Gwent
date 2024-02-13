@@ -135,10 +135,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void inflateFactionPopup() {
-        new ChangeFactionDialog(this, theme -> PreferenceManager.getDefaultSharedPreferences(this)
-                .edit()
-                .putInt(FactionSwitchListener.THEME_PREFERENCE_KEY, theme)
-                .apply())
+        // TODO reset
+        // TODO warnung
+        new ChangeFactionDialog(this, theme -> {
+
+            PreferenceManager.getDefaultSharedPreferences(this)
+                    .edit()
+                    .putInt(FactionSwitchListener.THEME_PREFERENCE_KEY, theme)
+                    .apply();
+        })
                 .show();
 
     }

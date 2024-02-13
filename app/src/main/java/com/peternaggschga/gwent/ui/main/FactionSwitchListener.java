@@ -51,8 +51,7 @@ public class FactionSwitchListener implements SharedPreferences.OnSharedPreferen
         List<ImageView> cardViews = new ArrayList<>(3);
         List<TextView> unitViews = new ArrayList<>(3);
 
-        int[] rowIds = {R.id.firstRow, R.id.secondRow, R.id.thirdRow};
-        for (int id : rowIds) {
+        for (int id : new int[]{R.id.firstRow, R.id.secondRow, R.id.thirdRow}) {
             ConstraintLayout rowLayout = mainWindow.findViewById(id);
 
             ballViews.add(rowLayout.findViewById(R.id.pointBall));
