@@ -9,6 +9,8 @@ import androidx.lifecycle.Observer;
 
 import com.peternaggschga.gwent.RowType;
 
+import org.jetbrains.annotations.Contract;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -60,6 +62,7 @@ public class MenuUpdateObserver implements Observer<RowUiState> {
      * @see MenuUpdateObserver#MenuUpdateObserver(MutableLiveData, List)
      */
     @NonNull
+    @Contract("_, _, _ -> new")
     public static MenuUpdateObserver getObserver(@NonNull RowType row,
                                                  @NonNull MutableLiveData<MenuUiState> menuObserver,
                                                  @NonNull Map<RowType, MutableLiveData<RowUiState>> rowObservers) {

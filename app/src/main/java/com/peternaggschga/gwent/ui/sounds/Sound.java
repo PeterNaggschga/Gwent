@@ -11,6 +11,8 @@ import androidx.preference.PreferenceManager;
 
 import com.peternaggschga.gwent.R;
 
+import org.jetbrains.annotations.Contract;
+
 /**
  * A data class encapsulating information on a certain sound effect,
  * e.g., its id in a SoundPool and whether it is activated in settings.
@@ -63,6 +65,7 @@ class Sound {
      * @return A Sound object referencing the newly registered sound effect.
      */
     @NonNull
+    @Contract("_, _, _, _ -> new")
     static Sound createSound(@NonNull Context context, @StringRes int preferenceRes,
                              @NonNull SoundPool soundPool, @RawRes int resId) {
         String preferenceKey = context.getString(preferenceRes);

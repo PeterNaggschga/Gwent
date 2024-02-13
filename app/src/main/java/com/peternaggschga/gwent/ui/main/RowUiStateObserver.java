@@ -10,6 +10,8 @@ import androidx.lifecycle.Observer;
 import com.peternaggschga.gwent.R;
 import com.peternaggschga.gwent.RowType;
 
+import org.jetbrains.annotations.Contract;
+
 /**
  * An observer class responsible for updating the views of the row defined in #row when notified,
  * i.e., when a new RowUiState is produced by RowStateUseCase.
@@ -93,6 +95,7 @@ public class RowUiStateObserver implements Observer<RowUiState> {
      * @see #RowUiStateObserver(TextView, ImageView, int, ImageView, TextView)
      */
     @NonNull
+    @Contract("_, _, _, _, _ -> new")
     public static RowUiStateObserver getObserver(@NonNull RowType row, @NonNull TextView damageView,
                                                  @NonNull ImageView weatherView, @NonNull ImageView hornView,
                                                  @NonNull TextView unitView) {
