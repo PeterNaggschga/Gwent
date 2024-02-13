@@ -27,12 +27,15 @@ public class ImageViewSwitchAnimator {
     @NonNull
     private static ImageView getOverlayView(@NonNull ImageView template) {
         ImageView result = new ImageView(template.getContext());
-        ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) template.getLayoutParams();
-        result.setLayoutParams(new ConstraintLayout.LayoutParams(params.width, params.height));
+        ViewGroup.LayoutParams oldParams = template.getLayoutParams();
+        ConstraintLayout.LayoutParams newParams = new ConstraintLayout.LayoutParams(oldParams.width, oldParams.height);
+        newParams.topToTop = template.getId();
+        newParams.endToEnd = template.getId();
+        newParams.startToStart = template.getId();
+        newParams.bottomToBottom = template.getId();
+        result.setLayoutParams(newParams);
         result.setImageDrawable(template.getDrawable());
         result.setScaleType(template.getScaleType());
-        result.setX(template.getX());
-        result.setY(template.getY());
         result.setTranslationZ(template.getTranslationZ() + 1);
         return result;
     }
