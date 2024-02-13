@@ -2,6 +2,8 @@
 <resources>
     <bool name="warning_preference_default">true</bool>
     <string name="preference_key_warning" translatable="false">warnings</string>
+    <bool name="faction_reset_preference_default">false</bool>
+    <string name="preference_key_faction_reset" translatable="false">factionReset</string>
 
     <!-- Sound preferences -->
     <bool name="sound_preference_default">true</bool>

@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private GameBoardViewModel gameBoard;
     @SuppressWarnings("FieldCanBeLocal")
     private SharedPreferences.OnSharedPreferenceChangeListener factionSwitchListener;
+    private boolean resetOnFactionSwitch;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -68,6 +69,14 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.factionButton).setOnClickListener(v -> inflateFactionPopup());
         findViewById(R.id.coinButton).setOnClickListener(v -> inflateCoinFlipPopup());
         findViewById(R.id.settingsButton).setOnClickListener(v -> startActivity(new Intent(MainActivity.this, SettingsActivity.class)));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        resetOnFactionSwitch = PreferenceManager.getDefaultSharedPreferences(this)
+                .getBoolean(getString(R.string.preference_key_faction_reset),
+                        getResources().getBoolean(R.bool.faction_reset_preference_default));
     }
 
     private void initializeViewModel() {
@@ -138,14 +147,18 @@ public class MainActivity extends AppCompatActivity {
         // TODO reset
         // TODO warnung
         new ChangeFactionDialog(this, theme -> {
-
-            PreferenceManager.getDefaultSharedPreferences(this)
-                    .edit()
-                    .putInt(FactionSwitchListener.THEME_PREFERENCE_KEY, theme)
-                    .apply();
-        })
-                .show();
-
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+            if (resetOnFactionSwitch) {
+                // noinspection CheckResult, ResultOfMethodCallIgnored
+                gameBoard.onResetButtonPressed().subscribe(aBoolean -> preferences.edit()
+                        .putInt(FactionSwitchListener.THEME_PREFERENCE_KEY, theme)
+                        .apply());
+            } else {
+                preferences.edit()
+                        .putInt(FactionSwitchListener.THEME_PREFERENCE_KEY, theme)
+                        .apply();
+            }
+        }).show();
     }
 
     private void inflateCoinFlipPopup() {

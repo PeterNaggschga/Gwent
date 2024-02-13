@@ -126,7 +126,10 @@ public class GameBoardViewModel extends ViewModel {
     }
 
     public Single<Boolean> onResetButtonPressed() {
-        // TODO: Warnung
+        if (!Objects.requireNonNull(menuUiState.getValue()).isReset()) {
+            return Single.just(false);
+        }
+        // TODO: Warnung + Monster-Reset
         return repository.reset()
                 .andThen(updateUiState())
                 .andThen(Single.just(true))

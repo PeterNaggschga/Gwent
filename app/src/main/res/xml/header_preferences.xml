@@ -17,9 +17,9 @@
         app:title="@string/preference_warnings_title" />
 
     <SwitchPreference
-        app:defaultValue="false"
+        app:defaultValue="@bool/faction_reset_preference_default"
         app:icon="@drawable/icon_factionreset"
-        app:key="factionReset"
+        app:key="@string/preference_key_faction_reset"
         app:summary="@string/preference_faction_reset_desc"
         app:title="@string/preference_faction_reset_title" />
 
