@@ -125,7 +125,7 @@ public class SoundManager {
      * #SOUND_CARDS_RANGE, #SOUND_CARDS_SIEGE, #SOUND_RESET, #SOUND_BURN, and #SOUND_COIN.
      */
     @NonNull
-    private final Sound[] sounds = new Sound[12];
+    private final Sound[] sounds = new Sound[SOUND_COIN + 1];
 
     /**
      * SoundPool where sound effects are registered.
@@ -210,7 +210,7 @@ public class SoundManager {
      * @param soundId Integer representing the Sound that should be played.
      * @throws IndexOutOfBoundsException When \f$ 0 \leq \mathit{soundId} \leq 11 \f$ is not true.
      */
-    public void playSound(@IntRange(from = 0, to = 11) int soundId) {
+    public void playSound(@IntRange(from = SOUND_WEATHER_GOOD, to = SOUND_COIN) int soundId) {
         if (sounds[soundId].isActivated()) {
             soundPool.play(sounds[soundId].getSoundId(), 1, 1, 0, 0, 1);
         }
