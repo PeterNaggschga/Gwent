@@ -22,13 +22,6 @@
             android:src="?attr/point_ball_mipmap"
             android:translationZ="5dp" />
 
-        <ImageView
-            android:id="@+id/backgroundPointBall"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:contentDescription="@string/content_description_background_resource"
-            android:scaleType="fitXY" />
-
         <TextView
             android:id="@+id/pointView"
             android:layout_width="match_parent"
@@ -82,12 +75,6 @@
             android:contentDescription="@string/content_description_row_card"
             android:src="?attr/card_view_mipmap"
             android:translationZ="5dp" />
-
-        <ImageView
-            android:id="@+id/backgroundCardsImage"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:contentDescription="@string/content_description_background_resource" />
 
         <TextView
             android:id="@+id/cardCountView"
