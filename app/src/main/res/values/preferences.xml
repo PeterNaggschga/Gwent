@@ -3,13 +3,6 @@
     <bool name="warning_preference_default">true</bool>
     <string name="preference_key_warning" translatable="false">warnings</string>
 
-    <!-- Themes -->
-    <string name="preference_key_theme" translatable="false">theme</string>
-    <integer name="theme_id_monster">0</integer>
-    <integer name="theme_id_nilfgaard">1</integer>
-    <integer name="theme_id_northern_kingdoms">2</integer>
-    <integer name="theme_id_scoiatael">3</integer>
-
     <!-- Sound preferences -->
     <bool name="sound_preference_default">true</bool>
 

@@ -12,6 +12,7 @@ import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 
 import com.peternaggschga.gwent.R;
+import com.peternaggschga.gwent.ui.main.FactionSwitchListener;
 
 import java.util.Objects;
 
@@ -27,21 +28,17 @@ public class ChangeFactionDialog extends Dialog {
 
         findViewById(R.id.factionBackground).setOnClickListener(v -> cancel());
 
-        int monsterTheme = context.getResources().getInteger(R.integer.theme_id_monster);
-        findViewById(R.id.monsterCardView).setOnClickListener(getOnThemeClickListener(callback, monsterTheme));
-        findViewById(R.id.monsterButton).setOnClickListener(getOnThemeClickListener(callback, monsterTheme));
+        findViewById(R.id.monsterCardView).setOnClickListener(getOnThemeClickListener(callback, FactionSwitchListener.THEME_MONSTER));
+        findViewById(R.id.monsterButton).setOnClickListener(getOnThemeClickListener(callback, FactionSwitchListener.THEME_MONSTER));
 
-        int nilfgaardTheme = context.getResources().getInteger(R.integer.theme_id_nilfgaard);
-        findViewById(R.id.nilfgaardCardView).setOnClickListener(getOnThemeClickListener(callback, nilfgaardTheme));
-        findViewById(R.id.nilfgaardButton).setOnClickListener(getOnThemeClickListener(callback, nilfgaardTheme));
+        findViewById(R.id.nilfgaardCardView).setOnClickListener(getOnThemeClickListener(callback, FactionSwitchListener.THEME_NILFGAARD));
+        findViewById(R.id.nilfgaardButton).setOnClickListener(getOnThemeClickListener(callback, FactionSwitchListener.THEME_NILFGAARD));
 
-        int northernKingdomsTheme = context.getResources().getInteger(R.integer.theme_id_northern_kingdoms);
-        findViewById(R.id.northernKingdomsCardView).setOnClickListener(getOnThemeClickListener(callback, northernKingdomsTheme));
-        findViewById(R.id.northernKingdomsButton).setOnClickListener(getOnThemeClickListener(callback, northernKingdomsTheme));
+        findViewById(R.id.northernKingdomsCardView).setOnClickListener(getOnThemeClickListener(callback, FactionSwitchListener.THEME_NORTHERN_KINGDOMS));
+        findViewById(R.id.northernKingdomsButton).setOnClickListener(getOnThemeClickListener(callback, FactionSwitchListener.THEME_NORTHERN_KINGDOMS));
 
-        int scoiataelTheme = context.getResources().getInteger(R.integer.theme_id_scoiatael);
-        findViewById(R.id.scoiataelCardView).setOnClickListener(getOnThemeClickListener(callback, scoiataelTheme));
-        findViewById(R.id.scoiataelButton).setOnClickListener(getOnThemeClickListener(callback, scoiataelTheme));
+        findViewById(R.id.scoiataelCardView).setOnClickListener(getOnThemeClickListener(callback, FactionSwitchListener.THEME_SCOIATAEL));
+        findViewById(R.id.scoiataelButton).setOnClickListener(getOnThemeClickListener(callback, FactionSwitchListener.THEME_SCOIATAEL));
 
         setCancelable(true);
     }

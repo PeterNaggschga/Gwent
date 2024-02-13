@@ -1,6 +1,7 @@
 package com.peternaggschga.gwent;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -14,6 +15,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
 
+import com.peternaggschga.gwent.ui.dialogs.ChangeFactionDialog;
+import com.peternaggschga.gwent.ui.main.FactionSwitchListener;
 import com.peternaggschga.gwent.ui.main.GameBoardViewModel;
 import com.peternaggschga.gwent.ui.main.MenuUiStateObserver;
 import com.peternaggschga.gwent.ui.main.RowUiStateObserver;
@@ -24,22 +27,27 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class MainActivity extends AppCompatActivity {
     private SoundManager soundManager;
     private GameBoardViewModel gameBoard;
+    @SuppressWarnings("FieldCanBeLocal")
+    private SharedPreferences.OnSharedPreferenceChangeListener factionSwitchListener;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        int theme = PreferenceManager.getDefaultSharedPreferences(this)
-                .getInt(getString(R.string.preference_key_theme),
-                        getResources().getInteger(R.integer.theme_id_scoiatael));
-        if (theme == getResources().getInteger(R.integer.theme_id_monster)) {
-            setTheme(R.style.MonsterTheme);
-        } else if (theme == getResources().getInteger(R.integer.theme_id_nilfgaard)) {
-            setTheme(R.style.NilfgaardTheme);
-        } else if (theme == getResources().getInteger(R.integer.theme_id_northern_kingdoms)) {
-            setTheme(R.style.NorthernKingdomsTheme);
-        } else if (theme == getResources().getInteger(R.integer.theme_id_scoiatael)) {
-            setTheme(R.style.ScoiataelTheme);
+        switch (PreferenceManager.getDefaultSharedPreferences(this)
+                .getInt(FactionSwitchListener.THEME_PREFERENCE_KEY,
+                        FactionSwitchListener.THEME_SCOIATAEL)) {
+            case FactionSwitchListener.THEME_MONSTER:
+                setTheme(R.style.MonsterTheme);
+                break;
+            case FactionSwitchListener.THEME_NILFGAARD:
+                setTheme(R.style.NilfgaardTheme);
+                break;
+            case FactionSwitchListener.THEME_NORTHERN_KINGDOMS:
+                setTheme(R.style.NorthernKingdomsTheme);
+                break;
+            case FactionSwitchListener.THEME_SCOIATAEL:
+                setTheme(R.style.ScoiataelTheme);
         }
 
         setContentView(R.layout.activity_main);
@@ -52,6 +60,10 @@ public class MainActivity extends AppCompatActivity {
             ).get(GameBoardViewModel.class);
             new Handler(Looper.getMainLooper()).post(MainActivity.this::initializeViewModel);
         });
+
+        factionSwitchListener = FactionSwitchListener.getFactionSwitchObserver(getWindow());
+        PreferenceManager.getDefaultSharedPreferences(this)
+                .registerOnSharedPreferenceChangeListener(factionSwitchListener);
 
         findViewById(R.id.factionButton).setOnClickListener(v -> inflateFactionPopup());
         findViewById(R.id.coinButton).setOnClickListener(v -> inflateCoinFlipPopup());
@@ -123,8 +135,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void inflateFactionPopup() {
-        Toast.makeText(this, "Not yet implemented!", Toast.LENGTH_SHORT).show();
-        // TODO
+        new ChangeFactionDialog(this, theme -> PreferenceManager.getDefaultSharedPreferences(this)
+                .edit()
+                .putInt(FactionSwitchListener.THEME_PREFERENCE_KEY, theme)
+                .apply())
+                .show();
+
     }
 
     private void inflateCoinFlipPopup() {
