@@ -7,6 +7,7 @@ import android.widget.ImageView;
 
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import io.reactivex.rxjava3.core.Completable;
 
@@ -26,7 +27,8 @@ public class ImageViewSwitchAnimator {
     @NonNull
     private static ImageView getOverlayView(@NonNull ImageView template) {
         ImageView result = new ImageView(template.getContext());
-        result.setLayoutParams(new ViewGroup.LayoutParams(template.getWidth(), template.getHeight()));
+        ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) template.getLayoutParams();
+        result.setLayoutParams(new ConstraintLayout.LayoutParams(params.width, params.height));
         result.setImageDrawable(template.getDrawable());
         result.setScaleType(template.getScaleType());
         result.setX(template.getX());
