@@ -17,7 +17,6 @@ import android.view.WindowInsetsController;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -187,26 +186,26 @@ public class OldMainActivity extends AppCompatActivity {
             final boolean monster = THEME.MONSTER.ordinal() == sharedPreferences.getInt("faction", THEME.SCOIATAEL.ordinal());
             AlertDialog.Builder builder = getAlertDialogBuilder();
             if (sharedPreferences.getBoolean("warnings", true)) {
-                final View checkBoxView = View.inflate(OldMainActivity.this, R.layout.alertdialog_checkbox, null);
+                //final View checkBoxView = View.inflate(OldMainActivity.this, R.layout.alertdialog_checkbox, null);
                 if (monster) {
-                    builder.setView(checkBoxView);
+                    //builder.setView(checkBoxView);
                 }
                 builder.setTitle(R.string.alertDialog_reset_title)
-                        .setMessage(R.string.alertDialog_reset_msg)
+                        .setMessage(R.string.alertDialog_reset_msg_default)
                         .setPositiveButton(R.string.alertDialog_reset_positive, (dialogInterface, i) -> {
                             if (monster) {
-                                CheckBox checkBox = checkBoxView.findViewById(R.id.alertDialog_checkbox);
-                                resetAll(checkBox.isChecked());
+                                /*CheckBox checkBox = checkBoxView.findViewById(R.id.alertDialog_checkbox);
+                                resetAll(checkBox.isChecked());*/
                             } else {
                                 resetAll(false);
                             }
                         });
                 builder.create().show();
             } else if (monster) {
-                builder.setTitle(R.string.alertDialog_monster_title)
+                /*builder.setTitle(R.string.alertDialog_monster_title)
                         .setMessage(R.string.alertDialog_monster_msg)
                         .setPositiveButton(R.string.alertDialog_monster_positive, (dialogInterface, i) -> resetAll(true))
-                        .setNegativeButton(R.string.alertDialog_monster_negative, (dialogInterface, i) -> resetAll(false));
+                        .setNegativeButton(R.string.alertDialog_monster_negative, (dialogInterface, i) -> resetAll(false));*/
                 builder.create().show();
             } else {
                 resetAll(false);
@@ -490,7 +489,7 @@ public class OldMainActivity extends AppCompatActivity {
                 }
             }
             if (allRows.size() == 0) {
-                Toast.makeText(this, R.string.alertDialog_factionreset_monster_toast_nokeep, Toast.LENGTH_LONG).show();
+                //Toast.makeText(this, R.string.alertDialog_factionreset_monster_toast_nokeep, Toast.LENGTH_LONG).show();
             }
             for (Row row : fullClear) {
                 row.clear(false);
@@ -999,7 +998,7 @@ public class OldMainActivity extends AppCompatActivity {
             if (sharedPreferences.getBoolean("factionReset", false) && sharedPreferences.getBoolean("warnings", true) && resetButton.isEnabled()) {
                 AlertDialog.Builder builder = getAlertDialogBuilder();
                 builder.setTitle(R.string.alertDialog_reset_title)
-                        .setMessage(R.string.alertDialog_factionreset_msg)
+                        .setMessage(R.string.alertDialog_reset_msg_faction_switch)
                         .setCancelable(false)
                         .setPositiveButton(R.string.alertDialog_reset_positive, (dialogInterface, i) -> {
                             resetAll(false);
@@ -1007,7 +1006,7 @@ public class OldMainActivity extends AppCompatActivity {
                             inflateFactionLayout(false);
                             popupWindow.dismiss();
                         })
-                        .setNegativeButton(R.string.alertDialog_factionreset_negative, (dialogInterface, i) -> {
+                        .setNegativeButton(R.string.alertDialog_reset_negative, (dialogInterface, i) -> {
                             sharedPreferences.edit().putInt("faction", theme.ordinal()).apply();
                             inflateFactionLayout(false);
                             popupWindow.dismiss();

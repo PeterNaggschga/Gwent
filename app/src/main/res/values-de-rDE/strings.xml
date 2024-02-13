@@ -30,18 +30,12 @@
     <string name="alertDialog_burn_title">Verbrennen</string>
 
     <string name="alertDialog_reset_title">Spielfeld zurücksetzen</string>
-    <string name="alertDialog_reset_msg">Willst du wirklich das gesamte Spielfeld zurücksetzen?</string>
-    <string name="alertDialog_factionreset_msg">Du hast \"Zurücksetzen bei Fraktionswechsel\" aktiviert. Soll das Spielfeld wirklich zurückgesetzt werden?</string>
+    <string name="alertDialog_reset_msg_default">Willst du wirklich das gesamte Spielfeld zurücksetzen?</string>
+    <string name="alertDialog_reset_msg_faction_switch">Du hast \"Zurücksetzen bei Fraktionswechsel\" aktiviert. Soll das Spielfeld wirklich zurückgesetzt werden?</string>
     <string name="alertDialog_reset_checkbox">Die Fähigkeit der Monsterfraktion auslösen (du behältst eine zufällige Einheit)</string>
     <string name="alertDialog_factionreset_monster_toast_keep">Du behältst: %1$s</string>
-    <string name="alertDialog_factionreset_monster_toast_nokeep">Du behältst keine Einheit!</string>
     <string name="alertDialog_reset_positive">Zurücksetzen</string>
-    <string name="alertDialog_factionreset_negative">Nicht zurücksetzen</string>
-
-    <string name="alertDialog_monster_title">Fähigkeit auslösen</string>
-    <string name="alertDialog_monster_msg">Willst du die Fähigkeit der Monsterfraktion auslösen? Du kannst eine zufällig ausgewählte Einheit behalten.</string>
-    <string name="alertDialog_monster_positive">Auslösen</string>
-    <string name="alertDialog_monster_negative">Nicht auslösen</string>
+    <string name="alertDialog_reset_negative">Nicht zurücksetzen</string>
 
     <string name="alertDialog_revenge_title">Rächerfähigkeit</string>
     <string name="alertDialog_revenge_msg">Du hast eine Einheit vom Spielfeld entfernt, die einen Rächer herbeirufen kann. Möchtest du diese Fähigkeit auslösen?</string>

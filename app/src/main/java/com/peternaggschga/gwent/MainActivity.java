@@ -15,6 +15,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
 
+import com.peternaggschga.gwent.domain.cases.ResetUseCase;
 import com.peternaggschga.gwent.ui.dialogs.ChangeFactionDialog;
 import com.peternaggschga.gwent.ui.main.FactionSwitchListener;
 import com.peternaggschga.gwent.ui.main.GameBoardViewModel;
@@ -120,8 +121,10 @@ public class MainActivity extends AppCompatActivity {
         gameBoard.getMenuUiState().observe(this, observer);
 
         reset.setOnClickListener(v -> {
+            boolean monsterTheme = FactionSwitchListener.THEME_MONSTER == PreferenceManager.getDefaultSharedPreferences(this)
+                    .getInt(FactionSwitchListener.THEME_PREFERENCE_KEY, FactionSwitchListener.THEME_SCOIATAEL);
             // noinspection CheckResult, ResultOfMethodCallIgnored
-            gameBoard.onResetButtonPressed().subscribe(aBoolean -> {
+            gameBoard.onResetButtonPressed(this, monsterTheme).subscribe(aBoolean -> {
                 if (aBoolean) {
                     soundManager.playResetSound();
                 }
@@ -144,15 +147,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void inflateFactionPopup() {
-        // TODO reset
-        // TODO warnung
         new ChangeFactionDialog(this, theme -> {
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
             if (resetOnFactionSwitch) {
                 // noinspection CheckResult, ResultOfMethodCallIgnored
-                gameBoard.onResetButtonPressed().subscribe(aBoolean -> preferences.edit()
-                        .putInt(FactionSwitchListener.THEME_PREFERENCE_KEY, theme)
-                        .apply());
+                gameBoard.reset(this, ResetUseCase.TRIGGER_FACTION_SWITCH)
+                        .subscribe(aBoolean -> {
+                            soundManager.playResetSound();
+                            preferences.edit()
+                                    .putInt(FactionSwitchListener.THEME_PREFERENCE_KEY, theme)
+                                    .apply();
+                        });
             } else {
                 preferences.edit()
                         .putInt(FactionSwitchListener.THEME_PREFERENCE_KEY, theme)

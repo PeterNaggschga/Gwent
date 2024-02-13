@@ -45,18 +45,12 @@
     <string name="alertDialog_burn_msg">Do you really want to scorch %1$s?</string>
 
     <string name="alertDialog_reset_title">Reset board</string>
-    <string name="alertDialog_reset_msg">Do you really want to reset the board?</string>
-    <string name="alertDialog_factionreset_msg">You activated \"Reset on change of faction\". Do you really want to reset the board?</string>
+    <string name="alertDialog_reset_msg_default">Do you really want to reset the board?</string>
+    <string name="alertDialog_reset_msg_faction_switch">You activated \"Reset on change of faction\". Do you really want to reset the board?</string>
     <string name="alertDialog_reset_checkbox">Activate perk of monster faction (you keep one random unit)</string>
     <string name="alertDialog_factionreset_monster_toast_keep">You keep: %1$s</string>
-    <string name="alertDialog_factionreset_monster_toast_nokeep">You don\'t keep any units!</string>
     <string name="alertDialog_reset_positive">Reset</string>
-    <string name="alertDialog_factionreset_negative">Don\'t reset</string>
-
-    <string name="alertDialog_monster_title">Activate perk</string>
-    <string name="alertDialog_monster_msg">Do you want to activate the perk of monsters faction? You can keep one randomly chosen unit.</string>
-    <string name="alertDialog_monster_positive">Activate</string>
-    <string name="alertDialog_monster_negative">Don\'t Activate</string>
+    <string name="alertDialog_reset_negative">Don\'t reset</string>
 
     <string name="alertDialog_revenge_title">Avenger ability</string>
     <string name="alertDialog_revenge_msg">You removed units that can summon an avenger. Do you want to activate their ability?</string>

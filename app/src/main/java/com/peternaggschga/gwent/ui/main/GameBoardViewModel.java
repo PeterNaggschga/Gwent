@@ -5,6 +5,7 @@ import static androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.APPLI
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -17,6 +18,7 @@ import com.peternaggschga.gwent.R;
 import com.peternaggschga.gwent.RowType;
 import com.peternaggschga.gwent.data.UnitRepository;
 import com.peternaggschga.gwent.domain.cases.BurnUnitsUseCase;
+import com.peternaggschga.gwent.domain.cases.ResetUseCase;
 import com.peternaggschga.gwent.domain.cases.RowStateUseCase;
 
 import java.util.HashMap;
@@ -25,6 +27,7 @@ import java.util.Objects;
 
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.core.SingleEmitter;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class GameBoardViewModel extends ViewModel {
@@ -125,15 +128,29 @@ public class GameBoardViewModel extends ViewModel {
                 .subscribeOn(Schedulers.io());
     }
 
-    public Single<Boolean> onResetButtonPressed() {
+    public Single<Boolean> onResetButtonPressed(@NonNull Context context, boolean monsterFaction) {
+        return reset(context, ResetUseCase.TRIGGER_BUTTON_CLICK, monsterFaction);
+    }
+
+    public Single<Boolean> reset(Context context, @IntRange(from = 0, to = 1) int trigger) {
+        return reset(context, trigger, false);
+    }
+
+    public Single<Boolean> reset(@NonNull Context context, @IntRange(from = 0, to = 1) int trigger, boolean monsterFaction) {
         if (!Objects.requireNonNull(menuUiState.getValue()).isReset()) {
             return Single.just(false);
         }
-        // TODO: Warnung + Monster-Reset
-        return repository.reset()
-                .andThen(updateUiState())
-                .andThen(Single.just(true))
-                .subscribeOn(Schedulers.io());
+        return Single.create((@NonNull SingleEmitter<Boolean> emitter) -> {
+            ResetUseCase useCase = new ResetUseCase(repository, trigger, monsterFaction);
+            if (showWarnings || useCase.showMonsterDialog().blockingGet()) {
+                useCase.getWarningDialog(context, emitter).blockingGet().show();
+            } else {
+                useCase.reset()
+                        .andThen(updateUiState())
+                        .blockingAwait();
+                emitter.onSuccess(true);
+            }
+        });
     }
 
     public Completable onWeatherButtonPressed() {
