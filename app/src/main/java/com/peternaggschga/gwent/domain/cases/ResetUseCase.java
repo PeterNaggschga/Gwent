@@ -14,6 +14,7 @@ import com.peternaggschga.gwent.data.UnitRepository;
 
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Maybe;
@@ -45,7 +46,11 @@ public class ResetUseCase {
     @NonNull
     private static Maybe<UnitEntity> getRandomUnit(@NonNull UnitRepository repository) {
         return Maybe.create(emitter -> {
-            List<UnitEntity> units = repository.getUnits().blockingGet();
+            List<UnitEntity> units = repository.getUnits()
+                    .blockingGet()
+                    .stream()
+                    .filter(unit -> !unit.isEpic())
+                    .collect(Collectors.toList());
             if (units.isEmpty()) {
                 emitter.onComplete();
             } else {
@@ -90,7 +95,11 @@ public class ResetUseCase {
     @NonNull
     public Single<Boolean> showMonsterDialog() {
         return Single.concat(Single.just(monsterReset),
-                repository.countUnits().map(integer -> integer > 0)).all(bool -> bool);
+                Single.create(emitter -> emitter.onSuccess(repository.getUnits()
+                        .blockingGet()
+                        .stream()
+                        .anyMatch(unit -> !unit.isEpic()))
+                )).all(bool -> bool);
     }
 
     @NonNull
