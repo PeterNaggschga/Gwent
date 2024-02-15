@@ -28,7 +28,6 @@ import java.util.Objects;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.core.SingleEmitter;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class GameBoardViewModel extends ViewModel {
     public static final ViewModelInitializer<GameBoardViewModel> initializer = new ViewModelInitializer<>(
@@ -89,7 +88,7 @@ public class GameBoardViewModel extends ViewModel {
     }
 
     public Completable updateUi() {
-        return updateUiState().subscribeOn(Schedulers.io());
+        return updateUiState();
     }
 
     @NonNull
@@ -118,14 +117,12 @@ public class GameBoardViewModel extends ViewModel {
     public Single<Boolean> onWeatherViewPressed(@NonNull RowType row) {
         return repository.switchWeather(row)
                 .andThen(updateUiState(row))
-                .andThen(repository.isWeather(row))
-                .subscribeOn(Schedulers.io());
+                .andThen(repository.isWeather(row));
     }
 
     public Completable onHornViewPressed(@NonNull RowType row) {
         return repository.switchHorn(row)
-                .andThen(updateUiState(row))
-                .subscribeOn(Schedulers.io());
+                .andThen(updateUiState(row));
     }
 
     public Single<Boolean> onResetButtonPressed(@NonNull Context context, boolean monsterFaction) {
@@ -155,8 +152,7 @@ public class GameBoardViewModel extends ViewModel {
 
     public Completable onWeatherButtonPressed() {
         return repository.clearWeather()
-                .andThen(updateUiState())
-                .subscribeOn(Schedulers.io());
+                .andThen(updateUiState());
     }
 
     public Single<Boolean> onBurnButtonPressed() {
@@ -164,7 +160,6 @@ public class GameBoardViewModel extends ViewModel {
         return new BurnUnitsUseCase(repository)
                 .removeBurnUnits()
                 .andThen(updateUiState())
-                .andThen(Single.just(true))
-                .subscribeOn(Schedulers.io());
+                .andThen(Single.just(true));
     }
 }

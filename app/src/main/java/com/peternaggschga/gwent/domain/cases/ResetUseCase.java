@@ -20,7 +20,6 @@ import io.reactivex.rxjava3.core.Maybe;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.core.SingleEmitter;
 import io.reactivex.rxjava3.functions.Consumer;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 
 /**
  * @todo Review function accessibility
@@ -107,8 +106,7 @@ public class ResetUseCase {
             switch (trigger) {
                 case TRIGGER_FACTION_SWITCH:
                     // noinspection CheckResult, ResultOfMethodCallIgnored
-                    getFactionSwitchDialogBuilder(context, resetEmitter).subscribeOn(Schedulers.io())
-                            .subscribe(builderCompleter);
+                    getFactionSwitchDialogBuilder(context, resetEmitter).subscribe(builderCompleter);
                     break;
                 case TRIGGER_BUTTON_CLICK:
                 default:

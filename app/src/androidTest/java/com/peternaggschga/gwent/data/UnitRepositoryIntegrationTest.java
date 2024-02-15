@@ -76,7 +76,7 @@ public class UnitRepositoryIntegrationTest {
                 database.units().insertUnit(false, 5, Ability.NONE, null, row).blockingAwait();
             }
         }
-        repository.reset().andThen(database.units().countUnits()).test().assertValue(0);
+        assertThat(repository.reset().andThen(database.units().countUnits()).blockingGet()).isEqualTo(0);
     }
 
     @Test
@@ -88,7 +88,7 @@ public class UnitRepositoryIntegrationTest {
         }
         //noinspection OptionalGetWithoutIsPresent
         UnitEntity unit = database.units().getUnits().blockingGet().stream().findAny().get();
-        repository.reset(unit).andThen(database.units().countUnits()).test().assertValue(1);
+        assertThat(repository.reset(unit).andThen(database.units().countUnits()).blockingGet()).isEqualTo(1);
     }
 
     @Test
@@ -117,10 +117,10 @@ public class UnitRepositoryIntegrationTest {
 
     @Test
     public void insertUnitNumberAddsUnits() {
-        repository.insertUnit(false, 5, Ability.NONE, null, RowType.MELEE, TESTING_DEPTH)
+        assertThat(repository.insertUnit(false, 5, Ability.NONE, null, RowType.MELEE, TESTING_DEPTH)
                 .andThen(database.units().countUnits())
-                .test()
-                .assertValue(TESTING_DEPTH);
+                .blockingGet())
+                .isEqualTo(TESTING_DEPTH);
     }
 
     @Test
@@ -220,14 +220,14 @@ public class UnitRepositoryIntegrationTest {
     @Test
     public void switchWeatherSwitchesWeather() {
         for (RowType row : RowType.values()) {
-            repository.switchWeather(row)
+            assertThat(repository.switchWeather(row)
                     .andThen(database.rows().isWeather(row))
-                    .test()
-                    .assertValue(true);
-            repository.switchWeather(row)
+                    .blockingGet())
+                    .isTrue();
+            assertThat(repository.switchWeather(row)
                     .andThen(database.rows().isWeather(row))
-                    .test()
-                    .assertValue(false);
+                    .blockingGet())
+                    .isFalse();
         }
     }
 
@@ -244,11 +244,11 @@ public class UnitRepositoryIntegrationTest {
     @Test
     public void isWeatherReturnsWeather() {
         for (RowType row : RowType.values()) {
-            repository.isWeather(row).test().assertValue(false);
-            database.rows().updateWeather(row)
+            assertThat(repository.isWeather(row).blockingGet()).isFalse();
+            assertThat(database.rows().updateWeather(row)
                     .andThen(repository.isWeather(row))
-                    .test()
-                    .assertValue(true);
+                    .blockingGet())
+                    .isTrue();
         }
     }
 
@@ -276,14 +276,14 @@ public class UnitRepositoryIntegrationTest {
     @Test
     public void switchHornSwitchesHorn() {
         for (RowType row : RowType.values()) {
-            repository.switchHorn(row)
+            assertThat(repository.switchHorn(row)
                     .andThen(database.rows().isHorn(row))
-                    .test()
-                    .assertValue(true);
-            repository.switchHorn(row)
+                    .blockingGet())
+                    .isTrue();
+            assertThat(repository.switchHorn(row)
                     .andThen(database.rows().isHorn(row))
-                    .test()
-                    .assertValue(false);
+                    .blockingGet())
+                    .isFalse();
         }
     }
 
@@ -300,11 +300,11 @@ public class UnitRepositoryIntegrationTest {
     @Test
     public void isHornReturnsHorn() {
         for (RowType row : RowType.values()) {
-            repository.isHorn(row).test().assertValue(false);
-            database.rows().updateHorn(row)
+            assertThat(repository.isHorn(row).blockingGet()).isFalse();
+            assertThat(database.rows().updateHorn(row)
                     .andThen(repository.isHorn(row))
-                    .test()
-                    .assertValue(true);
+                    .blockingGet())
+                    .isTrue();
         }
     }
 
@@ -323,10 +323,10 @@ public class UnitRepositoryIntegrationTest {
         insertDummys();
 
         List<UnitEntity> units = database.units().getUnits().blockingGet();
-        repository.delete(units)
+        assertThat(repository.delete(units)
                 .andThen(database.units().countUnits())
-                .test()
-                .assertValue(0);
+                .blockingGet())
+                .isEqualTo(0);
     }
 
     @Test
@@ -345,10 +345,10 @@ public class UnitRepositoryIntegrationTest {
         insertDummys();
 
         List<UnitEntity> units = database.units().getUnits().blockingGet();
-        repository.copy(units)
+        assertThat(repository.copy(units)
                 .andThen(database.units().countUnits())
-                .test()
-                .assertValue(units.size() * 2);
+                .blockingGet())
+                .isEqualTo(units.size() * 2);
     }
 
     @Test
@@ -366,21 +366,21 @@ public class UnitRepositoryIntegrationTest {
     public void countUnitsCountsCorrectly() {
         for (int rowNumber = 0; rowNumber < RowType.values().length; rowNumber++) {
             RowType row = RowType.values()[rowNumber];
-            repository.countUnits(row)
-                    .test()
-                    .assertValue(0);
+            assertThat(repository.countUnits(row)
+                    .blockingGet())
+                    .isEqualTo(0);
             for (int unitNumber = 0; unitNumber < 5; unitNumber++) {
-                repository.countUnits()
-                        .test()
-                        .assertValue(rowNumber * 5 + unitNumber);
-                database.units().insertUnit(false, unitNumber, Ability.values()[unitNumber / 2], null, row)
+                assertThat(repository.countUnits()
+                        .blockingGet())
+                        .isEqualTo(rowNumber * 5 + unitNumber);
+                assertThat(database.units().insertUnit(false, unitNumber, Ability.values()[unitNumber / 2], null, row)
                         .andThen(repository.countUnits(row))
-                        .test()
-                        .assertValue(unitNumber + 1);
+                        .blockingGet())
+                        .isEqualTo(unitNumber + 1);
             }
-            repository.countUnits()
-                    .test()
-                    .assertValue((rowNumber + 1) * 5);
+            assertThat(repository.countUnits()
+                    .blockingGet())
+                    .isEqualTo((rowNumber + 1) * 5);
         }
 
     }
