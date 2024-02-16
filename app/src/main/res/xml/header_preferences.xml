@@ -23,15 +23,6 @@
         app:summary="@string/preference_faction_reset_desc"
         app:title="@string/preference_faction_reset_title" />
 
-    <MultiSelectListPreference
-        app:defaultValue="@array/preference_unit_string_defaultValues"
-        app:entries="@array/preference_unit_string"
-        app:entryValues="@array/preference_unit_string_values"
-        app:icon="@drawable/icon_unit_string"
-        app:key="unit_string"
-        app:summary="@string/preference_unit_string_desc"
-        app:title="@string/preference_unit_string_title" />
-
     <Preference
         app:fragment="com.peternaggschga.gwent.SettingsActivity$SoundFragment"
         app:icon="@drawable/icon_sounds"

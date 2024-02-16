@@ -71,13 +71,6 @@
     <string name="preference_warnings_desc">Determines if warnings are shown before you can reset the board or scorch units.</string>
     <string name="preference_faction_reset_title">"Reset on change of faction"</string>
     <string name="preference_faction_reset_desc">Determines if the board is reset on change of faction.</string>
-    <string name="array_unit_string_type">Type of unit (Close combat unit, etc.)</string>
-    <string name="array_unit_string_baseAD">Base strength</string>
-    <string name="array_unit_string_buffAD">Boosted strength</string>
-    <string name="array_unit_string_ability">Ability (Tight bond, etc.)</string>
-    <string name="preference_unit_string_title">Card description</string>
-    <string name="preference_unit_string_desc">Determines which data is shown in card description (for instance when units are scorched).</string>
-    <string name="preference_unit_string_alert">Example: %1$s</string>
 
     <string name="preference_sounds_header">Sounds</string>
     <string name="preference_sounds_category">Events</string>

@@ -50,9 +50,6 @@
     <string name="preference_warnings_desc">Legt fest, ob beim Zurücksetzen und Verbrennen eine Warnung erscheinen soll.</string>
     <string name="preference_faction_reset_title">Zurücksetzen bei Fraktionswechsel</string>
     <string name="preference_faction_reset_desc">Legt fest, ob das Spielfeld beim Fraktionswechsel automatisch zurückgesetzt werden soll.</string>
-    <string name="preference_unit_string_title">Kartenbeschreibung</string>
-    <string name="preference_unit_string_desc">Legt fest, welche Daten bei der Kartenbeschreibung (zum Beispiel beim Verbrennen) angezeigt werden.</string>
-    <string name="preference_unit_string_alert">Beispiel: %1$s</string>
 
     <string name="preference_sounds_header">Tonausgabe</string>
     <string name="preference_sounds_category">Ereignisse</string>
@@ -207,10 +204,6 @@
     <string name="array_design_default">Standard</string>
     <string name="array_design_geralt">Geralt von Riva</string>
     <string name="array_design_yennefer">Yennefer von Vengerberg</string>
-    <string name="array_unit_string_type">Einheitentyp (Nahkampfeinheit, etc.)</string>
-    <string name="array_unit_string_baseAD">Grundangriff</string>
-    <string name="array_unit_string_buffAD">Verstärkter Angriff</string>
-    <string name="array_unit_string_ability">Fähigkeit (Enge Bindung, etc.)</string>
     <string name="array_add_epic_epic">Held</string>
     <string name="array_add_ability_default">Keine</string>
     <string name="array_add_ability_moralBoost">Moralschub</string>
