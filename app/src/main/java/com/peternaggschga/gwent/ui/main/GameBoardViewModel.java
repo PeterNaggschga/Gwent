@@ -120,9 +120,10 @@ public class GameBoardViewModel extends ViewModel {
                 .andThen(repository.isWeather(row));
     }
 
-    public Completable onHornViewPressed(@NonNull RowType row) {
+    public Single<Boolean> onHornViewPressed(@NonNull RowType row) {
         return repository.switchHorn(row)
-                .andThen(updateUiState(row));
+                .andThen(updateUiState(row))
+                .andThen(repository.isHorn(row));
     }
 
     public Single<Boolean> onResetButtonPressed(@NonNull Context context, boolean monsterFaction) {

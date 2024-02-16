@@ -98,8 +98,12 @@ public class MainActivity extends AppCompatActivity {
                 });
             });
             horn.setOnClickListener(v -> {
-                gameBoard.onHornViewPressed(row).subscribe();
-                soundManager.playHornSound();
+                // noinspection CheckResult, ResultOfMethodCallIgnored
+                gameBoard.onHornViewPressed(row).subscribe(aBoolean -> {
+                    if (aBoolean) {
+                        soundManager.playHornSound();
+                    }
+                });
             });
 
             final RowUiStateObserver observer = RowUiStateObserver.getObserver(row,
