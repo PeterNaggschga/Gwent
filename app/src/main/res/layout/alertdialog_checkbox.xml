@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <CheckBox
+        android:id="@+id/alertDialog_checkbox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/alertDialog_checkBox_marginStart"
+        android:layout_marginEnd="@dimen/alertDialog_checkBox_marginEnd"
+        android:checked="true"
+        android:layoutDirection="rtl"
+        android:minHeight="@dimen/alertDialog_checkBox_minHeight"
+        android:text="@string/alertDialog_reset_checkbox" />
+</FrameLayout>

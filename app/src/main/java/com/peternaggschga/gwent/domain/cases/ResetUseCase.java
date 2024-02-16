@@ -1,6 +1,8 @@
 package com.peternaggschga.gwent.domain.cases;
 
 import android.content.Context;
+import android.view.View;
+import android.widget.CheckBox;
 import android.widget.Toast;
 
 import androidx.annotation.IntRange;
@@ -22,9 +24,6 @@ import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.core.SingleEmitter;
 import io.reactivex.rxjava3.functions.Consumer;
 
-/**
- * @todo Review function accessibility
- */
 public class ResetUseCase {
     public static final int TRIGGER_BUTTON_CLICK = 0;
     public static final int TRIGGER_FACTION_SWITCH = 1;
@@ -44,7 +43,7 @@ public class ResetUseCase {
     }
 
     @NonNull
-    private static Maybe<UnitEntity> getRandomUnit(@NonNull UnitRepository repository) {
+    private Maybe<UnitEntity> getRandomUnit() {
         return Maybe.create(emitter -> {
             List<UnitEntity> units = repository.getUnits()
                     .blockingGet()
@@ -60,12 +59,12 @@ public class ResetUseCase {
     }
 
     @NonNull
-    public static Maybe<UnitEntity> reset(@NonNull UnitRepository repository, boolean keepUnit) {
+    private Maybe<UnitEntity> reset(boolean keepUnit) {
         if (!keepUnit) {
             return repository.reset(null).andThen(Maybe.empty());
         }
         return Maybe.create(emitter -> {
-            UnitEntity keptUnit = getRandomUnit(repository).blockingGet();
+            UnitEntity keptUnit = getRandomUnit().blockingGet();
             repository.reset(keptUnit).blockingAwait();
             if (keptUnit == null) {
                 emitter.onComplete();
@@ -75,11 +74,6 @@ public class ResetUseCase {
         });
     }
 
-    /**
-     * @param context
-     * @param unit
-     * @todo Case abbilden, dass nichts behalten wird
-     */
     private static void showKeptUnitToast(@NonNull Context context, @NonNull UnitEntity unit) {
         ContextCompat.getMainExecutor(context).execute(() -> Toast.makeText(context,
                         context.getString(R.string.alertDialog_factionreset_monster_toast_keep, unit.toString(context)),
@@ -88,13 +82,8 @@ public class ResetUseCase {
     }
 
     @NonNull
-    public Maybe<UnitEntity> reset(boolean keepUnit) {
-        return reset(repository, keepUnit);
-    }
-
-    @NonNull
     public Completable reset() {
-        return Completable.fromMaybe(reset(repository, false));
+        return Completable.fromMaybe(reset(false));
     }
 
     @NonNull
@@ -107,12 +96,17 @@ public class ResetUseCase {
                 )).all(bool -> bool);
     }
 
+    /**
+     * @todo Fix dialog icon (currently shows theme icon, i.e., old icon if a faction change occurred).
+     */
     @NonNull
     public Single<AlertDialog> getWarningDialog(@NonNull Context context, @NonNull SingleEmitter<Boolean> resetEmitter) {
         return Single.create(dialogEmitter -> {
             Consumer<AlertDialog.Builder> builderCompleter = builder -> {
                 builder.setTitle(R.string.alertDialog_reset_title)
+                        .setIconAttribute(android.R.attr.alertDialogIcon)
                         .setNegativeButton(R.string.alertDialog_reset_negative, (dialog, which) -> resetEmitter.onSuccess(false));
+
 
                 dialogEmitter.onSuccess(builder.create());
             };
@@ -133,19 +127,24 @@ public class ResetUseCase {
     @NonNull
     private Single<AlertDialog.Builder> getButtonClickDialogBuilder(@NonNull Context context, @NonNull SingleEmitter<Boolean> resetEmitter) {
         return Single.create(emitter -> {
-            AlertDialog.Builder builder;
-            builder = new AlertDialog.Builder(context).setMessage(R.string.alertDialog_reset_msg_default)
+            AlertDialog.Builder builder = new AlertDialog.Builder(context)
+                    .setMessage(R.string.alertDialog_reset_msg_default)
                     .setCancelable(true)
                     .setOnCancelListener(dialog -> resetEmitter.onSuccess(false));
 
             if (showMonsterDialog().blockingGet()) {
-                final boolean[] keepUnit = new boolean[]{true};
-                builder.setMultiChoiceItems(new CharSequence[]{context.getString(R.string.alertDialog_reset_checkbox)},
-                                keepUnit,
-                                (dialog, which, isChecked) -> keepUnit[which] = isChecked)
+                View checkBoxView = View.inflate(context, R.layout.alertdialog_checkbox, null);
+                builder.setView(checkBoxView)
                         .setPositiveButton(R.string.alertDialog_reset_positive, (dialog, which) -> {
+                            CheckBox checkBox = checkBoxView.findViewById(R.id.alertDialog_checkbox);
                             // noinspection CheckResult, ResultOfMethodCallIgnored
-                            reset(keepUnit[0]).subscribe(unitEntity -> showKeptUnitToast(context, unitEntity));
+                            reset(checkBox.isChecked()).subscribe(
+                                    unitEntity -> {
+                                        showKeptUnitToast(context, unitEntity);
+                                        resetEmitter.onSuccess(true);
+                                    },
+                                    Throwable::printStackTrace,
+                                    () -> resetEmitter.onSuccess(true));
                         });
             } else {
                 builder.setPositiveButton(R.string.alertDialog_reset_positive, (dialog, which) -> {
@@ -159,8 +158,8 @@ public class ResetUseCase {
 
     @NonNull
     private Single<AlertDialog.Builder> getFactionSwitchDialogBuilder(@NonNull Context context, @NonNull SingleEmitter<Boolean> resetEmitter) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setMessage(R.string.alertDialog_reset_msg_faction_switch)
+        AlertDialog.Builder builder = new AlertDialog.Builder(context)
+                .setMessage(R.string.alertDialog_reset_msg_faction_switch)
                 .setCancelable(false)
                 .setPositiveButton(R.string.alertDialog_reset_positive, (dialog, which) -> {
                     // noinspection CheckResult, ResultOfMethodCallIgnored

@@ -148,6 +148,10 @@ public class GameBoardViewModel extends ViewModel {
                         .blockingAwait();
                 emitter.onSuccess(true);
             }
+        }).doOnSuccess(aBoolean -> {
+            if (aBoolean) {
+                updateUiState().subscribe();
+            }
         });
     }
 
