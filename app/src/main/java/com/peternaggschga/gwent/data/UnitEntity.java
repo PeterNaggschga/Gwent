@@ -2,6 +2,8 @@ package com.peternaggschga.gwent.data;
 
 import static org.valid4j.Assertive.require;
 
+import android.content.Context;
+
 import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,12 +13,15 @@ import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
 import com.peternaggschga.gwent.Ability;
+import com.peternaggschga.gwent.R;
 import com.peternaggschga.gwent.RowType;
 import com.peternaggschga.gwent.domain.damage.DamageCalculator;
 
 /**
  * A class representing a card on the game board.
  * Is a persistent Entity and is therefore saved in a database table named `units`.
+ *
+ * @todo Add toString() method
  */
 @Entity(tableName = "units", foreignKeys = {
         @ForeignKey(entity = RowEntity.class,
@@ -108,6 +113,52 @@ public class UnitEntity {
     }
 
     /**
+     * Returns a string representation of this unit.
+     * The representation contains information on each field of this class,
+     * i.e., #row, #epic, #damage, #ability, and #squad.
+     *
+     * @param context Context used to acquire String resources.
+     * @return A string representing the unit.
+     */
+    @NonNull
+    public String toString(@NonNull Context context) {
+        String row;
+        switch (getRow()) {
+            case MELEE:
+            default:
+                row = context.getString(R.string.unit_toString_melee);
+                break;
+            case RANGE:
+                row = context.getString(R.string.unit_toString_range);
+                break;
+            case SIEGE:
+                row = context.getString(R.string.unit_toString_siege);
+        }
+        String epic = isEpic() ? context.getString(R.string.unit_toString_epic) : context.getString(R.string.unit_toString_unit);
+        String ability;
+        String squad = "";
+        switch (getAbility()) {
+            case HORN:
+                ability = context.getString(R.string.array_add_ability_horn);
+                break;
+            case BINDING:
+                ability = context.getString(R.string.array_add_ability_binding);
+                squad = context.getString(R.string.unit_toString_squad, getSquad());
+                break;
+            case MORAL_BOOST:
+                ability = context.getString(R.string.array_add_ability_moralBoost);
+                break;
+            case REVENGE:
+                ability = context.getString(R.string.array_add_ability_revenge);
+                break;
+            case NONE:
+            default:
+                ability = context.getString(R.string.unit_toString_ability_none);
+        }
+        return context.getString(R.string.unit_toString, row, epic, getDamage(), ability, squad);
+    }
+
+    /**
      * Getter for #id.
      *
      * @return Integer representing the units' id.
@@ -128,11 +179,10 @@ public class UnitEntity {
 
     /**
      * Getter for #epic.
-     * Only used by Room extension.
      *
      * @return Boolean representing whether the card is epic.
      */
-    boolean isEpic() {
+    public boolean isEpic() {
         return epic;
     }
 

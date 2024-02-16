@@ -34,10 +34,14 @@
     <string name="popUp_coin_stewie_4" translatable="false">It became a manhole cover for like three days—but then pow!</string>
     <string name="popUp_coin_vin">Vin burned steel and pushed away your coin!</string>
 
-    <string name="unit_toString_melee">Close combat unit</string>
-    <string name="unit_toString_range">Ranged combat unit</string>
-    <string name="unit_toString_siege">Siege combat unit</string>
-    <string name="unit_toString_unit">Unit</string>
+    <string name="unit_toString">%1$s %2$s (%3$d) with %4$s ability %5$s</string>
+    <string name="unit_toString_melee">Close combat</string>
+    <string name="unit_toString_range">Ranged combat</string>
+    <string name="unit_toString_siege">Siege combat</string>
+    <string name="unit_toString_epic">hero</string>
+    <string name="unit_toString_unit">unit</string>
+    <string name="unit_toString_ability_none">no</string>
+    <string name="unit_toString_squad">(%1$d)</string>
 
     <string name="alertDialog_cancel">Cancel</string>
 

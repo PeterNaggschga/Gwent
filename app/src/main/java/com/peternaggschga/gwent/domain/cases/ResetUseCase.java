@@ -75,9 +75,14 @@ public class ResetUseCase {
         });
     }
 
+    /**
+     * @param context
+     * @param unit
+     * @todo Case abbilden, dass nichts behalten wird
+     */
     private static void showKeptUnitToast(@NonNull Context context, @NonNull UnitEntity unit) {
         ContextCompat.getMainExecutor(context).execute(() -> Toast.makeText(context,
-                        context.getString(R.string.alertDialog_factionreset_monster_toast_keep, unit.toString()),
+                        context.getString(R.string.alertDialog_factionreset_monster_toast_keep, unit.toString(context)),
                         Toast.LENGTH_LONG)
                 .show());
     }
