@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
             new Handler(Looper.getMainLooper()).post(MainActivity.this::initializeViewModel);
         });
 
-        factionSwitchListener = FactionSwitchListener.getFactionSwitchObserver(getWindow());
+        factionSwitchListener = FactionSwitchListener.getListener(getWindow());
         PreferenceManager.getDefaultSharedPreferences(this)
                 .registerOnSharedPreferenceChangeListener(factionSwitchListener);
 
