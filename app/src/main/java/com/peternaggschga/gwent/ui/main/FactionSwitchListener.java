@@ -155,20 +155,19 @@ public class FactionSwitchListener implements SharedPreferences.OnSharedPreferen
 
         Context context = factionButton.getContext();
 
-        int theme;
         switch (sharedPreferences.getInt(key, THEME_SCOIATAEL)) {
             case THEME_MONSTER:
-                theme = R.style.MonsterTheme;
+                context.setTheme(R.style.MonsterTheme);
                 break;
             case THEME_NILFGAARD:
-                theme = R.style.NilfgaardTheme;
+                context.setTheme(R.style.NilfgaardTheme);
                 break;
             case THEME_NORTHERN_KINGDOMS:
-                theme = R.style.NorthernKingdomsTheme;
+                context.setTheme(R.style.NorthernKingdomsTheme);
                 break;
             case THEME_SCOIATAEL:
             default:
-                theme = R.style.ScoiataelTheme;
+                context.setTheme(R.style.ScoiataelTheme);
         }
 
         int ballImageRes;
@@ -176,14 +175,14 @@ public class FactionSwitchListener implements SharedPreferences.OnSharedPreferen
         int unitNumberTextColor;
         int factionButtonImageRes;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            try (TypedArray attributeValues = context.obtainStyledAttributes(theme, R.styleable.theme)) {
+            try (TypedArray attributeValues = context.getTheme().obtainStyledAttributes(R.styleable.theme)) {
                 ballImageRes = attributeValues.getResourceId(R.styleable.theme_point_ball_mipmap, R.drawable.ball_green);
                 cardImageRes = attributeValues.getResourceId(R.styleable.theme_card_view_mipmap, R.drawable.card_scoiatael_landscape_free);
                 unitNumberTextColor = attributeValues.getColor(R.styleable.theme_colorPrimary, context.getColor(R.color.color_text_scoiatael));
                 factionButtonImageRes = attributeValues.getResourceId(R.styleable.theme_android_alertDialogIcon, R.drawable.icon_round_scoiatael);
             }
         } else {
-            TypedArray attributeValues = context.obtainStyledAttributes(theme, R.styleable.theme);
+            TypedArray attributeValues = context.getTheme().obtainStyledAttributes(R.styleable.theme);
             ballImageRes = attributeValues.getResourceId(R.styleable.theme_point_ball_mipmap, R.drawable.ball_green);
             cardImageRes = attributeValues.getResourceId(R.styleable.theme_card_view_mipmap, R.drawable.card_scoiatael_landscape_free);
             unitNumberTextColor = attributeValues.getColor(R.styleable.theme_colorPrimary, context.getColor(R.color.color_text_scoiatael));

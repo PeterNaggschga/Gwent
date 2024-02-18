@@ -96,9 +96,6 @@ public class ResetUseCase {
                 )).all(bool -> bool);
     }
 
-    /**
-     * @todo Fix dialog icon (currently shows theme icon, i.e., old icon if a faction change occurred).
-     */
     @NonNull
     public Single<AlertDialog> getWarningDialog(@NonNull Context context, @NonNull SingleEmitter<Boolean> resetEmitter) {
         return Single.create(dialogEmitter -> {
