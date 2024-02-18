@@ -1,6 +1,7 @@
 package com.peternaggschga.gwent.ui.sounds;
 
 import static com.google.common.truth.Truth.assertThat;
+import static org.mockito.Mockito.mock;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -30,7 +31,7 @@ public class SoundUnitTest {
                         .apply();
                 assertThat(Sound.createSound(context,
                         R.string.preference_key_sounds_weather,
-                        new SoundPool.Builder().build(),
+                        mock(SoundPool.class),
                         R.raw.weather_good).isActivated()).isEqualTo(weatherSound && allSound);
             }
         }
@@ -40,13 +41,13 @@ public class SoundUnitTest {
     public void createSoundInitializesPreferenceKeyAttribute() {
         assertThat(Sound.createSound(context,
                 R.string.preference_key_sounds_weather,
-                new SoundPool.Builder().build(),
+                mock(SoundPool.class),
                 R.raw.weather_good).getPreferenceKey()).isEqualTo(context.getString(R.string.preference_key_sounds_weather));
     }
 
     @Test
     public void setActivatedSharedPreferencesSetsCorrectActiveValue() {
-        Sound testSound = Sound.createSound(context, R.string.preference_key_sounds_weather, new SoundPool.Builder().build(), R.raw.weather_good);
+        Sound testSound = Sound.createSound(context, R.string.preference_key_sounds_weather, mock(SoundPool.class), R.raw.weather_good);
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
         for (boolean weatherSound : new boolean[]{false, true}) {
             pref.edit()
