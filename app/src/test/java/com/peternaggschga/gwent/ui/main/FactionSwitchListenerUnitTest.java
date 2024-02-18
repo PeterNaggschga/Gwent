@@ -55,9 +55,7 @@ public class FactionSwitchListenerUnitTest {
         when(mockContext.getTheme()).thenReturn(mockTheme);
 
         mockBallView = mock(ImageView.class);
-        when(mockBallView.getContext()).thenReturn(mockContext);
         mockCardView = mock(ImageView.class);
-        when(mockCardView.getContext()).thenReturn(mockContext);
         mockUnitView = mock(TextView.class);
         mockFactionButton = mock(ImageButton.class);
         when(mockFactionButton.getContext()).thenReturn(mockContext);
@@ -83,10 +81,17 @@ public class FactionSwitchListenerUnitTest {
 
     @Test
     public void onSharedPreferenceChangeSetsTheme() {
-        for (int i = THEME_MONSTER; i <= THEME_SCOIATAEL; i++) {
-            when(mockPreferences.getInt(eq(THEME_PREFERENCE_KEY), anyInt())).thenReturn(i);
-            testListener.onSharedPreferenceChanged(mockPreferences, THEME_PREFERENCE_KEY);
-            verify(mockContext, atLeast(i)).setTheme(anyInt());
+        try (MockedStatic<ImageViewSwitchAnimator> switchAnimator = mockStatic(ImageViewSwitchAnimator.class)) {
+            switchAnimator.when(() -> ImageViewSwitchAnimator.animatedSwitch(any(), anyInt()))
+                    .then((Answer<Completable>) invocation -> {
+                        ((ImageView) invocation.getArgument(0)).setImageResource(invocation.getArgument(1));
+                        return Completable.complete();
+                    });
+            for (int i = THEME_MONSTER; i <= THEME_SCOIATAEL; i++) {
+                when(mockPreferences.getInt(eq(THEME_PREFERENCE_KEY), anyInt())).thenReturn(i);
+                testListener.onSharedPreferenceChanged(mockPreferences, THEME_PREFERENCE_KEY);
+                verify(mockContext, atLeast(i)).setTheme(anyInt());
+            }
         }
     }
 
