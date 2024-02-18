@@ -8,7 +8,6 @@ import android.widget.Toast;
 import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.core.content.ContextCompat;
 
 import com.peternaggschga.gwent.R;
 import com.peternaggschga.gwent.data.UnitEntity;
@@ -24,24 +23,70 @@ import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.core.SingleEmitter;
 import io.reactivex.rxjava3.functions.Consumer;
 
+/**
+ * A use case class responsible for the execution of the reset operation.
+ */
 public class ResetUseCase {
+    /**
+     * Integer constant representing that a reset was triggered by a click on the reset button.
+     */
     public static final int TRIGGER_BUTTON_CLICK = 0;
+
+    /**
+     * Integer constant representing that a reset was triggered by a faction switch.
+     * Only relevant if faction reset is activated, i.e.,
+     * the SharedPreference referenced by R.string#preference_key_faction_reset.
+     *
+     * @see R.string#preference_key_faction_reset
+     */
     public static final int TRIGGER_FACTION_SWITCH = 1;
 
+    /**
+     * UnitRepository that is reset.
+     */
     @NonNull
     private final UnitRepository repository;
+
+    /**
+     * Integer representing what triggered this use case.
+     * Either #TRIGGER_BUTTON_CLICK or #TRIGGER_FACTION_SWITCH.
+     *
+     * @see #TRIGGER_BUTTON_CLICK
+     * @see #TRIGGER_FACTION_SWITCH
+     */
     @IntRange(from = TRIGGER_BUTTON_CLICK, to = TRIGGER_FACTION_SWITCH)
     private final int trigger;
+
+    /**
+     * Boolean representing whether the monster ability should be presented, i.e.,
+     * if the user should be able to opt for keeping a random unit.
+     */
     private final boolean monsterReset;
 
+    /**
+     * Constructor of a ResetUseCase for the given UnitRepository and trigger.
+     * When monsterTheme is true and the trigger is not #TRIGGER_FACTION_SWITCH,
+     * then #monsterReset is initialized as true.
+     *
+     * @param repository   UnitRepository where the reset that is reset.
+     * @param trigger      Integer representing what triggered this reset, i.e.,
+     *                     either #TRIGGER_BUTTON_CLICK or #TRIGGER_FACTION_SWITCH.
+     * @param monsterTheme Boolean defining whether the current theme is set to the monster theme.
+     */
     public ResetUseCase(@NonNull UnitRepository repository,
                         @IntRange(from = TRIGGER_BUTTON_CLICK, to = TRIGGER_FACTION_SWITCH) int trigger,
-                        boolean monsterReset) {
+                        boolean monsterTheme) {
         this.repository = repository;
         this.trigger = trigger;
-        this.monsterReset = monsterReset && trigger != TRIGGER_FACTION_SWITCH;
+        this.monsterReset = monsterTheme && trigger != TRIGGER_FACTION_SWITCH;
     }
 
+    /**
+     * Selects a random unit that is not epic.
+     * If all units are epic or if there are no units at all, an empty Maybe is returned.
+     *
+     * @return A Maybe emitting the selected unit or nothing if no unit could be selected.
+     */
     @NonNull
     private Maybe<UnitEntity> getRandomUnit() {
         return Maybe.create(emitter -> {
@@ -58,10 +103,16 @@ public class ResetUseCase {
         });
     }
 
+    /**
+     * Resets the repository. If keepUnit is true, the returned Maybe emits the kept UnitEntity.
+     *
+     * @param keepUnit Boolean defining whether a single UnitEntity should be kept.
+     * @return A Maybe emitting the kept UnitEntity or nothing if keepUnit is false.
+     */
     @NonNull
     private Maybe<UnitEntity> reset(boolean keepUnit) {
         if (!keepUnit) {
-            return repository.reset(null).andThen(Maybe.empty());
+            return repository.reset().andThen(Maybe.empty());
         }
         return Maybe.create(emitter -> {
             UnitEntity keptUnit = getRandomUnit().blockingGet();
@@ -74,18 +125,23 @@ public class ResetUseCase {
         });
     }
 
-    private static void showKeptUnitToast(@NonNull Context context, @NonNull UnitEntity unit) {
-        ContextCompat.getMainExecutor(context).execute(() -> Toast.makeText(context,
-                        context.getString(R.string.alertDialog_factionreset_monster_toast_keep, unit.toString(context)),
-                        Toast.LENGTH_LONG)
-                .show());
-    }
-
+    /**
+     * Resets the repository. Wrapper function for #reset(boolean).
+     *
+     * @return A Completable tracking operation status.
+     * @see #reset(boolean)
+     */
     @NonNull
     public Completable reset() {
         return Completable.fromMaybe(reset(false));
     }
 
+    /**
+     * Checks whether the monster reset dialog should be shown.
+     * Is true when #monsterReset is true and at least one non-epic unit exists.
+     *
+     * @return A Single emitting a Boolean deciding whether the monster dialog should be shown.
+     */
     @NonNull
     public Single<Boolean> showMonsterDialog() {
         return Single.concat(Single.just(monsterReset),
@@ -96,6 +152,18 @@ public class ResetUseCase {
                 )).all(bool -> bool);
     }
 
+    /**
+     * Creates an AlertDialog warning the user of the upcoming reset.
+     * When the user agrees to perform a reset,
+     * the resetEmitter is called to emit true, otherwise false.
+     * The appearance of the created AlertDialog depends on #trigger and #monsterReset.
+     *
+     * @param context      Context of the created AlertDialog.
+     * @param resetEmitter SingleEmitter that emits whether a reset is performed or not.
+     * @return A Single emitting the created AlertDialog.
+     * @see #getFactionSwitchDialogBuilder(Context, SingleEmitter)
+     * @see #getButtonClickDialogBuilder(Context, SingleEmitter)
+     */
     @NonNull
     public Single<AlertDialog> getWarningDialog(@NonNull Context context, @NonNull SingleEmitter<Boolean> resetEmitter) {
         return Single.create(dialogEmitter -> {
@@ -121,6 +189,15 @@ public class ResetUseCase {
         });
     }
 
+    /**
+     * Creates an AlertDialog.Builder object for a reset triggered by a click on the reset button,
+     * i.e., #trigger is #TRIGGER_BUTTON_CLICK.
+     *
+     * @param context      Context of the created AlertDialog.Builder.
+     * @param resetEmitter SingleEmitter that emits whether a reset is performed or not.
+     * @return A Single emitting the created AlertDialog.Builder.
+     * @see #getWarningDialog(Context, SingleEmitter)
+     */
     @NonNull
     private Single<AlertDialog.Builder> getButtonClickDialogBuilder(@NonNull Context context, @NonNull SingleEmitter<Boolean> resetEmitter) {
         return Single.create(emitter -> {
@@ -137,7 +214,10 @@ public class ResetUseCase {
                             // noinspection CheckResult, ResultOfMethodCallIgnored
                             reset(checkBox.isChecked()).subscribe(
                                     unitEntity -> {
-                                        showKeptUnitToast(context, unitEntity);
+                                        Toast.makeText(context,
+                                                        context.getString(R.string.alertDialog_factionreset_monster_toast_keep, unitEntity.toString(context)),
+                                                        Toast.LENGTH_LONG)
+                                                .show();
                                         resetEmitter.onSuccess(true);
                                     },
                                     Throwable::printStackTrace,
@@ -153,6 +233,15 @@ public class ResetUseCase {
         });
     }
 
+    /**
+     * Creates an AlertDialog.Builder object for a reset triggered by a faction switch,
+     * i.e., #trigger is #TRIGGER_FACTION_SWITCH.
+     *
+     * @param context      Context of the created AlertDialog.Builder.
+     * @param resetEmitter SingleEmitter that emits whether a reset is performed or not.
+     * @return A Single emitting the created AlertDialog.Builder.
+     * @see #getWarningDialog(Context, SingleEmitter)
+     */
     @NonNull
     private Single<AlertDialog.Builder> getFactionSwitchDialogBuilder(@NonNull Context context, @NonNull SingleEmitter<Boolean> resetEmitter) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context)
