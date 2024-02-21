@@ -7,7 +7,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +16,7 @@ import androidx.preference.PreferenceManager;
 
 import com.peternaggschga.gwent.domain.cases.ResetUseCase;
 import com.peternaggschga.gwent.ui.dialogs.ChangeFactionDialog;
+import com.peternaggschga.gwent.ui.dialogs.CoinFlipDialog;
 import com.peternaggschga.gwent.ui.main.FactionSwitchListener;
 import com.peternaggschga.gwent.ui.main.GameBoardViewModel;
 import com.peternaggschga.gwent.ui.main.MenuUiStateObserver;
@@ -171,8 +171,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void inflateCoinFlipPopup() {
+        new CoinFlipDialog(this).show();
         soundManager.playCoinSound();
-        Toast.makeText(this, "Not yet implemented!", Toast.LENGTH_SHORT).show();
-        // TODO
     }
 }
