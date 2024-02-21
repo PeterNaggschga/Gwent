@@ -9,6 +9,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -25,6 +26,11 @@ import java.util.Objects;
  */
 public class ChangeFactionDialog extends Dialog {
     /**
+     * Callback that is called when a theme is selected.
+     */
+    private final Callback callback;
+
+    /**
      * Constructor of a ChangeFactionDialog
      * that calls the given Callback when one theme is selected.
      *
@@ -33,6 +39,21 @@ public class ChangeFactionDialog extends Dialog {
      */
     public ChangeFactionDialog(@NonNull Context context, @NonNull Callback callback) {
         super(context);
+        this.callback = callback;
+    }
+
+    /**
+     * Initializes Layout using #setContentView(int) and sets listeners for each view.
+     *
+     * @param savedInstanceState If this dialog is being reinitialized after
+     *                           the hosting activity was previously shut down, holds the result from
+     *                           the most recent call to {@link #onSaveInstanceState}, or null if this
+     *                           is the first time.
+     * @see #setContentView(int)
+     */
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
         setContentView(R.layout.popup_faction);
 
@@ -42,34 +63,32 @@ public class ChangeFactionDialog extends Dialog {
 
         findViewById(R.id.factionBackground).setOnClickListener(v -> cancel());
 
-        findViewById(R.id.monsterCardView).setOnClickListener(getOnThemeClickListener(callback, THEME_MONSTER));
-        findViewById(R.id.monsterButton).setOnClickListener(getOnThemeClickListener(callback, THEME_MONSTER));
+        findViewById(R.id.monsterCardView).setOnClickListener(getOnThemeClickListener(THEME_MONSTER));
+        findViewById(R.id.monsterButton).setOnClickListener(getOnThemeClickListener(THEME_MONSTER));
 
-        findViewById(R.id.nilfgaardCardView).setOnClickListener(getOnThemeClickListener(callback, THEME_NILFGAARD));
-        findViewById(R.id.nilfgaardButton).setOnClickListener(getOnThemeClickListener(callback, THEME_NILFGAARD));
+        findViewById(R.id.nilfgaardCardView).setOnClickListener(getOnThemeClickListener(THEME_NILFGAARD));
+        findViewById(R.id.nilfgaardButton).setOnClickListener(getOnThemeClickListener(THEME_NILFGAARD));
 
-        findViewById(R.id.northernKingdomsCardView).setOnClickListener(getOnThemeClickListener(callback, THEME_NORTHERN_KINGDOMS));
-        findViewById(R.id.northernKingdomsButton).setOnClickListener(getOnThemeClickListener(callback, THEME_NORTHERN_KINGDOMS));
+        findViewById(R.id.northernKingdomsCardView).setOnClickListener(getOnThemeClickListener(THEME_NORTHERN_KINGDOMS));
+        findViewById(R.id.northernKingdomsButton).setOnClickListener(getOnThemeClickListener(THEME_NORTHERN_KINGDOMS));
 
-        findViewById(R.id.scoiataelCardView).setOnClickListener(getOnThemeClickListener(callback, THEME_SCOIATAEL));
-        findViewById(R.id.scoiataelButton).setOnClickListener(getOnThemeClickListener(callback, THEME_SCOIATAEL));
+        findViewById(R.id.scoiataelCardView).setOnClickListener(getOnThemeClickListener(THEME_SCOIATAEL));
+        findViewById(R.id.scoiataelButton).setOnClickListener(getOnThemeClickListener(THEME_SCOIATAEL));
 
         setCancelable(true);
     }
 
     /**
      * Returns a View.OnclickListener instance that calls #cancel()
-     * and uses the given Callback to propagate the selected theme.
+     * and uses #callback to propagate the selected theme.
      *
-     * @param callback Callback used to propagate the selected theme.
-     * @param theme    Integer representing the selected theme.
+     * @param theme Integer representing the selected theme.
      * @return A View.OnClickListener handling theme input.
      * @see #cancel()
      * @see Callback#onThemeSelect(int)
      */
     @NonNull
-    private View.OnClickListener getOnThemeClickListener(@NonNull Callback callback,
-                                                         @IntRange(from = THEME_MONSTER, to = THEME_SCOIATAEL) int theme) {
+    private View.OnClickListener getOnThemeClickListener(@IntRange(from = THEME_MONSTER, to = THEME_SCOIATAEL) int theme) {
         return v -> {
             cancel();
             callback.onThemeSelect(theme);
