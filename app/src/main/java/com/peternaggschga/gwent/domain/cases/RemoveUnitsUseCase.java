@@ -18,7 +18,7 @@ import java.util.Collection;
 
 import io.reactivex.rxjava3.core.Completable;
 
-public class RemoveUnitUseCase {
+public class RemoveUnitsUseCase {
     private static final boolean AVENGER_EPIC = false;
     private static final Ability AVENGER_ABILITY = Ability.NONE;
     private static final int AVENGER_DAMAGE = 8;
@@ -31,7 +31,7 @@ public class RemoveUnitUseCase {
     @NonNull
     private final Context context;
 
-    public RemoveUnitUseCase(@NonNull Context context, @NonNull UnitRepository repository) {
+    public RemoveUnitsUseCase(@NonNull Context context, @NonNull UnitRepository repository) {
         this.context = context;
         this.repository = repository;
     }

@@ -50,7 +50,7 @@ public class ResetUseCase {
      * RemoveUnitUseCase used for resetting the #repository.
      */
     @NonNull
-    private final RemoveUnitUseCase removeUseCase;
+    private final RemoveUnitsUseCase removeUseCase;
 
     /**
      * Integer representing what triggered this use case.
@@ -82,7 +82,7 @@ public class ResetUseCase {
                         @IntRange(from = TRIGGER_BUTTON_CLICK, to = TRIGGER_FACTION_SWITCH) int trigger,
                         boolean monsterTheme) {
         this.repository = repository;
-        this.removeUseCase = new RemoveUnitUseCase(context, repository);
+        this.removeUseCase = new RemoveUnitsUseCase(context, repository);
         this.trigger = trigger;
         this.monsterReset = monsterTheme && trigger != TRIGGER_FACTION_SWITCH;
     }

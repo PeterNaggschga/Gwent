@@ -34,7 +34,7 @@ public class BurnUnitsUseCase {
      * RemoveUnitUseCase used for removing the burned units from the #repository.
      */
     @NonNull
-    private final RemoveUnitUseCase removeUseCase;
+    private final RemoveUnitsUseCase removeUseCase;
 
     /**
      * List of UnitEntity objects that are to be burned.
@@ -49,7 +49,7 @@ public class BurnUnitsUseCase {
      */
     public BurnUnitsUseCase(@NonNull Context context, @NonNull UnitRepository repository) {
         this.repository = repository;
-        this.removeUseCase = new RemoveUnitUseCase(context, repository);
+        this.removeUseCase = new RemoveUnitsUseCase(context, repository);
     }
 
     /**
