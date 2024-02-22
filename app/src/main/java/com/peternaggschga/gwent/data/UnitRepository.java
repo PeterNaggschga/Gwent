@@ -12,6 +12,7 @@ import com.peternaggschga.gwent.RowType;
 import java.util.Collection;
 import java.util.List;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
@@ -82,7 +83,7 @@ public class UnitRepository {
         if (keptUnit != null) {
             result = result.andThen(insertUnit(keptUnit));
         }
-        return result.subscribeOn(Schedulers.io());
+        return result.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 
     /**
@@ -92,7 +93,7 @@ public class UnitRepository {
      * @return A Completable tracking operation status.
      */
     private Completable insertUnit(@NonNull UnitEntity unit) {
-        return database.units().insertUnit(unit).subscribeOn(Schedulers.io());
+        return database.units().insertUnit(unit).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 
     /**
@@ -109,7 +110,7 @@ public class UnitRepository {
     public Completable insertUnit(boolean epic, @IntRange(from = 0) int damage, @NonNull Ability ability, @IntRange(from = 0) @Nullable Integer squad, @NonNull RowType row) {
         require(damage >= 0);
         require((ability != Ability.BINDING && squad == null) || (ability == Ability.BINDING && squad != null && squad >= 0));
-        return database.units().insertUnit(epic, damage, ability, squad, row).subscribeOn(Schedulers.io());
+        return database.units().insertUnit(epic, damage, ability, squad, row).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 
     /**
@@ -130,7 +131,7 @@ public class UnitRepository {
         for (int i = 0; i < number; i++) {
             result = result.andThen(insertUnit(epic, damage, ability, squad, row));
         }
-        return result.subscribeOn(Schedulers.io());
+        return result.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 
     /**
@@ -140,7 +141,7 @@ public class UnitRepository {
      * @return A Completable tracking operation status.
      */
     public Completable switchWeather(@NonNull RowType row) {
-        return database.rows().updateWeather(row).subscribeOn(Schedulers.io());
+        return database.rows().updateWeather(row).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 
     /**
@@ -150,7 +151,7 @@ public class UnitRepository {
      * @return A Single tracking operation status and returning the value.
      */
     public Single<Boolean> isWeather(@NonNull RowType row) {
-        return database.rows().isWeather(row).subscribeOn(Schedulers.io());
+        return database.rows().isWeather(row).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 
     /**
@@ -159,7 +160,7 @@ public class UnitRepository {
      * @return A Completable tracking operation status.
      */
     public Completable clearWeather() {
-        return database.rows().clearWeather().subscribeOn(Schedulers.io());
+        return database.rows().clearWeather().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 
     /**
@@ -169,7 +170,7 @@ public class UnitRepository {
      * @return A Completable tracking operation status.
      */
     public Completable switchHorn(@NonNull RowType row) {
-        return database.rows().updateHorn(row).subscribeOn(Schedulers.io());
+        return database.rows().updateHorn(row).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 
     /**
@@ -179,7 +180,7 @@ public class UnitRepository {
      * @return A Single tracking operation status and returning the value.
      */
     public Single<Boolean> isHorn(@NonNull RowType row) {
-        return database.rows().isHorn(row).subscribeOn(Schedulers.io());
+        return database.rows().isHorn(row).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 
     /**
@@ -189,7 +190,7 @@ public class UnitRepository {
      * @return A Completable tracking operation status.
      */
     public Completable delete(@NonNull Collection<UnitEntity> units) {
-        return database.units().deleteUnits(units).subscribeOn(Schedulers.io());
+        return database.units().deleteUnits(units).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 
     /**
@@ -203,7 +204,7 @@ public class UnitRepository {
         for (UnitEntity unit : units) {
             result = result.andThen(insertUnit(unit.isEpic(), unit.getDamage(), unit.getAbility(), unit.getSquad(), unit.getRow()));
         }
-        return result.subscribeOn(Schedulers.io());
+        return result.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 
     /**
@@ -214,7 +215,7 @@ public class UnitRepository {
      * @see #countUnits()
      */
     public Single<Integer> countUnits(@NonNull RowType row) {
-        return database.units().countUnits(row).subscribeOn(Schedulers.io());
+        return database.units().countUnits(row).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 
     /**
@@ -224,7 +225,7 @@ public class UnitRepository {
      * @see #countUnits(RowType)
      */
     public Single<Integer> countUnits() {
-        return database.units().countUnits().subscribeOn(Schedulers.io());
+        return database.units().countUnits().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 
     /**
@@ -235,7 +236,7 @@ public class UnitRepository {
      * @see #getUnits()
      */
     public Single<List<UnitEntity>> getUnits(@NonNull RowType row) {
-        return database.units().getUnits(row).subscribeOn(Schedulers.io());
+        return database.units().getUnits(row).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 
     /**
@@ -245,6 +246,6 @@ public class UnitRepository {
      * @see #getUnits(RowType)
      */
     public Single<List<UnitEntity>> getUnits() {
-        return database.units().getUnits().subscribeOn(Schedulers.io());
+        return database.units().getUnits().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 }

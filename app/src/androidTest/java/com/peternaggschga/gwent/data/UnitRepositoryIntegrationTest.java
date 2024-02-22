@@ -18,6 +18,8 @@ import org.valid4j.errors.RequireViolation;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.schedulers.Schedulers;
+
 @RunWith(AndroidJUnit4.class)
 public class UnitRepositoryIntegrationTest {
     private static final int TESTING_DEPTH = 50;
@@ -76,7 +78,11 @@ public class UnitRepositoryIntegrationTest {
                 database.units().insertUnit(false, 5, Ability.NONE, null, row).blockingAwait();
             }
         }
-        assertThat(repository.reset().andThen(database.units().countUnits()).blockingGet()).isEqualTo(0);
+        assertThat(repository.reset()
+                .observeOn(Schedulers.io())
+                .andThen(database.units().countUnits())
+                .blockingGet()
+        ).isEqualTo(0);
     }
 
     @Test
@@ -87,8 +93,12 @@ public class UnitRepositoryIntegrationTest {
             }
         }
         //noinspection OptionalGetWithoutIsPresent
-        UnitEntity unit = database.units().getUnits().blockingGet().stream().findAny().get();
-        assertThat(repository.reset(unit).andThen(database.units().countUnits()).blockingGet()).isEqualTo(1);
+        UnitEntity unit = database.units().getUnits().subscribeOn(Schedulers.io()).blockingGet().stream().findAny().get();
+        assertThat(repository.reset(unit)
+                .observeOn(Schedulers.io())
+                .andThen(database.units().countUnits())
+                .blockingGet()
+        ).isEqualTo(1);
     }
 
     @Test
@@ -118,6 +128,7 @@ public class UnitRepositoryIntegrationTest {
     @Test
     public void insertUnitNumberAddsUnits() {
         assertThat(repository.insertUnit(false, 5, Ability.NONE, null, RowType.MELEE, TESTING_DEPTH)
+                .observeOn(Schedulers.io())
                 .andThen(database.units().countUnits())
                 .blockingGet())
                 .isEqualTo(TESTING_DEPTH);
@@ -221,10 +232,12 @@ public class UnitRepositoryIntegrationTest {
     public void switchWeatherSwitchesWeather() {
         for (RowType row : RowType.values()) {
             assertThat(repository.switchWeather(row)
+                    .observeOn(Schedulers.io())
                     .andThen(database.rows().isWeather(row))
                     .blockingGet())
                     .isTrue();
             assertThat(repository.switchWeather(row)
+                    .observeOn(Schedulers.io())
                     .andThen(database.rows().isWeather(row))
                     .blockingGet())
                     .isFalse();
@@ -277,10 +290,12 @@ public class UnitRepositoryIntegrationTest {
     public void switchHornSwitchesHorn() {
         for (RowType row : RowType.values()) {
             assertThat(repository.switchHorn(row)
+                    .observeOn(Schedulers.io())
                     .andThen(database.rows().isHorn(row))
                     .blockingGet())
                     .isTrue();
             assertThat(repository.switchHorn(row)
+                    .observeOn(Schedulers.io())
                     .andThen(database.rows().isHorn(row))
                     .blockingGet())
                     .isFalse();
@@ -324,6 +339,7 @@ public class UnitRepositoryIntegrationTest {
 
         List<UnitEntity> units = database.units().getUnits().blockingGet();
         assertThat(repository.delete(units)
+                .observeOn(Schedulers.io())
                 .andThen(database.units().countUnits())
                 .blockingGet())
                 .isEqualTo(0);
@@ -346,6 +362,7 @@ public class UnitRepositoryIntegrationTest {
 
         List<UnitEntity> units = database.units().getUnits().blockingGet();
         assertThat(repository.copy(units)
+                .observeOn(Schedulers.io())
                 .andThen(database.units().countUnits())
                 .blockingGet())
                 .isEqualTo(units.size() * 2);
