@@ -63,26 +63,30 @@ public class BurnUnitsUseCase {
         if (burnUnits != null) {
             return Single.just(burnUnits);
         }
-        return Single.fromCallable(() -> {
-            List<UnitEntity> units = repository.getUnits().blockingGet();
-            if (units.isEmpty()) {
-                burnUnits = units;
-                return burnUnits;
-            }
+        return repository.getUnits()
+                .concatMap(units -> {
+                    if (units.isEmpty()) {
+                        burnUnits = units;
+                        return Single.just(burnUnits);
+                    }
 
-            Map<RowType, DamageCalculator> damageCalculators = new HashMap<>();
-            for (RowType row : RowType.values()) {
-                damageCalculators.put(row, DamageCalculatorUseCase.getDamageCalculator(repository, row).blockingGet());
-            }
+                    Single<Map<RowType, DamageCalculator>> calculators = Single.just(new HashMap<>());
+                    for (RowType row : RowType.values()) {
+                        calculators = calculators.zipWith(DamageCalculatorUseCase.getDamageCalculator(repository, row), (calculatorMap, damageCalculator) -> {
+                            calculatorMap.put(row, damageCalculator);
+                            return calculatorMap;
+                        });
+                    }
+                    return calculators.flatMap(damageCalculators -> {
+                        units.sort(Comparator.comparingInt(o -> (-o.calculateDamage(Objects.requireNonNull(damageCalculators.get(o.getRow()))))));
+                        int maxDamage = units.get(0).calculateDamage(Objects.requireNonNull(damageCalculators.get(units.get(0).getRow())));
 
-            units.sort(Comparator.comparingInt(o -> (-o.calculateDamage(Objects.requireNonNull(damageCalculators.get(o.getRow()))))));
-            int maxDamage = units.get(0).calculateDamage(Objects.requireNonNull(damageCalculators.get(units.get(0).getRow())));
-
-            burnUnits = units.stream()
-                    .filter(unitEntity -> unitEntity.calculateDamage(Objects.requireNonNull(damageCalculators.get(unitEntity.getRow()))) == maxDamage)
-                    .collect(Collectors.toList());
-            return burnUnits;
-        });
+                        burnUnits = units.stream()
+                                .filter(unitEntity -> unitEntity.calculateDamage(Objects.requireNonNull(damageCalculators.get(unitEntity.getRow()))) == maxDamage)
+                                .collect(Collectors.toList());
+                        return Single.just(burnUnits);
+                    });
+                });
     }
 
     /**
@@ -94,9 +98,12 @@ public class BurnUnitsUseCase {
      */
     @NonNull
     public Completable removeBurnUnits() {
-        return Completable.create(emitter ->
-                removeUseCase.remove(getBurnUnits().blockingGet())
-                        .doAfterTerminate(emitter::onComplete)
-                        .blockingAwait());
+        return Completable.create(emitter -> {
+            // noinspection CheckResult, ResultOfMethodCallIgnored
+            getBurnUnits().subscribe(units -> {
+                // noinspection CheckResult, ResultOfMethodCallIgnored
+                removeUseCase.remove(units).subscribe(emitter::onComplete);
+            });
+        });
     }
 }

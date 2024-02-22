@@ -2,6 +2,7 @@ package com.peternaggschga.gwent.ui.main;
 
 import static androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 
@@ -104,11 +105,14 @@ public class GameBoardViewModel extends ViewModel {
     private Completable updateUiState(@NonNull RowType row) {
         return Completable.create(emitter -> {
             MutableLiveData<RowUiState> rowState = getRowUiState(row);
-            RowUiState state = RowStateUseCase.getRowState(repository, row).blockingGet();
-            if (!state.equals(rowState.getValue())) {
-                rowState.postValue(state);
-            }
-            emitter.onComplete();
+            // noinspection CheckResult, ResultOfMethodCallIgnored
+            RowStateUseCase.getRowState(repository, row)
+                    .subscribe(rowUiState -> {
+                        if (!rowUiState.equals(rowState.getValue())) {
+                            rowState.postValue(rowUiState);
+                        }
+                        emitter.onComplete();
+                    });
         });
 
     }
@@ -140,13 +144,26 @@ public class GameBoardViewModel extends ViewModel {
         }
         return Single.create((@NonNull SingleEmitter<Boolean> emitter) -> {
             ResetUseCase useCase = new ResetUseCase(context, repository, trigger, monsterFaction);
-            if (showWarnings || useCase.showMonsterDialog().blockingGet()) {
-                useCase.getWarningDialog(context, emitter).blockingGet().show();
+            Runnable dialog = () -> {
+                // noinspection CheckResult, ResultOfMethodCallIgnored
+                useCase.getWarningDialog(context, emitter)
+                        .subscribe(Dialog::show);
+            };
+
+            if (showWarnings) {
+                dialog.run();
             } else {
-                useCase.reset()
-                        .andThen(updateUiState())
-                        .blockingAwait();
-                emitter.onSuccess(true);
+                // noinspection CheckResult, ResultOfMethodCallIgnored
+                useCase.showMonsterDialog().subscribe(showDialog -> {
+                    if (showDialog) {
+                        dialog.run();
+                    } else {
+                        // noinspection CheckResult, ResultOfMethodCallIgnored
+                        useCase.reset()
+                                .andThen(updateUiState())
+                                .subscribe(() -> emitter.onSuccess(true));
+                    }
+                });
             }
         }).doOnSuccess(aBoolean -> {
             if (aBoolean) {

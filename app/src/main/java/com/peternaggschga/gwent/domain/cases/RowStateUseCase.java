@@ -1,14 +1,12 @@
 package com.peternaggschga.gwent.domain.cases;
 
 import androidx.annotation.NonNull;
+import androidx.core.util.Pair;
 
 import com.peternaggschga.gwent.RowType;
-import com.peternaggschga.gwent.data.UnitEntity;
 import com.peternaggschga.gwent.data.UnitRepository;
 import com.peternaggschga.gwent.domain.damage.DamageCalculator;
 import com.peternaggschga.gwent.ui.main.RowUiState;
-
-import java.util.Collection;
 
 import io.reactivex.rxjava3.core.Single;
 
@@ -28,15 +26,14 @@ public class RowStateUseCase {
      */
     @NonNull
     public static Single<RowUiState> getRowState(@NonNull UnitRepository repository, @NonNull RowType row) {
-        return Single.fromCallable(() -> {
-            boolean weather = repository.isWeather(row).blockingGet();
-            boolean horn = repository.isHorn(row).blockingGet();
-            Collection<UnitEntity> units = repository.getUnits(row).blockingGet();
-            DamageCalculator calculator = DamageCalculatorUseCase.getDamageCalculator(weather, horn, units);
-            int damage = units.stream()
-                    .map(unit -> unit.calculateDamage(calculator))
-                    .reduce(0, Integer::sum);
-            return new RowUiState(damage, weather, horn, units.size());
-        });
+        return repository.isWeather(row)
+                .zipWith(repository.isHorn(row), Pair::create)
+                .zipWith(repository.getUnits(row), (weatherHorn, units) -> {
+                    DamageCalculator calculator = DamageCalculatorUseCase.getDamageCalculator(weatherHorn.first, weatherHorn.second, units);
+                    int damage = units.stream()
+                            .map(unit -> unit.calculateDamage(calculator))
+                            .reduce(0, Integer::sum);
+                    return new RowUiState(damage, weatherHorn.first, weatherHorn.second, units.size());
+                });
     }
 }

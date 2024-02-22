@@ -1,5 +1,7 @@
 package com.peternaggschga.gwent.domain.cases;
 
+import android.util.Pair;
+
 import androidx.annotation.NonNull;
 
 import com.peternaggschga.gwent.RowType;
@@ -28,12 +30,10 @@ public class DamageCalculatorUseCase {
      */
     @NonNull
     public static Single<DamageCalculator> getDamageCalculator(@NonNull UnitRepository repository, @NonNull RowType row) {
-        return Single.fromCallable(() -> {
-            boolean weather = repository.isWeather(row).blockingGet();
-            boolean horn = repository.isHorn(row).blockingGet();
-            Collection<UnitEntity> units = repository.getUnits(row).blockingGet();
-            return getDamageCalculator(weather, horn, units);
-        });
+        return repository.isWeather(row)
+                .zipWith(repository.isHorn(row), Pair::create)
+                .zipWith(repository.getUnits(row), (weatherHorn, units) ->
+                        getDamageCalculator(weatherHorn.first, weatherHorn.second, units));
     }
 
     /**

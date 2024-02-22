@@ -13,7 +13,6 @@ import com.peternaggschga.gwent.R;
 import com.peternaggschga.gwent.data.UnitEntity;
 import com.peternaggschga.gwent.data.UnitRepository;
 
-import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
@@ -96,17 +95,12 @@ public class ResetUseCase {
      */
     @NonNull
     private Maybe<UnitEntity> getRandomUnit() {
-        return Maybe.create(emitter -> {
-            List<UnitEntity> units = repository.getUnits()
-                    .blockingGet()
-                    .stream()
+        return repository.getUnits().flatMapMaybe(units -> {
+            units = units.stream()
                     .filter(unit -> !unit.isEpic())
                     .collect(Collectors.toList());
-            if (units.isEmpty()) {
-                emitter.onComplete();
-            } else {
-                emitter.onSuccess(units.get(new Random().nextInt(units.size())));
-            }
+            return units.isEmpty() ? Maybe.empty() : Maybe.just(units.get(new Random().nextInt(units.size())));
+
         });
     }
 
@@ -121,15 +115,9 @@ public class ResetUseCase {
         if (!keepUnit) {
             return removeUseCase.reset().andThen(Maybe.empty());
         }
-        return Maybe.create(emitter -> {
-            UnitEntity keptUnit = getRandomUnit().blockingGet();
-            removeUseCase.reset(keptUnit).blockingAwait();
-            if (keptUnit == null) {
-                emitter.onComplete();
-            } else {
-                emitter.onSuccess(keptUnit);
-            }
-        });
+        return getRandomUnit().concatMap(unit -> removeUseCase
+                .reset(unit)
+                .andThen(unit == null ? Maybe.empty() : Maybe.just(unit)));
     }
 
     /**
@@ -152,11 +140,9 @@ public class ResetUseCase {
     @NonNull
     public Single<Boolean> showMonsterDialog() {
         return Single.concat(Single.just(monsterReset),
-                Single.create(emitter -> emitter.onSuccess(repository.getUnits()
-                        .blockingGet()
-                        .stream()
-                        .anyMatch(unit -> !unit.isEpic()))
-                )).all(bool -> bool);
+                        repository.getUnits().map(units -> units.stream()
+                                .anyMatch(unit -> !unit.isEpic())))
+                .all(bool -> bool);
     }
 
     /**
@@ -178,8 +164,6 @@ public class ResetUseCase {
                 builder.setTitle(R.string.alertDialog_reset_title)
                         .setIconAttribute(android.R.attr.alertDialogIcon)
                         .setNegativeButton(R.string.alertDialog_reset_negative, (dialog, which) -> resetEmitter.onSuccess(false));
-
-
                 dialogEmitter.onSuccess(builder.create());
             };
 
@@ -207,13 +191,13 @@ public class ResetUseCase {
      */
     @NonNull
     private Single<AlertDialog.Builder> getButtonClickDialogBuilder(@NonNull Context context, @NonNull SingleEmitter<Boolean> resetEmitter) {
-        return Single.create(emitter -> {
+        return showMonsterDialog().map(showMonsterDialog -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(context)
                     .setMessage(R.string.alertDialog_reset_msg_default)
                     .setCancelable(true)
                     .setOnCancelListener(dialog -> resetEmitter.onSuccess(false));
 
-            if (showMonsterDialog().blockingGet()) {
+            if (showMonsterDialog) {
                 View checkBoxView = View.inflate(context, R.layout.alertdialog_checkbox, null);
                 builder.setView(checkBoxView)
                         .setPositiveButton(R.string.alertDialog_reset_positive, (dialog, which) -> {
@@ -236,7 +220,7 @@ public class ResetUseCase {
                     reset().subscribe(() -> resetEmitter.onSuccess(true));
                 });
             }
-            emitter.onSuccess(builder);
+            return builder;
         });
     }
 
