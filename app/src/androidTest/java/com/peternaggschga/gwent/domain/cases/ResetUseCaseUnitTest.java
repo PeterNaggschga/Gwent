@@ -7,6 +7,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.peternaggschga.gwent.data.UnitEntity;
@@ -39,16 +40,16 @@ public class ResetUseCaseUnitTest {
 
     @Test
     public void resetCallsResetOnRepository() {
-        new ResetUseCase(repository, TRIGGER_BUTTON_CLICK, false)
+        new ResetUseCase(ApplicationProvider.getApplicationContext(), repository, TRIGGER_BUTTON_CLICK, false)
                 .reset()
                 .blockingAwait();
-        verify(repository, atLeastOnce()).reset();
+        verify(repository, atLeastOnce()).reset(null);
     }
 
     @Test
     public void showMonsterDialogChecksMonsterResetTrue() {
         for (boolean monsterTheme : new boolean[]{true, false}) {
-            new ResetUseCase(repository, TRIGGER_BUTTON_CLICK, monsterTheme)
+            new ResetUseCase(ApplicationProvider.getApplicationContext(), repository, TRIGGER_BUTTON_CLICK, monsterTheme)
                     .showMonsterDialog()
                     .test()
                     .assertValue(monsterTheme)
@@ -58,13 +59,13 @@ public class ResetUseCaseUnitTest {
 
     @Test
     public void showMonsterDialogChecksNonEpicUnitsExist() {
-        new ResetUseCase(repository, TRIGGER_BUTTON_CLICK, true)
+        new ResetUseCase(ApplicationProvider.getApplicationContext(), repository, TRIGGER_BUTTON_CLICK, true)
                 .showMonsterDialog()
                 .test()
                 .assertValue(true)
                 .dispose();
         when(mockUnit.isEpic()).thenReturn(true);
-        new ResetUseCase(repository, TRIGGER_BUTTON_CLICK, true)
+        new ResetUseCase(ApplicationProvider.getApplicationContext(), repository, TRIGGER_BUTTON_CLICK, true)
                 .showMonsterDialog()
                 .test()
                 .assertValue(false)

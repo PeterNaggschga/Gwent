@@ -139,7 +139,7 @@ public class GameBoardViewModel extends ViewModel {
             return Single.just(false);
         }
         return Single.create((@NonNull SingleEmitter<Boolean> emitter) -> {
-            ResetUseCase useCase = new ResetUseCase(repository, trigger, monsterFaction);
+            ResetUseCase useCase = new ResetUseCase(context, repository, trigger, monsterFaction);
             if (showWarnings || useCase.showMonsterDialog().blockingGet()) {
                 useCase.getWarningDialog(context, emitter).blockingGet().show();
             } else {
@@ -160,9 +160,9 @@ public class GameBoardViewModel extends ViewModel {
                 .andThen(updateUiState());
     }
 
-    public Single<Boolean> onBurnButtonPressed() {
+    public Single<Boolean> onBurnButtonPressed(@NonNull Context context) {
         // TODO: Warnung
-        return new BurnUnitsUseCase(repository)
+        return new BurnUnitsUseCase(context, repository)
                 .removeBurnUnits()
                 .andThen(updateUiState())
                 .andThen(Single.just(true));

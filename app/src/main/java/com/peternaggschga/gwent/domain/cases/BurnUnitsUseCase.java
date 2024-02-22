@@ -1,5 +1,7 @@
 package com.peternaggschga.gwent.domain.cases;
 
+import android.content.Context;
+
 import androidx.annotation.NonNull;
 
 import com.peternaggschga.gwent.RowType;
@@ -29,6 +31,12 @@ public class BurnUnitsUseCase {
     private final UnitRepository repository;
 
     /**
+     * RemoveUnitUseCase used for removing the burned units from the #repository.
+     */
+    @NonNull
+    private final RemoveUnitUseCase removeUseCase;
+
+    /**
      * List of UnitEntity objects that are to be burned.
      * Are lazily computed when #getBurnUnits() or #removeBurnUnits() is called.
      */
@@ -39,8 +47,9 @@ public class BurnUnitsUseCase {
      *
      * @param repository UnitRepository where units are searched and deleted.
      */
-    public BurnUnitsUseCase(@NonNull UnitRepository repository) {
+    public BurnUnitsUseCase(@NonNull Context context, @NonNull UnitRepository repository) {
         this.repository = repository;
+        this.removeUseCase = new RemoveUnitUseCase(context, repository);
     }
 
     /**
@@ -86,7 +95,7 @@ public class BurnUnitsUseCase {
     @NonNull
     public Completable removeBurnUnits() {
         return Completable.create(emitter ->
-                repository.delete(getBurnUnits().blockingGet())
+                removeUseCase.remove(getBurnUnits().blockingGet())
                         .doAfterTerminate(emitter::onComplete)
                         .blockingAwait());
     }

@@ -7,6 +7,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import androidx.annotation.NonNull;
+import androidx.test.core.app.ApplicationProvider;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.peternaggschga.gwent.RowType;
 import com.peternaggschga.gwent.data.UnitEntity;
@@ -16,7 +18,6 @@ import com.peternaggschga.gwent.domain.damage.DamageCalculator;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,7 +27,7 @@ import java.util.Random;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(AndroidJUnit4.class)
 public class BurnUnitsUseCaseUnitTest {
     private static final int TESTING_DEPTH = 20;
     private UnitRepository repository;
@@ -58,7 +59,7 @@ public class BurnUnitsUseCaseUnitTest {
         when(repository.isHorn(any())).thenReturn(Single.just(false));
         when(repository.getUnits(any())).thenReturn(Single.just(Collections.emptyList()));
         when(repository.delete(any())).thenReturn(Completable.complete());
-        testUseCase = new BurnUnitsUseCase(repository);
+        testUseCase = new BurnUnitsUseCase(ApplicationProvider.getApplicationContext(), repository);
     }
 
     @Test
@@ -143,7 +144,7 @@ public class BurnUnitsUseCaseUnitTest {
                 initUseCase();
                 List<UnitEntity> testList = getTestList(listSize, maxDamage, maxDamageUnits);
                 when(repository.getUnits()).thenReturn(Single.just(testList));
-                List<UnitEntity> burnList = new BurnUnitsUseCase(repository).getBurnUnits().blockingGet();
+                List<UnitEntity> burnList = new BurnUnitsUseCase(ApplicationProvider.getApplicationContext(), repository).getBurnUnits().blockingGet();
                 testUseCase.removeBurnUnits().blockingAwait();
                 verify(repository, atLeastOnce()).delete(burnList);
             }

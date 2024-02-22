@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
         });
         burn.setOnClickListener(v -> {
             // noinspection CheckResult, ResultOfMethodCallIgnored
-            gameBoard.onBurnButtonPressed().subscribe(aBoolean -> {
+            gameBoard.onBurnButtonPressed(MainActivity.this).subscribe(aBoolean -> {
                 if (aBoolean) {
                     soundManager.playBurnSound();
                 }

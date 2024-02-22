@@ -48,6 +48,12 @@ public class ResetUseCase {
     private final UnitRepository repository;
 
     /**
+     * RemoveUnitUseCase used for resetting the #repository.
+     */
+    @NonNull
+    private final RemoveUnitUseCase removeUseCase;
+
+    /**
      * Integer representing what triggered this use case.
      * Either #TRIGGER_BUTTON_CLICK or #TRIGGER_FACTION_SWITCH.
      *
@@ -73,10 +79,11 @@ public class ResetUseCase {
      *                     either #TRIGGER_BUTTON_CLICK or #TRIGGER_FACTION_SWITCH.
      * @param monsterTheme Boolean defining whether the current theme is set to the monster theme.
      */
-    public ResetUseCase(@NonNull UnitRepository repository,
+    public ResetUseCase(@NonNull Context context, @NonNull UnitRepository repository,
                         @IntRange(from = TRIGGER_BUTTON_CLICK, to = TRIGGER_FACTION_SWITCH) int trigger,
                         boolean monsterTheme) {
         this.repository = repository;
+        this.removeUseCase = new RemoveUnitUseCase(context, repository);
         this.trigger = trigger;
         this.monsterReset = monsterTheme && trigger != TRIGGER_FACTION_SWITCH;
     }
@@ -112,11 +119,11 @@ public class ResetUseCase {
     @NonNull
     private Maybe<UnitEntity> reset(boolean keepUnit) {
         if (!keepUnit) {
-            return repository.reset().andThen(Maybe.empty());
+            return removeUseCase.reset().andThen(Maybe.empty());
         }
         return Maybe.create(emitter -> {
             UnitEntity keptUnit = getRandomUnit().blockingGet();
-            repository.reset(keptUnit).blockingAwait();
+            removeUseCase.reset(keptUnit).blockingAwait();
             if (keptUnit == null) {
                 emitter.onComplete();
             } else {
