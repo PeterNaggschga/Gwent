@@ -128,9 +128,9 @@ public class UnitRepository {
      * @return A Completable tracking operation status.
      * @see #insertUnit(boolean, int, Ability, Integer, RowType)
      */
-    public Completable insertUnit(boolean epic, @IntRange(from = 0) int damage, @NonNull Ability ability, @IntRange(from = 0) @Nullable Integer squad, @NonNull RowType row, int number) {
+    public Completable insertUnit(boolean epic, @IntRange(from = 0) int damage, @NonNull Ability ability, @IntRange(from = 0) @Nullable Integer squad, @NonNull RowType row, long number) {
         Completable result = Completable.complete();
-        for (int i = 0; i < number; i++) {
+        for (long i = 0; i < number; i++) {
             result = result.andThen(insertUnit(epic, damage, ability, squad, row));
         }
         return result.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
