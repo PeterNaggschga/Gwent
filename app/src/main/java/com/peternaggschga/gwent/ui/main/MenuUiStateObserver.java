@@ -50,7 +50,7 @@ public class MenuUiStateObserver implements Observer<MenuUiState> {
      * @param damageView    TextView showing the summed-up damage of all units.
      * @param resetButton   ImageButton used to reset the whole game board.
      * @param weatherButton ImageButton used to reset the weather debuff in all rows.
-     * @param burnButton    ImageButton used to delete the strongest units from the game board.
+     * @param burnButton    ImageButton used to remove the strongest units from the game board.
      */
     public MenuUiStateObserver(@NonNull TextView damageView, @NonNull ImageButton resetButton,
                                @NonNull ImageButton weatherButton, @NonNull ImageButton burnButton) {

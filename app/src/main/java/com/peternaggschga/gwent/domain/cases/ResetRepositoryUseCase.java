@@ -18,12 +18,7 @@ import io.reactivex.rxjava3.core.CompletableEmitter;
  * A use case class responsible for removing units or resetting the UnitRepository.
  * Also, capable of invoking an AlertDialog if a UnitEntity with the Ability#REVENGE ability is removed.
  */
-public class ResetRemoveDialogUseCase extends RemoveUnitsDialogUseCase {
-
-    public ResetRemoveDialogUseCase(@NonNull Context context, @NonNull UnitRepository repository) {
-        super(context, repository);
-    }
-
+public class ResetRepositoryUseCase {
     @NonNull
     public static Completable reset(@NonNull Context context, @NonNull UnitRepository repository, @Nullable UnitEntity keptUnit) {
         return repository.getUnits()
@@ -44,11 +39,11 @@ public class ResetRemoveDialogUseCase extends RemoveUnitsDialogUseCase {
     private static Dialog getRevengeDialog(@NonNull Context context, @NonNull UnitRepository repository,
                                            @NonNull CompletableEmitter emitter, @Nullable UnitEntity keptUnit,
                                            @IntRange(from = 1) long revengeUnits) {
-        return getRevengeDialog(context,
+        return RevengeDialogFactory.getRevengeDialog(context,
                 (dialogInterface, which) -> {
                     // noinspection CheckResult, ResultOfMethodCallIgnored
                     repository.reset(keptUnit)
-                            .andThen(repository.insertUnit(AVENGER_EPIC, AVENGER_DAMAGE, AVENGER_ABILITY, AVENGER_SQUAD, AVENGER_ROW, revengeUnits))
+                            .andThen(RevengeDialogFactory.insertAvengers(repository, revengeUnits))
                             .subscribe(emitter::onComplete);
                 },
                 ((dialog, which) -> {
@@ -61,15 +56,5 @@ public class ResetRemoveDialogUseCase extends RemoveUnitsDialogUseCase {
     @NonNull
     public static Completable reset(@NonNull Context context, @NonNull UnitRepository repository) {
         return reset(context, repository, null);
-    }
-
-    @NonNull
-    public Completable reset() {
-        return reset(null);
-    }
-
-    @NonNull
-    public Completable reset(@Nullable UnitEntity keptUnit) {
-        return reset(context, repository, keptUnit);
     }
 }

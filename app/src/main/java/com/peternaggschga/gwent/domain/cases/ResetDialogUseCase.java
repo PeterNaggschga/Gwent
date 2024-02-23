@@ -102,9 +102,9 @@ public class ResetDialogUseCase extends DialogUseCase {
     @NonNull
     private Maybe<UnitEntity> reset(boolean keepUnit) {
         if (!keepUnit) {
-            return ResetRemoveDialogUseCase.reset(context, repository).andThen(Maybe.empty());
+            return ResetRepositoryUseCase.reset(context, repository).andThen(Maybe.empty());
         }
-        return getRandomUnit().concatMap(unit -> ResetRemoveDialogUseCase
+        return getRandomUnit().concatMap(unit -> ResetRepositoryUseCase
                 .reset(context, repository, unit)
                 .andThen(unit == null ? Maybe.empty() : Maybe.just(unit)));
     }

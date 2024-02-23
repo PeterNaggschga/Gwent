@@ -91,7 +91,7 @@ public class BurnDialogUseCase extends DialogUseCase {
             // noinspection CheckResult, ResultOfMethodCallIgnored
             getBurnUnits().subscribe(units -> {
                 // noinspection CheckResult, ResultOfMethodCallIgnored
-                DeleteRemoveDialogUseCase.delete(context, repository, units).subscribe(emitter::onComplete);
+                RemoveUnitsUseCase.remove(context, repository, units).subscribe(emitter::onComplete);
             });
         });
     }

@@ -19,12 +19,7 @@ import io.reactivex.rxjava3.core.CompletableEmitter;
  * A use case class responsible for removing units or resetting the UnitRepository.
  * Also, capable of invoking an AlertDialog if a UnitEntity with the Ability#REVENGE ability is removed.
  */
-public class DeleteRemoveDialogUseCase extends RemoveUnitsDialogUseCase {
-
-    public DeleteRemoveDialogUseCase(@NonNull Context context, @NonNull UnitRepository repository) {
-        super(context, repository);
-    }
-
+public class RemoveUnitsUseCase {
     /**
      * @param context
      * @param repository
@@ -33,7 +28,7 @@ public class DeleteRemoveDialogUseCase extends RemoveUnitsDialogUseCase {
      * @throws NullPointerException When units contains a null value.
      */
     @NonNull
-    public static Completable delete(@NonNull Context context, @NonNull UnitRepository repository, @NonNull Collection<UnitEntity> units) {
+    public static Completable remove(@NonNull Context context, @NonNull UnitRepository repository, @NonNull Collection<UnitEntity> units) {
         long revengeUnits = units.stream()
                 .filter(unit -> unit.getAbility() == Ability.REVENGE)
                 .count();
@@ -49,11 +44,11 @@ public class DeleteRemoveDialogUseCase extends RemoveUnitsDialogUseCase {
     private static Dialog getRevengeDialog(@NonNull Context context, @NonNull UnitRepository repository,
                                            @NonNull CompletableEmitter emitter, @NonNull Collection<UnitEntity> units,
                                            @IntRange(from = 1) long revengeUnits) {
-        return getRevengeDialog(context,
+        return RevengeDialogFactory.getRevengeDialog(context,
                 (dialog, which) -> {
                     // noinspection CheckResult, ResultOfMethodCallIgnored
                     repository.delete(units)
-                            .andThen(repository.insertUnit(AVENGER_EPIC, AVENGER_DAMAGE, AVENGER_ABILITY, AVENGER_SQUAD, AVENGER_ROW, revengeUnits))
+                            .andThen(RevengeDialogFactory.insertAvengers(repository, revengeUnits))
                             .subscribe(emitter::onComplete);
                 },
                 ((dialog, which) -> {
@@ -61,10 +56,5 @@ public class DeleteRemoveDialogUseCase extends RemoveUnitsDialogUseCase {
                     repository.delete(units).subscribe(emitter::onComplete);
                 })
         );
-    }
-
-    @NonNull
-    public Completable delete(@NonNull Collection<UnitEntity> units) {
-        return delete(context, repository, units);
     }
 }
