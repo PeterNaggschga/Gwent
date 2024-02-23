@@ -27,7 +27,19 @@ import io.reactivex.rxjava3.functions.Consumer;
  *
  * @todo Move dialog stuff here.
  */
-public class ResetDialogUseCase extends DialogUseCase {
+public class ResetDialogUseCase {
+    /**
+     * Context where the warning Dialog is shown.
+     */
+    @NonNull
+    private final Context context;
+
+    /**
+     * UnitRepository where units are burned.
+     */
+    @NonNull
+    private final UnitRepository repository;
+
     /**
      * Integer constant representing that a reset was triggered by a click on the reset button.
      */
@@ -71,7 +83,8 @@ public class ResetDialogUseCase extends DialogUseCase {
     public ResetDialogUseCase(@NonNull Context context, @NonNull UnitRepository repository,
                               @IntRange(from = TRIGGER_BUTTON_CLICK, to = TRIGGER_FACTION_SWITCH) int trigger,
                               boolean monsterTheme) {
-        super(context, repository);
+        this.context = context;
+        this.repository = repository;
         this.trigger = trigger;
         this.monsterReset = monsterTheme && trigger != TRIGGER_FACTION_SWITCH;
     }
