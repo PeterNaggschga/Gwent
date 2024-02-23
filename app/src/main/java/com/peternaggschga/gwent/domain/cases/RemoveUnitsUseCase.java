@@ -57,7 +57,12 @@ public class RemoveUnitsUseCase {
                     repository.delete(units)
                             .andThen(repository.insertUnit(AVENGER_EPIC, AVENGER_DAMAGE, AVENGER_ABILITY, AVENGER_SQUAD, AVENGER_ROW, revengeUnits))
                             .subscribe(emitter::onComplete);
-                }).show());
+                },
+                ((dialog, which) -> {
+                    // noinspection CheckResult, ResultOfMethodCallIgnored
+                    repository.delete(units).subscribe(emitter::onComplete);
+                })
+        ).show());
     }
 
     @NonNull
@@ -76,17 +81,24 @@ public class RemoveUnitsUseCase {
                                 repository.reset(keptUnit)
                                         .andThen(repository.insertUnit(AVENGER_EPIC, AVENGER_DAMAGE, AVENGER_ABILITY, AVENGER_SQUAD, AVENGER_ROW, revengeUnits))
                                         .subscribe(emitter::onComplete);
-                            }).show());
+                            },
+                            ((dialog, which) -> {
+                                // noinspection CheckResult, ResultOfMethodCallIgnored
+                                repository.reset(keptUnit).subscribe(emitter::onComplete);
+                            })
+                    ).show());
                 });
     }
 
     @NonNull
-    private static Dialog getRevengeDialog(@NonNull Context context, @NonNull DialogInterface.OnClickListener onClickListener) {
+    private static Dialog getRevengeDialog(@NonNull Context context, @NonNull DialogInterface.OnClickListener onPositiveClickListener,
+                                           @NonNull DialogInterface.OnClickListener onNegativeClickListener) {
         return new AlertDialog.Builder(context)
                 .setTitle(R.string.alertDialog_revenge_title)
                 .setMessage(R.string.alertDialog_revenge_msg)
                 .setCancelable(false)
-                .setPositiveButton(R.string.alertDialog_revenge_positive, onClickListener)
+                .setPositiveButton(R.string.alertDialog_revenge_positive, onPositiveClickListener)
+                .setNegativeButton(R.string.alertDialog_revenge_negative, onNegativeClickListener)
                 .create();
     }
 

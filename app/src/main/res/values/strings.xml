@@ -59,6 +59,7 @@
     <string name="alertDialog_revenge_title">Avenger ability</string>
     <string name="alertDialog_revenge_msg">You removed units that can summon an avenger. Do you want to activate their ability?</string>
     <string name="alertDialog_revenge_positive">Summon avenger</string>
+    <string name="alertDialog_revenge_negative">Don\'t activate</string>
 
     <string name="array_design_default">Default</string>
     <string name="array_design_geralt">Geralt of Rivia</string>

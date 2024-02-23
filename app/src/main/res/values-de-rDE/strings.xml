@@ -211,4 +211,5 @@
     <string name="array_add_ability_binding">Enge Bindung</string>
     <string name="popUp_add_card_binding_count">Anzahl Einheiten in %1$d. Gruppe: %2$d</string>
     <string name="alertDialog_burn_msg">Möchtest du wirklich %1$s verbrennen?</string>
+    <string name="alertDialog_revenge_negative">Nicht auslösen</string>
 </resources>
