@@ -19,10 +19,10 @@ import io.reactivex.rxjava3.core.CompletableEmitter;
  * A use case class responsible for removing units or resetting the UnitRepository.
  * Also, capable of invoking an AlertDialog if a UnitEntity with the Ability#REVENGE ability is removed.
  */
-public class DeleteUnitsUseCase extends RemoveUnitsUseCase {
+public class DeleteRemoveDialogUseCase extends RemoveUnitsDialogUseCase {
 
-    public DeleteUnitsUseCase(@NonNull Context context, @NonNull UnitRepository repository) {
-        super(repository, context);
+    public DeleteRemoveDialogUseCase(@NonNull Context context, @NonNull UnitRepository repository) {
+        super(context, repository);
     }
 
     /**

@@ -24,20 +24,7 @@ import io.reactivex.rxjava3.core.Single;
  *
  * @todo Create warning dialog.
  */
-public class BurnDialogUseCase {
-    /**
-     * UnitRepository that is queried
-     * when searching for the units to be burned and where the units are deleted.
-     */
-    @NonNull
-    private final UnitRepository repository;
-
-    /**
-     * RemoveUnitUseCase used for removing the burned units from the #repository.
-     */
-    @NonNull
-    private final DeleteUnitsUseCase deleteUseCase;
-
+public class BurnDialogUseCase extends DialogUseCase {
     /**
      * List of UnitEntity objects that are to be burned.
      * Are lazily computed when #getBurnUnits() or #removeBurnUnits() is called.
@@ -47,11 +34,11 @@ public class BurnDialogUseCase {
     /**
      * Constructor of a BurnDialogUseCase.
      *
+     * @param context    Context of the created warning AlertDialog.
      * @param repository UnitRepository where units are searched and deleted.
      */
     public BurnDialogUseCase(@NonNull Context context, @NonNull UnitRepository repository) {
-        this.repository = repository;
-        this.deleteUseCase = new DeleteUnitsUseCase(context, repository);
+        super(context, repository);
     }
 
     /**
@@ -104,7 +91,7 @@ public class BurnDialogUseCase {
             // noinspection CheckResult, ResultOfMethodCallIgnored
             getBurnUnits().subscribe(units -> {
                 // noinspection CheckResult, ResultOfMethodCallIgnored
-                deleteUseCase.delete(units).subscribe(emitter::onComplete);
+                DeleteRemoveDialogUseCase.delete(context, repository, units).subscribe(emitter::onComplete);
             });
         });
     }

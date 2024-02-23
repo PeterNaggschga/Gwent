@@ -27,7 +27,7 @@ import io.reactivex.rxjava3.functions.Consumer;
  *
  * @todo Move dialog stuff here.
  */
-public class ResetDialogUseCase {
+public class ResetDialogUseCase extends DialogUseCase {
     /**
      * Integer constant representing that a reset was triggered by a click on the reset button.
      */
@@ -41,18 +41,6 @@ public class ResetDialogUseCase {
      * @see R.string#preference_key_faction_reset
      */
     public static final int TRIGGER_FACTION_SWITCH = 1;
-
-    /**
-     * UnitRepository that is reset.
-     */
-    @NonNull
-    private final UnitRepository repository;
-
-    /**
-     * RemoveUnitUseCase used for resetting the #repository.
-     */
-    @NonNull
-    private final ResetRepositoryUseCase resetUseCase;
 
     /**
      * Integer representing what triggered this use case.
@@ -83,8 +71,7 @@ public class ResetDialogUseCase {
     public ResetDialogUseCase(@NonNull Context context, @NonNull UnitRepository repository,
                               @IntRange(from = TRIGGER_BUTTON_CLICK, to = TRIGGER_FACTION_SWITCH) int trigger,
                               boolean monsterTheme) {
-        this.repository = repository;
-        this.resetUseCase = new ResetRepositoryUseCase(context, repository);
+        super(context, repository);
         this.trigger = trigger;
         this.monsterReset = monsterTheme && trigger != TRIGGER_FACTION_SWITCH;
     }
@@ -115,10 +102,10 @@ public class ResetDialogUseCase {
     @NonNull
     private Maybe<UnitEntity> reset(boolean keepUnit) {
         if (!keepUnit) {
-            return resetUseCase.reset().andThen(Maybe.empty());
+            return ResetRemoveDialogUseCase.reset(context, repository).andThen(Maybe.empty());
         }
-        return getRandomUnit().concatMap(unit -> resetUseCase
-                .reset(unit)
+        return getRandomUnit().concatMap(unit -> ResetRemoveDialogUseCase
+                .reset(context, repository, unit)
                 .andThen(unit == null ? Maybe.empty() : Maybe.just(unit)));
     }
 

@@ -13,7 +13,7 @@ import com.peternaggschga.gwent.RowType;
 import com.peternaggschga.gwent.data.UnitEntity;
 import com.peternaggschga.gwent.data.UnitRepository;
 
-public abstract class RemoveUnitsUseCase {
+abstract class RemoveUnitsDialogUseCase extends DialogUseCase {
     /**
      * Boolean constant defining
      * whether the default UnitEntity summoned by the Ability#REVENGE ability is epic.
@@ -59,17 +59,8 @@ public abstract class RemoveUnitsUseCase {
      */
     protected static final RowType AVENGER_ROW = RowType.MELEE;
 
-    /**
-     * UnitRepository where the units are removed or that is reset.
-     */
-    @NonNull
-    protected final UnitRepository repository;
-    @NonNull
-    protected final Context context;
-
-    protected RemoveUnitsUseCase(@NonNull UnitRepository repository, @NonNull Context context) {
-        this.repository = repository;
-        this.context = context;
+    protected RemoveUnitsDialogUseCase(@NonNull Context context, @NonNull UnitRepository repository) {
+        super(context, repository);
     }
 
     @NonNull
