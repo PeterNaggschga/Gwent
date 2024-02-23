@@ -2,6 +2,7 @@ package com.peternaggschga.gwent.domain.cases;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 
 import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
@@ -16,16 +17,22 @@ import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.CompletableEmitter;
 
 /**
- * A use case class responsible for removing units or resetting the UnitRepository.
- * Also, capable of invoking an AlertDialog if a UnitEntity with the Ability#REVENGE ability is removed.
+ * A use case class responsible for removing units from a UnitRepository.
+ * Capable of invoking a Dialog if a UnitEntity with the Ability#REVENGE ability is removed.
  */
 public class RemoveUnitsUseCase {
     /**
-     * @param context
-     * @param repository
-     * @param units
-     * @return
+     * Removes the given UnitEntity objects from the given UnitRepository.
+     * If a UnitEntity has the Ability#REVENGE ability,
+     * a Dialog asking whether the ability should be used is shown.
+     *
+     * @param context    Context of the shown Dialog.
+     * @param repository UnitRepository where the UnitEntity objects are removed.
+     * @param units      Collection of UnitEntity objects that are removed.
+     * @return A Completable tracking operation status.
      * @throws NullPointerException When units contains a null value.
+     * @see #getRevengeDialog(Context, UnitRepository, CompletableEmitter, Collection, long)
+     * @see UnitRepository#delete(Collection)
      */
     @NonNull
     public static Completable remove(@NonNull Context context, @NonNull UnitRepository repository, @NonNull Collection<UnitEntity> units) {
@@ -40,6 +47,20 @@ public class RemoveUnitsUseCase {
         );
     }
 
+    /**
+     * Creates a Dialog asking whether the Ability#REVENGE ability should be activated.
+     * The Dialog is created using RevengeDialogFactory.
+     *
+     * @param context      Context of the shown Dialog.
+     * @param repository   UnitRepository where the UnitEntity objects are removed and avengers are inserted.
+     * @param emitter      CompletableEmitter where CompletableEmitter#onComplete must be called,
+     *                     when the user makes a decision.
+     * @param units        Collection of UnitEntity objects that are removed.
+     * @param revengeUnits Long representing the number of revenge units.
+     * @return A Dialog asking whether the Ability#REVENGE ability should be activated.
+     * @see RevengeDialogFactory#getRevengeDialog(Context, DialogInterface.OnClickListener, DialogInterface.OnClickListener)
+     * @see RevengeDialogFactory#insertAvengers(UnitRepository, long)
+     */
     @NonNull
     private static Dialog getRevengeDialog(@NonNull Context context, @NonNull UnitRepository repository,
                                            @NonNull CompletableEmitter emitter, @NonNull Collection<UnitEntity> units,
