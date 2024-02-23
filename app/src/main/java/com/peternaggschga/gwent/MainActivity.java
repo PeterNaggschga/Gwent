@@ -14,7 +14,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
 
-import com.peternaggschga.gwent.domain.cases.ResetUseCase;
+import com.peternaggschga.gwent.domain.cases.ResetDialogUseCase;
 import com.peternaggschga.gwent.ui.dialogs.ChangeFactionDialog;
 import com.peternaggschga.gwent.ui.dialogs.CoinFlipDialog;
 import com.peternaggschga.gwent.ui.main.FactionSwitchListener;
@@ -155,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
             if (resetOnFactionSwitch) {
                 // noinspection CheckResult, ResultOfMethodCallIgnored
-                gameBoard.reset(this, ResetUseCase.TRIGGER_FACTION_SWITCH)
+                gameBoard.reset(this, ResetDialogUseCase.TRIGGER_FACTION_SWITCH)
                         .subscribe(aBoolean -> {
                             soundManager.playResetSound();
                             preferences.edit()

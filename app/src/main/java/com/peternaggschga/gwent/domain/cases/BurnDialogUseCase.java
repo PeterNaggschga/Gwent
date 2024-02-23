@@ -22,7 +22,7 @@ import io.reactivex.rxjava3.core.Single;
 /**
  * A use case class responsible for the execution of the burn operation.
  */
-public class BurnUnitsUseCase {
+public class BurnDialogUseCase {
     /**
      * UnitRepository that is queried
      * when searching for the units to be burned and where the units are deleted.
@@ -34,7 +34,7 @@ public class BurnUnitsUseCase {
      * RemoveUnitUseCase used for removing the burned units from the #repository.
      */
     @NonNull
-    private final RemoveUnitsUseCase removeUseCase;
+    private final DeleteUnitsUseCase deleteUseCase;
 
     /**
      * List of UnitEntity objects that are to be burned.
@@ -43,13 +43,13 @@ public class BurnUnitsUseCase {
     private List<UnitEntity> burnUnits;
 
     /**
-     * Constructor of a BurnUnitsUseCase.
+     * Constructor of a BurnDialogUseCase.
      *
      * @param repository UnitRepository where units are searched and deleted.
      */
-    public BurnUnitsUseCase(@NonNull Context context, @NonNull UnitRepository repository) {
+    public BurnDialogUseCase(@NonNull Context context, @NonNull UnitRepository repository) {
         this.repository = repository;
-        this.removeUseCase = new RemoveUnitsUseCase(context, repository);
+        this.deleteUseCase = new DeleteUnitsUseCase(context, repository);
     }
 
     /**
@@ -102,7 +102,7 @@ public class BurnUnitsUseCase {
             // noinspection CheckResult, ResultOfMethodCallIgnored
             getBurnUnits().subscribe(units -> {
                 // noinspection CheckResult, ResultOfMethodCallIgnored
-                removeUseCase.remove(units).subscribe(emitter::onComplete);
+                deleteUseCase.delete(units).subscribe(emitter::onComplete);
             });
         });
     }

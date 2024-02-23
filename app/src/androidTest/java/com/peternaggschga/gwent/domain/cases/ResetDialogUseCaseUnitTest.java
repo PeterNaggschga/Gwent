@@ -1,6 +1,6 @@
 package com.peternaggschga.gwent.domain.cases;
 
-import static com.peternaggschga.gwent.domain.cases.ResetUseCase.TRIGGER_BUTTON_CLICK;
+import static com.peternaggschga.gwent.domain.cases.ResetDialogUseCase.TRIGGER_BUTTON_CLICK;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
@@ -23,7 +23,7 @@ import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 
 @RunWith(AndroidJUnit4.class)
-public class ResetUseCaseUnitTest {
+public class ResetDialogUseCaseUnitTest {
     private UnitRepository repository;
     private UnitEntity mockUnit;
 
@@ -40,7 +40,7 @@ public class ResetUseCaseUnitTest {
 
     @Test
     public void resetCallsResetOnRepository() {
-        new ResetUseCase(ApplicationProvider.getApplicationContext(), repository, TRIGGER_BUTTON_CLICK, false)
+        new ResetDialogUseCase(ApplicationProvider.getApplicationContext(), repository, TRIGGER_BUTTON_CLICK, false)
                 .reset()
                 .blockingAwait();
         verify(repository, atLeastOnce()).reset(null);
@@ -49,7 +49,7 @@ public class ResetUseCaseUnitTest {
     @Test
     public void showMonsterDialogChecksMonsterResetTrue() {
         for (boolean monsterTheme : new boolean[]{true, false}) {
-            new ResetUseCase(ApplicationProvider.getApplicationContext(), repository, TRIGGER_BUTTON_CLICK, monsterTheme)
+            new ResetDialogUseCase(ApplicationProvider.getApplicationContext(), repository, TRIGGER_BUTTON_CLICK, monsterTheme)
                     .showMonsterDialog()
                     .test()
                     .assertValue(monsterTheme)
@@ -59,13 +59,13 @@ public class ResetUseCaseUnitTest {
 
     @Test
     public void showMonsterDialogChecksNonEpicUnitsExist() {
-        new ResetUseCase(ApplicationProvider.getApplicationContext(), repository, TRIGGER_BUTTON_CLICK, true)
+        new ResetDialogUseCase(ApplicationProvider.getApplicationContext(), repository, TRIGGER_BUTTON_CLICK, true)
                 .showMonsterDialog()
                 .test()
                 .assertValue(true)
                 .dispose();
         when(mockUnit.isEpic()).thenReturn(true);
-        new ResetUseCase(ApplicationProvider.getApplicationContext(), repository, TRIGGER_BUTTON_CLICK, true)
+        new ResetDialogUseCase(ApplicationProvider.getApplicationContext(), repository, TRIGGER_BUTTON_CLICK, true)
                 .showMonsterDialog()
                 .test()
                 .assertValue(false)

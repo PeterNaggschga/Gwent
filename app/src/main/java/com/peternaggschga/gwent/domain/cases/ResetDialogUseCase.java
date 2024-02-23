@@ -25,7 +25,7 @@ import io.reactivex.rxjava3.functions.Consumer;
 /**
  * A use case class responsible for the execution of the reset operation.
  */
-public class ResetUseCase {
+public class ResetDialogUseCase {
     /**
      * Integer constant representing that a reset was triggered by a click on the reset button.
      */
@@ -50,7 +50,7 @@ public class ResetUseCase {
      * RemoveUnitUseCase used for resetting the #repository.
      */
     @NonNull
-    private final RemoveUnitsUseCase removeUseCase;
+    private final ResetRepositoryUseCase resetUseCase;
 
     /**
      * Integer representing what triggered this use case.
@@ -69,7 +69,7 @@ public class ResetUseCase {
     private final boolean monsterReset;
 
     /**
-     * Constructor of a ResetUseCase for the given UnitRepository and trigger.
+     * Constructor of a ResetDialogUseCase for the given UnitRepository and trigger.
      * When monsterTheme is true and the trigger is not #TRIGGER_FACTION_SWITCH,
      * then #monsterReset is initialized as true.
      *
@@ -78,11 +78,11 @@ public class ResetUseCase {
      *                     either #TRIGGER_BUTTON_CLICK or #TRIGGER_FACTION_SWITCH.
      * @param monsterTheme Boolean defining whether the current theme is set to the monster theme.
      */
-    public ResetUseCase(@NonNull Context context, @NonNull UnitRepository repository,
-                        @IntRange(from = TRIGGER_BUTTON_CLICK, to = TRIGGER_FACTION_SWITCH) int trigger,
-                        boolean monsterTheme) {
+    public ResetDialogUseCase(@NonNull Context context, @NonNull UnitRepository repository,
+                              @IntRange(from = TRIGGER_BUTTON_CLICK, to = TRIGGER_FACTION_SWITCH) int trigger,
+                              boolean monsterTheme) {
         this.repository = repository;
-        this.removeUseCase = new RemoveUnitsUseCase(context, repository);
+        this.resetUseCase = new ResetRepositoryUseCase(context, repository);
         this.trigger = trigger;
         this.monsterReset = monsterTheme && trigger != TRIGGER_FACTION_SWITCH;
     }
@@ -113,9 +113,9 @@ public class ResetUseCase {
     @NonNull
     private Maybe<UnitEntity> reset(boolean keepUnit) {
         if (!keepUnit) {
-            return removeUseCase.reset().andThen(Maybe.empty());
+            return resetUseCase.reset().andThen(Maybe.empty());
         }
-        return getRandomUnit().concatMap(unit -> removeUseCase
+        return getRandomUnit().concatMap(unit -> resetUseCase
                 .reset(unit)
                 .andThen(unit == null ? Maybe.empty() : Maybe.just(unit)));
     }

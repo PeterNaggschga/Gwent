@@ -28,10 +28,10 @@ import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 
 @RunWith(AndroidJUnit4.class)
-public class BurnUnitsUseCaseUnitTest {
+public class BurnDialogUseCaseUnitTest {
     private static final int TESTING_DEPTH = 20;
     private UnitRepository repository;
-    private BurnUnitsUseCase testUseCase;
+    private BurnDialogUseCase testUseCase;
 
     @NonNull
     private List<UnitEntity> getTestList(int listSize, int maxDamage, int maxDamageUnits) {
@@ -59,7 +59,7 @@ public class BurnUnitsUseCaseUnitTest {
         when(repository.isHorn(any())).thenReturn(Single.just(false));
         when(repository.getUnits(any())).thenReturn(Single.just(Collections.emptyList()));
         when(repository.delete(any())).thenReturn(Completable.complete());
-        testUseCase = new BurnUnitsUseCase(ApplicationProvider.getApplicationContext(), repository);
+        testUseCase = new BurnDialogUseCase(ApplicationProvider.getApplicationContext(), repository);
     }
 
     @Test
@@ -144,7 +144,7 @@ public class BurnUnitsUseCaseUnitTest {
                 initUseCase();
                 List<UnitEntity> testList = getTestList(listSize, maxDamage, maxDamageUnits);
                 when(repository.getUnits()).thenReturn(Single.just(testList));
-                List<UnitEntity> burnList = new BurnUnitsUseCase(ApplicationProvider.getApplicationContext(), repository).getBurnUnits().blockingGet();
+                List<UnitEntity> burnList = new BurnDialogUseCase(ApplicationProvider.getApplicationContext(), repository).getBurnUnits().blockingGet();
                 testUseCase.removeBurnUnits().blockingAwait();
                 verify(repository, atLeastOnce()).delete(burnList);
             }

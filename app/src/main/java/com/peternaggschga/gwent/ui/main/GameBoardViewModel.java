@@ -18,8 +18,8 @@ import com.peternaggschga.gwent.GwentApplication;
 import com.peternaggschga.gwent.R;
 import com.peternaggschga.gwent.RowType;
 import com.peternaggschga.gwent.data.UnitRepository;
-import com.peternaggschga.gwent.domain.cases.BurnUnitsUseCase;
-import com.peternaggschga.gwent.domain.cases.ResetUseCase;
+import com.peternaggschga.gwent.domain.cases.BurnDialogUseCase;
+import com.peternaggschga.gwent.domain.cases.ResetDialogUseCase;
 import com.peternaggschga.gwent.domain.cases.RowStateUseCase;
 
 import java.util.HashMap;
@@ -131,7 +131,7 @@ public class GameBoardViewModel extends ViewModel {
     }
 
     public Single<Boolean> onResetButtonPressed(@NonNull Context context, boolean monsterFaction) {
-        return reset(context, ResetUseCase.TRIGGER_BUTTON_CLICK, monsterFaction);
+        return reset(context, ResetDialogUseCase.TRIGGER_BUTTON_CLICK, monsterFaction);
     }
 
     public Single<Boolean> reset(Context context, @IntRange(from = 0, to = 1) int trigger) {
@@ -143,7 +143,7 @@ public class GameBoardViewModel extends ViewModel {
             return Single.just(false);
         }
         return Single.create((@NonNull SingleEmitter<Boolean> emitter) -> {
-            ResetUseCase useCase = new ResetUseCase(context, repository, trigger, monsterFaction);
+            ResetDialogUseCase useCase = new ResetDialogUseCase(context, repository, trigger, monsterFaction);
             Runnable dialog = () -> {
                 // noinspection CheckResult, ResultOfMethodCallIgnored
                 useCase.getWarningDialog(context, emitter)
@@ -179,7 +179,7 @@ public class GameBoardViewModel extends ViewModel {
 
     public Single<Boolean> onBurnButtonPressed(@NonNull Context context) {
         // TODO: Warnung
-        return new BurnUnitsUseCase(context, repository)
+        return new BurnDialogUseCase(context, repository)
                 .removeBurnUnits()
                 .andThen(updateUiState())
                 .andThen(Single.just(true));
