@@ -24,7 +24,19 @@ import io.reactivex.rxjava3.core.Single;
  *
  * @todo Create warning dialog.
  */
-public class BurnDialogUseCase extends DialogUseCase {
+public class BurnDialogUseCase {
+    /**
+     * Context where the warning Dialog is shown.
+     */
+    @NonNull
+    private final Context context;
+
+    /**
+     * UnitRepository where units are burned.
+     */
+    @NonNull
+    private final UnitRepository repository;
+
     /**
      * List of UnitEntity objects that are to be burned.
      * Are lazily computed when #getBurnUnits() or #removeBurnUnits() is called.
@@ -38,7 +50,8 @@ public class BurnDialogUseCase extends DialogUseCase {
      * @param repository UnitRepository where units are searched and deleted.
      */
     public BurnDialogUseCase(@NonNull Context context, @NonNull UnitRepository repository) {
-        super(context, repository);
+        this.context = context;
+        this.repository = repository;
     }
 
     /**
