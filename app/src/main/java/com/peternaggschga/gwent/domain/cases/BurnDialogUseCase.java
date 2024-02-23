@@ -21,6 +21,8 @@ import io.reactivex.rxjava3.core.Single;
 
 /**
  * A use case class responsible for the execution of the burn operation.
+ *
+ * @todo Create warning dialog.
  */
 public class BurnDialogUseCase {
     /**

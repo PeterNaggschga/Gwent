@@ -24,6 +24,8 @@ import io.reactivex.rxjava3.functions.Consumer;
 
 /**
  * A use case class responsible for the execution of the reset operation.
+ *
+ * @todo Move dialog stuff here.
  */
 public class ResetDialogUseCase {
     /**
