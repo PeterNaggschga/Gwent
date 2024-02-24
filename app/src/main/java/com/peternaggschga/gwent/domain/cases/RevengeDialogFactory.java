@@ -16,6 +16,13 @@ import com.peternaggschga.gwent.data.UnitRepository;
 
 import io.reactivex.rxjava3.core.Completable;
 
+/**
+ * A factory class providing a Dialog asking whether the Ability#REVENGE ability should be activated
+ * and uses the given Callbacks in #getRevengeDialog().
+ *
+ * @see Ability#REVENGE
+ * @see #getRevengeDialog(Context, DialogInterface.OnClickListener, DialogInterface.OnClickListener)
+ */
 class RevengeDialogFactory {
     /**
      * Boolean constant defining
@@ -62,6 +69,17 @@ class RevengeDialogFactory {
      */
     private static final RowType AVENGER_ROW = RowType.MELEE;
 
+    /**
+     * Creates a Dialog
+     * asking whether the Ability#REVENGE ability of a removed UnitEntity should be activated.
+     * The onPositiveClickListener should call #insertAvengers().
+     *
+     * @param context                 Context of the created Dialog.
+     * @param onPositiveClickListener DialogInterface.OnClickListener which is called when the positive button is clicked.
+     * @param onNegativeClickListener DialogInterface.OnClickListener which is called when the negative button is clicked.
+     * @return A Dialog asking about the activation of the Ability#REVENGE ability.
+     * @see #insertAvengers(UnitRepository, int)
+     */
     @NonNull
     public static Dialog getRevengeDialog(@NonNull Context context, @NonNull DialogInterface.OnClickListener onPositiveClickListener,
                                           @NonNull DialogInterface.OnClickListener onNegativeClickListener) {
@@ -74,6 +92,15 @@ class RevengeDialogFactory {
                 .create();
     }
 
+    /**
+     * Inserts numberOfAvengers avenger units into the given UnitRepository.
+     * The inserted UnitEntity objects have the attributes defined in #AVENGER_EPIC,
+     * #AVENGER_DAMAGE, #AVENGER_ABILITY, #AVENGER_SQUAD, and #AVENGER_ROW.
+     *
+     * @param repository       UnitRepository where avengers are inserted.
+     * @param numberOfAvengers Integer defining how many avengers are inserted.
+     * @return A Completable tracking operation status.
+     */
     @NonNull
     public static Completable insertAvengers(@NonNull UnitRepository repository, @IntRange(from = 0) int numberOfAvengers) {
         return repository.insertUnit(AVENGER_EPIC, AVENGER_DAMAGE, AVENGER_ABILITY, AVENGER_SQUAD, AVENGER_ROW, numberOfAvengers);
