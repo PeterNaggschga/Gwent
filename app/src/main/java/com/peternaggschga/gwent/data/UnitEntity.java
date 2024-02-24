@@ -20,8 +20,6 @@ import com.peternaggschga.gwent.domain.damage.DamageCalculator;
 /**
  * A class representing a card on the game board.
  * Is a persistent Entity and is therefore saved in a database table named `units`.
- *
- * @todo Add toString() method
  */
 @Entity(tableName = "units", foreignKeys = {
         @ForeignKey(entity = RowEntity.class,
