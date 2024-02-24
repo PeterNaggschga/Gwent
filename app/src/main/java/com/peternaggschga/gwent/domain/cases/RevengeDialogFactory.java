@@ -75,7 +75,7 @@ class RevengeDialogFactory {
     }
 
     @NonNull
-    public static Completable insertAvengers(@NonNull UnitRepository repository, @IntRange(from = 0) long numberOfAvengers) {
+    public static Completable insertAvengers(@NonNull UnitRepository repository, @IntRange(from = 0) int numberOfAvengers) {
         return repository.insertUnit(AVENGER_EPIC, AVENGER_DAMAGE, AVENGER_ABILITY, AVENGER_SQUAD, AVENGER_ROW, numberOfAvengers);
     }
 }

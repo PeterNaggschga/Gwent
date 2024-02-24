@@ -29,7 +29,7 @@ public class ResetRepositoryUseCase {
      * @param repository UnitRepository that is being reset.
      * @param keptUnit   UnitEntity that should be kept.
      * @return A Completable tracking operation status.
-     * @see #getRevengeDialog(Context, UnitRepository, CompletableEmitter, UnitEntity, long)
+     * @see #getRevengeDialog(Context, UnitRepository, CompletableEmitter, UnitEntity, int)
      * @see UnitRepository#reset(UnitEntity)
      */
     @NonNull
@@ -43,7 +43,7 @@ public class ResetRepositoryUseCase {
                         return repository.reset(keptUnit);
                     }
                     return Completable.create(emitter ->
-                            getRevengeDialog(context, repository, emitter, keptUnit, revengeUnits).show()
+                            getRevengeDialog(context, repository, emitter, keptUnit, (int) revengeUnits).show()
                     );
                 });
     }
@@ -60,12 +60,12 @@ public class ResetRepositoryUseCase {
      * @param revengeUnits Long representing the number of revenge units.
      * @return A Dialog asking whether the Ability#REVENGE ability should be activated.
      * @see RevengeDialogFactory#getRevengeDialog(Context, DialogInterface.OnClickListener, DialogInterface.OnClickListener)
-     * @see RevengeDialogFactory#insertAvengers(UnitRepository, long)
+     * @see RevengeDialogFactory#insertAvengers(UnitRepository, int)
      */
     @NonNull
     private static Dialog getRevengeDialog(@NonNull Context context, @NonNull UnitRepository repository,
                                            @NonNull CompletableEmitter emitter, @Nullable UnitEntity keptUnit,
-                                           @IntRange(from = 1) long revengeUnits) {
+                                           @IntRange(from = 1) int revengeUnits) {
         return RevengeDialogFactory.getRevengeDialog(context,
                 (dialogInterface, which) -> {
                     // noinspection CheckResult, ResultOfMethodCallIgnored

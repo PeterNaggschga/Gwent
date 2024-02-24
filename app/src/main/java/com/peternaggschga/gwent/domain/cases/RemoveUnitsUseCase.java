@@ -31,7 +31,7 @@ public class RemoveUnitsUseCase {
      * @param units      Collection of UnitEntity objects that are removed.
      * @return A Completable tracking operation status.
      * @throws NullPointerException When units contains a null value.
-     * @see #getRevengeDialog(Context, UnitRepository, CompletableEmitter, Collection, long)
+     * @see #getRevengeDialog(Context, UnitRepository, CompletableEmitter, Collection, int)
      * @see UnitRepository#delete(Collection)
      */
     @NonNull
@@ -43,7 +43,7 @@ public class RemoveUnitsUseCase {
             return repository.delete(units);
         }
         return Completable.create(emitter ->
-                getRevengeDialog(context, repository, emitter, units, revengeUnits).show()
+                getRevengeDialog(context, repository, emitter, units, (int) revengeUnits).show()
         );
     }
 
@@ -59,12 +59,12 @@ public class RemoveUnitsUseCase {
      * @param revengeUnits Long representing the number of revenge units.
      * @return A Dialog asking whether the Ability#REVENGE ability should be activated.
      * @see RevengeDialogFactory#getRevengeDialog(Context, DialogInterface.OnClickListener, DialogInterface.OnClickListener)
-     * @see RevengeDialogFactory#insertAvengers(UnitRepository, long)
+     * @see RevengeDialogFactory#insertAvengers(UnitRepository, int)
      */
     @NonNull
     private static Dialog getRevengeDialog(@NonNull Context context, @NonNull UnitRepository repository,
                                            @NonNull CompletableEmitter emitter, @NonNull Collection<UnitEntity> units,
-                                           @IntRange(from = 1) long revengeUnits) {
+                                           @IntRange(from = 1) int revengeUnits) {
         return RevengeDialogFactory.getRevengeDialog(context,
                 (dialog, which) -> {
                     // noinspection CheckResult, ResultOfMethodCallIgnored
