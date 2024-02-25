@@ -84,6 +84,7 @@ class RevengeDialogFactory {
     public static Dialog getRevengeDialog(@NonNull Context context, @NonNull DialogInterface.OnClickListener onPositiveClickListener,
                                           @NonNull DialogInterface.OnClickListener onNegativeClickListener) {
         return new AlertDialog.Builder(context)
+                .setIconAttribute(android.R.attr.alertDialogIcon)
                 .setTitle(R.string.alertDialog_revenge_title)
                 .setMessage(R.string.alertDialog_revenge_msg)
                 .setCancelable(false)
