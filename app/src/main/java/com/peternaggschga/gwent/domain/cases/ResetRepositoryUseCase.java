@@ -12,8 +12,14 @@ import com.peternaggschga.gwent.Ability;
 import com.peternaggschga.gwent.data.UnitEntity;
 import com.peternaggschga.gwent.data.UnitRepository;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.Random;
+import java.util.stream.Collectors;
+
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.CompletableEmitter;
+import io.reactivex.rxjava3.core.Maybe;
 
 /**
  * A use case class responsible for resetting the UnitRepository.
@@ -21,31 +27,48 @@ import io.reactivex.rxjava3.core.CompletableEmitter;
  */
 public class ResetRepositoryUseCase {
     /**
-     * Resets the given UnitRepository and keeps the given UnitEntity (if not null).
+     * Resets the given UnitRepository and keeps one random unit if keepUnit is true.
      * If a removed UnitEntity has the Ability#REVENGE ability,
      * a Dialog asking whether the ability should be used is shown.
      *
      * @param context    Context of the shown Dialog.
      * @param repository UnitRepository that is being reset.
-     * @param keptUnit   UnitEntity that should be kept.
-     * @return A Completable tracking operation status.
+     * @param keepUnit   Boolean defining whether a single UnitEntity should be kept.
+     * @return A Maybe emitting the kept UnitEntity or nothing if keepUnit is false.
      * @see #getRevengeDialog(Context, UnitRepository, CompletableEmitter, UnitEntity, int)
      * @see UnitRepository#reset(UnitEntity)
      */
     @NonNull
-    public static Completable reset(@NonNull Context context, @NonNull UnitRepository repository, @Nullable UnitEntity keptUnit) {
+    public static Maybe<UnitEntity> reset(@NonNull Context context, @NonNull UnitRepository repository,
+                                          boolean keepUnit) {
         return repository.getUnits()
-                .flatMapCompletable(units -> {
+                .flatMapMaybe(units -> {
+                    Optional<UnitEntity> keptUnit = keepUnit ? getRandomUnit(units) : Optional.empty();
                     long revengeUnits = units.stream()
                             .filter(unit -> unit.getAbility() == Ability.REVENGE)
-                            .count() - (keptUnit != null && keptUnit.getAbility() == Ability.REVENGE ? 1 : 0);
-                    if (revengeUnits == 0) {
-                        return repository.reset(keptUnit);
-                    }
-                    return Completable.create(emitter ->
-                            getRevengeDialog(context, repository, emitter, keptUnit, (int) revengeUnits).show()
-                    );
+                            .count() - (keptUnit.isPresent() && keptUnit.get().getAbility() == Ability.REVENGE ? 1 : 0);
+                    Completable resultAction = (revengeUnits == 0) ?
+                            repository.reset(keptUnit.orElse(null)) :
+                            Completable.create(emitter ->
+                                    getRevengeDialog(context, repository, emitter, keptUnit.orElse(null), (int) revengeUnits).show()
+                            );
+                    return resultAction.andThen(Maybe.fromOptional(keptUnit));
                 });
+    }
+
+    /**
+     * Selects a random unit that is not epic.
+     * If all units are epic or if there are no units at all, an empty Optional is returned.
+     *
+     * @param units List of UnitEntity objects, one of which is selected.
+     * @return An Optional containing the selected unit or nothing if no unit could be selected.
+     */
+    @NonNull
+    private static Optional<UnitEntity> getRandomUnit(@NonNull List<UnitEntity> units) {
+        units = units.stream()
+                .filter(unit -> !unit.isEpic())
+                .collect(Collectors.toList());
+        return units.isEmpty() ? Optional.empty() : Optional.of(units.get(new Random().nextInt(units.size())));
     }
 
     /**
@@ -84,15 +107,15 @@ public class ResetRepositoryUseCase {
      * Resets the given UnitRepository.
      * If a removed UnitEntity has the Ability#REVENGE ability,
      * a Dialog asking whether the ability should be used is shown.
-     * Wrapper of #reset(Context, UnitRepository, UnitEntity).
+     * Wrapper of #reset(Context, UnitRepository, boolean).
      *
      * @param context    Context of the shown Dialog.
      * @param repository UnitRepository that is being reset.
      * @return A Completable tracking operation status.
-     * @see #reset(Context, UnitRepository, UnitEntity)
+     * @see #reset(Context, UnitRepository, boolean)
      */
     @NonNull
     public static Completable reset(@NonNull Context context, @NonNull UnitRepository repository) {
-        return reset(context, repository, null);
+        return Completable.fromMaybe(reset(context, repository, false));
     }
 }

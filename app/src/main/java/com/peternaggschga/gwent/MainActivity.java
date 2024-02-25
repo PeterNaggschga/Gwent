@@ -14,7 +14,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
 
-import com.peternaggschga.gwent.domain.cases.ResetDialogUseCase;
 import com.peternaggschga.gwent.ui.dialogs.ChangeFactionDialog;
 import com.peternaggschga.gwent.ui.dialogs.CoinFlipDialog;
 import com.peternaggschga.gwent.ui.main.FactionSwitchListener;
@@ -125,14 +124,13 @@ public class MainActivity extends AppCompatActivity {
         gameBoard.getMenuUiState().observe(this, observer);
 
         reset.setOnClickListener(v -> {
-            boolean monsterTheme = FactionSwitchListener.THEME_MONSTER == PreferenceManager.getDefaultSharedPreferences(this)
-                    .getInt(FactionSwitchListener.THEME_PREFERENCE_KEY, FactionSwitchListener.THEME_SCOIATAEL);
             // noinspection CheckResult, ResultOfMethodCallIgnored
-            gameBoard.onResetButtonPressed(this, monsterTheme).subscribe(aBoolean -> {
-                if (aBoolean) {
-                    soundManager.playResetSound();
-                }
-            });
+            gameBoard.onResetButtonPressed(this)
+                    .subscribe(playSound -> {
+                        if (playSound) {
+                            soundManager.playResetSound();
+                        }
+                    });
         });
         weather.setOnClickListener(v -> {
             gameBoard.onWeatherButtonPressed().subscribe();
@@ -152,21 +150,19 @@ public class MainActivity extends AppCompatActivity {
 
     private void inflateFactionPopup() {
         new ChangeFactionDialog(this, theme -> {
-            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
             if (resetOnFactionSwitch) {
                 // noinspection CheckResult, ResultOfMethodCallIgnored
-                gameBoard.reset(this, ResetDialogUseCase.TRIGGER_FACTION_SWITCH)
-                        .subscribe(aBoolean -> {
-                            soundManager.playResetSound();
-                            preferences.edit()
-                                    .putInt(FactionSwitchListener.THEME_PREFERENCE_KEY, theme)
-                                    .apply();
+                gameBoard.onFactionSwitchReset(this)
+                        .subscribe(playSound -> {
+                            if (playSound) {
+                                soundManager.playResetSound();
+                            }
                         });
-            } else {
-                preferences.edit()
-                        .putInt(FactionSwitchListener.THEME_PREFERENCE_KEY, theme)
-                        .apply();
             }
+            PreferenceManager.getDefaultSharedPreferences(this)
+                    .edit()
+                    .putInt(FactionSwitchListener.THEME_PREFERENCE_KEY, theme)
+                    .apply();
         }).show();
     }
 

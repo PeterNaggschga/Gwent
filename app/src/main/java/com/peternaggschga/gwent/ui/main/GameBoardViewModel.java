@@ -1,8 +1,9 @@
 package com.peternaggschga.gwent.ui.main;
 
 import static androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY;
+import static com.peternaggschga.gwent.domain.cases.ResetDialogUseCase.TRIGGER_BUTTON_CLICK;
+import static com.peternaggschga.gwent.domain.cases.ResetDialogUseCase.TRIGGER_FACTION_SWITCH;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 
@@ -28,7 +29,6 @@ import java.util.Objects;
 
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
-import io.reactivex.rxjava3.core.SingleEmitter;
 
 public class GameBoardViewModel extends ViewModel {
     public static final ViewModelInitializer<GameBoardViewModel> initializer = new ViewModelInitializer<>(
@@ -130,46 +130,20 @@ public class GameBoardViewModel extends ViewModel {
                 .andThen(repository.isHorn(row));
     }
 
-    public Single<Boolean> onResetButtonPressed(@NonNull Context context, boolean monsterFaction) {
-        return reset(context, ResetDialogUseCase.TRIGGER_BUTTON_CLICK, monsterFaction);
+    @NonNull
+    public Single<Boolean> onResetButtonPressed(@NonNull Context context) {
+        return reset(context, TRIGGER_BUTTON_CLICK);
     }
 
-    public Single<Boolean> reset(Context context, @IntRange(from = 0, to = 1) int trigger) {
-        return reset(context, trigger, false);
+    @NonNull
+    public Single<Boolean> onFactionSwitchReset(@NonNull Context context) {
+        return reset(context, TRIGGER_FACTION_SWITCH);
     }
 
-    public Single<Boolean> reset(@NonNull Context context, @IntRange(from = 0, to = 1) int trigger, boolean monsterFaction) {
-        if (!Objects.requireNonNull(menuUiState.getValue()).isReset()) {
-            return Single.just(false);
-        }
-        return Single.create((@NonNull SingleEmitter<Boolean> emitter) -> {
-            ResetDialogUseCase useCase = new ResetDialogUseCase(context, repository, trigger, monsterFaction);
-            Runnable dialog = () -> {
-                // noinspection CheckResult, ResultOfMethodCallIgnored
-                useCase.getWarningDialog(context, emitter)
-                        .subscribe(Dialog::show);
-            };
-
-            if (showWarnings) {
-                dialog.run();
-            } else {
-                // noinspection CheckResult, ResultOfMethodCallIgnored
-                useCase.showMonsterDialog().subscribe(showDialog -> {
-                    if (showDialog) {
-                        dialog.run();
-                    } else {
-                        // noinspection CheckResult, ResultOfMethodCallIgnored
-                        useCase.reset()
-                                .andThen(updateUiState())
-                                .subscribe(() -> emitter.onSuccess(true));
-                    }
-                });
-            }
-        }).doOnSuccess(aBoolean -> {
-            if (aBoolean) {
-                updateUiState().subscribe();
-            }
-        });
+    @NonNull
+    private Single<Boolean> reset(@NonNull Context context,
+                                  @IntRange(from = TRIGGER_BUTTON_CLICK, to = TRIGGER_FACTION_SWITCH) int trigger) {
+        return ResetDialogUseCase.reset(context, repository, trigger);
     }
 
     public Completable onWeatherButtonPressed() {

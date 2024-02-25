@@ -1,45 +1,34 @@
 package com.peternaggschga.gwent.domain.cases;
 
+import static com.peternaggschga.gwent.ui.main.FactionSwitchListener.THEME_MONSTER;
+import static com.peternaggschga.gwent.ui.main.FactionSwitchListener.THEME_PREFERENCE_KEY;
+import static com.peternaggschga.gwent.ui.main.FactionSwitchListener.THEME_SCOIATAEL;
+
 import android.content.Context;
-import android.view.View;
-import android.widget.CheckBox;
+import android.content.SharedPreferences;
 import android.widget.Toast;
 
 import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
+import androidx.preference.PreferenceManager;
 
 import com.peternaggschga.gwent.R;
-import com.peternaggschga.gwent.data.UnitEntity;
+import com.peternaggschga.gwent.RowType;
 import com.peternaggschga.gwent.data.UnitRepository;
 
-import java.util.Random;
+import java.util.Arrays;
 import java.util.stream.Collectors;
 
-import io.reactivex.rxjava3.core.Completable;
-import io.reactivex.rxjava3.core.Maybe;
 import io.reactivex.rxjava3.core.Single;
-import io.reactivex.rxjava3.core.SingleEmitter;
-import io.reactivex.rxjava3.functions.Consumer;
 
 /**
- * A use case class responsible for the execution of the reset operation.
+ * A use case class responsible for dispatching a reset call to ResetRepositoryUseCase,
+ * possibly after a confirmation by the user obtained from a Dialog.
  *
- * @todo Move dialog stuff here.
+ * @todo Change Integer constants to enum fields.
+ * @see ResetRepositoryUseCase
  */
 public class ResetDialogUseCase {
-    /**
-     * Context where the warning Dialog is shown.
-     */
-    @NonNull
-    private final Context context;
-
-    /**
-     * UnitRepository where units are burned.
-     */
-    @NonNull
-    private final UnitRepository repository;
-
     /**
      * Integer constant representing that a reset was triggered by a click on the reset button.
      */
@@ -55,195 +44,101 @@ public class ResetDialogUseCase {
     public static final int TRIGGER_FACTION_SWITCH = 1;
 
     /**
-     * Integer representing what triggered this use case.
-     * Either #TRIGGER_BUTTON_CLICK or #TRIGGER_FACTION_SWITCH.
+     * Resets the given UnitRepository.
+     * May invoke a Dialog asking whether the user really wants
+     * to reset depending on the given trigger and warning settings.
+     * ResetRepositoryUseCase is used for resetting.
      *
-     * @see #TRIGGER_BUTTON_CLICK
-     * @see #TRIGGER_FACTION_SWITCH
-     */
-    @IntRange(from = TRIGGER_BUTTON_CLICK, to = TRIGGER_FACTION_SWITCH)
-    private final int trigger;
-
-    /**
-     * Boolean representing whether the monster ability should be presented, i.e.,
-     * if the user should be able to opt for keeping a random unit.
-     */
-    private final boolean monsterReset;
-
-    /**
-     * Constructor of a ResetDialogUseCase for the given UnitRepository and trigger.
-     * When monsterTheme is true and the trigger is not #TRIGGER_FACTION_SWITCH,
-     * then #monsterReset is initialized as true.
-     *
-     * @param repository   UnitRepository where the reset that is reset.
-     * @param trigger      Integer representing what triggered this reset, i.e.,
-     *                     either #TRIGGER_BUTTON_CLICK or #TRIGGER_FACTION_SWITCH.
-     * @param monsterTheme Boolean defining whether the current theme is set to the monster theme.
-     */
-    public ResetDialogUseCase(@NonNull Context context, @NonNull UnitRepository repository,
-                              @IntRange(from = TRIGGER_BUTTON_CLICK, to = TRIGGER_FACTION_SWITCH) int trigger,
-                              boolean monsterTheme) {
-        this.context = context;
-        this.repository = repository;
-        this.trigger = trigger;
-        this.monsterReset = monsterTheme && trigger != TRIGGER_FACTION_SWITCH;
-    }
-
-    /**
-     * Selects a random unit that is not epic.
-     * If all units are epic or if there are no units at all, an empty Maybe is returned.
-     *
-     * @return A Maybe emitting the selected unit or nothing if no unit could be selected.
+     * @param context    Context where a Dialog can be inflated.
+     * @param repository UnitRepository that is reset.
+     * @param trigger    Integer defining what triggered this reset.
+     * @return A Single emitting a Boolean defining whether the reset really took place.
+     * @see ResetRepositoryUseCase#reset(Context, UnitRepository, boolean)
      */
     @NonNull
-    private Maybe<UnitEntity> getRandomUnit() {
-        return repository.getUnits().flatMapMaybe(units -> {
-            units = units.stream()
-                    .filter(unit -> !unit.isEpic())
-                    .collect(Collectors.toList());
-            return units.isEmpty() ? Maybe.empty() : Maybe.just(units.get(new Random().nextInt(units.size())));
-
-        });
-    }
-
-    /**
-     * Resets the repository. If keepUnit is true, the returned Maybe emits the kept UnitEntity.
-     *
-     * @param keepUnit Boolean defining whether a single UnitEntity should be kept.
-     * @return A Maybe emitting the kept UnitEntity or nothing if keepUnit is false.
-     */
-    @NonNull
-    private Maybe<UnitEntity> reset(boolean keepUnit) {
-        if (!keepUnit) {
-            return ResetRepositoryUseCase.reset(context, repository).andThen(Maybe.empty());
-        }
-        return getRandomUnit().concatMap(unit -> ResetRepositoryUseCase
-                .reset(context, repository, unit)
-                .andThen(unit == null ? Maybe.empty() : Maybe.just(unit)));
-    }
-
-    /**
-     * Resets the repository. Wrapper function for #reset(boolean).
-     *
-     * @return A Completable tracking operation status.
-     * @see #reset(boolean)
-     */
-    @NonNull
-    public Completable reset() {
-        return Completable.fromMaybe(reset(false));
-    }
-
-    /**
-     * Checks whether the monster reset dialog should be shown.
-     * Is true when #monsterReset is true and at least one non-epic unit exists.
-     *
-     * @return A Single emitting a Boolean deciding whether the monster dialog should be shown.
-     */
-    @NonNull
-    public Single<Boolean> showMonsterDialog() {
-        return Single.concat(Single.just(monsterReset),
-                        repository.getUnits().map(units -> units.stream()
-                                .anyMatch(unit -> !unit.isEpic())))
-                .all(bool -> bool);
-    }
-
-    /**
-     * Creates an AlertDialog warning the user of the upcoming reset.
-     * When the user agrees to perform a reset,
-     * the resetEmitter is called to emit true, otherwise false.
-     * The appearance of the created AlertDialog depends on #trigger and #monsterReset.
-     *
-     * @param context      Context of the created AlertDialog.
-     * @param resetEmitter SingleEmitter that emits whether a reset is performed or not.
-     * @return A Single emitting the created AlertDialog.
-     * @see #getFactionSwitchDialogBuilder(Context, SingleEmitter)
-     * @see #getButtonClickDialogBuilder(Context, SingleEmitter)
-     */
-    @NonNull
-    public Single<AlertDialog> getWarningDialog(@NonNull Context context, @NonNull SingleEmitter<Boolean> resetEmitter) {
-        return Single.create(dialogEmitter -> {
-            Consumer<AlertDialog.Builder> builderCompleter = builder -> {
-                builder.setTitle(R.string.alertDialog_reset_title)
-                        .setIconAttribute(android.R.attr.alertDialogIcon)
-                        .setNegativeButton(R.string.alertDialog_reset_negative, (dialog, which) -> resetEmitter.onSuccess(false));
-                dialogEmitter.onSuccess(builder.create());
-            };
-
-            switch (trigger) {
-                case TRIGGER_FACTION_SWITCH:
-                    // noinspection CheckResult, ResultOfMethodCallIgnored
-                    getFactionSwitchDialogBuilder(context, resetEmitter).subscribe(builderCompleter);
-                    break;
-                case TRIGGER_BUTTON_CLICK:
-                default:
-                    // noinspection CheckResult, ResultOfMethodCallIgnored
-                    getButtonClickDialogBuilder(context, resetEmitter).subscribe(builderCompleter);
+    public static Single<Boolean> reset(@NonNull Context context, @NonNull UnitRepository repository,
+                                        @IntRange(from = TRIGGER_BUTTON_CLICK, to = TRIGGER_FACTION_SWITCH) int trigger) {
+        return getDialogType(context, repository, trigger).flatMap(dialogType -> {
+            if (dialogType == DialogType.NONE) {
+                return ResetRepositoryUseCase.reset(context, repository).andThen(Single.just(true));
             }
+            return Single.create(emitter -> {
+                new ResetAlertDialogBuilderAdapter(context, (resetDecision, keepUnit) -> {
+                    if (!resetDecision) {
+                        emitter.onSuccess(false);
+                        return;
+                    }
+                    // noinspection CheckResult, ResultOfMethodCallIgnored
+                    ResetRepositoryUseCase.reset(context, repository, keepUnit)
+                            .doAfterTerminate(() -> emitter.onSuccess(true))
+                            .subscribe(unit ->
+                                    Toast.makeText(context,
+                                                    context.getString(R.string.alertDialog_factionreset_monster_toast_keep, unit.toString(context)),
+                                                    Toast.LENGTH_LONG)
+                                            .show());
+                }).setTrigger(trigger)
+                        .setMonsterDialog(dialogType == DialogType.MONSTER)
+                        .create()
+                        .show();
+
+
+            });
         });
     }
 
     /**
-     * Creates an AlertDialog.Builder object for a reset triggered by a click on the reset button,
-     * i.e., #trigger is #TRIGGER_BUTTON_CLICK.
+     * Returns a DialogType defining which kind of Dialog should be invoked.
      *
-     * @param context      Context of the created AlertDialog.Builder.
-     * @param resetEmitter SingleEmitter that emits whether a reset is performed or not.
-     * @return A Single emitting the created AlertDialog.Builder.
-     * @see #getWarningDialog(Context, SingleEmitter)
+     * @param context    Context used for retrieval of SharedPreferences.
+     * @param repository UnitRepository used to check if a certain DialogType is even necessary.
+     * @param trigger    Integer defining what triggered the reset.
+     * @return A DialogType defining the kind of Dialog.
+     * @see DialogType
      */
     @NonNull
-    private Single<AlertDialog.Builder> getButtonClickDialogBuilder(@NonNull Context context, @NonNull SingleEmitter<Boolean> resetEmitter) {
-        return showMonsterDialog().map(showMonsterDialog -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(context)
-                    .setMessage(R.string.alertDialog_reset_msg_default)
-                    .setCancelable(true)
-                    .setOnCancelListener(dialog -> resetEmitter.onSuccess(false));
-
-            if (showMonsterDialog) {
-                View checkBoxView = View.inflate(context, R.layout.alertdialog_checkbox, null);
-                builder.setView(checkBoxView)
-                        .setPositiveButton(R.string.alertDialog_reset_positive, (dialog, which) -> {
-                            CheckBox checkBox = checkBoxView.findViewById(R.id.alertDialog_checkbox);
-                            // noinspection CheckResult, ResultOfMethodCallIgnored
-                            reset(checkBox.isChecked()).subscribe(
-                                    unitEntity -> {
-                                        Toast.makeText(context,
-                                                        context.getString(R.string.alertDialog_factionreset_monster_toast_keep, unitEntity.toString(context)),
-                                                        Toast.LENGTH_LONG)
-                                                .show();
-                                        resetEmitter.onSuccess(true);
-                                    },
-                                    Throwable::printStackTrace,
-                                    () -> resetEmitter.onSuccess(true));
-                        });
-            } else {
-                builder.setPositiveButton(R.string.alertDialog_reset_positive, (dialog, which) -> {
-                    // noinspection CheckResult, ResultOfMethodCallIgnored
-                    reset().subscribe(() -> resetEmitter.onSuccess(true));
+    private static Single<DialogType> getDialogType(@NonNull Context context, @NonNull UnitRepository repository,
+                                                    @IntRange(from = TRIGGER_BUTTON_CLICK, to = TRIGGER_FACTION_SWITCH) int trigger) {
+        return Single.concat(Arrays.stream(RowType.values()).map(row ->
+                        repository.isWeather(row)
+                                .concatWith(repository.isHorn(row))
+                                .any(state -> state)
+                ).collect(Collectors.toList())).any(state -> state)
+                .zipWith(repository.getUnits(), (statusEffects, units) -> {
+                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+                    boolean monsterDialog = trigger != TRIGGER_FACTION_SWITCH;
+                    monsterDialog &= preferences.getInt(THEME_PREFERENCE_KEY, THEME_SCOIATAEL) == THEME_MONSTER;
+                    monsterDialog &= units.stream().anyMatch(unit -> !unit.isEpic());
+                    if (monsterDialog) {
+                        return DialogType.MONSTER;
+                    }
+                    boolean defaultWarning = statusEffects || !units.isEmpty();
+                    defaultWarning &= preferences.getBoolean(context.getString(R.string.preference_key_warning),
+                            context.getResources().getBoolean(R.bool.warning_preference_default));
+                    if (defaultWarning) {
+                        return DialogType.DEFAULT;
+                    }
+                    return DialogType.NONE;
                 });
-            }
-            return builder;
-        });
     }
 
     /**
-     * Creates an AlertDialog.Builder object for a reset triggered by a faction switch,
-     * i.e., #trigger is #TRIGGER_FACTION_SWITCH.
+     * Enum defining which form of Dialog should be shown.
      *
-     * @param context      Context of the created AlertDialog.Builder.
-     * @param resetEmitter SingleEmitter that emits whether a reset is performed or not.
-     * @return A Single emitting the created AlertDialog.Builder.
-     * @see #getWarningDialog(Context, SingleEmitter)
+     * @see #getDialogType(Context, UnitRepository, int)
      */
-    @NonNull
-    private Single<AlertDialog.Builder> getFactionSwitchDialogBuilder(@NonNull Context context, @NonNull SingleEmitter<Boolean> resetEmitter) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context)
-                .setMessage(R.string.alertDialog_reset_msg_faction_switch)
-                .setCancelable(false)
-                .setPositiveButton(R.string.alertDialog_reset_positive, (dialog, which) -> {
-                    // noinspection CheckResult, ResultOfMethodCallIgnored
-                    reset().subscribe(() -> resetEmitter.onSuccess(true));
-                });
-        return Single.just(builder);
+    private enum DialogType {
+        /**
+         * No Dialog must be invoked.
+         */
+        NONE,
+        /**
+         * A default Dialog asking whether to reset should be invoked.
+         */
+        DEFAULT,
+        /**
+         * A monster Dialog asking whether to reset and
+         * whether to invoke the monster perk, should be invoked.
+         */
+        MONSTER
     }
 }
