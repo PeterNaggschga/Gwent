@@ -79,14 +79,14 @@ public class BurnDialogUseCase {
                             return calculatorMap;
                         });
                     }
-                    return calculators.flatMap(damageCalculators -> {
+                    return calculators.map(damageCalculators -> {
                         units.sort(Comparator.comparingInt(o -> (-o.calculateDamage(Objects.requireNonNull(damageCalculators.get(o.getRow()))))));
                         int maxDamage = units.get(0).calculateDamage(Objects.requireNonNull(damageCalculators.get(units.get(0).getRow())));
 
                         burnUnits = units.stream()
                                 .filter(unitEntity -> unitEntity.calculateDamage(Objects.requireNonNull(damageCalculators.get(unitEntity.getRow()))) == maxDamage)
                                 .collect(Collectors.toList());
-                        return Single.just(burnUnits);
+                        return burnUnits;
                     });
                 });
     }
