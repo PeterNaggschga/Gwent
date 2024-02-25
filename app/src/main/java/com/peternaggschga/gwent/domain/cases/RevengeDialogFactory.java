@@ -20,6 +20,7 @@ import io.reactivex.rxjava3.core.Completable;
  * A factory class providing a Dialog asking whether the Ability#REVENGE ability should be activated
  * and uses the given Callbacks in #getRevengeDialog().
  *
+ * @todo Restructure as an adapter class for AlertDialog.Builder (see ResetAlertDialogBuilderAdapter)
  * @see Ability#REVENGE
  * @see #getRevengeDialog(Context, DialogInterface.OnClickListener, DialogInterface.OnClickListener)
  */
