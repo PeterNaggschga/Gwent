@@ -24,8 +24,11 @@ import io.reactivex.rxjava3.core.Maybe;
 /**
  * A use case class responsible for resetting the UnitRepository.
  * Capable of invoking a Dialog if a UnitEntity with the Ability#REVENGE ability is removed.
+ * Should not be used directly by the UI layer.
+ *
+ * @see ResetDialogUseCase
  */
-public class ResetRepositoryUseCase {
+class ResetRepositoryUseCase {
     /**
      * Resets the given UnitRepository and keeps one random unit if keepUnit is true.
      * If a removed UnitEntity has the Ability#REVENGE ability,
@@ -39,8 +42,8 @@ public class ResetRepositoryUseCase {
      * @see UnitRepository#reset(UnitEntity)
      */
     @NonNull
-    public static Maybe<UnitEntity> reset(@NonNull Context context, @NonNull UnitRepository repository,
-                                          boolean keepUnit) {
+    static Maybe<UnitEntity> reset(@NonNull Context context, @NonNull UnitRepository repository,
+                                   boolean keepUnit) {
         return repository.getUnits()
                 .flatMapMaybe(units -> {
                     Optional<UnitEntity> keptUnit = keepUnit ? getRandomUnit(units) : Optional.empty();

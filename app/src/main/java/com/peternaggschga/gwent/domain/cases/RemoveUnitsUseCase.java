@@ -19,8 +19,11 @@ import io.reactivex.rxjava3.core.CompletableEmitter;
 /**
  * A use case class responsible for removing units from a UnitRepository.
  * Capable of invoking a Dialog if a UnitEntity with the Ability#REVENGE ability is removed.
+ * Should not be used directly by the UI layer.
+ *
+ * @see BurnDialogUseCase
  */
-public class RemoveUnitsUseCase {
+class RemoveUnitsUseCase {
     /**
      * Removes the given UnitEntity objects from the given UnitRepository.
      * If a UnitEntity has the Ability#REVENGE ability,
@@ -35,7 +38,7 @@ public class RemoveUnitsUseCase {
      * @see UnitRepository#delete(Collection)
      */
     @NonNull
-    public static Completable remove(@NonNull Context context, @NonNull UnitRepository repository, @NonNull Collection<UnitEntity> units) {
+    static Completable remove(@NonNull Context context, @NonNull UnitRepository repository, @NonNull Collection<UnitEntity> units) {
         long revengeUnits = units.stream()
                 .filter(unit -> unit.getAbility() == Ability.REVENGE)
                 .count();
