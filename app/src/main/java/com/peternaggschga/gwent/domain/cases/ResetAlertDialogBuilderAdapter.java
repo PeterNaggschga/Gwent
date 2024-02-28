@@ -19,17 +19,33 @@ class ResetAlertDialogBuilderAdapter {
     private final AlertDialog.Builder adapteeBuilder;
     @NonNull
     private final Callback dialogCallback;
-    @IntRange(from = TRIGGER_BUTTON_CLICK, to = TRIGGER_FACTION_SWITCH)
-    private int trigger = TRIGGER_BUTTON_CLICK;
-    private boolean monsterDialog = false;
 
     public ResetAlertDialogBuilderAdapter(@NonNull Context context, @NonNull Callback dialogCallback) {
-        this.adapteeBuilder = new AlertDialog.Builder(context);
+        this.adapteeBuilder = new AlertDialog.Builder(context)
+                .setIconAttribute(android.R.attr.alertDialogIcon)
+                .setTitle(R.string.alertDialog_reset_title)
+                .setOnCancelListener(dialog -> dialogCallback.reset(false))
+                .setNegativeButton(R.string.alertDialog_reset_negative, (dialog, which) -> dialog.cancel());
         this.dialogCallback = dialogCallback;
     }
 
     @NonNull
     public AlertDialog create() {
+        return adapteeBuilder.create();
+    }
+
+    @NonNull
+    public ResetAlertDialogBuilderAdapter setTrigger(@IntRange(from = TRIGGER_BUTTON_CLICK, to = TRIGGER_FACTION_SWITCH) int trigger) {
+        require(TRIGGER_BUTTON_CLICK <= trigger && trigger <= TRIGGER_FACTION_SWITCH);
+        adapteeBuilder.setMessage((trigger != TRIGGER_FACTION_SWITCH) ?
+                        R.string.alertDialog_reset_msg_default :
+                        R.string.alertDialog_reset_msg_faction_switch)
+                .setCancelable(trigger != TRIGGER_FACTION_SWITCH);
+        return this;
+    }
+
+    @NonNull
+    public ResetAlertDialogBuilderAdapter setMonsterDialog(boolean monsterDialog) {
         if (monsterDialog) {
             View checkBoxView = View.inflate(adapteeBuilder.getContext(), R.layout.alertdialog_checkbox, null);
             adapteeBuilder.setView(checkBoxView)
@@ -40,37 +56,6 @@ class ResetAlertDialogBuilderAdapter {
         } else {
             adapteeBuilder.setPositiveButton(R.string.alertDialog_reset_positive, ((dialog, which) -> dialogCallback.reset(true)));
         }
-        return adapteeBuilder
-                .setIconAttribute(android.R.attr.alertDialogIcon)
-                .setTitle(R.string.alertDialog_reset_title)
-                .setMessage((trigger != TRIGGER_FACTION_SWITCH) ?
-                        R.string.alertDialog_reset_msg_default :
-                        R.string.alertDialog_reset_msg_faction_switch)
-                .setCancelable(trigger != TRIGGER_FACTION_SWITCH)
-                .setOnCancelListener(dialog -> dialogCallback.reset(false))
-                .setNegativeButton(R.string.alertDialog_reset_negative, (dialog, which) -> dialog.cancel())
-                .create();
-    }
-
-    @IntRange(from = TRIGGER_BUTTON_CLICK, to = TRIGGER_FACTION_SWITCH)
-    public int getTrigger() {
-        return trigger;
-    }
-
-    @NonNull
-    public ResetAlertDialogBuilderAdapter setTrigger(@IntRange(from = TRIGGER_BUTTON_CLICK, to = TRIGGER_FACTION_SWITCH) int trigger) {
-        require(TRIGGER_BUTTON_CLICK <= trigger && trigger <= TRIGGER_FACTION_SWITCH);
-        this.trigger = trigger;
-        return this;
-    }
-
-    public boolean isMonsterDialog() {
-        return monsterDialog;
-    }
-
-    @NonNull
-    public ResetAlertDialogBuilderAdapter setMonsterDialog(boolean monsterDialog) {
-        this.monsterDialog = monsterDialog;
         return this;
     }
 
