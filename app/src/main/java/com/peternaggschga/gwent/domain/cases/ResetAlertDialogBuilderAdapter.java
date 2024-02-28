@@ -20,7 +20,7 @@ class ResetAlertDialogBuilderAdapter {
     @NonNull
     private final Callback dialogCallback;
 
-    public ResetAlertDialogBuilderAdapter(@NonNull Context context, @NonNull Callback dialogCallback) {
+    ResetAlertDialogBuilderAdapter(@NonNull Context context, @NonNull Callback dialogCallback) {
         this.adapteeBuilder = new AlertDialog.Builder(context)
                 .setIconAttribute(android.R.attr.alertDialogIcon)
                 .setTitle(R.string.alertDialog_reset_title)
@@ -30,12 +30,12 @@ class ResetAlertDialogBuilderAdapter {
     }
 
     @NonNull
-    public AlertDialog create() {
+    AlertDialog create() {
         return adapteeBuilder.create();
     }
 
     @NonNull
-    public ResetAlertDialogBuilderAdapter setTrigger(@IntRange(from = TRIGGER_BUTTON_CLICK, to = TRIGGER_FACTION_SWITCH) int trigger) {
+    ResetAlertDialogBuilderAdapter setTrigger(@IntRange(from = TRIGGER_BUTTON_CLICK, to = TRIGGER_FACTION_SWITCH) int trigger) {
         require(TRIGGER_BUTTON_CLICK <= trigger && trigger <= TRIGGER_FACTION_SWITCH);
         adapteeBuilder.setMessage((trigger != TRIGGER_FACTION_SWITCH) ?
                         R.string.alertDialog_reset_msg_default :
@@ -45,7 +45,7 @@ class ResetAlertDialogBuilderAdapter {
     }
 
     @NonNull
-    public ResetAlertDialogBuilderAdapter setMonsterDialog(boolean monsterDialog) {
+    ResetAlertDialogBuilderAdapter setMonsterDialog(boolean monsterDialog) {
         if (monsterDialog) {
             View checkBoxView = View.inflate(adapteeBuilder.getContext(), R.layout.alertdialog_checkbox, null);
             adapteeBuilder.setView(checkBoxView)
