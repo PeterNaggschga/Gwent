@@ -32,6 +32,8 @@ public class MenuUpdateObserver implements Observer<RowUiState> {
 
     /**
      * A List of two LiveData objects issuing the state of the rows not observed by this observer.
+     *
+     * @todo Move data structure to Pair.
      */
     @NonNull
     private final List<LiveData<RowUiState>> rowStates;
