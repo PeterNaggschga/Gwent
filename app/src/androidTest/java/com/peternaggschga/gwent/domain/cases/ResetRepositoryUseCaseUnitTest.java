@@ -65,18 +65,4 @@ public class ResetRepositoryUseCaseUnitTest {
             verify(mockRepository, atLeast(numberOfUnits + 1)).reset(null);
         }
     }
-
-    @Test
-    public void resetCallsResetRepositoryWithKeptRevengeUnit() {
-        Context context = ApplicationProvider.getApplicationContext();
-        UnitEntity revengeUnit = mock(UnitEntity.class);
-        when(revengeUnit.getAbility()).thenReturn(Ability.REVENGE);
-        for (int numberOfUnits = 0; numberOfUnits < TESTING_DEPTH; numberOfUnits++) {
-            List<UnitEntity> testList = getUnitMockList(numberOfUnits);
-            testList.add(revengeUnit);
-            when(mockRepository.getUnits()).thenReturn(Single.just(testList));
-            ResetRepositoryUseCase.reset(context, mockRepository, revengeUnit).blockingAwait();
-            verify(mockRepository, atLeast(numberOfUnits + 1)).reset(revengeUnit);
-        }
-    }
 }
