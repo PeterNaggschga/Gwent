@@ -146,7 +146,8 @@ public class GameBoardViewModel extends ViewModel {
     @NonNull
     private Single<Boolean> reset(@NonNull Context context,
                                   @IntRange(from = TRIGGER_BUTTON_CLICK, to = TRIGGER_FACTION_SWITCH) int trigger) {
-        return ResetDialogUseCase.reset(context, repository, trigger);
+        return ResetDialogUseCase.reset(context, repository, trigger)
+                .flatMap(resetComplete -> updateUiState().andThen(Single.just(resetComplete)));
     }
 
     public Completable onWeatherButtonPressed() {
