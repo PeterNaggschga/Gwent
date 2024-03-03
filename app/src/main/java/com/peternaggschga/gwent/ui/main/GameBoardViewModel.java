@@ -155,10 +155,7 @@ public class GameBoardViewModel extends ViewModel {
     }
 
     public Single<Boolean> onBurnButtonPressed(@NonNull Context context) {
-        // TODO: Warnung
-        return new BurnDialogUseCase(context, repository)
-                .removeBurnUnits()
-                .andThen(updateUiState())
-                .andThen(Single.just(true));
+        return BurnDialogUseCase.burn(context, repository)
+                .flatMap(burnComplete -> updateUiState().andThen(Single.just(burnComplete)));
     }
 }

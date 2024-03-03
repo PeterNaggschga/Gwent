@@ -33,6 +33,9 @@
     <string name="alertDialog_cancel">Abbrechen</string>
 
     <string name="alertDialog_burn_title">Verbrennen</string>
+    <string name="alertDialog_burn_positive">Verbrennen</string>
+    <string name="alertDialog_burn_msg">Möchtest du wirklich %1$s verbrennen?</string>
+    <string name="alertDialog_burn_negative">Nicht verbrennen</string>
 
     <string name="alertDialog_reset_title">Spielfeld zurücksetzen</string>
     <string name="alertDialog_reset_msg_default">Willst du wirklich das gesamte Spielfeld zurücksetzen?</string>
@@ -48,7 +51,7 @@
 
     <string name="preference_design">Hintergrundbild</string>
     <string name="preference_warnings_title">Warnungen</string>
-    <string name="preference_warnings_desc">Legt fest, ob beim Zurücksetzen und Verbrennen eine Warnung erscheinen soll.</string>
+    <string name="preference_warnings_desc">Legt fest, ob beim Zurücksetzen eine Warnung erscheinen soll.</string>
     <string name="preference_faction_reset_title">Zurücksetzen bei Fraktionswechsel</string>
     <string name="preference_faction_reset_desc">Legt fest, ob das Spielfeld beim Fraktionswechsel automatisch zurückgesetzt werden soll.</string>
 
@@ -211,6 +214,5 @@
     <string name="array_add_ability_revenge">Rächer</string>
     <string name="array_add_ability_binding">Enge Bindung</string>
     <string name="popUp_add_card_binding_count">Anzahl Einheiten in %1$d. Gruppe: %2$d</string>
-    <string name="alertDialog_burn_msg">Möchtest du wirklich %1$s verbrennen?</string>
     <string name="alertDialog_revenge_negative">Nicht auslösen</string>
 </resources>

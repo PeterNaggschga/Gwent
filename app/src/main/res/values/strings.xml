@@ -48,6 +48,8 @@
     <string name="alertDialog_cancel">Cancel</string>
 
     <string name="alertDialog_burn_title">Scorch</string>
+    <string name="alertDialog_burn_positive">Scorch</string>
+    <string name="alertDialog_burn_negative">Don\'t scorch</string>
     <string name="alertDialog_burn_msg">Do you really want to scorch %1$s?</string>
 
     <string name="alertDialog_reset_title">Reset board</string>
@@ -71,7 +73,7 @@
     <string name="array_design_eredin" translatable="false">Eredin Bréacc Glas</string>
     <string name="preference_design">Background</string>
     <string name="preference_warnings_title">Warnings</string>
-    <string name="preference_warnings_desc">Determines if warnings are shown before you can reset the board or scorch units.</string>
+    <string name="preference_warnings_desc">Determines if warnings are shown before you can reset the board.</string>
     <string name="preference_faction_reset_title">"Reset on change of faction"</string>
     <string name="preference_faction_reset_desc">Determines if the board is reset on change of faction.</string>
 
