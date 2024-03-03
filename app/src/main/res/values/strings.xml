@@ -42,6 +42,8 @@
     <string name="unit_toString_unit">unit</string>
     <string name="unit_toString_ability_none">no</string>
     <string name="unit_toString_squad">(%1$d)</string>
+    <string name="unit_collection_toString_accumulation_symbol" translatable="false">%1$s, %2$s</string>
+    <string name="unit_collection_toString_accumulation_word">%1$s, and %2$s</string>
 
     <string name="alertDialog_cancel">Cancel</string>
 

@@ -20,7 +20,7 @@
     <string name="popUp_coin_stewie_1">Chris Griffin hat die Münze gegessen!</string>
     <string name="popUp_coin_vin">Vin hat Stahl verbrannt und die Münze weggedrückt!</string>
 
-    <string name="unit_toString">%1$s%2$s (%3$d), Fähigkeit: %4$s %5$s</string>
+    <string name="unit_toString">%1$s%2$s (%3$d) - Fähigkeit: %4$s %5$s</string>
     <string name="unit_toString_melee">Nahkampf</string>
     <string name="unit_toString_range">Fernkampf</string>
     <string name="unit_toString_siege">Belagerungs</string>
@@ -28,6 +28,7 @@
     <string name="unit_toString_unit">einheit</string>
     <string name="unit_toString_ability_none">Keine</string>
     <string name="unit_toString_squad">(%1$d)</string>
+    <string name="unit_collection_toString_accumulation_word">%1$s und %2$s</string>
 
     <string name="alertDialog_cancel">Abbrechen</string>
 

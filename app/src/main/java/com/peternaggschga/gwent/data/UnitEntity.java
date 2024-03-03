@@ -17,6 +17,9 @@ import com.peternaggschga.gwent.R;
 import com.peternaggschga.gwent.RowType;
 import com.peternaggschga.gwent.domain.damage.DamageCalculator;
 
+import java.util.Collection;
+import java.util.Iterator;
+
 /**
  * A class representing a card on the game board.
  * Is a persistent Entity and is therefore saved in a database table named `units`.
@@ -111,12 +114,38 @@ public class UnitEntity {
     }
 
     /**
+     * Creates a String containing the descriptions of all units in the given collection,
+     * separated by commas.
+     * Unit descriptions are created using #toString(Context).
+     *
+     * @param context Context used to acquire String resources.
+     * @param units   Collection of UnitEntity objects that should be in the created String.
+     * @return A String containing the description of all units.
+     * @throws org.valid4j.errors.RequireViolation When units collection is empty.
+     * @todo Add unit tests.
+     * @todo Condense n units with same description into "Description (n)".
+     * @see #toString(Context)
+     */
+    @NonNull
+    public static String collectionToString(@NonNull Context context, @NonNull Collection<UnitEntity> units) {
+        require(!units.isEmpty());
+        Iterator<UnitEntity> unitIterator = units.iterator();
+        final String[] result = {unitIterator.next().toString(context)};
+        if (unitIterator.hasNext()) {
+            result[0] = context.getString(R.string.unit_collection_toString_accumulation_word, unitIterator.next().toString(context), result[0]).trim();
+        }
+        unitIterator.forEachRemaining(unitEntity -> result[0] = context.getString(R.string.unit_collection_toString_accumulation_symbol, unitIterator.next().toString(context), result[0]).trim());
+        return result[0];
+    }
+
+    /**
      * Returns a string representation of this unit.
      * The representation contains information on each field of this class,
      * i.e., #row, #epic, #damage, #ability, and #squad.
      *
      * @param context Context used to acquire String resources.
      * @return A string representing the unit.
+     * @todo Add unit test.
      */
     @NonNull
     public String toString(@NonNull Context context) {
@@ -153,7 +182,7 @@ public class UnitEntity {
             default:
                 ability = context.getString(R.string.unit_toString_ability_none);
         }
-        return context.getString(R.string.unit_toString, row, epic, getDamage(), ability, squad);
+        return context.getString(R.string.unit_toString, row, epic, getDamage(), ability, squad).trim();
     }
 
     /**
