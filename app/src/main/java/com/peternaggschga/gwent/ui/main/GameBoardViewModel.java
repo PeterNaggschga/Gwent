@@ -91,21 +91,17 @@ public class GameBoardViewModel extends ViewModel {
         return menuUiState;
     }
 
-    public Completable updateUi() {
-        return updateUiState();
-    }
-
     @NonNull
-    private Completable updateUiState() {
+    public Completable updateUi() {
         Completable result = Completable.complete();
         for (RowType row : RowType.values()) {
-            result = result.andThen(updateUiState(row));
+            result = result.andThen(updateUi(row));
         }
         return result;
     }
 
     @NonNull
-    private Completable updateUiState(@NonNull RowType row) {
+    private Completable updateUi(@NonNull RowType row) {
         return Completable.create(emitter -> {
             MutableLiveData<RowUiState> rowState = getRowUiState(row);
             // noinspection CheckResult, ResultOfMethodCallIgnored
@@ -123,13 +119,13 @@ public class GameBoardViewModel extends ViewModel {
     @NonNull
     public Single<Boolean> onWeatherViewPressed(@NonNull RowType row) {
         return repository.switchWeather(row)
-                .andThen(updateUiState(row))
+                .andThen(updateUi(row))
                 .andThen(repository.isWeather(row));
     }
 
     public Single<Boolean> onHornViewPressed(@NonNull RowType row) {
         return repository.switchHorn(row)
-                .andThen(updateUiState(row))
+                .andThen(updateUi(row))
                 .andThen(repository.isHorn(row));
     }
 
@@ -147,16 +143,16 @@ public class GameBoardViewModel extends ViewModel {
     private Single<Boolean> reset(@NonNull Context context,
                                   @IntRange(from = TRIGGER_BUTTON_CLICK, to = TRIGGER_FACTION_SWITCH) int trigger) {
         return ResetDialogUseCase.reset(context, repository, trigger)
-                .flatMap(resetComplete -> updateUiState().andThen(Single.just(resetComplete)));
+                .flatMap(resetComplete -> updateUi().andThen(Single.just(resetComplete)));
     }
 
     public Completable onWeatherButtonPressed() {
         return repository.clearWeather()
-                .andThen(updateUiState());
+                .andThen(updateUi());
     }
 
     public Single<Boolean> onBurnButtonPressed(@NonNull Context context) {
         return BurnDialogUseCase.burn(context, repository)
-                .flatMap(burnComplete -> updateUiState().andThen(Single.just(burnComplete)));
+                .flatMap(burnComplete -> updateUi().andThen(Single.just(burnComplete)));
     }
 }
