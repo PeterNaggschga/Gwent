@@ -30,9 +30,6 @@ import java.util.Objects;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 
-/**
- * @todo Let class manage its own Context object.
- */
 public class GameBoardViewModel extends ViewModel {
     public static final ViewModelInitializer<GameBoardViewModel> initializer = new ViewModelInitializer<>(
             GameBoardViewModel.class,
