@@ -7,6 +7,9 @@ import androidx.room.Room;
 import com.peternaggschga.gwent.data.AppDatabase;
 import com.peternaggschga.gwent.data.UnitRepository;
 
+/**
+ * @todo Documentation
+ */
 public class GwentApplication extends Application {
     private AppDatabase database;
 

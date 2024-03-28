@@ -24,6 +24,9 @@ import com.peternaggschga.gwent.ui.sounds.SoundManager;
 
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
+/**
+ * @todo Documentation
+ */
 public class MainActivity extends AppCompatActivity {
     private SoundManager soundManager;
     private GameBoardViewModel gameBoard;

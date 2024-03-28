@@ -21,7 +21,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
  * A facade class managing public access to the data layer.
  * The contained functions mostly redirect requests to package-private DAO methods in RowDao and UnitDao.
  * Some functions implement slightly more complex behavior by chaining multiple DAO calls,
- * e.g. #reset().
+ * e.g., #reset().
  *
  * @todo Check which methods can be dropped.
  * @todo Add method to get non-epic units and replace stream.filter() calls.
