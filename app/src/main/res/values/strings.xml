@@ -34,33 +34,36 @@
     <string name="popUp_coin_stewie_4" translatable="false">It became a manhole cover for like three days—but then pow!</string>
     <string name="popUp_coin_vin">Vin burned steel and pushed away your coin!</string>
 
-    <string name="unit_toString_melee">Close combat unit</string>
-    <string name="unit_toString_range">Ranged combat unit</string>
-    <string name="unit_toString_siege">Siege combat unit</string>
-    <string name="unit_toString_unit">Unit</string>
+    <string name="unit_toString">%1$s %2$s (%3$d) with %4$s ability %5$s</string>
+    <string name="unit_toString_melee">Close combat</string>
+    <string name="unit_toString_range">Ranged combat</string>
+    <string name="unit_toString_siege">Siege combat</string>
+    <string name="unit_toString_epic">hero</string>
+    <string name="unit_toString_unit">unit</string>
+    <string name="unit_toString_ability_none">no</string>
+    <string name="unit_toString_squad">(%1$d)</string>
+    <string name="unit_collection_toString_accumulation_symbol" translatable="false">%1$s, %2$s</string>
+    <string name="unit_collection_toString_accumulation_word">%1$s, and %2$s</string>
 
     <string name="alertDialog_cancel">Cancel</string>
 
     <string name="alertDialog_burn_title">Scorch</string>
+    <string name="alertDialog_burn_positive">Scorch</string>
+    <string name="alertDialog_burn_negative">Don\'t scorch</string>
     <string name="alertDialog_burn_msg">Do you really want to scorch %1$s?</string>
 
     <string name="alertDialog_reset_title">Reset board</string>
-    <string name="alertDialog_reset_msg">Do you really want to reset the board?</string>
-    <string name="alertDialog_factionreset_msg">You activated \"Reset on change of faction\". Do you really want to reset the board?</string>
+    <string name="alertDialog_reset_msg_default">Do you really want to reset the board?</string>
+    <string name="alertDialog_reset_msg_faction_switch">You activated \"Reset on change of faction\". Do you really want to reset the board?</string>
     <string name="alertDialog_reset_checkbox">Activate perk of monster faction (you keep one random unit)</string>
     <string name="alertDialog_factionreset_monster_toast_keep">You keep: %1$s</string>
-    <string name="alertDialog_factionreset_monster_toast_nokeep">You don\'t keep any units!</string>
     <string name="alertDialog_reset_positive">Reset</string>
-    <string name="alertDialog_factionreset_negative">Don\'t reset</string>
-
-    <string name="alertDialog_monster_title">Activate perk</string>
-    <string name="alertDialog_monster_msg">Do you want to activate the perk of monsters faction? You can keep one randomly chosen unit.</string>
-    <string name="alertDialog_monster_positive">Activate</string>
-    <string name="alertDialog_monster_negative">Don\'t Activate</string>
+    <string name="alertDialog_reset_negative">Don\'t reset</string>
 
     <string name="alertDialog_revenge_title">Avenger ability</string>
     <string name="alertDialog_revenge_msg">You removed units that can summon an avenger. Do you want to activate their ability?</string>
     <string name="alertDialog_revenge_positive">Summon avenger</string>
+    <string name="alertDialog_revenge_negative">Don\'t activate</string>
 
     <string name="array_design_default">Default</string>
     <string name="array_design_geralt">Geralt of Rivia</string>
@@ -70,16 +73,9 @@
     <string name="array_design_eredin" translatable="false">Eredin Bréacc Glas</string>
     <string name="preference_design">Background</string>
     <string name="preference_warnings_title">Warnings</string>
-    <string name="preference_warnings_desc">Determines if warnings are shown before you can reset the board or scorch units.</string>
+    <string name="preference_warnings_desc">Determines if warnings are shown before you can reset the board.</string>
     <string name="preference_faction_reset_title">"Reset on change of faction"</string>
     <string name="preference_faction_reset_desc">Determines if the board is reset on change of faction.</string>
-    <string name="array_unit_string_type">Type of unit (Close combat unit, etc.)</string>
-    <string name="array_unit_string_baseAD">Base strength</string>
-    <string name="array_unit_string_buffAD">Boosted strength</string>
-    <string name="array_unit_string_ability">Ability (Tight bond, etc.)</string>
-    <string name="preference_unit_string_title">Card description</string>
-    <string name="preference_unit_string_desc">Determines which data is shown in card description (for instance when units are scorched).</string>
-    <string name="preference_unit_string_alert">Example: %1$s</string>
 
     <string name="preference_sounds_header">Sounds</string>
     <string name="preference_sounds_category">Events</string>
@@ -105,6 +101,7 @@
     <string name="onboardingSupport_button_skip">Skip</string>
     <string name="onboardingSupport_button_finish">Finish</string>
 
+    <!-- TODO: remove background description -->
     <string name="content_description_background_resource">background element</string>
     <string name="content_description_activity_main_background">background</string>
     <string name="content_description_activity_main_point_ball">total score</string>

@@ -17,25 +17,6 @@
         <item>5</item>
     </string-array>
 
-    <string-array name="preference_unit_string">
-        <item>@string/array_unit_string_type</item>
-        <item>@string/array_unit_string_baseAD</item>
-        <item>@string/array_unit_string_buffAD</item>
-        <item>@string/array_unit_string_ability</item>
-    </string-array>
-
-    <string-array name="preference_unit_string_values">
-        <item>type</item>
-        <item>baseAD</item>
-        <item>buffAD</item>
-        <item>ability</item>
-    </string-array>
-
-    <string-array name="preference_unit_string_defaultValues">
-        <item>type</item>
-        <item>baseAD</item>
-    </string-array>
-
     <string-array name="popup_add_card_epic_values">
         <item>@string/array_add_epic_normal</item>
         <item>@string/array_add_epic_epic</item>

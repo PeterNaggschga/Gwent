@@ -7,4 +7,11 @@
     <attr name="point_ball_mipmap" format="reference" />
 
     <attr name="card_background_drawable" format="reference" />
+
+    <declare-styleable name="theme">
+        <attr name="point_ball_mipmap" />
+        <attr name="card_view_mipmap" />
+        <attr name="colorPrimary" />
+        <attr name="android:alertDialogIcon" />
+    </declare-styleable>
 </resources>

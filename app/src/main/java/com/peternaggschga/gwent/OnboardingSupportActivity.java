@@ -12,8 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.peternaggschga.gwent.ui.main.PlaceholderFragment;
-import com.peternaggschga.gwent.ui.main.SectionsPagerAdapter;
+import com.peternaggschga.gwent.ui.onboarding.PlaceholderFragment;
+import com.peternaggschga.gwent.ui.onboarding.SectionsPagerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
