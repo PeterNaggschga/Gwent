@@ -4,15 +4,9 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.preference.PreferenceManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
 
 @Deprecated
 public class Unit {
@@ -135,12 +129,12 @@ public class Unit {
 
     @NonNull
     public String toString(@NonNull Context context, @Nullable Object object) {
-        Set<String> arguments = object == null ? Objects.requireNonNull(PreferenceManager.getDefaultSharedPreferences(context).getStringSet("unit_string", new HashSet<>(Arrays.asList(context.getResources().getStringArray(R.array.preference_unit_string_defaultValues))))) : new HashSet<>(Arrays.asList(object.toString().replace("[", "").replace("]", "").split(", ")));
+        //Set<String> arguments = object == null ? Objects.requireNonNull(PreferenceManager.getDefaultSharedPreferences(context).getStringSet("unit_string", new HashSet<>(Arrays.asList(context.getResources().getStringArray(R.array.preference_unit_string_defaultValues))))) : new HashSet<>(Arrays.asList(object.toString().replace("[", "").replace("]", "").split(", ")));
         boolean type = false;
         boolean baseAD = false;
         boolean buffAD = false;
         boolean ability = false;
-        String[] values = context.getResources().getStringArray(R.array.preference_unit_string_values);
+        /*String[] values = context.getResources().getStringArray(R.array.preference_unit_string_values);
         for (String argument : arguments) {
             if (argument.equals(values[0])) {
                 type = true;
@@ -151,7 +145,7 @@ public class Unit {
             } else if (argument.equals(values[3])) {
                 ability = true;
             }
-        }
+        }*/
         StringBuilder builder = new StringBuilder();
         if (type) {
             switch (this.row) {

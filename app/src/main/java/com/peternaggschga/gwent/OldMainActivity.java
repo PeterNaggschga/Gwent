@@ -17,7 +17,6 @@ import android.view.WindowInsetsController;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -187,26 +186,26 @@ public class OldMainActivity extends AppCompatActivity {
             final boolean monster = THEME.MONSTER.ordinal() == sharedPreferences.getInt("faction", THEME.SCOIATAEL.ordinal());
             AlertDialog.Builder builder = getAlertDialogBuilder();
             if (sharedPreferences.getBoolean("warnings", true)) {
-                final View checkBoxView = View.inflate(OldMainActivity.this, R.layout.alertdialog_checkbox, null);
+                //final View checkBoxView = View.inflate(OldMainActivity.this, R.layout.alertdialog_checkbox, null);
                 if (monster) {
-                    builder.setView(checkBoxView);
+                    //builder.setView(checkBoxView);
                 }
                 builder.setTitle(R.string.alertDialog_reset_title)
-                        .setMessage(R.string.alertDialog_reset_msg)
+                        .setMessage(R.string.alertDialog_reset_msg_default)
                         .setPositiveButton(R.string.alertDialog_reset_positive, (dialogInterface, i) -> {
                             if (monster) {
-                                CheckBox checkBox = checkBoxView.findViewById(R.id.alertDialog_checkbox);
-                                resetAll(checkBox.isChecked());
+                                /*CheckBox checkBox = checkBoxView.findViewById(R.id.alertDialog_checkbox);
+                                resetAll(checkBox.isChecked());*/
                             } else {
                                 resetAll(false);
                             }
                         });
                 builder.create().show();
             } else if (monster) {
-                builder.setTitle(R.string.alertDialog_monster_title)
+                /*builder.setTitle(R.string.alertDialog_monster_title)
                         .setMessage(R.string.alertDialog_monster_msg)
                         .setPositiveButton(R.string.alertDialog_monster_positive, (dialogInterface, i) -> resetAll(true))
-                        .setNegativeButton(R.string.alertDialog_monster_negative, (dialogInterface, i) -> resetAll(false));
+                        .setNegativeButton(R.string.alertDialog_monster_negative, (dialogInterface, i) -> resetAll(false));*/
                 builder.create().show();
             } else {
                 resetAll(false);
@@ -287,37 +286,37 @@ public class OldMainActivity extends AppCompatActivity {
         View firstRow = findViewById(R.id.firstRow);
         View secondRow = findViewById(R.id.secondRow);
         View thirdRow = findViewById(R.id.thirdRow);
-        firstRowBackgroundPointBall = firstRow.findViewById(R.id.backgroundPointBall);
+        //firstRowBackgroundPointBall = firstRow.findViewById(R.id.backgroundPointBall);
         firstRowPointBall = firstRow.findViewById(R.id.pointBall);
         firstRowPointView = firstRow.findViewById(R.id.pointView);
-        firstRowBackgroundWeatherImageView = firstRow.findViewById(R.id.backgroundWeatherImage);
-        firstRowWeatherImageView = firstRow.findViewById(R.id.weatherImage);
-        firstRowBackgroundHornImageView = firstRow.findViewById(R.id.backgroundHornImage);
-        firstRowHornImageView = firstRow.findViewById(R.id.hornImage);
-        firstRowBackgroundCardImageView = firstRow.findViewById(R.id.backgroundCardsImage);
+        //firstRowBackgroundWeatherImageView = firstRow.findViewById(R.id.backgroundWeatherImage);
+        firstRowWeatherImageView = firstRow.findViewById(R.id.weatherView);
+        //firstRowBackgroundHornImageView = firstRow.findViewById(R.id.backgroundHornImage);
+        firstRowHornImageView = firstRow.findViewById(R.id.hornView);
+        //firstRowBackgroundCardImageView = firstRow.findViewById(R.id.backgroundCardsImage);
         firstRowCardImageView = firstRow.findViewById(R.id.cardsImage);
         firstRowCardCount = firstRow.findViewById(R.id.cardCountView);
-        secondRowBackgroundPointBall = secondRow.findViewById(R.id.backgroundPointBall);
+        //secondRowBackgroundPointBall = secondRow.findViewById(R.id.backgroundPointBall);
         secondRowPointBall = secondRow.findViewById(R.id.pointBall);
         secondRowPointView = secondRow.findViewById(R.id.pointView);
-        secondRowBackgroundWeatherImageView = secondRow.findViewById(R.id.backgroundWeatherImage);
-        secondRowWeatherImageView = secondRow.findViewById(R.id.weatherImage);
-        secondRowBackgroundHornImageView = secondRow.findViewById(R.id.backgroundHornImage);
-        secondRowHornImageView = secondRow.findViewById(R.id.hornImage);
-        secondRowBackgroundCardImageView = secondRow.findViewById(R.id.backgroundCardsImage);
+        //secondRowBackgroundWeatherImageView = secondRow.findViewById(R.id.backgroundWeatherImage);
+        secondRowWeatherImageView = secondRow.findViewById(R.id.weatherView);
+        //secondRowBackgroundHornImageView = secondRow.findViewById(R.id.backgroundHornImage);
+        secondRowHornImageView = secondRow.findViewById(R.id.hornView);
+        //secondRowBackgroundCardImageView = secondRow.findViewById(R.id.backgroundCardsImage);
         secondRowCardImageView = secondRow.findViewById(R.id.cardsImage);
         secondRowCardCount = secondRow.findViewById(R.id.cardCountView);
-        thirdRowBackgroundPointBall = thirdRow.findViewById(R.id.backgroundPointBall);
+        //thirdRowBackgroundPointBall = thirdRow.findViewById(R.id.backgroundPointBall);
         thirdRowPointBall = thirdRow.findViewById(R.id.pointBall);
         thirdRowPointView = thirdRow.findViewById(R.id.pointView);
-        thirdRowBackgroundWeatherImageView = thirdRow.findViewById(R.id.backgroundWeatherImage);
-        thirdRowWeatherImageView = thirdRow.findViewById(R.id.weatherImage);
-        thirdRowBackgroundHornImageView = thirdRow.findViewById(R.id.backgroundHornImage);
-        thirdRowHornImageView = thirdRow.findViewById(R.id.hornImage);
-        thirdRowBackgroundCardImageView = thirdRow.findViewById(R.id.backgroundCardsImage);
+        //thirdRowBackgroundWeatherImageView = thirdRow.findViewById(R.id.backgroundWeatherImage);
+        thirdRowWeatherImageView = thirdRow.findViewById(R.id.weatherView);
+        //thirdRowBackgroundHornImageView = thirdRow.findViewById(R.id.backgroundHornImage);
+        thirdRowHornImageView = thirdRow.findViewById(R.id.hornView);
+        //thirdRowBackgroundCardImageView = thirdRow.findViewById(R.id.backgroundCardsImage);
         thirdRowCardImageView = thirdRow.findViewById(R.id.cardsImage);
         thirdRowCardCount = thirdRow.findViewById(R.id.cardCountView);
-        backgroundOverallPointBall = findViewById(R.id.backgroundOverallPointBall);
+        //backgroundOverallPointBall = findViewById(R.id.backgroundOverallPointBall);
         overallPointBall = findViewById(R.id.overallPointBall);
         overallPointView = findViewById(R.id.overallPointView);
         factionButton = findViewById(R.id.factionButton);
@@ -490,7 +489,7 @@ public class OldMainActivity extends AppCompatActivity {
                 }
             }
             if (allRows.size() == 0) {
-                Toast.makeText(this, R.string.alertDialog_factionreset_monster_toast_nokeep, Toast.LENGTH_LONG).show();
+                //Toast.makeText(this, R.string.alertDialog_factionreset_monster_toast_nokeep, Toast.LENGTH_LONG).show();
             }
             for (Row row : fullClear) {
                 row.clear(false);
@@ -999,7 +998,7 @@ public class OldMainActivity extends AppCompatActivity {
             if (sharedPreferences.getBoolean("factionReset", false) && sharedPreferences.getBoolean("warnings", true) && resetButton.isEnabled()) {
                 AlertDialog.Builder builder = getAlertDialogBuilder();
                 builder.setTitle(R.string.alertDialog_reset_title)
-                        .setMessage(R.string.alertDialog_factionreset_msg)
+                        .setMessage(R.string.alertDialog_reset_msg_faction_switch)
                         .setCancelable(false)
                         .setPositiveButton(R.string.alertDialog_reset_positive, (dialogInterface, i) -> {
                             resetAll(false);
@@ -1007,7 +1006,7 @@ public class OldMainActivity extends AppCompatActivity {
                             inflateFactionLayout(false);
                             popupWindow.dismiss();
                         })
-                        .setNegativeButton(R.string.alertDialog_factionreset_negative, (dialogInterface, i) -> {
+                        .setNegativeButton(R.string.alertDialog_reset_negative, (dialogInterface, i) -> {
                             sharedPreferences.edit().putInt("faction", theme.ordinal()).apply();
                             inflateFactionLayout(false);
                             popupWindow.dismiss();

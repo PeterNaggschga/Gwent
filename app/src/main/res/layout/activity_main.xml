@@ -83,13 +83,6 @@
                     android:src="?attr/point_ball_mipmap"
                     android:translationZ="5dp" />
 
-                <ImageView
-                    android:id="@+id/backgroundOverallPointBall"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:contentDescription="@string/content_description_background_resource"
-                    android:scaleType="fitCenter" />
-
                 <TextView
                     android:id="@+id/overallPointView"
                     android:layout_width="wrap_content"

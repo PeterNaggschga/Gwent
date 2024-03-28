@@ -1,10 +1,21 @@
 package com.peternaggschga.gwent.data;
 
 import static org.junit.Assert.fail;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.only;
+import static org.mockito.Mockito.verify;
+
+import com.peternaggschga.gwent.Ability;
+import com.peternaggschga.gwent.RowType;
+import com.peternaggschga.gwent.domain.damage.DamageCalculator;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.valid4j.errors.RequireViolation;
 
 public class UnitEntityUnitTest {
@@ -125,6 +136,24 @@ public class UnitEntityUnitTest {
                 fail();
             } catch (RequireViolation ignored) {
             }
+        }
+    }
+
+    @RunWith(MockitoJUnitRunner.class)
+    public static class CalculateDamageTests {
+        @Test
+        public void epicUnitsDoNotCallCalculator() {
+            DamageCalculator calculator = mock(DamageCalculator.class);
+            new UnitEntity(true, 5, Ability.NONE, null, RowType.MELEE).calculateDamage(calculator);
+            verify(calculator, never()).calculateDamage(anyInt(), anyInt());
+        }
+
+        @Test
+        public void nonEpicUnitsCallCalculator() {
+            int damage = 5;
+            DamageCalculator calculator = mock(DamageCalculator.class);
+            new UnitEntity(false, damage, Ability.NONE, null, RowType.MELEE).calculateDamage(calculator);
+            verify(calculator, only()).calculateDamage(anyInt(), eq(damage));
         }
     }
 }

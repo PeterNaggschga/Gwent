@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -101,16 +100,7 @@ public class SettingsActivity extends AppCompatActivity implements
                 OldMainActivity.hideSystemUI(requireActivity().getWindow());
                 return true;
             });
-            Preference unitString = findPreference("unit_string");
-            assert unitString != null;
-            unitString.setOnPreferenceChangeListener((preference, newValue) -> {
-                Unit unit = new Unit(5, false, false, false, 1, false);
-                unit.setRow(Row.ROW_MELEE);
-                unit.setBuffAD(10);
-                unit.setBuffed(true);
-                Toast.makeText(getContext(), getString(R.string.preference_unit_string_alert, unit.toString(requireContext(), newValue)), Toast.LENGTH_SHORT).show();
-                return true;
-            });
+
             Preference onboardingSupport = findPreference("onboardingSupport");
             assert onboardingSupport != null;
             onboardingSupport.setOnPreferenceClickListener(preference -> {

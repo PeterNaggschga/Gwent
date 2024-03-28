@@ -2,6 +2,8 @@ package com.peternaggschga.gwent.data;
 
 import static org.valid4j.Assertive.require;
 
+import android.content.Context;
+
 import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -9,6 +11,14 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
+
+import com.peternaggschga.gwent.Ability;
+import com.peternaggschga.gwent.R;
+import com.peternaggschga.gwent.RowType;
+import com.peternaggschga.gwent.domain.damage.DamageCalculator;
+
+import java.util.Collection;
+import java.util.Iterator;
 
 /**
  * A class representing a card on the game board.
@@ -76,6 +86,7 @@ public class UnitEntity {
      * @param ability Ability representing the #ability of the card.
      * @param squad   Integer representing the #squad of a card that has the Ability#BINDING #ability.
      * @param row     RowType representing the combat type of the card.
+     * @throws org.valid4j.errors.RequireViolation When damage is less than zero or if ability is Ability#BINDING and squad is null or less than zero or if ability is not Ability#BINDING and squad is not null.
      */
     UnitEntity(boolean epic, @IntRange(from = 0) int damage, @NonNull Ability ability, @IntRange(from = 0) @Nullable Integer squad, @NonNull RowType row) {
         require(damage >= 0);
@@ -89,12 +100,97 @@ public class UnitEntity {
     }
 
     /**
+     * Calculates the damage of this unit when (de-)buffed.
+     * Returns #damage if #epic is true.
+     * Otherwise, the damage is calculated through the given DamageCalculator,
+     * which follows the visitor pattern.
+     *
+     * @param calculator DamageCalculator visitor used for damage calculation.
+     * @return Integer representing the units (de-)buffed damage.
+     * @see #getDamage()
+     */
+    public int calculateDamage(@NonNull DamageCalculator calculator) {
+        return epic ? damage : calculator.calculateDamage(id, damage);
+    }
+
+    /**
+     * Creates a String containing the descriptions of all units in the given collection,
+     * separated by commas.
+     * Unit descriptions are created using #toString(Context).
+     *
+     * @param context Context used to acquire String resources.
+     * @param units   Collection of UnitEntity objects that should be in the created String.
+     * @return A String containing the description of all units.
+     * @throws org.valid4j.errors.RequireViolation When units collection is empty.
+     * @todo Add unit tests.
+     * @todo Condense n units with same description into "Description (n)".
+     * @see #toString(Context)
+     */
+    @NonNull
+    public static String collectionToString(@NonNull Context context, @NonNull Collection<UnitEntity> units) {
+        require(!units.isEmpty());
+        Iterator<UnitEntity> unitIterator = units.iterator();
+        final String[] result = {unitIterator.next().toString(context)};
+        if (unitIterator.hasNext()) {
+            result[0] = context.getString(R.string.unit_collection_toString_accumulation_word, unitIterator.next().toString(context), result[0]).trim();
+        }
+        unitIterator.forEachRemaining(unitEntity -> result[0] = context.getString(R.string.unit_collection_toString_accumulation_symbol, unitIterator.next().toString(context), result[0]).trim());
+        return result[0];
+    }
+
+    /**
+     * Returns a string representation of this unit.
+     * The representation contains information on each field of this class,
+     * i.e., #row, #epic, #damage, #ability, and #squad.
+     *
+     * @param context Context used to acquire String resources.
+     * @return A string representing the unit.
+     * @todo Add unit test.
+     */
+    @NonNull
+    public String toString(@NonNull Context context) {
+        String row;
+        switch (getRow()) {
+            case MELEE:
+            default:
+                row = context.getString(R.string.unit_toString_melee);
+                break;
+            case RANGE:
+                row = context.getString(R.string.unit_toString_range);
+                break;
+            case SIEGE:
+                row = context.getString(R.string.unit_toString_siege);
+        }
+        String epic = isEpic() ? context.getString(R.string.unit_toString_epic) : context.getString(R.string.unit_toString_unit);
+        String ability;
+        String squad = "";
+        switch (getAbility()) {
+            case HORN:
+                ability = context.getString(R.string.array_add_ability_horn);
+                break;
+            case BINDING:
+                ability = context.getString(R.string.array_add_ability_binding);
+                squad = context.getString(R.string.unit_toString_squad, getSquad());
+                break;
+            case MORAL_BOOST:
+                ability = context.getString(R.string.array_add_ability_moralBoost);
+                break;
+            case REVENGE:
+                ability = context.getString(R.string.array_add_ability_revenge);
+                break;
+            case NONE:
+            default:
+                ability = context.getString(R.string.unit_toString_ability_none);
+        }
+        return context.getString(R.string.unit_toString, row, epic, getDamage(), ability, squad).trim();
+    }
+
+    /**
      * Getter for #id.
-     * Only used by Room extension.
      *
      * @return Integer representing the units' id.
      */
-    int getId() {
+    public int getId() {
         return id;
     }
 
@@ -110,11 +206,10 @@ public class UnitEntity {
 
     /**
      * Getter for #epic.
-     * Only used by Room extension.
      *
      * @return Boolean representing whether the card is epic.
      */
-    boolean isEpic() {
+    public boolean isEpic() {
         return epic;
     }
 
@@ -133,6 +228,7 @@ public class UnitEntity {
      * Only used by Room extension.
      *
      * @return Integer representing the card's base-damage.
+     * @see #calculateDamage(DamageCalculator)
      */
     int getDamage() {
         return damage;
@@ -143,6 +239,7 @@ public class UnitEntity {
      * Only used by Room extension.
      *
      * @param damage Integer representing the card's base-damage.
+     * @throws org.valid4j.errors.RequireViolation When damage is less than zero.
      */
     void setDamage(@IntRange(from = 0) int damage) {
         require(damage >= 0);
@@ -151,12 +248,11 @@ public class UnitEntity {
 
     /**
      * Getter for #ability.
-     * Only used by Room extension.
      *
      * @return Ability representing the units' ability.
      */
     @NonNull
-    Ability getAbility() {
+    public Ability getAbility() {
         return ability;
     }
 
@@ -172,12 +268,11 @@ public class UnitEntity {
 
     /**
      * Getter for #squad.
-     * Only used by Room extension.
      *
      * @return Integer representing the units' squad if #ability is Ability#BINDING or `null`.
      */
     @Nullable
-    Integer getSquad() {
+    public Integer getSquad() {
         return squad;
     }
 
@@ -186,6 +281,7 @@ public class UnitEntity {
      * Only used by Room extension.
      *
      * @param squad Integer representing the units' squad if #ability is Ability#BINDING or `null`.
+     * @throws org.valid4j.errors.RequireViolation When #ability is Ability#BINDING and squad is null or less than zero or if #ability is not Ability#BINDING and squad is not null.
      */
     void setSquad(@IntRange(from = 0) @Nullable Integer squad) {
         require(ability == Ability.BINDING || squad == null);
@@ -195,12 +291,11 @@ public class UnitEntity {
 
     /**
      * Getter for #row.
-     * Only used by Room extension.
      *
      * @return RowType representing the units combat row.
      */
     @NonNull
-    RowType getRow() {
+    public RowType getRow() {
         return row;
     }
 

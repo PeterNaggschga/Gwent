@@ -20,28 +20,30 @@
     <string name="popUp_coin_stewie_1">Chris Griffin hat die Münze gegessen!</string>
     <string name="popUp_coin_vin">Vin hat Stahl verbrannt und die Münze weggedrückt!</string>
 
-    <string name="unit_toString_melee">Nahkampfeinheit</string>
-    <string name="unit_toString_range">Fernkampfeinheit</string>
-    <string name="unit_toString_siege">Belagerungseinheit</string>
-    <string name="unit_toString_unit">Einheit</string>
+    <string name="unit_toString">%1$s%2$s (%3$d) - Fähigkeit: %4$s %5$s</string>
+    <string name="unit_toString_melee">Nahkampf</string>
+    <string name="unit_toString_range">Fernkampf</string>
+    <string name="unit_toString_siege">Belagerungs</string>
+    <string name="unit_toString_epic">held</string>
+    <string name="unit_toString_unit">einheit</string>
+    <string name="unit_toString_ability_none">Keine</string>
+    <string name="unit_toString_squad">(%1$d)</string>
+    <string name="unit_collection_toString_accumulation_word">%1$s und %2$s</string>
 
     <string name="alertDialog_cancel">Abbrechen</string>
 
     <string name="alertDialog_burn_title">Verbrennen</string>
+    <string name="alertDialog_burn_positive">Verbrennen</string>
+    <string name="alertDialog_burn_msg">Möchtest du wirklich %1$s verbrennen?</string>
+    <string name="alertDialog_burn_negative">Nicht verbrennen</string>
 
     <string name="alertDialog_reset_title">Spielfeld zurücksetzen</string>
-    <string name="alertDialog_reset_msg">Willst du wirklich das gesamte Spielfeld zurücksetzen?</string>
-    <string name="alertDialog_factionreset_msg">Du hast \"Zurücksetzen bei Fraktionswechsel\" aktiviert. Soll das Spielfeld wirklich zurückgesetzt werden?</string>
+    <string name="alertDialog_reset_msg_default">Willst du wirklich das gesamte Spielfeld zurücksetzen?</string>
+    <string name="alertDialog_reset_msg_faction_switch">Du hast \"Zurücksetzen bei Fraktionswechsel\" aktiviert. Soll das Spielfeld wirklich zurückgesetzt werden?</string>
     <string name="alertDialog_reset_checkbox">Die Fähigkeit der Monsterfraktion auslösen (du behältst eine zufällige Einheit)</string>
     <string name="alertDialog_factionreset_monster_toast_keep">Du behältst: %1$s</string>
-    <string name="alertDialog_factionreset_monster_toast_nokeep">Du behältst keine Einheit!</string>
     <string name="alertDialog_reset_positive">Zurücksetzen</string>
-    <string name="alertDialog_factionreset_negative">Nicht zurücksetzen</string>
-
-    <string name="alertDialog_monster_title">Fähigkeit auslösen</string>
-    <string name="alertDialog_monster_msg">Willst du die Fähigkeit der Monsterfraktion auslösen? Du kannst eine zufällig ausgewählte Einheit behalten.</string>
-    <string name="alertDialog_monster_positive">Auslösen</string>
-    <string name="alertDialog_monster_negative">Nicht auslösen</string>
+    <string name="alertDialog_reset_negative">Nicht zurücksetzen</string>
 
     <string name="alertDialog_revenge_title">Rächerfähigkeit</string>
     <string name="alertDialog_revenge_msg">Du hast eine Einheit vom Spielfeld entfernt, die einen Rächer herbeirufen kann. Möchtest du diese Fähigkeit auslösen?</string>
@@ -49,12 +51,9 @@
 
     <string name="preference_design">Hintergrundbild</string>
     <string name="preference_warnings_title">Warnungen</string>
-    <string name="preference_warnings_desc">Legt fest, ob beim Zurücksetzen und Verbrennen eine Warnung erscheinen soll.</string>
+    <string name="preference_warnings_desc">Legt fest, ob beim Zurücksetzen eine Warnung erscheinen soll.</string>
     <string name="preference_faction_reset_title">Zurücksetzen bei Fraktionswechsel</string>
     <string name="preference_faction_reset_desc">Legt fest, ob das Spielfeld beim Fraktionswechsel automatisch zurückgesetzt werden soll.</string>
-    <string name="preference_unit_string_title">Kartenbeschreibung</string>
-    <string name="preference_unit_string_desc">Legt fest, welche Daten bei der Kartenbeschreibung (zum Beispiel beim Verbrennen) angezeigt werden.</string>
-    <string name="preference_unit_string_alert">Beispiel: %1$s</string>
 
     <string name="preference_sounds_header">Tonausgabe</string>
     <string name="preference_sounds_category">Ereignisse</string>
@@ -209,15 +208,11 @@
     <string name="array_design_default">Standard</string>
     <string name="array_design_geralt">Geralt von Riva</string>
     <string name="array_design_yennefer">Yennefer von Vengerberg</string>
-    <string name="array_unit_string_type">Einheitentyp (Nahkampfeinheit, etc.)</string>
-    <string name="array_unit_string_baseAD">Grundangriff</string>
-    <string name="array_unit_string_buffAD">Verstärkter Angriff</string>
-    <string name="array_unit_string_ability">Fähigkeit (Enge Bindung, etc.)</string>
     <string name="array_add_epic_epic">Held</string>
     <string name="array_add_ability_default">Keine</string>
     <string name="array_add_ability_moralBoost">Moralschub</string>
     <string name="array_add_ability_revenge">Rächer</string>
     <string name="array_add_ability_binding">Enge Bindung</string>
     <string name="popUp_add_card_binding_count">Anzahl Einheiten in %1$d. Gruppe: %2$d</string>
-    <string name="alertDialog_burn_msg">Möchtest du wirklich %1$s verbrennen?</string>
+    <string name="alertDialog_revenge_negative">Nicht auslösen</string>
 </resources>

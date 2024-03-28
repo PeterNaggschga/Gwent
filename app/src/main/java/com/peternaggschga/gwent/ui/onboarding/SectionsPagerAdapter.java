@@ -1,4 +1,4 @@
-package com.peternaggschga.gwent.ui.main;
+package com.peternaggschga.gwent.ui.onboarding;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;

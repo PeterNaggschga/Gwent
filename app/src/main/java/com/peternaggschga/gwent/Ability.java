@@ -1,4 +1,4 @@
-package com.peternaggschga.gwent.data;
+package com.peternaggschga.gwent;
 
 /**
  * An enum listing the different card abilities possible.
