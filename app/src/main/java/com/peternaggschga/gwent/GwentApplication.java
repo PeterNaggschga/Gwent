@@ -1,7 +1,9 @@
 package com.peternaggschga.gwent;
 
 import android.app.Application;
+import android.content.Context;
 
+import androidx.annotation.NonNull;
 import androidx.room.Room;
 
 import com.peternaggschga.gwent.data.AppDatabase;
@@ -27,5 +29,9 @@ public class GwentApplication extends Application {
             return Single.just(repository);
         }
         return UnitRepository.getRepository(database).doOnSuccess(unitRepository -> repository = unitRepository);
+    }
+
+    public static Single<UnitRepository> getRepository(@NonNull Context context) {
+        return ((GwentApplication) context.getApplicationContext()).getRepository();
     }
 }
