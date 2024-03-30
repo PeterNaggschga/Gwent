@@ -29,7 +29,7 @@ public class UnitRepositoryIntegrationTest {
     @Before
     public void initDatabase() {
         database = Room.inMemoryDatabaseBuilder(ApplicationProvider.getApplicationContext(), AppDatabase.class).build();
-        repository = new UnitRepository(database);
+        repository = UnitRepository.getRepository(database).blockingGet();
     }
 
     @After
@@ -48,26 +48,26 @@ public class UnitRepositoryIntegrationTest {
     }
 
     @Test
-    public void constructorAssertsNonNull() {
+    public void getRepositoryAssertsNonNull() {
         try {
             //noinspection DataFlowIssue
-            repository = new UnitRepository(null);
+            repository = UnitRepository.getRepository(null).blockingGet();
             fail();
         } catch (NullPointerException ignored) {
         }
     }
 
     @Test
-    public void constructorInitializesRows() {
+    public void getRepositoryInitializesRows() {
         for (RowType row : RowType.values()) {
             database.rows().isWeather(row).test().assertValue(false);
         }
     }
 
     @Test
-    public void constructorDoesntResetDatabase() {
+    public void getRepositoryDoesNotResetDatabase() {
         insertDummys();
-        repository = new UnitRepository(database);
+        repository = UnitRepository.getRepository(database).blockingGet();
         assertThat(database.units().countUnits().blockingGet()).isGreaterThan(0);
     }
 
