@@ -8,10 +8,10 @@ import android.content.Context;
 
 import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.viewmodel.ViewModelInitializer;
 
 import com.peternaggschga.gwent.GwentApplication;
@@ -30,11 +30,11 @@ import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 
 /**
- * A ViewModel class responsible for encapsulating and offering state of views in activity_main.xml,
- * i.e., that show the overall game board.
+ * An AndroidViewModel class responsible for encapsulating
+ * and offering state of views in activity_main.xml, i.e., that show the overall game board.
  * Click events on the rows and the menu are handled also.
  */
-public class GameBoardViewModel extends ViewModel {
+public class GameBoardViewModel extends AndroidViewModel {
     /**
      * ViewModelInitializer used by androidx.lifecycle.ViewModelProvider.Factory to instantiate the class.
      *
@@ -46,14 +46,9 @@ public class GameBoardViewModel extends ViewModel {
             creationExtras -> {
                 GwentApplication app = (GwentApplication) creationExtras.get(APPLICATION_KEY);
                 assert app != null;
-                return new GameBoardViewModel(app.getRepository().blockingGet());
+                return new GameBoardViewModel(app);
             });
 
-    /**
-     * UnitRepository that is used to read and update state.
-     */
-    @NonNull
-    private final UnitRepository repository;
     /**
      * A map structure containing the MutableLiveData objects emitting the RowUiState for each row.
      * MutableLiveData objects are lazily initialized when queried using #getMutableRowUiState().
@@ -74,11 +69,22 @@ public class GameBoardViewModel extends ViewModel {
      * Constructor of a GameBoardViewModel object.
      * Should only be called in #initializer.
      *
-     * @param repository UnitRepository that is used to read and update state.
+     * @param application GwentApplication that uses this AndroidViewModel.
      * @see #initializer
      */
-    private GameBoardViewModel(@NonNull UnitRepository repository) {
-        this.repository = repository;
+    private GameBoardViewModel(@NonNull GwentApplication application) {
+        super(application);
+    }
+
+    /**
+     * Returns the UnitRepository used by the parent GwentApplication.
+     * Basically a wrapper for GwentApplication#getRepository(Context).
+     *
+     * @return A Single emitting the UnitRepository instance.
+     * @see GwentApplication#getRepository(Context)
+     */
+    private Single<UnitRepository> getRepository() {
+        return GwentApplication.getRepository(getApplication());
     }
 
     /**
@@ -155,13 +161,14 @@ public class GameBoardViewModel extends ViewModel {
      */
     @NonNull
     private Completable updateUi(@NonNull RowType row) {
-        return RowStateUseCase.getRowState(repository, row)
-                .doOnSuccess(rowUiState -> {
-                    MutableLiveData<RowUiState> rowState = getMutableRowUiState(row);
-                    if (!rowUiState.equals(rowState.getValue())) {
-                        rowState.postValue(rowUiState);
-                    }
-                }).ignoreElement();
+        return getRepository().flatMapCompletable(repository ->
+                RowStateUseCase.getRowState(repository, row)
+                        .doOnSuccess(rowUiState -> {
+                            MutableLiveData<RowUiState> rowState = getMutableRowUiState(row);
+                            if (!rowUiState.equals(rowState.getValue())) {
+                                rowState.postValue(rowUiState);
+                            }
+                        }).ignoreElement());
     }
 
     /**
@@ -173,9 +180,10 @@ public class GameBoardViewModel extends ViewModel {
      */
     @NonNull
     public Single<Boolean> onWeatherViewPressed(@NonNull RowType row) {
-        return repository.switchWeather(row)
-                .andThen(updateUi(row))
-                .andThen(repository.isWeather(row));
+        return getRepository().flatMap(repository ->
+                repository.switchWeather(row)
+                        .andThen(updateUi(row))
+                        .andThen(repository.isWeather(row)));
     }
 
     /**
@@ -186,9 +194,10 @@ public class GameBoardViewModel extends ViewModel {
      * @see UnitRepository#switchHorn(RowType)
      */
     public Single<Boolean> onHornViewPressed(@NonNull RowType row) {
-        return repository.switchHorn(row)
-                .andThen(updateUi(row))
-                .andThen(repository.isHorn(row));
+        return getRepository().flatMap(repository ->
+                repository.switchHorn(row)
+                        .andThen(updateUi(row))
+                        .andThen(repository.isHorn(row)));
     }
 
     /**
@@ -224,14 +233,14 @@ public class GameBoardViewModel extends ViewModel {
      * @param context Context object used to acquire SharedPreferences and inflate Dialog views.
      * @param trigger Integer defining which action triggered the reset.
      * @return A Single emitting a Boolean defining whether a reset was actually conducted.
-     * @see ResetDialogUseCase#reset(Context, UnitRepository, int)
+     * @see #reset(Context, int)
      * @see ResetDialogUseCase#TRIGGER_BUTTON_CLICK
      * @see ResetDialogUseCase#TRIGGER_FACTION_SWITCH
      */
     @NonNull
     private Single<Boolean> reset(@NonNull Context context,
                                   @IntRange(from = TRIGGER_BUTTON_CLICK, to = TRIGGER_FACTION_SWITCH) int trigger) {
-        return ResetDialogUseCase.reset(context, repository, trigger)
+        return ResetDialogUseCase.reset(context, trigger)
                 .flatMap(resetComplete -> updateUi().andThen(Single.just(resetComplete)));
     }
 
@@ -243,8 +252,9 @@ public class GameBoardViewModel extends ViewModel {
      */
     @NonNull
     public Completable onWeatherButtonPressed() {
-        return repository.clearWeather()
-                .andThen(updateUi());
+        return getRepository().flatMapCompletable(repository ->
+                repository.clearWeather()
+                        .andThen(updateUi()));
     }
 
     /**
@@ -254,11 +264,11 @@ public class GameBoardViewModel extends ViewModel {
      * Should only be called by the View.OnClickListener of the burn button.
      * @param context Context
      * @return A Single emitting a Boolean defining whether the units were actually removed.
-     * @see BurnDialogUseCase#burn(Context, UnitRepository)
+     * @see BurnDialogUseCase#burn(Context)
      */
     @NonNull
     public Single<Boolean> onBurnButtonPressed(@NonNull Context context) {
-        return BurnDialogUseCase.burn(context, repository)
+        return BurnDialogUseCase.burn(context)
                 .flatMap(burnComplete -> updateUi().andThen(Single.just(burnComplete)));
     }
 }

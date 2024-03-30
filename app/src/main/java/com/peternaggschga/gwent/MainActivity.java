@@ -3,8 +3,6 @@ package com.peternaggschga.gwent;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
@@ -22,8 +20,6 @@ import com.peternaggschga.gwent.ui.main.GameBoardViewModel;
 import com.peternaggschga.gwent.ui.main.MenuUiStateObserver;
 import com.peternaggschga.gwent.ui.main.RowUiStateObserver;
 import com.peternaggschga.gwent.ui.sounds.SoundManager;
-
-import io.reactivex.rxjava3.schedulers.Schedulers;
 
 /**
  * @todo Documentation
@@ -59,12 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
         soundManager = new SoundManager(this);
 
-        Schedulers.io().scheduleDirect(() -> {
-            gameBoard = new ViewModelProvider(MainActivity.this,
-                    ViewModelProvider.Factory.from(GameBoardViewModel.initializer)
-            ).get(GameBoardViewModel.class);
-            new Handler(Looper.getMainLooper()).post(MainActivity.this::initializeViewModel);
-        });
+        initializeViewModel();
 
         factionSwitchListener = FactionSwitchListener.getListener(getWindow());
         PreferenceManager.getDefaultSharedPreferences(this)
@@ -84,6 +75,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initializeViewModel() {
+        gameBoard = new ViewModelProvider(MainActivity.this,
+                ViewModelProvider.Factory.from(GameBoardViewModel.initializer)
+        ).get(GameBoardViewModel.class);
         int[] rowIds = {R.id.firstRow, R.id.secondRow, R.id.thirdRow};
         for (int rowId = 0; rowId < rowIds.length; rowId++) {
             RowType row = RowType.values()[rowId];

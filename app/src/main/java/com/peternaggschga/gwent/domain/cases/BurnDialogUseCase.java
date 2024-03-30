@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 
+import com.peternaggschga.gwent.GwentApplication;
 import com.peternaggschga.gwent.R;
 import com.peternaggschga.gwent.RowType;
 import com.peternaggschga.gwent.data.UnitEntity;
@@ -62,6 +63,22 @@ public class BurnDialogUseCase {
      * Burns the strongest UnitEntity objects in UnitRepository.
      * Invokes a Dialog asking whether the user really wants to remove those units.
      * ResetRepositoryUseCase is used for resetting.
+     * Wrapper for #burn(Context, UnitRepository).
+     *
+     * @param context Context where a Dialog can be inflated.
+     * @return A Single emitting a Boolean defining whether the units really were burned.
+     * @see #burn(Context, UnitRepository)
+     * @see RemoveUnitsUseCase#remove(Context, UnitRepository, Collection)
+     */
+    @NonNull
+    public static Single<Boolean> burn(@NonNull Context context) {
+        return GwentApplication.getRepository(context).flatMap(repository -> burn(context, repository));
+    }
+
+    /**
+     * Burns the strongest UnitEntity objects in UnitRepository.
+     * Invokes a Dialog asking whether the user really wants to remove those units.
+     * ResetRepositoryUseCase is used for resetting.
      *
      * @param context    Context where a Dialog can be inflated.
      * @param repository UnitRepository where units are burned.
@@ -69,7 +86,7 @@ public class BurnDialogUseCase {
      * @see RemoveUnitsUseCase#remove(Context, UnitRepository, Collection)
      */
     @NonNull
-    public static Single<Boolean> burn(@NonNull Context context, @NonNull UnitRepository repository) {
+    protected static Single<Boolean> burn(@NonNull Context context, @NonNull UnitRepository repository) {
         return getBurnUnits(repository).flatMap(units -> {
             if (units.isEmpty()) {
                 return Single.just(false);
