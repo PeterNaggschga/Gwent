@@ -46,7 +46,7 @@ public class GameBoardViewModel extends ViewModel {
             creationExtras -> {
                 GwentApplication app = (GwentApplication) creationExtras.get(APPLICATION_KEY);
                 assert app != null;
-                return new GameBoardViewModel(app.getRepository());
+                return new GameBoardViewModel(app.getRepository().blockingGet());
             });
 
     /**

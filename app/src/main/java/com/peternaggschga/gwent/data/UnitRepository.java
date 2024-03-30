@@ -38,14 +38,26 @@ public class UnitRepository {
     /**
      * Constructor of a UnitRepository.
      * Depends on the given AppDatabase as a data source.
-     * Three attack rows are initialized, if not yet done so, via #initializeRows().
+     * Should only be called by #getRepository().
      *
      * @param database AppDatabase that is injected for the repository.
-     * @see #initializeRows()
+     * @see #getRepository(AppDatabase)
      */
-    public UnitRepository(@NonNull AppDatabase database) {
+    private UnitRepository(@NonNull AppDatabase database) {
         this.database = database;
-        initializeRows().blockingAwait();
+    }
+
+    /**
+     * @param database
+     * @return
+     * @todo Documentation
+     */
+    public static Single<UnitRepository> getRepository(@NonNull AppDatabase database) {
+        UnitRepository repository = new UnitRepository(database);
+        return repository.initializeRows()
+                .andThen(Single.just(repository))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     /**

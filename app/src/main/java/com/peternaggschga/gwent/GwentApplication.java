@@ -7,11 +7,14 @@ import androidx.room.Room;
 import com.peternaggschga.gwent.data.AppDatabase;
 import com.peternaggschga.gwent.data.UnitRepository;
 
+import io.reactivex.rxjava3.core.Single;
+
 /**
  * @todo Documentation
  */
 public class GwentApplication extends Application {
     private AppDatabase database;
+    private static UnitRepository repository = null;
 
     @Override
     public void onCreate() {
@@ -19,7 +22,10 @@ public class GwentApplication extends Application {
         database = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "database").build();
     }
 
-    public UnitRepository getRepository() {
-        return new UnitRepository(database);
+    public Single<UnitRepository> getRepository() {
+        if (repository != null) {
+            return Single.just(repository);
+        }
+        return UnitRepository.getRepository(database).doOnSuccess(unitRepository -> repository = unitRepository);
     }
 }
