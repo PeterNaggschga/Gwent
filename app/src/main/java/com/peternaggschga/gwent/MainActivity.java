@@ -16,6 +16,7 @@ import androidx.preference.PreferenceManager;
 
 import com.peternaggschga.gwent.ui.dialogs.ChangeFactionDialog;
 import com.peternaggschga.gwent.ui.dialogs.CoinFlipDialog;
+import com.peternaggschga.gwent.ui.dialogs.ShowUnitsDialog;
 import com.peternaggschga.gwent.ui.main.FactionSwitchListener;
 import com.peternaggschga.gwent.ui.main.GameBoardViewModel;
 import com.peternaggschga.gwent.ui.main.MenuUiStateObserver;
@@ -90,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
 
             ImageView weather = rowLayout.findViewById(R.id.weatherView);
             ImageView horn = rowLayout.findViewById(R.id.hornView);
+            ConstraintLayout cards = rowLayout.findViewById(R.id.cardView);
 
             weather.setOnClickListener(v -> {
                 // noinspection CheckResult, ResultOfMethodCallIgnored
@@ -107,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
             });
+            cards.setOnClickListener(v -> new ShowUnitsDialog(MainActivity.this, row).show());
 
             final RowUiStateObserver observer = RowUiStateObserver.getObserver(row,
                     rowLayout.findViewById(R.id.pointView),
