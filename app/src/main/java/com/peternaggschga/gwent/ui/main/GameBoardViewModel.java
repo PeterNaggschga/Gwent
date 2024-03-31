@@ -16,6 +16,7 @@ import androidx.lifecycle.viewmodel.ViewModelInitializer;
 
 import com.peternaggschga.gwent.GwentApplication;
 import com.peternaggschga.gwent.RowType;
+import com.peternaggschga.gwent.data.Observer;
 import com.peternaggschga.gwent.data.UnitRepository;
 import com.peternaggschga.gwent.domain.cases.BurnDialogUseCase;
 import com.peternaggschga.gwent.domain.cases.ResetDialogUseCase;
@@ -34,7 +35,7 @@ import io.reactivex.rxjava3.core.Single;
  * and offering state of views in activity_main.xml, i.e., that show the overall game board.
  * Click events on the rows and the menu are handled also.
  */
-public class GameBoardViewModel extends AndroidViewModel {
+public class GameBoardViewModel extends AndroidViewModel implements Observer {
     /**
      * ViewModelInitializer used by androidx.lifecycle.ViewModelProvider.Factory to instantiate the class.
      *
@@ -141,15 +142,16 @@ public class GameBoardViewModel extends AndroidViewModel {
 
     /**
      * Updates all the state associated with the main view, i.e., rows and menu.
-     * Uses #updateUi(RowType).
-     * @see #updateUi(RowType)
+     * Uses #update(RowType).
+     * @see #update(RowType)
      * @return A Completable tracking operation status.
      */
     @NonNull
-    public Completable updateUi() {
+    @Override
+    public Completable update() {
         Completable result = Completable.complete();
         for (RowType row : RowType.values()) {
-            result = result.andThen(updateUi(row));
+            result = result.andThen(update(row));
         }
         return result;
     }
@@ -160,7 +162,7 @@ public class GameBoardViewModel extends AndroidViewModel {
      * @return A Completable tracking operation status.
      */
     @NonNull
-    private Completable updateUi(@NonNull RowType row) {
+    private Completable update(@NonNull RowType row) {
         return getRepository().flatMapCompletable(repository ->
                 RowStateUseCase.getRowState(repository, row)
                         .doOnSuccess(rowUiState -> {
@@ -182,7 +184,7 @@ public class GameBoardViewModel extends AndroidViewModel {
     public Single<Boolean> onWeatherViewPressed(@NonNull RowType row) {
         return getRepository().flatMap(repository ->
                 repository.switchWeather(row)
-                        .andThen(updateUi(row))
+                        .andThen(update(row))
                         .andThen(repository.isWeather(row)));
     }
 
@@ -196,7 +198,7 @@ public class GameBoardViewModel extends AndroidViewModel {
     public Single<Boolean> onHornViewPressed(@NonNull RowType row) {
         return getRepository().flatMap(repository ->
                 repository.switchHorn(row)
-                        .andThen(updateUi(row))
+                        .andThen(update(row))
                         .andThen(repository.isHorn(row)));
     }
 
@@ -240,8 +242,7 @@ public class GameBoardViewModel extends AndroidViewModel {
     @NonNull
     private Single<Boolean> reset(@NonNull Context context,
                                   @IntRange(from = TRIGGER_BUTTON_CLICK, to = TRIGGER_FACTION_SWITCH) int trigger) {
-        return ResetDialogUseCase.reset(context, trigger)
-                .flatMap(resetComplete -> updateUi().andThen(Single.just(resetComplete)));
+        return ResetDialogUseCase.reset(context, trigger);
     }
 
     /**
@@ -252,9 +253,7 @@ public class GameBoardViewModel extends AndroidViewModel {
      */
     @NonNull
     public Completable onWeatherButtonPressed() {
-        return getRepository().flatMapCompletable(repository ->
-                repository.clearWeather()
-                        .andThen(updateUi()));
+        return getRepository().flatMapCompletable(UnitRepository::clearWeather);
     }
 
     /**
@@ -268,7 +267,6 @@ public class GameBoardViewModel extends AndroidViewModel {
      */
     @NonNull
     public Single<Boolean> onBurnButtonPressed(@NonNull Context context) {
-        return BurnDialogUseCase.burn(context)
-                .flatMap(burnComplete -> updateUi().andThen(Single.just(burnComplete)));
+        return BurnDialogUseCase.burn(context);
     }
 }

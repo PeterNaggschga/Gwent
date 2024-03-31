@@ -145,7 +145,12 @@ public class MainActivity extends AppCompatActivity {
             });
         });
 
-        gameBoard.updateUi().subscribe();
+        ((GwentApplication) getApplication()).getRepository()
+                .flatMapCompletable(repository -> {
+                    repository.registerObserver(gameBoard);
+                    return gameBoard.update();
+                })
+                .subscribe();
     }
 
     private void inflateFactionPopup() {

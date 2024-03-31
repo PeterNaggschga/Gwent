@@ -2,6 +2,8 @@ package com.peternaggschga.gwent.data;
 
 import static org.valid4j.Assertive.require;
 
+import android.database.Observable;
+
 import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,7 +29,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
  * @todo Add method to get non-epic units and replace stream.filter() calls.
  * @todo Add method to get units of a certain ability and replace stream.filter() calls.
  */
-public class UnitRepository {
+public class UnitRepository extends Observable<Observer> {
     /**
      * Defines the AppDatabase that is used as a data source by this repository.
      * Is provided by dependency injection in #UnitRepository().
@@ -45,6 +47,17 @@ public class UnitRepository {
      */
     private UnitRepository(@NonNull AppDatabase database) {
         this.database = database;
+    }
+
+    /**
+     * @todo Documentation
+     */
+    private Completable notifyObservers() {
+        Completable result = Completable.complete();
+        for (Observer observer : mObservers) {
+            result = result.andThen(observer.update());
+        }
+        return result;
     }
 
     /**
@@ -71,7 +84,7 @@ public class UnitRepository {
         for (RowType row : RowType.values()) {
             result = result.andThen(database.rows().insertRow(new RowEntity(row)));
         }
-        return result;
+        return result.andThen(notifyObservers());
     }
 
     /**
@@ -99,7 +112,7 @@ public class UnitRepository {
         if (keptUnit != null) {
             result = result.andThen(insertUnit(keptUnit));
         }
-        return result.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+        return result.andThen(notifyObservers()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 
     /**
@@ -109,7 +122,7 @@ public class UnitRepository {
      * @return A Completable tracking operation status.
      */
     private Completable insertUnit(@NonNull UnitEntity unit) {
-        return database.units().insertUnit(unit).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+        return database.units().insertUnit(unit).andThen(notifyObservers()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 
     /**
@@ -126,7 +139,11 @@ public class UnitRepository {
     public Completable insertUnit(boolean epic, @IntRange(from = 0) int damage, @NonNull Ability ability, @IntRange(from = 0) @Nullable Integer squad, @NonNull RowType row) {
         require(damage >= 0);
         require((ability != Ability.BINDING && squad == null) || (ability == Ability.BINDING && squad != null && squad >= 0));
-        return database.units().insertUnit(epic, damage, ability, squad, row).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+        return database.units()
+                .insertUnit(epic, damage, ability, squad, row)
+                .andThen(notifyObservers())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     /**
@@ -149,7 +166,7 @@ public class UnitRepository {
         for (int i = 0; i < number; i++) {
             result = result.andThen(insertUnit(epic, damage, ability, squad, row));
         }
-        return result.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+        return result.andThen(notifyObservers()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 
     /**
@@ -159,7 +176,7 @@ public class UnitRepository {
      * @return A Completable tracking operation status.
      */
     public Completable switchWeather(@NonNull RowType row) {
-        return database.rows().updateWeather(row).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+        return database.rows().updateWeather(row).andThen(notifyObservers()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 
     /**
@@ -178,7 +195,7 @@ public class UnitRepository {
      * @return A Completable tracking operation status.
      */
     public Completable clearWeather() {
-        return database.rows().clearWeather().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+        return database.rows().clearWeather().andThen(notifyObservers()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 
     /**
@@ -188,7 +205,7 @@ public class UnitRepository {
      * @return A Completable tracking operation status.
      */
     public Completable switchHorn(@NonNull RowType row) {
-        return database.rows().updateHorn(row).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+        return database.rows().updateHorn(row).andThen(notifyObservers()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 
     /**
@@ -208,7 +225,7 @@ public class UnitRepository {
      * @return A Completable tracking operation status.
      */
     public Completable delete(@NonNull Collection<UnitEntity> units) {
-        return database.units().deleteUnits(units).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+        return database.units().deleteUnits(units).andThen(notifyObservers()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 
     /**
@@ -222,7 +239,7 @@ public class UnitRepository {
         for (UnitEntity unit : units) {
             result = result.andThen(insertUnit(unit.isEpic(), unit.getDamage(), unit.getAbility(), unit.getSquad(), unit.getRow()));
         }
-        return result.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+        return result.andThen(notifyObservers()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 
     /**
