@@ -92,7 +92,11 @@ class OverlayDialog extends Dialog {
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         window.setBackgroundDrawable(BACKGROUND);
 
-        setCancelable(cancelViewId != NO_CANCEL_VIEW);
-        findViewById(cancelViewId).setOnClickListener(v -> cancel());
+        if (cancelViewId != NO_CANCEL_VIEW) {
+            setCancelable(true);
+            findViewById(cancelViewId).setOnClickListener(v -> cancel());
+        } else {
+            setCancelable(false);
+        }
     }
 }
