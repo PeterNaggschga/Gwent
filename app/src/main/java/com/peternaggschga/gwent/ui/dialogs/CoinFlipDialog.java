@@ -36,14 +36,13 @@ public class CoinFlipDialog extends OverlayDialog {
     }
 
     /**
-     * Initializes Layout using #setContentView(int) and sets listeners for each view.
+     * Initializes layout and sets listeners for each view.
      * The result of the coin-flip is decided here.
      *
      * @param savedInstanceState If this dialog is being reinitialized after
      *                           the hosting activity was previously shut down, holds the result from
      *                           the most recent call to {@link #onSaveInstanceState}, or null if this
      *                           is the first time.
-     * @see #setContentView(int)
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {

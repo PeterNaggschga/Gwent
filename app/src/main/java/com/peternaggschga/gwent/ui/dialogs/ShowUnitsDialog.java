@@ -8,6 +8,9 @@ import androidx.annotation.NonNull;
 import com.peternaggschga.gwent.R;
 import com.peternaggschga.gwent.RowType;
 
+/**
+ * @todo Documentation
+ */
 public class ShowUnitsDialog extends OverlayDialog {
     @NonNull
     private final RowType row;
