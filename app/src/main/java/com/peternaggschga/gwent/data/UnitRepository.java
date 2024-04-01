@@ -24,7 +24,11 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
  * The contained functions mostly redirect requests to package-private DAO methods in RowDao and UnitDao.
  * Some functions implement slightly more complex behavior by chaining multiple DAO calls,
  * e.g., #reset().
+ * Extends Observable to allow the registration of Observer implementors using #registerObserver().
+ * Can be used by ViewModel classes.
  *
+ * @see Observable
+ * @todo Add testing that every non-read operations call #notifyObservers().
  * @todo Check which methods can be dropped.
  * @todo Add method to get non-epic units and replace stream.filter() calls.
  * @todo Add method to get units of a certain ability and replace stream.filter() calls.
@@ -50,21 +54,14 @@ public class UnitRepository extends Observable<Observer> {
     }
 
     /**
-     * @todo Documentation
+     * Factory method for the UnitRepository class.
+     * Creates a new UnitRepository managing the given AppDatabase.
+     * Also initializes one RowEntity per RowType using #initializeRows().
+     * @see #initializeRows()
+     * @param database AppDatabase managed and initialized by the returned UnitRepository.
+     * @return A Single emitting the created UnitRepository when initialization is finished.
      */
-    private Completable notifyObservers() {
-        Completable result = Completable.complete();
-        for (Observer observer : mObservers) {
-            result = result.andThen(observer.update());
-        }
-        return result;
-    }
-
-    /**
-     * @param database
-     * @return
-     * @todo Documentation
-     */
+    @NonNull
     public static Single<UnitRepository> getRepository(@NonNull AppDatabase database) {
         UnitRepository repository = new UnitRepository(database);
         return repository.initializeRows()
@@ -74,11 +71,26 @@ public class UnitRepository extends Observable<Observer> {
     }
 
     /**
+     * Notifies all Observer objects in #mObservers using Observer#update().
+     * @see Observer#update()
+     * @return A Completable tracking operation status.
+     */
+    @NonNull
+    private Completable notifyObservers() {
+        Completable result = Completable.complete();
+        for (Observer observer : mObservers) {
+            result = result.andThen(observer.update());
+        }
+        return result;
+    }
+
+    /**
      * Adds one attack row for each RowType asynchronously.
      * If an attack row already exists, it is not inserted again.
      *
      * @return A Completable tracking operation status.
      */
+    @NonNull
     private Completable initializeRows() {
         Completable result = Completable.complete();
         for (RowType row : RowType.values()) {
@@ -95,6 +107,7 @@ public class UnitRepository extends Observable<Observer> {
      * @return A Completable tracking operation status.
      * @see #reset(UnitEntity)
      */
+    @NonNull
     public Completable reset() {
         return reset(null);
     }
@@ -107,6 +120,7 @@ public class UnitRepository extends Observable<Observer> {
      * @return A Completable tracking operation status.
      * @see #initializeRows()
      */
+    @NonNull
     public Completable reset(@Nullable UnitEntity keptUnit) {
         Completable result = database.rows().clearRows().andThen(initializeRows());
         if (keptUnit != null) {
@@ -121,6 +135,7 @@ public class UnitRepository extends Observable<Observer> {
      * @param unit UnitEntity that should be added.
      * @return A Completable tracking operation status.
      */
+    @NonNull
     private Completable insertUnit(@NonNull UnitEntity unit) {
         return database.units().insertUnit(unit).andThen(notifyObservers()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
@@ -136,6 +151,7 @@ public class UnitRepository extends Observable<Observer> {
      * @return A Completable tracking operation status.
      * @throws org.valid4j.errors.RequireViolation When damage is less than zero or if ability is Ability#BINDING and squad is null or less than zero or if ability is not Ability#BINDING and squad is not null.
      */
+    @NonNull
     public Completable insertUnit(boolean epic, @IntRange(from = 0) int damage, @NonNull Ability ability, @IntRange(from = 0) @Nullable Integer squad, @NonNull RowType row) {
         require(damage >= 0);
         require((ability != Ability.BINDING && squad == null) || (ability == Ability.BINDING && squad != null && squad >= 0));
@@ -159,6 +175,7 @@ public class UnitRepository extends Observable<Observer> {
      * @return A Completable tracking operation status.
      * @see #insertUnit(boolean, int, Ability, Integer, RowType)
      */
+    @NonNull
     public Completable insertUnit(boolean epic, @IntRange(from = 0) int damage, @NonNull Ability ability,
                                   @IntRange(from = 0) @Nullable Integer squad, @NonNull RowType row,
                                   @IntRange(from = 0) int number) {
@@ -175,6 +192,7 @@ public class UnitRepository extends Observable<Observer> {
      * @param row RowEntity#id where the weather should be updated.
      * @return A Completable tracking operation status.
      */
+    @NonNull
     public Completable switchWeather(@NonNull RowType row) {
         return database.rows().updateWeather(row).andThen(notifyObservers()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
@@ -185,6 +203,7 @@ public class UnitRepository extends Observable<Observer> {
      * @param row RowEntity#id where the weather is queried.
      * @return A Single tracking operation status and returning the value.
      */
+    @NonNull
     public Single<Boolean> isWeather(@NonNull RowType row) {
         return database.rows().isWeather(row).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
@@ -194,6 +213,7 @@ public class UnitRepository extends Observable<Observer> {
      *
      * @return A Completable tracking operation status.
      */
+    @NonNull
     public Completable clearWeather() {
         return database.rows().clearWeather().andThen(notifyObservers()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
@@ -204,6 +224,7 @@ public class UnitRepository extends Observable<Observer> {
      * @param row RowEntity#id where the horn status should be updated.
      * @return A Completable tracking operation status.
      */
+    @NonNull
     public Completable switchHorn(@NonNull RowType row) {
         return database.rows().updateHorn(row).andThen(notifyObservers()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
@@ -214,6 +235,7 @@ public class UnitRepository extends Observable<Observer> {
      * @param row RowEntity#id where the horn status is queried.
      * @return A Single tracking operation status and returning the value.
      */
+    @NonNull
     public Single<Boolean> isHorn(@NonNull RowType row) {
         return database.rows().isHorn(row).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
@@ -224,6 +246,7 @@ public class UnitRepository extends Observable<Observer> {
      * @param units List of units to be removed.
      * @return A Completable tracking operation status.
      */
+    @NonNull
     public Completable delete(@NonNull Collection<UnitEntity> units) {
         return database.units().deleteUnits(units).andThen(notifyObservers()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
@@ -234,6 +257,7 @@ public class UnitRepository extends Observable<Observer> {
      * @param units List of UnitEntity elements that should be copied.
      * @return A Completable tracking operation status.
      */
+    @NonNull
     public Completable copy(@NonNull Collection<UnitEntity> units) {
         Completable result = Completable.complete();
         for (UnitEntity unit : units) {
@@ -249,6 +273,7 @@ public class UnitRepository extends Observable<Observer> {
      * @return A Single tracking operation status and returning the value.
      * @see #countUnits()
      */
+    @NonNull
     public Single<Integer> countUnits(@NonNull RowType row) {
         return database.units().countUnits(row).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
@@ -259,6 +284,7 @@ public class UnitRepository extends Observable<Observer> {
      * @return A Single tracking operation status and returning the value.
      * @see #countUnits(RowType)
      */
+    @NonNull
     public Single<Integer> countUnits() {
         return database.units().countUnits().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
@@ -270,6 +296,7 @@ public class UnitRepository extends Observable<Observer> {
      * @return A Single tracking operation status and returning the value.
      * @see #getUnits()
      */
+    @NonNull
     public Single<List<UnitEntity>> getUnits(@NonNull RowType row) {
         return database.units().getUnits(row).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
@@ -280,6 +307,7 @@ public class UnitRepository extends Observable<Observer> {
      * @return A Single tracking operation status and returning the value.
      * @see #getUnits(RowType)
      */
+    @NonNull
     public Single<List<UnitEntity>> getUnits() {
         return database.units().getUnits().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
