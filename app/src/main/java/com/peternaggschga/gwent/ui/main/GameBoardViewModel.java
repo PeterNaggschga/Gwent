@@ -143,8 +143,9 @@ public class GameBoardViewModel extends AndroidViewModel implements Observer {
     /**
      * Updates all the state associated with the main view, i.e., rows and menu.
      * Uses #update(RowType).
-     * @see #update(RowType)
+     *
      * @return A Completable tracking operation status.
+     * @see #update(RowType)
      */
     @NonNull
     @Override
