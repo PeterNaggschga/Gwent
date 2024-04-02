@@ -96,12 +96,13 @@ public class UnitRepository extends Observable<Observer> {
         for (RowType row : RowType.values()) {
             result = result.andThen(database.rows().insertRow(new RowEntity(row)));
         }
-        return result.andThen(notifyObservers());
+        return result;
     }
 
     /**
      * Resets the board by removing all units and resetting row status.
      * Resetting row status is equivalent to removing the old rows and calling #initializeRows().
+     * Notifies observers by calling #notifyObservers().
      * Method is a wrapper for #reset(UnitEntity).
      *
      * @return A Completable tracking operation status.
@@ -115,10 +116,12 @@ public class UnitRepository extends Observable<Observer> {
     /**
      * Resets the board by removing all units but the given one and resetting row status.
      * Resetting row status is equivalent to removing the old rows and calling #initializeRows().
+     * Notifies observers by calling #notifyObservers().
      *
      * @param keptUnit UnitEntity that should be kept.
      * @return A Completable tracking operation status.
      * @see #initializeRows()
+     * @see #notifyObservers()
      */
     @NonNull
     public Completable reset(@Nullable UnitEntity keptUnit) {
@@ -134,10 +137,11 @@ public class UnitRepository extends Observable<Observer> {
      *
      * @param unit UnitEntity that should be added.
      * @return A Completable tracking operation status.
+     * @todo See if this can be removed.
      */
     @NonNull
     private Completable insertUnit(@NonNull UnitEntity unit) {
-        return database.units().insertUnit(unit).andThen(notifyObservers()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+        return database.units().insertUnit(unit);
     }
 
     /**
@@ -152,18 +156,16 @@ public class UnitRepository extends Observable<Observer> {
      * @throws org.valid4j.errors.RequireViolation When damage is less than zero or if ability is Ability#BINDING and squad is null or less than zero or if ability is not Ability#BINDING and squad is not null.
      */
     @NonNull
-    public Completable insertUnit(boolean epic, @IntRange(from = 0) int damage, @NonNull Ability ability, @IntRange(from = 0) @Nullable Integer squad, @NonNull RowType row) {
+    private Completable insertUnit(boolean epic, @IntRange(from = 0) int damage, @NonNull Ability ability,
+                                   @IntRange(from = 0) @Nullable Integer squad, @NonNull RowType row) {
         require(damage >= 0);
         require((ability != Ability.BINDING && squad == null) || (ability == Ability.BINDING && squad != null && squad >= 0));
-        return database.units()
-                .insertUnit(epic, damage, ability, squad, row)
-                .andThen(notifyObservers())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+        return database.units().insertUnit(epic, damage, ability, squad, row);
     }
 
     /**
      * Adds a number of units with the given stats to the given row.
+     * Notifies observers by calling #notifyObservers().
      * Essentially calls #insertUnit(boolean, int, Ability, Integer, RowType) multiple times.
      *
      * @param epic    Boolean representing whether card is #epic.
@@ -173,7 +175,10 @@ public class UnitRepository extends Observable<Observer> {
      * @param row     RowType representing the combat type of the card.
      * @param number  Integer representing the number of units to be added.
      * @return A Completable tracking operation status.
+     * @see #notifyObservers()
      * @see #insertUnit(boolean, int, Ability, Integer, RowType)
+     * @throws org.valid4j.errors.RequireViolation When damage is less than zero or if ability is Ability#BINDING and squad is null or less than zero
+     * or if ability is not Ability#BINDING and squad is not null.
      */
     @NonNull
     public Completable insertUnit(boolean epic, @IntRange(from = 0) int damage, @NonNull Ability ability,
@@ -188,7 +193,9 @@ public class UnitRepository extends Observable<Observer> {
 
     /**
      * Flips RowEntity#weather of the given attack row.
+     * Notifies observers by calling #notifyObservers().
      *
+     * @see #notifyObservers()
      * @param row RowEntity#id where the weather should be updated.
      * @return A Completable tracking operation status.
      */
@@ -210,7 +217,9 @@ public class UnitRepository extends Observable<Observer> {
 
     /**
      * Sets RowEntity#weather to `false` for all attack rows.
+     * Notifies observers by calling #notifyObservers().
      *
+     * @see #notifyObservers()
      * @return A Completable tracking operation status.
      */
     @NonNull
@@ -220,7 +229,8 @@ public class UnitRepository extends Observable<Observer> {
 
     /**
      * Flips RowEntity#horn of the given attack row.
-     *
+     * Notifies observers by calling #notifyObservers().
+     * @see #notifyObservers()
      * @param row RowEntity#id where the horn status should be updated.
      * @return A Completable tracking operation status.
      */
@@ -242,7 +252,8 @@ public class UnitRepository extends Observable<Observer> {
 
     /**
      * Removes the given units from the game.
-     *
+     * Notifies observers by calling #notifyObservers().
+     * @see #notifyObservers()
      * @param units List of units to be removed.
      * @return A Completable tracking operation status.
      */
@@ -253,7 +264,8 @@ public class UnitRepository extends Observable<Observer> {
 
     /**
      * Copies the given units.
-     *
+     * Notifies observers by calling #notifyObservers().
+     * @see #notifyObservers()
      * @param units List of UnitEntity elements that should be copied.
      * @return A Completable tracking operation status.
      */

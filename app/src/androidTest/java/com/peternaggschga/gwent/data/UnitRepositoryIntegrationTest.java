@@ -2,6 +2,12 @@ package com.peternaggschga.gwent.data;
 
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.fail;
+import static org.mockito.Mockito.atLeast;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import androidx.room.Room;
 import androidx.test.core.app.ApplicationProvider;
@@ -16,8 +22,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.valid4j.errors.RequireViolation;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 @RunWith(AndroidJUnit4.class)
@@ -25,11 +33,15 @@ public class UnitRepositoryIntegrationTest {
     private static final int TESTING_DEPTH = 50;
     private AppDatabase database;
     private UnitRepository repository;
+    private Observer mockObserver;
 
     @Before
     public void initDatabase() {
         database = Room.inMemoryDatabaseBuilder(ApplicationProvider.getApplicationContext(), AppDatabase.class).build();
         repository = UnitRepository.getRepository(database).blockingGet();
+        mockObserver = mock(Observer.class);
+        when(mockObserver.update()).thenReturn(Completable.complete());
+        repository.registerObserver(mockObserver);
     }
 
     @After
@@ -72,6 +84,22 @@ public class UnitRepositoryIntegrationTest {
     }
 
     @Test
+    public void notifyObserversUpdatesAllObservers() {
+        repository.unregisterAll();
+        List<Observer> mockObservers = new ArrayList<>(TESTING_DEPTH);
+        for (int i = 1; i <= TESTING_DEPTH; i++) {
+            Observer mockObserver = mock(Observer.class);
+            when(mockObserver.update()).thenReturn(Completable.complete());
+            mockObservers.add(mockObserver);
+            repository.registerObserver(mockObserver);
+            repository.reset().blockingAwait();
+            for (int j = 0; j < mockObservers.size(); j++) {
+                verify(mockObservers.get(j), atLeast(i - j)).update();
+            }
+        }
+    }
+
+    @Test
     public void resetNullDeletesUnits() {
         for (int i = 0; i < TESTING_DEPTH; i++) {
             for (RowType row : RowType.values()) {
@@ -83,6 +111,12 @@ public class UnitRepositoryIntegrationTest {
                 .andThen(database.units().countUnits())
                 .blockingGet()
         ).isEqualTo(0);
+    }
+
+    @Test
+    public void resetNullNotifiesObservers() {
+        repository.reset().blockingAwait();
+        verify(mockObserver).update();
     }
 
     @Test
@@ -114,19 +148,13 @@ public class UnitRepositoryIntegrationTest {
     }
 
     @Test
-    public void insertUnitAddsUnits() {
-        for (int unitNumber = 0; unitNumber < TESTING_DEPTH; unitNumber++) {
-            repository.insertUnit(unitNumber % 5 == 0,
-                    unitNumber % 10,
-                    Ability.values()[unitNumber % 3],
-                    null,
-                    RowType.values()[unitNumber % 3]).blockingAwait();
-        }
-        database.units().countUnits().test().assertValue(TESTING_DEPTH);
+    public void resetNotifiesObservers() {
+        repository.reset(null).blockingAwait();
+        verify(mockObserver).update();
     }
 
     @Test
-    public void insertUnitNumberAddsUnits() {
+    public void insertUnitAddsUnits() {
         assertThat(repository.insertUnit(false, 5, Ability.NONE, null, RowType.MELEE, TESTING_DEPTH)
                 .observeOn(Schedulers.io())
                 .andThen(database.units().countUnits())
@@ -135,9 +163,15 @@ public class UnitRepositoryIntegrationTest {
     }
 
     @Test
+    public void insertUnitNotifiesObservers() {
+        repository.insertUnit(false, 0, Ability.NONE, null, RowType.MELEE, TESTING_DEPTH).blockingAwait();
+        verify(mockObserver).update();
+    }
+
+    @Test
     public void insertUnitAssertsNonNegativeDamage() {
         try {
-            repository.insertUnit(false, -1, Ability.NONE, null, RowType.MELEE).blockingAwait();
+            repository.insertUnit(false, -1, Ability.NONE, null, RowType.MELEE, 1).blockingAwait();
             fail();
         } catch (RequireViolation ignored) {
         }
@@ -151,7 +185,7 @@ public class UnitRepositoryIntegrationTest {
     @Test
     public void insertUnitAllowsZeroDamage() {
         try {
-            repository.insertUnit(false, 0, Ability.NONE, null, RowType.MELEE)
+            repository.insertUnit(false, 0, Ability.NONE, null, RowType.MELEE, 1)
                     .andThen(repository.insertUnit(false, 0, Ability.NONE, null, RowType.MELEE, 5))
                     .blockingAwait();
         } catch (Exception ignored) {
@@ -162,7 +196,7 @@ public class UnitRepositoryIntegrationTest {
     @Test
     public void insertUnitAssertsSquadNullForOtherAbilities() {
         try {
-            repository.insertUnit(false, 0, Ability.NONE, 0, RowType.MELEE).blockingAwait();
+            repository.insertUnit(false, 0, Ability.NONE, 0, RowType.MELEE, 1).blockingAwait();
             fail();
         } catch (RequireViolation ignored) {
         }
@@ -176,7 +210,7 @@ public class UnitRepositoryIntegrationTest {
     @Test
     public void insertUnitAssertsSquadNonNegativeForBinding() {
         try {
-            repository.insertUnit(false, 0, Ability.BINDING, -1, RowType.MELEE).blockingAwait();
+            repository.insertUnit(false, 0, Ability.BINDING, -1, RowType.MELEE, 1).blockingAwait();
             fail();
         } catch (RequireViolation ignored) {
         }
@@ -190,7 +224,7 @@ public class UnitRepositoryIntegrationTest {
     @Test
     public void insertUnitAllowsZeroForBinding() {
         try {
-            repository.insertUnit(false, 0, Ability.BINDING, 0, RowType.MELEE)
+            repository.insertUnit(false, 0, Ability.BINDING, 0, RowType.MELEE, 1)
                     .andThen(repository.insertUnit(false, 0, Ability.BINDING, 0, RowType.MELEE, 5))
                     .blockingAwait();
         } catch (Exception ignored) {
@@ -201,7 +235,7 @@ public class UnitRepositoryIntegrationTest {
     @Test
     public void insertUnitAssertsSquadNonNullForBinding() {
         try {
-            repository.insertUnit(false, 0, Ability.BINDING, null, RowType.MELEE).blockingAwait();
+            repository.insertUnit(false, 0, Ability.BINDING, null, RowType.MELEE, 1).blockingAwait();
             fail();
         } catch (RequireViolation ignored) {
         }
@@ -216,7 +250,7 @@ public class UnitRepositoryIntegrationTest {
     public void insertUnitAssertsRowNotNull() {
         try {
             //noinspection DataFlowIssue
-            repository.insertUnit(false, 5, Ability.NONE, null, null).blockingAwait();
+            repository.insertUnit(false, 5, Ability.NONE, null, null, 1).blockingAwait();
             fail();
         } catch (NullPointerException ignored) {
         }
@@ -255,6 +289,14 @@ public class UnitRepositoryIntegrationTest {
     }
 
     @Test
+    public void switchWeatherNotifiesObservers() {
+        for (RowType row : RowType.values()) {
+            repository.switchWeather(row).blockingAwait();
+        }
+        verify(mockObserver, times(RowType.values().length)).update();
+    }
+
+    @Test
     public void isWeatherReturnsWeather() {
         for (RowType row : RowType.values()) {
             assertThat(repository.isWeather(row).blockingGet()).isFalse();
@@ -287,6 +329,12 @@ public class UnitRepositoryIntegrationTest {
     }
 
     @Test
+    public void clearWeatherNotifiesObservers() {
+        repository.clearWeather().blockingAwait();
+        verify(mockObserver).update();
+    }
+
+    @Test
     public void switchHornSwitchesHorn() {
         for (RowType row : RowType.values()) {
             assertThat(repository.switchHorn(row)
@@ -310,6 +358,14 @@ public class UnitRepositoryIntegrationTest {
             fail();
         } catch (NullPointerException ignored) {
         }
+    }
+
+    @Test
+    public void switchHornNotifiesObservers() {
+        for (RowType row : RowType.values()) {
+            repository.switchHorn(row).blockingAwait();
+        }
+        verify(mockObserver, times(RowType.values().length)).update();
     }
 
     @Test
@@ -357,6 +413,16 @@ public class UnitRepositoryIntegrationTest {
     }
 
     @Test
+    public void deleteNotifiesObservers() {
+        insertDummys();
+        List<UnitEntity> units = repository.getUnits().blockingGet();
+        reset(mockObserver);
+        when(mockObserver.update()).thenReturn(Completable.complete());
+        repository.delete(units);
+        verify(mockObserver).update();
+    }
+
+    @Test
     public void copyCopiesUnits() {
         insertDummys();
 
@@ -377,6 +443,16 @@ public class UnitRepositoryIntegrationTest {
             fail();
         } catch (NullPointerException ignored) {
         }
+    }
+
+    @Test
+    public void copyNotifiesObservers() {
+        insertDummys();
+        List<UnitEntity> units = repository.getUnits().blockingGet();
+        reset(mockObserver);
+        when(mockObserver.update()).thenReturn(Completable.complete());
+        repository.copy(units).blockingAwait();
+        verify(mockObserver).update();
     }
 
     @Test
