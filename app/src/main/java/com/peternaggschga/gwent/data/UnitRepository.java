@@ -85,7 +85,7 @@ public class UnitRepository extends Observable<Observer> {
     }
 
     /**
-     * Adds one attack row for each RowType asynchronously.
+     * Adds one attack row for each RowType.
      * If an attack row already exists, it is not inserted again.
      *
      * @return A Completable tracking operation status.
@@ -100,7 +100,7 @@ public class UnitRepository extends Observable<Observer> {
     }
 
     /**
-     * Resets the board asynchronously by removing all units and resetting row status.
+     * Resets the board by removing all units and resetting row status.
      * Resetting row status is equivalent to removing the old rows and calling #initializeRows().
      * Method is a wrapper for #reset(UnitEntity).
      *
@@ -113,7 +113,7 @@ public class UnitRepository extends Observable<Observer> {
     }
 
     /**
-     * Resets the board asynchronously by removing all units but the given one and resetting row status.
+     * Resets the board by removing all units but the given one and resetting row status.
      * Resetting row status is equivalent to removing the old rows and calling #initializeRows().
      *
      * @param keptUnit UnitEntity that should be kept.
@@ -130,7 +130,7 @@ public class UnitRepository extends Observable<Observer> {
     }
 
     /**
-     * Adds the given UnitEntity asynchronously.
+     * Adds the given UnitEntity.
      *
      * @param unit UnitEntity that should be added.
      * @return A Completable tracking operation status.
@@ -141,7 +141,7 @@ public class UnitRepository extends Observable<Observer> {
     }
 
     /**
-     * Adds a unit with the given stats to the given row asynchronously.
+     * Adds a unit with the given stats to the given row.
      *
      * @param epic    Boolean representing whether card is #epic.
      * @param damage  Non-negative value representing the #damage of the card.
@@ -163,7 +163,7 @@ public class UnitRepository extends Observable<Observer> {
     }
 
     /**
-     * Adds a number of units with the given stats to the given row asynchronously.
+     * Adds a number of units with the given stats to the given row.
      * Essentially calls #insertUnit(boolean, int, Ability, Integer, RowType) multiple times.
      *
      * @param epic    Boolean representing whether card is #epic.
@@ -187,7 +187,7 @@ public class UnitRepository extends Observable<Observer> {
     }
 
     /**
-     * Flips RowEntity#weather of the given attack row asynchronously.
+     * Flips RowEntity#weather of the given attack row.
      *
      * @param row RowEntity#id where the weather should be updated.
      * @return A Completable tracking operation status.
@@ -198,7 +198,7 @@ public class UnitRepository extends Observable<Observer> {
     }
 
     /**
-     * Returns the value of RowEntity#weather for the given attack row asynchronously.
+     * Returns the value of RowEntity#weather for the given attack row.
      *
      * @param row RowEntity#id where the weather is queried.
      * @return A Single tracking operation status and returning the value.
@@ -209,7 +209,7 @@ public class UnitRepository extends Observable<Observer> {
     }
 
     /**
-     * Sets RowEntity#weather to `false` asynchronously for all attack rows.
+     * Sets RowEntity#weather to `false` for all attack rows.
      *
      * @return A Completable tracking operation status.
      */
@@ -219,7 +219,7 @@ public class UnitRepository extends Observable<Observer> {
     }
 
     /**
-     * Flips RowEntity#horn of the given attack row asynchronously.
+     * Flips RowEntity#horn of the given attack row.
      *
      * @param row RowEntity#id where the horn status should be updated.
      * @return A Completable tracking operation status.
@@ -230,7 +230,7 @@ public class UnitRepository extends Observable<Observer> {
     }
 
     /**
-     * Returns the value of RowEntity#horn for the given attack row asynchronously.
+     * Returns the value of RowEntity#horn for the given attack row.
      *
      * @param row RowEntity#id where the horn status is queried.
      * @return A Single tracking operation status and returning the value.
@@ -241,7 +241,7 @@ public class UnitRepository extends Observable<Observer> {
     }
 
     /**
-     * Removes the given units from the game asynchronously.
+     * Removes the given units from the game.
      *
      * @param units List of units to be removed.
      * @return A Completable tracking operation status.
@@ -252,7 +252,7 @@ public class UnitRepository extends Observable<Observer> {
     }
 
     /**
-     * Copies the given units asynchronously.
+     * Copies the given units.
      *
      * @param units List of UnitEntity elements that should be copied.
      * @return A Completable tracking operation status.
@@ -267,7 +267,7 @@ public class UnitRepository extends Observable<Observer> {
     }
 
     /**
-     * Counts the units in the given attack row asynchronously.
+     * Counts the units in the given attack row.
      *
      * @param row RowEntity#id where the units are counted.
      * @return A Single tracking operation status and returning the value.
@@ -279,7 +279,7 @@ public class UnitRepository extends Observable<Observer> {
     }
 
     /**
-     * Counts the units in all attack rows asynchronously.
+     * Counts the units in all attack rows.
      *
      * @return A Single tracking operation status and returning the value.
      * @see #countUnits(RowType)
@@ -290,7 +290,7 @@ public class UnitRepository extends Observable<Observer> {
     }
 
     /**
-     * Returns the units in the given attack row asynchronously.
+     * Returns the units in the given attack row.
      *
      * @param row RowEntity#id where the units have been placed.
      * @return A Single tracking operation status and returning the value.
@@ -302,7 +302,7 @@ public class UnitRepository extends Observable<Observer> {
     }
 
     /**
-     * Returns the units in the given attack row asynchronously.
+     * Returns the units in the given attack row.
      *
      * @return A Single tracking operation status and returning the value.
      * @see #getUnits(RowType)
