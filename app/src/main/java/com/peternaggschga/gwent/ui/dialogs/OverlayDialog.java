@@ -20,7 +20,7 @@ import java.util.Objects;
  * The Dialog is cancelable when a #cancelViewId is specified (else it is #NO_CANCEL_VIEW).
  * The view specified by #cancelViewId may be clicked to dismiss the dialog.
  */
-class OverlayDialog extends Dialog {
+public class OverlayDialog extends Dialog {
     /**
      * Integer used as #cancelViewId, when the Dialog shouldn't be cancelable.
      *
@@ -53,7 +53,7 @@ class OverlayDialog extends Dialog {
      * @param layout Integer referencing the layout shown by the created OverlayDialog.
      * @param cancelViewId Integer referencing the cancel view or #NO_CANCEL_VIEW.
      */
-    OverlayDialog(@NonNull Context context, @LayoutRes int layout, @IdRes int cancelViewId) {
+    protected OverlayDialog(@NonNull Context context, @LayoutRes int layout, @IdRes int cancelViewId) {
         super(context);
         this.layout = layout;
         this.cancelViewId = cancelViewId;
@@ -66,7 +66,7 @@ class OverlayDialog extends Dialog {
      * @param context Context of the created OverlayDialog.
      * @param layout Integer referencing the layout shown by the created OverlayDialog.
      */
-    OverlayDialog(@NonNull Context context, @LayoutRes int layout) {
+    protected OverlayDialog(@NonNull Context context, @LayoutRes int layout) {
         this(context, layout, NO_CANCEL_VIEW);
     }
 

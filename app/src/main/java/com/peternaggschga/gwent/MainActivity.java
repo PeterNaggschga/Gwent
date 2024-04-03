@@ -14,7 +14,7 @@ import androidx.preference.PreferenceManager;
 
 import com.peternaggschga.gwent.ui.dialogs.ChangeFactionDialog;
 import com.peternaggschga.gwent.ui.dialogs.CoinFlipDialog;
-import com.peternaggschga.gwent.ui.dialogs.ShowUnitsDialog;
+import com.peternaggschga.gwent.ui.dialogs.cards.ShowUnitsDialog;
 import com.peternaggschga.gwent.ui.main.FactionSwitchListener;
 import com.peternaggschga.gwent.ui.main.GameBoardViewModel;
 import com.peternaggschga.gwent.ui.main.MenuUiStateObserver;
