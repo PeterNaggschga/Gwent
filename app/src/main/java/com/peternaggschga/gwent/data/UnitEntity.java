@@ -1,5 +1,7 @@
 package com.peternaggschga.gwent.data;
 
+import static com.peternaggschga.gwent.domain.damage.DamageCalculator.Color;
+import static com.peternaggschga.gwent.domain.damage.DamageCalculator.Color.DEFAULT;
 import static org.valid4j.Assertive.require;
 
 import android.content.Context;
@@ -111,6 +113,22 @@ public class UnitEntity {
      */
     public int calculateDamage(@NonNull DamageCalculator calculator) {
         return epic ? damage : calculator.calculateDamage(id, damage);
+    }
+
+    /**
+     * Returns whether this unit is (de-)buffed.
+     * Returns Color#DEFAULT if #epic is true.
+     * Otherwise, whether the unit is (de-)buffed is calculated through the given DamageCalculator,
+     * which follows the visitor pattern.
+     *
+     * @param calculator DamageCalculator visitor used for damage calculation.
+     * @return Integer representing the units (de-)buffed damage.
+     * @todo Add testing.
+     * @see #getDamage()
+     */
+    @NonNull
+    public Color isBuffed(@NonNull DamageCalculator calculator) {
+        return epic ? DEFAULT : calculator.isBuffed(id);
     }
 
     /**

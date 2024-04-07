@@ -1,5 +1,6 @@
 package com.peternaggschga.gwent.domain.damage;
 
+import static com.peternaggschga.gwent.domain.damage.DamageCalculator.Color.BUFFED;
 import static org.valid4j.Assertive.require;
 
 import androidx.annotation.IntRange;
@@ -51,7 +52,23 @@ class BondDamageCalculatorDecorator extends DamageCalculatorDecorator {
     @Override
     public int calculateDamage(int id, @IntRange(from = 0) int damage) {
         require(damage >= 0);
-        int componentDamage = component.calculateDamage(id, damage);
-        return idToSquadSize.containsKey(id) ? componentDamage * Objects.requireNonNull(idToSquadSize.get(id)) : componentDamage;
+        return Objects.requireNonNull(idToSquadSize.getOrDefault(id, 1)) * component.calculateDamage(id, damage);
+    }
+
+    /**
+     * Calculates whether the unit with the given id is shown as Color#BUFFED,
+     * Color#DEBUFFED, or Color#DEFAULT.
+     * Units are shown as Color#BUFFED when they are in a squad of two or more units,
+     * otherwise their Color is defined by #component.
+     *
+     * @param id Integer representing the UnitEntity#id of the unit buff status is calculated.
+     * @return Color representing whether the unit is buffed, de-buffed or not affected.
+     * @see Color
+     */
+    @Override
+    public Color isBuffed(int id) {
+        return (Objects.requireNonNull(idToSquadSize.getOrDefault(id, 0)) > 1)
+                ? BUFFED
+                : component.isBuffed(id);
     }
 }
