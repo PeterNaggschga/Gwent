@@ -32,6 +32,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
  * @todo Check which methods can be dropped.
  * @todo Add method to get non-epic units and replace stream.filter() calls.
  * @todo Add method to get units of a certain ability and replace stream.filter() calls.
+ * @todo Add caching proxy.
  */
 public class UnitRepository extends Observable<Observer> {
     /**
