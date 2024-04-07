@@ -50,7 +50,16 @@ interface UnitDao {
     Completable insertUnit(boolean epic, @IntRange(from = 0) int damage, @NonNull Ability ability, @IntRange(from = 0) @Nullable Integer squad, @NonNull RowType row);
 
     /**
-     * Deletes the given UnitEntity objects from `units` asynchronously.
+     * Deletes the UnitEntity object with the given id from `units`.
+     * @todo Add testing.
+     * @param id Integer representing the UnitEntity#id of the deleted UnitEntity.
+     * @return A Completable tracking operation status.
+     */
+    @Query("DELETE FROM units WHERE `id` = :id")
+    Completable deleteUnit(int id);
+
+    /**
+     * Deletes the given UnitEntity objects from `units`.
      *
      * @param units List of UnitEntity that are being inserted.
      * @return A Completable tracking operation status.

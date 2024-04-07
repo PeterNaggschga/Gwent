@@ -264,6 +264,20 @@ public class UnitRepository extends Observable<Observer> {
     }
 
     /**
+     * Removes the unit with the given id from the game.
+     * Notifies observers by calling #notifyObservers().
+     *
+     * @param id Integer representing the unit that should be deleted.
+     * @return A Completable tracking operation status.
+     * @todo Add testing.
+     * @see #notifyObservers()
+     */
+    @NonNull
+    public Completable delete(int id) {
+        return database.units().deleteUnit(id).andThen(notifyObservers()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+    }
+
+    /**
      * Copies the unit with the given id.
      * Notifies observers by calling #notifyObservers().
      * @see #notifyObservers()
