@@ -199,7 +199,7 @@ public class GameBoardViewModel extends AndroidViewModel implements Observer {
     /**
      * Updates the weather debuff of the given row.
      * Flips between good and bad weather.
-     * @param row RowType defining the effected row.
+     * @param row RowType defining the affected row.
      * @return A Single emitting a Boolean defining the weather status of the row after the operation.
      * @see UnitRepository#switchWeather(RowType)
      */
@@ -214,7 +214,7 @@ public class GameBoardViewModel extends AndroidViewModel implements Observer {
     /**
      * Updates the horn buff of the given row.
      * Flips between on and off.
-     * @param row RowType defining the effected row.
+     * @param row RowType defining the affected row.
      * @return A Single emitting a Boolean defining the horn status of the row after the operation.
      * @see UnitRepository#switchHorn(RowType)
      */
