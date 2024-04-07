@@ -933,7 +933,7 @@ public class OldMainActivity extends AppCompatActivity {
                 abilityView.setVisibility(View.VISIBLE);
             }
 
-            final ImageView copyButtonBackground = cardView.findViewById(R.id.copyButtonBackground);
+            final ImageView copyButtonBackground = cardView.findViewById(R.id.copyButton);
             cardView.findViewById(R.id.copyButton).setOnClickListener(view1 -> {
                 boolean contained = copyUnits.contains(unit);
                 ImageViewAnimatedChange(OldMainActivity.this, (ImageView) view1, copyButtonBackground, contained ? R.drawable.icon_copy_grey : R.drawable.icon_copy);
@@ -943,7 +943,7 @@ public class OldMainActivity extends AppCompatActivity {
                     copyUnits.add(unit);
                 }
             });
-            final ImageView deleteButtonBackground = cardView.findViewById(R.id.deleteButtonBackground);
+            final ImageView deleteButtonBackground = cardView.findViewById(R.id.deleteButton);
             cardView.findViewById(R.id.deleteButton).setOnClickListener(view12 -> {
                 boolean contained = deleteUnits.contains(unit);
                 ImageViewAnimatedChange(OldMainActivity.this, (ImageView) view12, deleteButtonBackground, contained ? R.drawable.icon_delete_grey : R.drawable.icon_delete);
