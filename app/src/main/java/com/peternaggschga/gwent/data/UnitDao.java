@@ -59,7 +59,16 @@ interface UnitDao {
     Completable deleteUnits(@NonNull Collection<UnitEntity> units);
 
     /**
-     * Fetches all UnitEntity objects from `units` in the given row asynchronously.
+     * Fetches the UnitEntity object with the given id from `units`.
+     * @todo Add testing.
+     * @param id Integer representing the UnitEntity#id of the requested UnitEntity. 
+     * @return A Single tracking operation status and returning the value.
+     */
+    @Query("SELECT * FROM units WHERE `id` = :id")
+    Single<UnitEntity> getUnit(int id);
+
+    /**
+     * Fetches all UnitEntity objects from `units` in the given row.
      *
      * @param row RowType defining the UnitEntity#row foreign key.
      * @return A Single tracking operation status and returning the value.

@@ -264,19 +264,18 @@ public class UnitRepository extends Observable<Observer> {
     }
 
     /**
-     * Copies the given units.
+     * Copies the unit with the given id.
      * Notifies observers by calling #notifyObservers().
      * @see #notifyObservers()
-     * @param units List of UnitEntity elements that should be copied.
+     * @param id Integer representing the unit that should be copied.
      * @return A Completable tracking operation status.
      */
     @NonNull
-    public Completable copy(@NonNull Collection<UnitEntity> units) {
-        Completable result = Completable.complete();
-        for (UnitEntity unit : units) {
-            result = result.andThen(insertUnit(unit.isEpic(), unit.getDamage(), unit.getAbility(), unit.getSquad(), unit.getRow()));
-        }
-        return result.andThen(notifyObservers()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+    public Completable copy(int id) {
+        return getUnit(id).flatMapCompletable(unit -> insertUnit(unit.isEpic(), unit.getDamage(), unit.getAbility(), unit.getSquad(), unit.getRow()))
+                .andThen(notifyObservers())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     /**
@@ -300,6 +299,18 @@ public class UnitRepository extends Observable<Observer> {
     @NonNull
     public Single<Integer> countUnits() {
         return database.units().countUnits().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+    }
+
+    /**
+     * Returns the unit with the given id.
+     *
+     * @param id Integer representing the queried unit.
+     * @return A Single tracking operation status and returning the value.
+     * @todo Add testing.
+     */
+    @NonNull
+    public Single<UnitEntity> getUnit(int id) {
+        return database.units().getUnit(id).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 
     /**

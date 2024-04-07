@@ -37,7 +37,9 @@ public class UnitRepositoryIntegrationTest {
 
     @Before
     public void initDatabase() {
-        database = Room.inMemoryDatabaseBuilder(ApplicationProvider.getApplicationContext(), AppDatabase.class).build();
+        database = Room.inMemoryDatabaseBuilder(ApplicationProvider.getApplicationContext(), AppDatabase.class)
+                .allowMainThreadQueries()
+                .build();
         repository = UnitRepository.getRepository(database).blockingGet();
         mockObserver = mock(Observer.class);
         when(mockObserver.update()).thenReturn(Completable.complete());
@@ -427,22 +429,11 @@ public class UnitRepositoryIntegrationTest {
         insertDummys();
 
         List<UnitEntity> units = database.units().getUnits().blockingGet();
-        assertThat(repository.copy(units)
+        assertThat(repository.copy(units.get(0).getId())
                 .observeOn(Schedulers.io())
                 .andThen(database.units().countUnits())
                 .blockingGet())
-                .isEqualTo(units.size() * 2);
-    }
-
-    @Test
-    public void copyAssertsNonNull() {
-        try {
-            //noinspection DataFlowIssue
-            repository.copy(null)
-                    .blockingAwait();
-            fail();
-        } catch (NullPointerException ignored) {
-        }
+                .isEqualTo(units.size() + 1);
     }
 
     @Test
@@ -451,7 +442,7 @@ public class UnitRepositoryIntegrationTest {
         List<UnitEntity> units = repository.getUnits().blockingGet();
         reset(mockObserver);
         when(mockObserver.update()).thenReturn(Completable.complete());
-        repository.copy(units).blockingAwait();
+        repository.copy(units.get(0).getId()).blockingAwait();
         verify(mockObserver).update();
     }
 
