@@ -26,7 +26,7 @@ import io.reactivex.rxjava3.core.Single;
 @SuppressWarnings("NullableProblems")
 interface UnitDao {
     /**
-     * Inserts the given UnitEntity into `units` asynchronously.
+     * Inserts the given UnitEntity into `units`.
      * If the same UnitEntity#id is already in the table, the new insert is ignored.
      *
      * @param unit UnitEntity that is being inserted.
@@ -36,7 +36,7 @@ interface UnitDao {
     Completable insertUnit(@NonNull UnitEntity unit);
 
     /**
-     * Inserts a UnitEntity with the given values into `units` asynchronously.
+     * Inserts a UnitEntity with the given values into `units`.
      *
      * @param epic    Boolean defining whether the unit is epic.
      * @param damage  Non-Negative value defining the base-damage of the unit.
@@ -86,7 +86,7 @@ interface UnitDao {
     Single<List<UnitEntity>> getUnits(@NonNull RowType row);
 
     /**
-     * Fetches all UnitEntity objects from `units` asynchronously.
+     * Fetches all UnitEntity objects from `units`.
      *
      * @return A Single tracking operation status and returning the value.
      */
@@ -94,7 +94,7 @@ interface UnitDao {
     Single<List<UnitEntity>> getUnits();
 
     /**
-     * Counts UnitEntity objects in `units` in the given row asynchronously.
+     * Counts UnitEntity objects in `units` in the given row.
      *
      * @param row RowType defining the UnitEntity#row foreign key.
      * @return A Single tracking operation status and returning the value.
@@ -103,7 +103,7 @@ interface UnitDao {
     Single<Integer> countUnits(@NonNull RowType row);
 
     /**
-     * Counts UnitEntity objects in `units` asynchronously.
+     * Counts UnitEntity objects in `units`.
      *
      * @return A Single tracking operation status and returning the value.
      */
