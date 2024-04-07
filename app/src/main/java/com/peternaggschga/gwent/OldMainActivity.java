@@ -876,7 +876,7 @@ public class OldMainActivity extends AppCompatActivity {
     private void inflateCardPopup(@NonNull final Row row, View view) {
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         ConstraintLayout popupLayout = (ConstraintLayout) inflater.inflate(R.layout.popup_cards, (ViewGroup) getWindow().getDecorView(), false);
-        LinearLayout cardsList = popupLayout.findViewById(R.id.cardsList).findViewById(R.id.cardListLayout);
+        LinearLayout cardsList = popupLayout.findViewById(R.id.cardsList).findViewById(R.id.cardsList);
         for (final Unit unit : row.getAllUnits()) {
             final View cardView = inflater.inflate(R.layout.card, cardsList, false);
             TextView damageView = cardView.findViewById(R.id.damageView);
@@ -955,7 +955,7 @@ public class OldMainActivity extends AppCompatActivity {
             });
             cardsList.addView(cardView);
         }
-        cardsList.findViewById(R.id.popup_cards_add).setOnClickListener(view13 -> {
+        cardsList.findViewById(R.id.popup_cards_add_button).setOnClickListener(view13 -> {
             popupWindow.dismiss();
             inflateAddCardPopup(row, view13);
         });
@@ -964,7 +964,7 @@ public class OldMainActivity extends AppCompatActivity {
             deleteUnits.clear();
             popupWindow.dismiss();
         });
-        popupLayout.findViewById(R.id.popup_cards_save_button).setOnClickListener(view15 -> {
+        popupLayout.findViewById(R.id.popup_cards_add_button).setOnClickListener(view15 -> {
             int revengeUnits = 0;
             for (Unit unit : deleteUnits) {
                 if (unit.isRevenge()) {

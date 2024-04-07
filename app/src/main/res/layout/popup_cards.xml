@@ -6,9 +6,8 @@
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintTop_toTopOf="parent">
 
-    <include
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/cardsList"
-        layout="@layout/cards_list"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/popUp_card_list_height"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,18 +26,18 @@
         android:textColor="@color/color_add_card_text"
         android:textSize="@dimen/popUp_card_textSize"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/popup_cards_save_button"
+        app:layout_constraintEnd_toStartOf="@id/popup_cards_add_button"
         app:layout_constraintHeight_max="@dimen/popUp_card_button_height"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cardsList" />
 
     <Button
-        android:id="@+id/popup_cards_save_button"
+        android:id="@+id/popup_cards_add_button"
         android:layout_width="@dimen/popUp_card_button_width"
         android:layout_height="0dp"
         android:layout_margin="@dimen/border_margin"
         android:background="?attr/card_background_drawable"
-        android:text="@string/popUp_cards_save"
+        android:text="@string/popUp_cards_add"
         android:textAllCaps="false"
         android:textColor="?attr/card_count_text_color"
         android:textSize="@dimen/popUp_card_textSize"

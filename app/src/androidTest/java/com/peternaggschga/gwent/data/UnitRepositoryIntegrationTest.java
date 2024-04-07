@@ -38,7 +38,6 @@ public class UnitRepositoryIntegrationTest {
     @Before
     public void initDatabase() {
         database = Room.inMemoryDatabaseBuilder(ApplicationProvider.getApplicationContext(), AppDatabase.class)
-                .allowMainThreadQueries()
                 .build();
         repository = UnitRepository.getRepository(database).blockingGet();
         mockObserver = mock(Observer.class);
