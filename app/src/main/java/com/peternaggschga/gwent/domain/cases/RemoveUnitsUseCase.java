@@ -12,6 +12,7 @@ import com.peternaggschga.gwent.data.UnitEntity;
 import com.peternaggschga.gwent.data.UnitRepository;
 
 import java.util.Collection;
+import java.util.Collections;
 
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.CompletableEmitter;
@@ -23,7 +24,7 @@ import io.reactivex.rxjava3.core.CompletableEmitter;
  *
  * @see BurnDialogUseCase
  */
-class RemoveUnitsUseCase {
+public class RemoveUnitsUseCase {
     /**
      * Removes the given UnitEntity objects from the given UnitRepository.
      * If a UnitEntity has the Ability#REVENGE ability,
@@ -38,7 +39,8 @@ class RemoveUnitsUseCase {
      * @see UnitRepository#delete(Collection)
      */
     @NonNull
-    static Completable remove(@NonNull Context context, @NonNull UnitRepository repository, @NonNull Collection<UnitEntity> units) {
+    public static Completable remove(@NonNull Context context, @NonNull UnitRepository repository,
+                                     @NonNull Collection<UnitEntity> units) {
         long revengeUnits = units.stream()
                 .filter(unit -> unit.getAbility() == Ability.REVENGE)
                 .count();
@@ -48,6 +50,26 @@ class RemoveUnitsUseCase {
         return Completable.create(emitter ->
                 getRevengeDialog(context, repository, emitter, units, (int) revengeUnits).show()
         );
+    }
+
+    /**
+     * Removes the unit with the given id from the given UnitRepository.
+     * If the unit has the Ability#REVENGE ability,
+     * a Dialog asking whether the ability should be used is shown.
+     * Wrapper of #remove(Context, UnitRepository, Collection).
+     *
+     * @param context    Context of the shown Dialog.
+     * @param repository UnitRepository where the UnitEntity objects are removed.
+     * @param id         Integer
+     * @return A Completable tracking operation status.
+     * @todo Add testing.
+     * @see #remove(Context, UnitRepository, Collection)
+     */
+    public static Completable remove(@NonNull Context context, @NonNull UnitRepository repository,
+                                     int id) {
+        return repository.getUnit(id)
+                .flatMapCompletable(unitEntity ->
+                        remove(context, repository, Collections.singletonList(unitEntity)));
     }
 
     /**
