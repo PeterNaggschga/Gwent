@@ -12,6 +12,8 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.lifecycle.viewmodel.ViewModelInitializer;
 
 import com.peternaggschga.gwent.GwentApplication;
@@ -42,13 +44,24 @@ public class GameBoardViewModel extends AndroidViewModel implements Observer {
      * @see androidx.lifecycle.ViewModelProvider.Factory#from(ViewModelInitializer[])
      */
     @NonNull
-    public static final ViewModelInitializer<GameBoardViewModel> initializer = new ViewModelInitializer<>(
+    private static final ViewModelInitializer<GameBoardViewModel> INITIALIZER = new ViewModelInitializer<>(
             GameBoardViewModel.class,
             creationExtras -> {
                 GwentApplication app = (GwentApplication) creationExtras.get(APPLICATION_KEY);
                 assert app != null;
                 return new GameBoardViewModel(app);
             });
+
+    /**
+     * Constructor of a GameBoardViewModel object.
+     * Should only be called in #initializer.
+     *
+     * @param application GwentApplication that uses this AndroidViewModel.
+     * @see #INITIALIZER
+     */
+    private GameBoardViewModel(@NonNull GwentApplication application) {
+        super(application);
+    }
 
     /**
      * A map structure containing the MutableLiveData objects emitting the RowUiState for each row.
@@ -67,14 +80,23 @@ public class GameBoardViewModel extends AndroidViewModel implements Observer {
     private MediatorLiveData<MenuUiState> menuUiState;
 
     /**
-     * Constructor of a GameBoardViewModel object.
-     * Should only be called in #initializer.
+     * Factory method of a GameBoardViewModel.
+     * Creates a new GameBoardViewModel for the given owner
+     * and registers it as an observer of the given UnitRepository.
      *
-     * @param application GwentApplication that uses this AndroidViewModel.
-     * @see #initializer
+     * @param owner      ViewModelStoreOwner instantiating the GameBoardViewModel.
+     * @param repository UnitRepository that the GameBoardViewModel is observing.
+     * @return A new GameBoardViewModel instance.
+     * @see UnitRepository#registerObserver(Object)
+     * @see ViewModelProvider#ViewModelProvider(ViewModelStoreOwner, ViewModelProvider.Factory)
      */
-    private GameBoardViewModel(@NonNull GwentApplication application) {
-        super(application);
+    @NonNull
+    public static GameBoardViewModel getModel(@NonNull ViewModelStoreOwner owner,
+                                              @NonNull UnitRepository repository) {
+        GameBoardViewModel result = new ViewModelProvider(owner, ViewModelProvider.Factory.from(INITIALIZER))
+                .get(GameBoardViewModel.class);
+        repository.registerObserver(result);
+        return result;
     }
 
     /**

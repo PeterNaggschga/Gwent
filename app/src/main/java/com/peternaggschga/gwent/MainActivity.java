@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
 
 import com.peternaggschga.gwent.ui.dialogs.ChangeFactionDialog;
@@ -55,7 +54,13 @@ public class MainActivity extends AppCompatActivity {
 
         soundManager = new SoundManager(this);
 
-        initializeViewModel();
+        // noinspection CheckResult, ResultOfMethodCallIgnored
+        ((GwentApplication) getApplicationContext()).getRepository()
+                .map(repository -> GameBoardViewModel.getModel(MainActivity.this, repository))
+                .subscribe(gameBoardViewModel -> {
+                    gameBoard = gameBoardViewModel;
+                    initializeViewModel();
+                });
 
         factionSwitchListener = FactionSwitchListener.getListener(getWindow());
         PreferenceManager.getDefaultSharedPreferences(this)
@@ -75,9 +80,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initializeViewModel() {
-        gameBoard = new ViewModelProvider(MainActivity.this,
-                ViewModelProvider.Factory.from(GameBoardViewModel.initializer)
-        ).get(GameBoardViewModel.class);
         int[] rowIds = {R.id.firstRow, R.id.secondRow, R.id.thirdRow};
         for (int rowId = 0; rowId < rowIds.length; rowId++) {
             RowType row = RowType.values()[rowId];
@@ -144,13 +146,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         });
-
-        ((GwentApplication) getApplication()).getRepository()
-                .flatMapCompletable(repository -> {
-                    repository.registerObserver(gameBoard);
-                    return gameBoard.update();
-                })
-                .subscribe();
+        gameBoard.update().subscribe();
     }
 
     private void inflateFactionPopup() {
