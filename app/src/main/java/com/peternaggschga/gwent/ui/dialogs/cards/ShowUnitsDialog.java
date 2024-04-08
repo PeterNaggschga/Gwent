@@ -52,10 +52,8 @@ public class ShowUnitsDialog extends OverlayDialog {
 
         setOnDismissListener(dialog -> {
             // noinspection CheckResult, ResultOfMethodCallIgnored
-            ((GwentApplication) getContext().getApplicationContext()).getRepository()
-                    .subscribe(repository -> {
-                        repository.unregisterObserver(cardListAdapter);
-                    });
+            GwentApplication.getRepository(getContext()).subscribe(repository ->
+                    repository.unregisterObserver(cardListAdapter));
         });
     }
 }

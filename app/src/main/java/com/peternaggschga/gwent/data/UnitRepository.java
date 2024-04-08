@@ -288,7 +288,8 @@ public class UnitRepository extends Observable<Observer> {
      */
     @NonNull
     public Completable copy(int id) {
-        return getUnit(id).flatMapCompletable(unit -> insertUnit(unit.isEpic(), unit.getDamage(), unit.getAbility(), unit.getSquad(), unit.getRow()))
+        return getUnit(id).flatMapCompletable(unit ->
+                        insertUnit(unit.isEpic(), unit.getDamage(), unit.getAbility(), unit.getSquad(), unit.getRow()))
                 .andThen(notifyObservers())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());

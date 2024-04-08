@@ -74,7 +74,7 @@ class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.CardViewHolde
         int buffColor = context.getColor(R.color.color_damage_textColor_buffed);
         int debuffColor = context.getColor(R.color.color_damage_textColor_debuffed);
 
-        return ((GwentApplication) context.getApplicationContext()).getRepository()
+        return GwentApplication.getRepository(context)
                 .flatMap(repository -> {
                     RemoveItemCallback callback = new RemoveItemCallback() {
                         @NonNull

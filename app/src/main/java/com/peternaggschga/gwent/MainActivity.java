@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         soundManager = new SoundManager(this);
 
         // noinspection CheckResult, ResultOfMethodCallIgnored
-        ((GwentApplication) getApplicationContext()).getRepository()
+        GwentApplication.getRepository(this)
                 .map(repository -> GameBoardViewModel.getModel(MainActivity.this, repository))
                 .subscribe(gameBoardViewModel -> {
                     gameBoard = gameBoardViewModel;
