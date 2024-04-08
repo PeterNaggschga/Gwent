@@ -220,6 +220,7 @@ class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.CardViewHolde
                 // noinspection CheckResult, ResultOfMethodCallIgnored
                 repository.copy(itemId)
                         .subscribe(() -> {
+                            // TODO use ListAdapter for changes
                             notifyItemInserted(items.size() - 1);
                             notifyItemRangeChanged(0, items.size() - 2);
                         });
