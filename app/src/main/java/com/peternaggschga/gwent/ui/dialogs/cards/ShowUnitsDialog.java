@@ -29,7 +29,6 @@ public class ShowUnitsDialog extends OverlayDialog {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        CardListAdapter adapter = null;
         // noinspection CheckResult, ResultOfMethodCallIgnored
         CardListAdapter.getAdapter(getContext(), row)
                 .subscribe(cardListAdapter -> {
@@ -46,9 +45,7 @@ public class ShowUnitsDialog extends OverlayDialog {
             // TODO
         });
 
-        findViewById(R.id.popup_cards_cancel_button).setOnClickListener(v -> {
-            dismiss();
-        });
+        findViewById(R.id.popup_cards_cancel_button).setOnClickListener(v -> dismiss());
 
         setOnDismissListener(dialog -> {
             // noinspection CheckResult, ResultOfMethodCallIgnored
