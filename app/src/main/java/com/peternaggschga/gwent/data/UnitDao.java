@@ -16,6 +16,7 @@ import java.util.Collection;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Single;
 
 /**
@@ -78,7 +79,7 @@ interface UnitDao {
 
     /**
      * Fetches all UnitEntity objects from `units` in the given row.
-     *
+     * @see #getUnitsFlowable(RowType)
      * @param row RowType defining the UnitEntity#row foreign key.
      * @return A Single tracking operation status and returning the value.
      */
@@ -86,16 +87,37 @@ interface UnitDao {
     Single<List<UnitEntity>> getUnits(@NonNull RowType row);
 
     /**
-     * Fetches all UnitEntity objects from `units`.
+     * Fetches a Flowable for all UnitEntity objects from `units` in the given row.
      *
+     * @param row RowType defining the UnitEntity#row foreign key.
+     * @return A Flowable emitting the values.
+     * @todo Add testing.
+     * @see #getUnits(RowType)
+     */
+    @Query("SELECT * FROM units WHERE `row` = :row")
+    Flowable<List<UnitEntity>> getUnitsFlowable(@NonNull RowType row);
+
+    /**
+     * Fetches all UnitEntity objects from `units`.
+     * @see #getUnitsFlowable()
      * @return A Single tracking operation status and returning the value.
      */
     @Query("SELECT * FROM units")
     Single<List<UnitEntity>> getUnits();
 
     /**
-     * Counts UnitEntity objects in `units` in the given row.
+     * Fetches a Flowable for all UnitEntity objects from `units`.
      *
+     * @return A Flowable emitting the values.
+     * @todo Add testing.
+     * @see #getUnits()
+     */
+    @Query("SELECT * FROM units")
+    Flowable<List<UnitEntity>> getUnitsFlowable();
+
+    /**
+     * Counts UnitEntity objects in `units` in the given row.
+     * @see #countUnitsFlowable(RowType)
      * @param row RowType defining the UnitEntity#row foreign key.
      * @return A Single tracking operation status and returning the value.
      */
@@ -103,10 +125,32 @@ interface UnitDao {
     Single<Integer> countUnits(@NonNull RowType row);
 
     /**
+     * Fetches a Flowable counting UnitEntity objects in `units` in the given row.
+     *
+     * @param row RowType defining the UnitEntity#row foreign key.
+     * @return A Flowable emitting the values.
+     * @todo Add testing.
+     * @see #countUnits(RowType)
+     */
+    @Query("SELECT COUNT(*) FROM units WHERE `row` = :row")
+    Flowable<Integer> countUnitsFlowable(@NonNull RowType row);
+
+    /**
      * Counts UnitEntity objects in `units`.
      *
+     * @see #countUnitsFlowable()
      * @return A Single tracking operation status and returning the value.
      */
     @Query("SELECT COUNT(*) FROM units")
     Single<Integer> countUnits();
+
+    /**
+     * Fetches a Flowable counting UnitEntity objects in `units`.
+     *
+     * @return A Flowable emitting the values.
+     * @todo Add testing.
+     * @see #countUnits()
+     */
+    @Query("SELECT COUNT(*) FROM units")
+    Flowable<Integer> countUnitsFlowable();
 }
