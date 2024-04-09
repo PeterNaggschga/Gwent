@@ -16,7 +16,7 @@ import java.util.Collection;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Completable;
-import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Single;
 
 /**
@@ -79,7 +79,7 @@ interface UnitDao {
 
     /**
      * Fetches all UnitEntity objects from `units` in the given row.
-     * @see #getUnitsObservable(RowType)
+     * @see #getUnitsFlowable(RowType)
      * @param row RowType defining the UnitEntity#row foreign key.
      * @return A Single tracking operation status and returning the value.
      */
@@ -87,37 +87,37 @@ interface UnitDao {
     Single<List<UnitEntity>> getUnits(@NonNull RowType row);
 
     /**
-     * Fetches a Observable for all UnitEntity objects from `units` in the given row.
+     * Fetches a Flowable for all UnitEntity objects from `units` in the given row.
      *
      * @param row RowType defining the UnitEntity#row foreign key.
-     * @return A Observable emitting the values.
+     * @return A Flowable emitting the values.
      * @todo Add testing.
      * @see #getUnits(RowType)
      */
     @Query("SELECT * FROM units WHERE `row` = :row")
-    Observable<List<UnitEntity>> getUnitsObservable(@NonNull RowType row);
+    Flowable<List<UnitEntity>> getUnitsFlowable(@NonNull RowType row);
 
     /**
      * Fetches all UnitEntity objects from `units`.
-     * @see #getUnitsObservable()
+     * @see #getUnitsFlowable()
      * @return A Single tracking operation status and returning the value.
      */
     @Query("SELECT * FROM units")
     Single<List<UnitEntity>> getUnits();
 
     /**
-     * Fetches a Observable for all UnitEntity objects from `units`.
+     * Fetches a Flowable for all UnitEntity objects from `units`.
      *
-     * @return A Observable emitting the values.
+     * @return A Flowable emitting the values.
      * @todo Add testing.
      * @see #getUnits()
      */
     @Query("SELECT * FROM units")
-    Observable<List<UnitEntity>> getUnitsObservable();
+    Flowable<List<UnitEntity>> getUnitsFlowable();
 
     /**
      * Counts UnitEntity objects in `units` in the given row.
-     * @see #countUnitsObservable(RowType)
+     * @see #countUnitsFlowable(RowType)
      * @param row RowType defining the UnitEntity#row foreign key.
      * @return A Single tracking operation status and returning the value.
      */
@@ -125,32 +125,32 @@ interface UnitDao {
     Single<Integer> countUnits(@NonNull RowType row);
 
     /**
-     * Fetches a Observable counting UnitEntity objects in `units` in the given row.
+     * Fetches a Flowable counting UnitEntity objects in `units` in the given row.
      *
      * @param row RowType defining the UnitEntity#row foreign key.
-     * @return A Observable emitting the values.
+     * @return A Flowable emitting the values.
      * @todo Add testing.
      * @see #countUnits(RowType)
      */
     @Query("SELECT COUNT(*) FROM units WHERE `row` = :row")
-    Observable<Integer> countUnitsObservable(@NonNull RowType row);
+    Flowable<Integer> countUnitsFlowable(@NonNull RowType row);
 
     /**
      * Counts UnitEntity objects in `units`.
      *
-     * @see #countUnitsObservable()
+     * @see #countUnitsFlowable()
      * @return A Single tracking operation status and returning the value.
      */
     @Query("SELECT COUNT(*) FROM units")
     Single<Integer> countUnits();
 
     /**
-     * Fetches a Observable counting UnitEntity objects in `units`.
+     * Fetches a Flowable counting UnitEntity objects in `units`.
      *
-     * @return A Observable emitting the values.
+     * @return A Flowable emitting the values.
      * @todo Add testing.
      * @see #countUnits()
      */
     @Query("SELECT COUNT(*) FROM units")
-    Observable<Integer> countUnitsObservable();
+    Flowable<Integer> countUnitsFlowable();
 }

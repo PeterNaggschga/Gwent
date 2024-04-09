@@ -9,7 +9,7 @@ import androidx.room.Query;
 import com.peternaggschga.gwent.RowType;
 
 import io.reactivex.rxjava3.core.Completable;
-import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Single;
 
 /**
@@ -65,7 +65,7 @@ interface RowDao {
 
     /**
      * Fetches RowEntity#weather for the given RowType in `rows`.
-     * @see #isWeatherObservable(RowType)
+     * @see #isWeatherFlowable(RowType)
      * @param row RowType of the queried RowEntity.
      * @return A Single tracking operation status and returning the value.
      */
@@ -73,19 +73,19 @@ interface RowDao {
     Single<Boolean> isWeather(@NonNull RowType row);
 
     /**
-     * Fetches a Observable of RowEntity#weather for the given RowType in `rows`.
+     * Fetches a Flowable of RowEntity#weather for the given RowType in `rows`.
      *
      * @param row RowType of the queried RowEntity.
-     * @return A Observable emitting the values.
+     * @return A Flowable emitting the values.
      * @todo Add testing.
      * @see #isWeather(RowType)
      */
     @Query("SELECT weather FROM rows WHERE id = :row")
-    Observable<Boolean> isWeatherObservable(@NonNull RowType row);
+    Flowable<Boolean> isWeatherFlowable(@NonNull RowType row);
 
     /**
      * Fetches RowEntity#horn for the given RowType in `rows`.
-     * @see #isHornObservable(RowType)
+     * @see #isHornFlowable(RowType)
      * @param row RowType of the queried RowEntity.
      * @return A Single tracking operation status and returning the value.
      */
@@ -93,13 +93,13 @@ interface RowDao {
     Single<Boolean> isHorn(@NonNull RowType row);
 
     /**
-     * Fetches a Observable of RowEntity#horn for the given RowType in `rows`.
+     * Fetches a Flowable of RowEntity#horn for the given RowType in `rows`.
      *
      * @param row RowType of the queried RowEntity.
-     * @return A Observable emitting the values.
+     * @return A Flowable emitting the values.
      * @todo Add testing.
      * @see #isHorn(RowType)
      */
     @Query("SELECT horn FROM rows WHERE id = :row")
-    Observable<Boolean> isHornObservable(@NonNull RowType row);
+    Flowable<Boolean> isHornFlowable(@NonNull RowType row);
 }

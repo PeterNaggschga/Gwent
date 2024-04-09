@@ -15,7 +15,6 @@ import java.util.Collection;
 import java.util.List;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.core.BackpressureStrategy;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Single;
@@ -27,10 +26,10 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
  * The contained functions mostly redirect requests to package-private DAO methods in RowDao and UnitDao.
  * Some functions implement slightly more complex behavior by chaining multiple DAO calls,
  * e.g., #reset().
- * Extends Observable to allow the registration of Observer implementors using #registerObserver().
+ * Extends Flowable to allow the registration of Observer implementors using #registerObserver().
  * Can be used by ViewModel classes.
  *
- * @see Observable
+ * @see Flowable
  * @todo Add testing that every non-read operations call #notifyObservers().
  * @todo Check which methods can be dropped.
  * @todo Add method to get non-epic units and replace stream.filter() calls.
@@ -251,8 +250,8 @@ public class UnitRepository extends Observable<Observer> {
     @NonNull
     public Flowable<Boolean> isWeatherFlowable(@NonNull RowType row) {
         return database.rows()
-                .isWeatherObservable(row)
-                .toFlowable(BackpressureStrategy.LATEST)
+                .isWeatherFlowable(row)
+                .onBackpressureLatest()
                 .distinctUntilChanged()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
@@ -304,8 +303,8 @@ public class UnitRepository extends Observable<Observer> {
     @NonNull
     public Flowable<Boolean> isHornFlowable(@NonNull RowType row) {
         return database.rows()
-                .isHornObservable(row)
-                .toFlowable(BackpressureStrategy.LATEST)
+                .isHornFlowable(row)
+                .onBackpressureLatest()
                 .distinctUntilChanged()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
@@ -377,8 +376,8 @@ public class UnitRepository extends Observable<Observer> {
     @NonNull
     public Flowable<Integer> countUnitsFlowable(@NonNull RowType row) {
         return database.units()
-                .countUnitsObservable(row)
-                .toFlowable(BackpressureStrategy.LATEST)
+                .countUnitsFlowable(row)
+                .onBackpressureLatest()
                 .distinctUntilChanged()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
@@ -407,8 +406,8 @@ public class UnitRepository extends Observable<Observer> {
     @NonNull
     public Flowable<Integer> countUnitsFlowable() {
         return database.units()
-                .countUnitsObservable()
-                .toFlowable(BackpressureStrategy.LATEST)
+                .countUnitsFlowable()
+                .onBackpressureLatest()
                 .distinctUntilChanged()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
@@ -450,8 +449,8 @@ public class UnitRepository extends Observable<Observer> {
     @NonNull
     public Flowable<List<UnitEntity>> getUnitsFlowable(@NonNull RowType row) {
         return database.units()
-                .getUnitsObservable(row)
-                .toFlowable(BackpressureStrategy.LATEST)
+                .getUnitsFlowable(row)
+                .onBackpressureLatest()
                 .distinctUntilChanged(UNIT_LIST_COMPARATOR)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
@@ -480,8 +479,8 @@ public class UnitRepository extends Observable<Observer> {
     @NonNull
     public Flowable<List<UnitEntity>> getUnitsFlowable() {
         return database.units()
-                .getUnitsObservable()
-                .toFlowable(BackpressureStrategy.LATEST)
+                .getUnitsFlowable()
+                .onBackpressureLatest()
                 .distinctUntilChanged(UNIT_LIST_COMPARATOR)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
