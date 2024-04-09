@@ -5,21 +5,21 @@ import android.widget.TextView;
 
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
-import androidx.lifecycle.Observer;
 
 import com.peternaggschga.gwent.R;
 import com.peternaggschga.gwent.RowType;
 
 import org.jetbrains.annotations.Contract;
 
+import io.reactivex.rxjava3.functions.Consumer;
+
 /**
  * An observer class responsible for updating the views of the row defined in #row when notified,
- * i.e., when a new RowUiState is produced by RowStateUseCase.
+ * i.e., when a new RowUiState is produced the observed Flowable.
  *
- * @see com.peternaggschga.gwent.domain.cases.RowStateUseCase
  * @see RowUiState
  */
-public class RowUiStateObserver implements Observer<RowUiState> {
+public class RowUiStateObserver implements Consumer<RowUiState> {
     /**
      * A TextView showing the user the summed-up damage of all units in this row,
      * i.e., RowUiState#damage.
@@ -124,7 +124,7 @@ public class RowUiStateObserver implements Observer<RowUiState> {
      * @see ImageViewSwitchAnimator
      */
     @Override
-    public void onChanged(@NonNull RowUiState rowUiState) {
+    public void accept(@NonNull RowUiState rowUiState) {
         damageView.setText(String.valueOf(rowUiState.getDamage()));
         ImageViewSwitchAnimator.animatedSwitch(weatherView, rowUiState.isWeather() ? weatherResource : R.drawable.good_weather)
                 .subscribe();

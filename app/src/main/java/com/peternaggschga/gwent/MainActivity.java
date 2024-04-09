@@ -112,7 +112,8 @@ public class MainActivity extends AppCompatActivity {
                     weather,
                     horn,
                     rowLayout.findViewById(R.id.cardCountView));
-            gameBoard.getRowUiState(row).observe(this, observer);
+            // noinspection CheckResult, ResultOfMethodCallIgnored
+            gameBoard.getRowUiState(row).subscribe(observer);
         }
 
         ImageButton reset = findViewById(R.id.resetButton);
@@ -123,7 +124,8 @@ public class MainActivity extends AppCompatActivity {
                 reset,
                 weather,
                 burn);
-        gameBoard.getMenuUiState().observe(this, observer);
+        // noinspection CheckResult, ResultOfMethodCallIgnored
+        gameBoard.getMenuUiState().subscribe(observer);
 
         reset.setOnClickListener(v -> {
             // noinspection CheckResult, ResultOfMethodCallIgnored
@@ -146,7 +148,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         });
-        gameBoard.update().subscribe();
     }
 
     private void inflateFactionPopup() {
