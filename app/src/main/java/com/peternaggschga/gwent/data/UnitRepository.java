@@ -46,14 +46,14 @@ public class UnitRepository extends Observable<Observer> {
      */
     private static final BiPredicate<List<UnitEntity>, List<UnitEntity>> UNIT_LIST_COMPARATOR = (list1, list2) -> {
         if (list1.size() != list2.size()) {
-            return true;
+            return false;
         }
         for (int index = 0; index < list1.size(); index++) {
             if (list1.get(index).getId() != list2.get(index).getId()) {
-                return true;
+                return false;
             }
         }
-        return false;
+        return true;
     };
 
     /**
