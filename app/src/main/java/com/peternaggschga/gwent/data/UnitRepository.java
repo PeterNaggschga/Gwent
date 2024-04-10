@@ -2,8 +2,6 @@ package com.peternaggschga.gwent.data;
 
 import static org.valid4j.Assertive.require;
 
-import android.database.Observable;
-
 import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,17 +24,13 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
  * The contained functions mostly redirect requests to package-private DAO methods in RowDao and UnitDao.
  * Some functions implement slightly more complex behavior by chaining multiple DAO calls,
  * e.g., #reset().
- * Extends Flowable to allow the registration of Observer implementors using #registerObserver().
- * Can be used by ViewModel classes.
  *
- * @see Flowable
- * @todo Add testing that every non-read operations call #notifyObservers().
  * @todo Check which methods can be dropped.
  * @todo Add method to get non-epic units and replace stream.filter() calls.
  * @todo Add method to get units of a certain ability and replace stream.filter() calls.
  * @todo Add caching proxy.
  */
-public class UnitRepository extends Observable<Observer> {
+public class UnitRepository {
     /**
      * BiPredicate used to check whether two Lists of UnitEntity are the same.
      *
@@ -93,20 +87,6 @@ public class UnitRepository extends Observable<Observer> {
     }
 
     /**
-     * Notifies all Observer objects in #mObservers using Observer#update().
-     * @see Observer#update()
-     * @return A Completable tracking operation status.
-     */
-    @NonNull
-    private Completable notifyObservers() {
-        Completable result = Completable.complete();
-        for (Observer observer : mObservers) {
-            result = result.andThen(observer.update());
-        }
-        return result;
-    }
-
-    /**
      * Adds one attack row for each RowType.
      * If an attack row already exists, it is not inserted again.
      *
@@ -124,7 +104,6 @@ public class UnitRepository extends Observable<Observer> {
     /**
      * Resets the board by removing all units and resetting row status.
      * Resetting row status is equivalent to removing the old rows and calling #initializeRows().
-     * Notifies observers by calling #notifyObservers().
      * Method is a wrapper for #reset(UnitEntity).
      *
      * @return A Completable tracking operation status.
@@ -138,12 +117,10 @@ public class UnitRepository extends Observable<Observer> {
     /**
      * Resets the board by removing all units but the given one and resetting row status.
      * Resetting row status is equivalent to removing the old rows and calling #initializeRows().
-     * Notifies observers by calling #notifyObservers().
      *
      * @param keptUnit UnitEntity that should be kept.
      * @return A Completable tracking operation status.
      * @see #initializeRows()
-     * @see #notifyObservers()
      */
     @NonNull
     public Completable reset(@Nullable UnitEntity keptUnit) {
@@ -151,7 +128,7 @@ public class UnitRepository extends Observable<Observer> {
         if (keptUnit != null) {
             result = result.andThen(insertUnit(keptUnit));
         }
-        return result.andThen(notifyObservers()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+        return result.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 
     /**
@@ -189,7 +166,6 @@ public class UnitRepository extends Observable<Observer> {
 
     /**
      * Adds a number of units with the given stats to the given row.
-     * Notifies observers by calling #notifyObservers().
      * Essentially calls #insertUnit(boolean, int, Ability, Integer, RowType) multiple times.
      *
      * @param epic    Boolean representing whether card is #epic.
@@ -199,7 +175,6 @@ public class UnitRepository extends Observable<Observer> {
      * @param row     RowType representing the combat type of the card.
      * @param number  Integer representing the number of units to be added.
      * @return A Completable tracking operation status.
-     * @see #notifyObservers()
      * @see #insertUnit(boolean, int, Ability, Integer, RowType)
      * @throws org.valid4j.errors.RequireViolation When damage is less than zero or if ability is Ability#BINDING and squad is null or less than zero
      * or if ability is not Ability#BINDING and squad is not null.
@@ -212,20 +187,18 @@ public class UnitRepository extends Observable<Observer> {
         for (int i = 0; i < number; i++) {
             result = result.andThen(insertUnit(epic, damage, ability, squad, row));
         }
-        return result.andThen(notifyObservers()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+        return result.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 
     /**
      * Flips RowEntity#weather of the given attack row.
-     * Notifies observers by calling #notifyObservers().
      *
-     * @see #notifyObservers()
      * @param row RowEntity#id where the weather should be updated.
      * @return A Completable tracking operation status.
      */
     @NonNull
     public Completable switchWeather(@NonNull RowType row) {
-        return database.rows().updateWeather(row).andThen(notifyObservers()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+        return database.rows().updateWeather(row).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 
     /**
@@ -259,26 +232,22 @@ public class UnitRepository extends Observable<Observer> {
 
     /**
      * Sets RowEntity#weather to `false` for all attack rows.
-     * Notifies observers by calling #notifyObservers().
      *
-     * @see #notifyObservers()
      * @return A Completable tracking operation status.
      */
     @NonNull
     public Completable clearWeather() {
-        return database.rows().clearWeather().andThen(notifyObservers()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+        return database.rows().clearWeather().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 
     /**
      * Flips RowEntity#horn of the given attack row.
-     * Notifies observers by calling #notifyObservers().
-     * @see #notifyObservers()
      * @param row RowEntity#id where the horn status should be updated.
      * @return A Completable tracking operation status.
      */
     @NonNull
     public Completable switchHorn(@NonNull RowType row) {
-        return database.rows().updateHorn(row).andThen(notifyObservers()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+        return database.rows().updateHorn(row).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 
     /**
@@ -312,34 +281,28 @@ public class UnitRepository extends Observable<Observer> {
 
     /**
      * Removes the given units from the game.
-     * Notifies observers by calling #notifyObservers().
-     * @see #notifyObservers()
      * @param units List of units to be removed.
      * @return A Completable tracking operation status.
      */
     @NonNull
     public Completable delete(@NonNull Collection<UnitEntity> units) {
-        return database.units().deleteUnits(units).andThen(notifyObservers()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+        return database.units().deleteUnits(units).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 
     /**
      * Removes the unit with the given id from the game.
-     * Notifies observers by calling #notifyObservers().
      *
      * @param id Integer representing the unit that should be deleted.
      * @return A Completable tracking operation status.
      * @todo Add testing.
-     * @see #notifyObservers()
      */
     @NonNull
     public Completable delete(int id) {
-        return database.units().deleteUnit(id).andThen(notifyObservers()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+        return database.units().deleteUnit(id).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 
     /**
      * Copies the unit with the given id.
-     * Notifies observers by calling #notifyObservers().
-     * @see #notifyObservers()
      * @param id Integer representing the unit that should be copied.
      * @return A Completable tracking operation status.
      */
@@ -347,7 +310,7 @@ public class UnitRepository extends Observable<Observer> {
     public Completable copy(int id) {
         return getUnit(id).flatMapCompletable(unit ->
                         insertUnit(unit.isEpic(), unit.getDamage(), unit.getAbility(), unit.getSquad(), unit.getRow()))
-                .andThen(notifyObservers())
+
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
