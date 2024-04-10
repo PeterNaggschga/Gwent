@@ -7,7 +7,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.peternaggschga.gwent.GwentApplication;
 import com.peternaggschga.gwent.R;
 import com.peternaggschga.gwent.RowType;
 import com.peternaggschga.gwent.ui.dialogs.OverlayDialog;
@@ -46,11 +45,5 @@ public class ShowUnitsDialog extends OverlayDialog {
         });
 
         findViewById(R.id.popup_cards_cancel_button).setOnClickListener(v -> dismiss());
-
-        setOnDismissListener(dialog -> {
-            // noinspection CheckResult, ResultOfMethodCallIgnored
-            GwentApplication.getRepository(getContext()).subscribe(repository ->
-                    repository.unregisterObserver(cardListAdapter));
-        });
     }
 }

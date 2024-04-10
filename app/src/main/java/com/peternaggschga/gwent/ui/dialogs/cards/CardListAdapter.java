@@ -14,12 +14,12 @@ import android.widget.TextView;
 import androidx.annotation.ColorInt;
 import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
+import androidx.core.util.Pair;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.peternaggschga.gwent.GwentApplication;
 import com.peternaggschga.gwent.R;
 import com.peternaggschga.gwent.RowType;
-import com.peternaggschga.gwent.data.Observer;
 import com.peternaggschga.gwent.data.UnitEntity;
 import com.peternaggschga.gwent.data.UnitRepository;
 import com.peternaggschga.gwent.domain.cases.DamageCalculatorUseCase;
@@ -29,12 +29,13 @@ import com.peternaggschga.gwent.domain.damage.DamageCalculator;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Single;
 
 /**
  * @todo Documentation
  */
-class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.CardViewHolder> implements Observer {
+class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.CardViewHolder> {
     @NonNull
     private final UnitRepository repository;
     @NonNull
@@ -83,17 +84,36 @@ class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.CardViewHolde
                             return RemoveUnitsUseCase.remove(context, repository, id);
                         }
                     };
+
                     return DamageCalculatorUseCase.getDamageCalculator(repository, row)
-                            .zipWith(repository.getUnits(), (damageCalculator, unitEntities) ->
-                                    new CardListAdapter(repository,
-                                            row,
-                                            unitEntities,
-                                            damageCalculator,
-                                            defaultColor,
-                                            buffColor,
-                                            debuffColor,
-                                            callback))
-                            .doOnSuccess(repository::registerObserver);
+                            .zipWith(repository.getUnits(), (damageCalculator, unitEntities) -> {
+                                CardListAdapter result = new CardListAdapter(repository,
+                                        row,
+                                        unitEntities,
+                                        damageCalculator,
+                                        defaultColor,
+                                        buffColor,
+                                        debuffColor,
+                                        callback);
+
+                                // noinspection CheckResult, ResultOfMethodCallIgnored
+                                Flowable.combineLatest(repository.isWeatherFlowable(row),
+                                                repository.isHornFlowable(row),
+                                                repository.getUnitsFlowable(row),
+                                                (weather, horn, units) -> {
+                                                    DamageCalculator calculator = DamageCalculatorUseCase.getDamageCalculator(weather, horn, units);
+                                                    return Pair.create(calculator, units);
+                                                })
+                                        .onBackpressureLatest()
+                                        .subscribe(damageCalculatorListPair -> {
+                                            result.damageCalculator = damageCalculatorListPair.first;
+                                            result.items = damageCalculatorListPair.second;
+                                            //TODO make more sophisticated (ListAdapter)
+                                            result.notifyDataSetChanged();
+                                        });
+
+                                return result;
+                            });
                 });
     }
 
@@ -183,17 +203,6 @@ class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.CardViewHolde
         return items.get(position).getId();
     }
 
-    @NonNull
-    @Override
-    public Completable update() {
-        return DamageCalculatorUseCase.getDamageCalculator(repository, row)
-                .doOnSuccess(damageCalculator -> CardListAdapter.this.damageCalculator = damageCalculator)
-                .ignoreElement()
-                .andThen(repository.getUnits(row))
-                .doOnSuccess(unitEntities -> items = unitEntities)
-                .ignoreElement();
-    }
-
     private interface RemoveItemCallback {
         @NonNull
         Completable removeItem(int id);
@@ -216,32 +225,10 @@ class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.CardViewHolde
             abilityView = itemView.findViewById(R.id.abilityView);
             bindingView = itemView.findViewById(R.id.bindingView);
 
-            itemView.findViewById(R.id.copyButton).setOnClickListener(v -> {
-                // noinspection CheckResult, ResultOfMethodCallIgnored
-                repository.copy(itemId)
-                        .subscribe(() -> {
-                            // TODO use ListAdapter for changes
-                            notifyItemInserted(items.size() - 1);
-                            notifyItemRangeChanged(0, items.size() - 2);
-                        });
-            });
+            itemView.findViewById(R.id.copyButton).setOnClickListener(v -> repository.copy(itemId).subscribe());
             itemView.findViewById(R.id.deleteButton).setOnClickListener(v -> {
                 // TODO: test if compatible with revenge units
-                int itemsBeforeRemoval = items.size();
-                int oldPosition = getAdapterPosition();
-
-                // noinspection CheckResult, ResultOfMethodCallIgnored
-                removeItemCallback.removeItem(itemId)
-                        .subscribe(() -> {
-                            boolean sizeChanged = itemsBeforeRemoval != items.size();
-                            if (sizeChanged) {
-                                notifyItemRemoved(oldPosition);
-                                notifyItemRangeChanged(0, items.size() - 1);
-                            } else {
-                                // TODO: test if moved item is automatically updated
-                                notifyItemMoved(oldPosition, items.size() - 1);
-                            }
-                        });
+                removeItemCallback.removeItem(itemId).subscribe();
             });
         }
 
