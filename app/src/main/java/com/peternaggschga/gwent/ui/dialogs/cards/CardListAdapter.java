@@ -49,7 +49,7 @@ class CardListAdapter extends ListAdapter<CardUiState, CardListAdapter.CardViewH
         holder.getDamageView().setTextColor(item.getDamageTextColor());
 
         if (item.showAbility()) {
-            holder.getAbilityView().setImageResource(item.getAbilityImage());
+            holder.getAbilityView().setImageResource(item.getAbilityImageId());
             holder.getAbilityView().setVisibility(View.VISIBLE);
         } else {
             holder.getAbilityView().setVisibility(View.GONE);
