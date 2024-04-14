@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 
 /**
  * A factory class responsible for creating CardUiState objects from UnitEntity objects.
- * @todo Add testing.
+ * @see CardUiState
  */
 public class CardUiStateFactory {
     /**
