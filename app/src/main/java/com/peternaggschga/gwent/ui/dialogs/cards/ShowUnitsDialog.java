@@ -44,8 +44,8 @@ public class ShowUnitsDialog extends OverlayDialog {
                                     id -> RemoveUnitsUseCase.remove(context, repository, id).subscribe()
                             );
                             Disposable updateSubscription = repository.getUnitsFlowable(row)
-                                    .subscribe(units ->
-                                            adapter.submitList(factory.createCardUiState(units)));
+                                    .map(factory::createCardUiState)
+                                    .subscribe(adapter::submitList);
                             return new ShowUnitsDialog(context, adapter, updateSubscription);
                         })
                 );
