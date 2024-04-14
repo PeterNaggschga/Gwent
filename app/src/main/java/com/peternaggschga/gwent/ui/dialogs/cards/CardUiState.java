@@ -5,12 +5,27 @@ import androidx.annotation.DrawableRes;
 import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.DiffUtil;
+
+import java.util.Objects;
 
 /**
  * @todo Documentation
  * @todo Add testing.
  */
 public class CardUiState {
+    @NonNull
+    public static final DiffUtil.ItemCallback<CardUiState> DIFF_CALLBACK = new DiffUtil.ItemCallback<CardUiState>() {
+        @Override
+        public boolean areItemsTheSame(@NonNull CardUiState oldItem, @NonNull CardUiState newItem) {
+            return oldItem.unitId == newItem.unitId;
+        }
+
+        @Override
+        public boolean areContentsTheSame(@NonNull CardUiState oldItem, @NonNull CardUiState newItem) {
+            return Objects.equals(oldItem, newItem);
+        }
+    };
     public static final int UNUSED = -1;
     private final int unitId;
     @DrawableRes
@@ -24,7 +39,7 @@ public class CardUiState {
     @NonNull
     private final String squadString;
 
-    CardUiState(int unitId, @DrawableRes int damageBackgroundImageId, @IntRange(from = 0) int damage,
+    public CardUiState(int unitId, @DrawableRes int damageBackgroundImageId, @IntRange(from = 0) int damage,
                 @ColorInt int damageTextColor, @DrawableRes int abilityImage,
                 @Nullable @IntRange(from = 1) Integer squad) {
         this.unitId = unitId;
@@ -70,5 +85,17 @@ public class CardUiState {
     @NonNull
     public String getSquadString() {
         return squadString;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CardUiState)) return false;
+        CardUiState that = (CardUiState) o;
+        return damageBackgroundImageId == that.damageBackgroundImageId
+                && damageTextColor == that.damageTextColor
+                && abilityImage == that.abilityImage
+                && Objects.equals(damageString, that.damageString)
+                && Objects.equals(squadString, that.squadString);
     }
 }

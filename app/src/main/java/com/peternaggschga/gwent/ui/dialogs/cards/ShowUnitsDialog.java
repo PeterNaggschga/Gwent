@@ -38,13 +38,14 @@ public class ShowUnitsDialog extends OverlayDialog {
                 .flatMap(repository -> repository.isWeather(row)
                         .zipWith(repository.isHorn(row), (weather, horn) ->
                                 new CardUiStateFactory(context, weather, horn))
-                        .zipWith(repository.getUnits(row), (factory, units) -> {
-                            CardListAdapter adapter = new CardListAdapter(factory.createCardUiState(units),
+                        .map(factory -> {
+                            CardListAdapter adapter = new CardListAdapter(
                                     id -> repository.copy(id).subscribe(),
-                                    id -> RemoveUnitsUseCase.remove(context, repository, id).subscribe());
+                                    id -> RemoveUnitsUseCase.remove(context, repository, id).subscribe()
+                            );
                             Disposable updateSubscription = repository.getUnitsFlowable(row)
-                                    .subscribe(unitList ->
-                                            adapter.setItems(factory.createCardUiState(unitList)));
+                                    .subscribe(units ->
+                                            adapter.submitList(factory.createCardUiState(units)));
                             return new ShowUnitsDialog(context, adapter, updateSubscription);
                         })
                 );

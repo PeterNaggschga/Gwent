@@ -12,36 +12,26 @@ import android.widget.TextView;
 import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.core.util.Consumer;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.peternaggschga.gwent.R;
 
-import java.util.List;
-
 /**
  * @todo Documentation
+ * @todo Add documentation
  */
-class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.CardViewHolder> {
+class CardListAdapter extends ListAdapter<CardUiState, CardListAdapter.CardViewHolder> {
     @NonNull
     private final Consumer<Integer> onCopy;
     @NonNull
     private final Consumer<Integer> onRemove;
-    @NonNull
-    private List<CardUiState> items;
 
-    CardListAdapter(@NonNull List<CardUiState> items, @NonNull Consumer<Integer> onCopy,
-                    @NonNull Consumer<Integer> onRemove) {
-        super();
-        this.items = items;
+    CardListAdapter(@NonNull Consumer<Integer> onCopy, @NonNull Consumer<Integer> onRemove) {
+        super(CardUiState.DIFF_CALLBACK);
         this.onCopy = onCopy;
         this.onRemove = onRemove;
         setHasStableIds(true);
-    }
-
-    void setItems(@NonNull List<CardUiState> items) {
-        this.items = items;
-        //TODO make more sophisticated (ListAdapter)
-        notifyDataSetChanged();
     }
 
     @NonNull
@@ -53,7 +43,7 @@ class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.CardViewHolde
 
     @Override
     public void onBindViewHolder(@NonNull CardViewHolder holder, @IntRange(from = 0) int position) {
-        CardUiState item = items.get(position);
+        CardUiState item = getItem(position);
         holder.getDamageView().setText(item.getDamageString());
         holder.getDamageView().setBackgroundResource(item.getDamageBackgroundImageId());
         holder.getDamageView().setTextColor(item.getDamageTextColor());
@@ -76,13 +66,8 @@ class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.CardViewHolde
     }
 
     @Override
-    public int getItemCount() {
-        return items.size();
-    }
-
-    @Override
     public long getItemId(@IntRange(from = 0) int position) {
-        return items.get(position).getUnitId();
+        return getItem(position).getUnitId();
     }
 
     static class CardViewHolder extends RecyclerView.ViewHolder {
@@ -107,7 +92,6 @@ class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.CardViewHolde
                 onCopy.accept(itemId);
             });
             itemView.findViewById(R.id.deleteButton).setOnClickListener(v -> {
-                // TODO: test if compatible with revenge units
                 require(itemId != NO_ID);
                 onRemove.accept(itemId);
             });
