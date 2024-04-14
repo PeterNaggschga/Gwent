@@ -111,6 +111,7 @@ public class CardUiStateFactory {
                 case 15:
                     damageBackgroundId = R.drawable.icon_epic_damage_15;
             }
+            damage = CardUiState.UNUSED;
         }
 
         int damageColor = Objects.requireNonNull(damageTextColors.get(unit.isBuffed(calculator)));

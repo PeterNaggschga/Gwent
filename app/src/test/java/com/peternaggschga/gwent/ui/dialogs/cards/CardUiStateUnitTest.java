@@ -32,18 +32,18 @@ public class CardUiStateUnitTest {
     }
 
     @Test
-    public void constructorAssertsNonNegativeDamage() {
+    public void constructorAssertsDamageGreaterThanUnused() {
         try {
-            new CardUiState(0, 0, -1, 0, CardUiState.UNUSED, null);
+            new CardUiState(0, 0, CardUiState.UNUSED - 1, 0, CardUiState.UNUSED, null);
             fail();
         } catch (RequireViolation ignored) {
         }
     }
 
     @Test
-    public void constructorAllowsZeroDamage() {
+    public void constructorAllowsUnusedDamage() {
         try {
-            new CardUiState(0, 0, 0, 0, CardUiState.UNUSED, null);
+            new CardUiState(0, 0, CardUiState.UNUSED, 0, CardUiState.UNUSED, null);
         } catch (RequireViolation ignored) {
             fail();
         }
@@ -70,6 +70,12 @@ public class CardUiStateUnitTest {
         } catch (RequireViolation ignored) {
             fail();
         }
+    }
+
+    @Test
+    public void constructorSetsEmptyDamageString() {
+        CardUiState state = new CardUiState(0, 0, CardUiState.UNUSED, 0, CardUiState.UNUSED, null);
+        assertThat(state.getDamageString()).isEmpty();
     }
 
     @Test

@@ -64,7 +64,8 @@ public class CardUiState {
     private final int damageBackgroundImageId;
 
     /**
-     * String containing the number shown in the damage view.
+     * String containing the number
+     * shown in the damage view or nothing if the represented UnitEntity is epic.
      * @see #getDamageString()
      */
     @NonNull
@@ -101,17 +102,17 @@ public class CardUiState {
      * @param damageTextColor Integer representing the text color of the damage view.
      * @param abilityImageId Integer referencing the drawable resource shown by the ability image view or #UNUSED.
      * @param squad Integer representing the UnitEntity#squad of the represented UnitEntity.
-     * @throws org.valid4j.errors.RequireViolation When damage is less than zero or squad is neither null nor greater than zero.
+     * @throws org.valid4j.errors.RequireViolation When damage is less than #UNUSED or squad is neither null nor greater than zero.
      * @see CardUiStateFactory#createCardUiState(UnitEntity, DamageCalculator)
      */
-    public CardUiState(int unitId, @DrawableRes int damageBackgroundImageId, @IntRange(from = 0) int damage,
+    public CardUiState(int unitId, @DrawableRes int damageBackgroundImageId, @IntRange(from = UNUSED) int damage,
                        @ColorInt int damageTextColor, @DrawableRes int abilityImageId,
                 @Nullable @IntRange(from = 1) Integer squad) {
-        require(damage >= 0);
+        require(damage >= UNUSED);
         require(squad == null || squad >= 1);
         this.unitId = unitId;
         this.damageBackgroundImageId = damageBackgroundImageId;
-        this.damageString = String.valueOf(damage);
+        this.damageString = damage == UNUSED ? "" : String.valueOf(damage);
         this.damageTextColor = damageTextColor;
         this.abilityImageId = abilityImageId;
         this.squadString = squad == null ? "" : String.valueOf(squad);
@@ -156,7 +157,7 @@ public class CardUiState {
 
     /**
      * Returns the String shown in the damage view.
-     * @return A String containing the damage of the represented UnitEntity.
+     * @return A String containing the damage of the represented UnitEntity or nothing if the unit is empty.
      * @see #damageString
      */
     @NonNull
