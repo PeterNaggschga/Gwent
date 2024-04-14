@@ -20,7 +20,6 @@ import java.util.Objects;
  * Can be created from the represented UnitEntity using CardUiStateFactory.
  * @see CardUiStateFactory
  * @see ShowUnitsDialog
- * @todo Add testing.
  */
 public class CardUiState {
     /**
