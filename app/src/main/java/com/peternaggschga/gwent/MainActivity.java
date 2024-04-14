@@ -1,5 +1,6 @@
 package com.peternaggschga.gwent;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -118,7 +119,11 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
             });
-            cards.setOnClickListener(v -> new ShowUnitsDialog(MainActivity.this, row).show());
+            cards.setOnClickListener(v -> {
+                        // noinspection CheckResult, ResultOfMethodCallIgnored
+                        ShowUnitsDialog.getDialog(MainActivity.this, row).subscribe(Dialog::show);
+                    }
+            );
 
             final RowUiStateObserver observer = RowUiStateObserver.getObserver(row,
                     rowLayout.findViewById(R.id.pointView),

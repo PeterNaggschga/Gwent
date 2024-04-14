@@ -7,37 +7,58 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.peternaggschga.gwent.GwentApplication;
 import com.peternaggschga.gwent.R;
 import com.peternaggschga.gwent.RowType;
+import com.peternaggschga.gwent.domain.cases.RemoveUnitsUseCase;
 import com.peternaggschga.gwent.ui.dialogs.OverlayDialog;
+
+import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.disposables.Disposable;
 
 /**
  * @todo Documentation
  */
 public class ShowUnitsDialog extends OverlayDialog {
     @NonNull
-    private final RowType row;
-    private CardListAdapter cardListAdapter = null;
+    private final CardListAdapter cardListAdapter;
+    @NonNull
+    private final Disposable updateSubscription;
 
-    public ShowUnitsDialog(@NonNull Context context, @NonNull RowType row) {
+    private ShowUnitsDialog(@NonNull Context context, @NonNull CardListAdapter cardListAdapter,
+                            @NonNull Disposable updateSubscription) {
         super(context, R.layout.popup_cards);
-        this.row = row;
+        this.cardListAdapter = cardListAdapter;
+        this.updateSubscription = updateSubscription;
+    }
+
+    @NonNull
+    public static Single<ShowUnitsDialog> getDialog(@NonNull Context context, @NonNull RowType row) {
+        return GwentApplication.getRepository(context)
+                .flatMap(repository -> repository.isWeather(row)
+                        .zipWith(repository.isHorn(row), (weather, horn) ->
+                                new CardUiStateFactory(context, weather, horn))
+                        .zipWith(repository.getUnits(row), (factory, units) -> {
+                            CardListAdapter adapter = new CardListAdapter(factory.createCardUiState(units),
+                                    id -> repository.copy(id).subscribe(),
+                                    id -> RemoveUnitsUseCase.remove(context, repository, id).subscribe());
+                            Disposable updateSubscription = repository.getUnitsFlowable(row)
+                                    .subscribe(unitList ->
+                                            adapter.setItems(factory.createCardUiState(unitList)));
+                            return new ShowUnitsDialog(context, adapter, updateSubscription);
+                        })
+                );
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // noinspection CheckResult, ResultOfMethodCallIgnored
-        CardListAdapter.getAdapter(getContext(), row)
-                .subscribe(cardListAdapter -> {
-                    ShowUnitsDialog.this.cardListAdapter = cardListAdapter;
-                    LinearLayoutManager llm = new LinearLayoutManager(getContext());
-                    llm.setOrientation(RecyclerView.HORIZONTAL);
-                    RecyclerView recyclerView = findViewById(R.id.cardsList);
-                    recyclerView.setLayoutManager(llm);
-                    recyclerView.setAdapter(cardListAdapter);
-                });
+        LinearLayoutManager llm = new LinearLayoutManager(getContext());
+        llm.setOrientation(RecyclerView.HORIZONTAL);
+        RecyclerView recyclerView = findViewById(R.id.cardsList);
+        recyclerView.setLayoutManager(llm);
+        recyclerView.setAdapter(cardListAdapter);
 
         findViewById(R.id.popup_cards_add_button).setOnClickListener(v -> {
             dismiss();
@@ -45,5 +66,7 @@ public class ShowUnitsDialog extends OverlayDialog {
         });
 
         findViewById(R.id.popup_cards_cancel_button).setOnClickListener(v -> dismiss());
+
+        setOnDismissListener(dialog -> updateSubscription.dispose());
     }
 }
