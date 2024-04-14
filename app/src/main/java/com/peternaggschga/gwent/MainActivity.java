@@ -20,15 +20,21 @@ import com.peternaggschga.gwent.ui.main.MenuUiStateObserver;
 import com.peternaggschga.gwent.ui.main.RowUiStateObserver;
 import com.peternaggschga.gwent.ui.sounds.SoundManager;
 
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+
 /**
  * @todo Documentation
  */
 public class MainActivity extends AppCompatActivity {
     private SoundManager soundManager;
-    private GameBoardViewModel gameBoard;
+    private final CompositeDisposable disposables = new CompositeDisposable();
     @SuppressWarnings("FieldCanBeLocal")
     private SharedPreferences.OnSharedPreferenceChangeListener factionSwitchListener;
     private boolean resetOnFactionSwitch;
+    /**
+     * @todo Initialize ViewModel only once in #onCreate().
+     */
+    private GameBoardViewModel gameBoard;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -79,6 +85,13 @@ public class MainActivity extends AppCompatActivity {
                         getResources().getBoolean(R.bool.faction_reset_preference_default));
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        disposables.dispose();
+        disposables.clear();
+    }
+
     private void initializeViewModel() {
         int[] rowIds = {R.id.firstRow, R.id.secondRow, R.id.thirdRow};
         for (int rowId = 0; rowId < rowIds.length; rowId++) {
@@ -112,8 +125,7 @@ public class MainActivity extends AppCompatActivity {
                     weather,
                     horn,
                     rowLayout.findViewById(R.id.cardCountView));
-            // noinspection CheckResult, ResultOfMethodCallIgnored
-            gameBoard.getRowUiState(row).subscribe(observer);
+            disposables.add(gameBoard.getRowUiState(row).subscribe(observer));
         }
 
         ImageButton reset = findViewById(R.id.resetButton);
@@ -124,8 +136,7 @@ public class MainActivity extends AppCompatActivity {
                 reset,
                 weather,
                 burn);
-        // noinspection CheckResult, ResultOfMethodCallIgnored
-        gameBoard.getMenuUiState().subscribe(observer);
+        disposables.add(gameBoard.getMenuUiState().subscribe(observer));
 
         reset.setOnClickListener(v -> {
             // noinspection CheckResult, ResultOfMethodCallIgnored
