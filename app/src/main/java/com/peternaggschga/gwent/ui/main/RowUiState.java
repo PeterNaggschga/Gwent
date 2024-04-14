@@ -6,9 +6,6 @@ import androidx.annotation.IntRange;
 
 /**
  * A data class encapsulating the visible state of a row in the main view of the application.
- * Should only be created by com.peternaggschga.gwent.domain.cases.RowStateUseCase.
- *
- * @see com.peternaggschga.gwent.domain.cases.RowStateUseCase
  */
 public class RowUiState {
     /**
