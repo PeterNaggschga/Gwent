@@ -60,6 +60,17 @@ public class ShowUnitsDialog extends OverlayDialog {
         RecyclerView recyclerView = findViewById(R.id.cardsList);
         recyclerView.setLayoutManager(llm);
         recyclerView.setAdapter(cardListAdapter);
+        cardListAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            /**
+             * @param positionStart
+             * @param itemCount
+             */
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                super.onItemRangeInserted(positionStart, itemCount);
+                recyclerView.smoothScrollToPosition(positionStart + itemCount - 1);
+            }
+        });
 
         findViewById(R.id.popup_cards_add_button).setOnClickListener(v -> {
             dismiss();
