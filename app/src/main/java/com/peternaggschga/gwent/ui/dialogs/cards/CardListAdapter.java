@@ -21,7 +21,6 @@ import com.peternaggschga.gwent.R;
 /**
  * A ListAdapter used to provide CardListAdapter.CardViewHolder objects
  * created from CardUiState objects to a RecyclerView.
- * @todo Add testing.
  * @see CardUiState
  * @see CardListAdapter.CardViewHolder
  * @see ListAdapter
