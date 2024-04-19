@@ -13,11 +13,13 @@ import com.peternaggschga.gwent.RowType;
 import com.peternaggschga.gwent.domain.damage.DamageCalculator;
 
 import org.junit.Test;
+import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.valid4j.errors.RequireViolation;
 
+@RunWith(Enclosed.class)
 public class UnitEntityUnitTest {
     @RunWith(JUnit4.class)
     public static class ConstructorTests {
