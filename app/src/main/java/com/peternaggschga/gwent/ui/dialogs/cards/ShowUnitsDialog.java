@@ -109,7 +109,10 @@ public class ShowUnitsDialog extends OverlayDialog {
             @Override
             public void onItemRangeInserted(int positionStart, int itemCount) {
                 super.onItemRangeInserted(positionStart, itemCount);
-                recyclerView.smoothScrollToPosition(positionStart + itemCount - 1);
+                int scrollPosition = positionStart + itemCount - 1;
+                if (scrollPosition >= 0) {
+                    recyclerView.smoothScrollToPosition(scrollPosition);
+                }
             }
         });
 
