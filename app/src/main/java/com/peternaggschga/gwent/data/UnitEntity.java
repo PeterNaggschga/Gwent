@@ -184,17 +184,17 @@ public class UnitEntity {
         String squad = "";
         switch (getAbility()) {
             case HORN:
-                ability = context.getString(R.string.array_add_ability_horn);
+                ability = context.getString(R.string.add_picker_ability_horn);
                 break;
             case BINDING:
-                ability = context.getString(R.string.array_add_ability_binding);
+                ability = context.getString(R.string.add_picker_ability_binding);
                 squad = context.getString(R.string.unit_toString_squad, getSquad());
                 break;
             case MORAL_BOOST:
-                ability = context.getString(R.string.array_add_ability_moralBoost);
+                ability = context.getString(R.string.add_picker_ability_moralBoost);
                 break;
             case REVENGE:
-                ability = context.getString(R.string.array_add_ability_revenge);
+                ability = context.getString(R.string.add_picker_ability_revenge);
                 break;
             case NONE:
             default:

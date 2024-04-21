@@ -208,11 +208,11 @@
     <string name="array_design_default">Standard</string>
     <string name="array_design_geralt">Geralt von Riva</string>
     <string name="array_design_yennefer">Yennefer von Vengerberg</string>
-    <string name="array_add_epic_epic">Held</string>
-    <string name="array_add_ability_default">Keine</string>
-    <string name="array_add_ability_moralBoost">Moralschub</string>
-    <string name="array_add_ability_revenge">Rächer</string>
-    <string name="array_add_ability_binding">Enge Bindung</string>
+    <string name="add_picker_epic_epic">Held</string>
+    <string name="add_picker_ability_default">Keine</string>
+    <string name="add_picker_ability_moralBoost">Moralschub</string>
+    <string name="add_picker_ability_revenge">Rächer</string>
+    <string name="add_picker_ability_binding">Enge Bindung</string>
     <string name="popUp_add_card_binding_count">Anzahl Einheiten in %1$d. Gruppe: %2$d</string>
     <string name="alertDialog_revenge_negative">Nicht auslösen</string>
 </resources>

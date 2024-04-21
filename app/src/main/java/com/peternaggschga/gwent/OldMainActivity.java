@@ -667,13 +667,13 @@ public class OldMainActivity extends AppCompatActivity {
         numberPicker = popupView.findViewById(R.id.popup_add_card_number_picker);
         epicPicker.setMinValue(0);
         epicPicker.setMaxValue(1);
-        epicPicker.setDisplayedValues(getResources().getStringArray(R.array.popup_add_card_epic_values));
+        //epicPicker.setDisplayedValues(getResources().getStringArray(R.array.popup_add_card_epic_values));
         dmgPicker.setMinValue(0);
         dmgPicker.setMaxValue(18);
         dmgPicker.setValue(5);
         abilityPicker.setMinValue(0);
         abilityPicker.setMaxValue(4);
-        abilityPicker.setDisplayedValues(getResources().getStringArray(R.array.popup_add_card_ability_values));
+        //abilityPicker.setDisplayedValues(getResources().getStringArray(R.array.popup_add_card_ability_values));
         bindingPicker.setMinValue(1);
         bindingPicker.setMaxValue(3);
         numberPicker.setMinValue(1);
@@ -687,16 +687,16 @@ public class OldMainActivity extends AppCompatActivity {
             dmgPicker.setValue(epic ? 3 : 5);
             dmgPicker.setEnabled(epic);
             if (epic) {
-                dmgPicker.setDisplayedValues(getResources().getStringArray(R.array.popup_add_card_dmg_values_epic));
+                //dmgPicker.setDisplayedValues(getResources().getStringArray(R.array.popup_add_card_dmg_values_epic));
 
                 abilityPicker.setMinValue(0);
                 abilityPicker.setMaxValue(1);
-                abilityPicker.setDisplayedValues(getResources().getStringArray(R.array.popup_add_card_ability_values_epic));
+                //abilityPicker.setDisplayedValues(getResources().getStringArray(R.array.popup_add_card_ability_values_epic));
 
                 bindingPicker.setVisibility(View.GONE);
                 bindingPickerLabel.setVisibility(View.GONE);
             } else {
-                abilityPicker.setDisplayedValues(getResources().getStringArray(R.array.popup_add_card_ability_values));
+                //abilityPicker.setDisplayedValues(getResources().getStringArray(R.array.popup_add_card_ability_values));
                 abilityPicker.setMinValue(0);
                 abilityPicker.setMaxValue(4);
             }
@@ -706,7 +706,7 @@ public class OldMainActivity extends AppCompatActivity {
                 dmgPicker.setMinValue(0);
                 dmgPicker.setMaxValue(1);
                 dmgPicker.setValue(0);
-                dmgPicker.setDisplayedValues(getResources().getStringArray(i1 == 0 ? R.array.popup_add_card_dmg_values_moralboost_normal : R.array.popup_add_card_dmg_values_moralboost_epic));
+                //dmgPicker.setDisplayedValues(getResources().getStringArray(i1 == 0 ? R.array.popup_add_card_dmg_values_moralboost_normal : R.array.popup_add_card_dmg_values_moralboost_epic));
             }
         });
         abilityPicker.setOnValueChangedListener((numberPicker, i, i1) -> {
@@ -718,7 +718,7 @@ public class OldMainActivity extends AppCompatActivity {
                     dmgPicker.setMaxValue(epic ? 4 : 18);
                     dmgPicker.setValue(epic ? 3 : 5);
                     if (epic) {
-                        dmgPicker.setDisplayedValues(getResources().getStringArray(R.array.popup_add_card_dmg_values_epic));
+                        //dmgPicker.setDisplayedValues(getResources().getStringArray(R.array.popup_add_card_dmg_values_epic));
                     }
                     dmgPicker.setEnabled(true);
                     break;
@@ -738,7 +738,7 @@ public class OldMainActivity extends AppCompatActivity {
                     boolean epic = !(epicPicker.getValue() == 0);
                     dmgPicker.setMaxValue(epic ? 1 : 4);
                     dmgPicker.setValue(1);
-                    dmgPicker.setDisplayedValues(getResources().getStringArray(epic ? R.array.popup_add_card_dmg_values_moralboost_epic : R.array.popup_add_card_dmg_values_moralboost_normal));
+                    //dmgPicker.setDisplayedValues(getResources().getStringArray(epic ? R.array.popup_add_card_dmg_values_moralboost_epic : R.array.popup_add_card_dmg_values_moralboost_normal));
                     break;
                 case 2:
                     dmgPicker.setValue(2);
