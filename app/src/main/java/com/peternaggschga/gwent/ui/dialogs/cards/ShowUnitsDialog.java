@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,6 +13,8 @@ import com.peternaggschga.gwent.R;
 import com.peternaggschga.gwent.RowType;
 import com.peternaggschga.gwent.domain.cases.RemoveUnitsUseCase;
 import com.peternaggschga.gwent.ui.dialogs.OverlayDialog;
+
+import java.util.Objects;
 
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.disposables.Disposable;
@@ -96,6 +99,7 @@ public class ShowUnitsDialog extends OverlayDialog {
         LinearLayoutManager llm = new LinearLayoutManager(getContext());
         llm.setOrientation(RecyclerView.HORIZONTAL);
         RecyclerView recyclerView = findViewById(R.id.cardsList);
+        ((DefaultItemAnimator) Objects.requireNonNull(recyclerView.getItemAnimator())).setSupportsChangeAnimations(false);
         recyclerView.setLayoutManager(llm);
         recyclerView.setAdapter(cardListAdapter);
 
