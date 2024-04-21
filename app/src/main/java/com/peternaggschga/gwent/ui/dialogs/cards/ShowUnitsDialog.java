@@ -13,10 +13,12 @@ import com.peternaggschga.gwent.R;
 import com.peternaggschga.gwent.RowType;
 import com.peternaggschga.gwent.domain.cases.RemoveUnitsUseCase;
 import com.peternaggschga.gwent.ui.dialogs.OverlayDialog;
+import com.peternaggschga.gwent.ui.dialogs.addcard.AddCardDialog;
 
 import java.util.Objects;
 
 import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 
 /**
@@ -26,34 +28,45 @@ import io.reactivex.rxjava3.disposables.Disposable;
  */
 public class ShowUnitsDialog extends OverlayDialog {
     /**
+     * RowType defining which row is represented by this Dialog.
+     *
+     * @see #getRow()
+     */
+    @NonNull
+    private final RowType row;
+
+    /**
      * CardListAdapter offering a list of CardUiState objects to the UI.
      */
     @NonNull
     private final CardListAdapter cardListAdapter;
 
     /**
-     * Disposable associated with a Flowable regularly updating the unit list in #cardListAdapter.
+     * CompositeDisposable keeping track of all subscriptions to observables made by this class.
      * Is being disposed in an android.content.DialogInterface.OnDismissListener that is set in #onCreate().
      *
      * @see android.content.DialogInterface.OnDismissListener
      * @see #onCreate(Bundle)
      */
     @NonNull
-    private final Disposable updateSubscription;
+    private final CompositeDisposable disposables = new CompositeDisposable();
 
     /**
      * Constructor of a ShowUnitsDialog shown in the given Context,
      * with the given CardListAdapter and update subscription.
-     * @param context Context this Dialog is shown in.
-     * @param cardListAdapter CardListAdapter providing an always up-to-date list of CardUiState objects for a certain row.
+     *
+     * @param context            Context this Dialog is shown in.
+     * @param row                RowType defining which row all shown units belong to.
+     * @param cardListAdapter    CardListAdapter providing an always up-to-date list of CardUiState objects for a certain row.
      * @param updateSubscription Disposable managing the running updates of the given CardListAdapter.
      *                           When disposed, the adapter is not updated anymore.
      */
-    private ShowUnitsDialog(@NonNull Context context, @NonNull CardListAdapter cardListAdapter,
-                            @NonNull Disposable updateSubscription) {
+    private ShowUnitsDialog(@NonNull Context context, @NonNull RowType row,
+                            @NonNull CardListAdapter cardListAdapter, @NonNull Disposable updateSubscription) {
         super(context, R.layout.popup_cards);
+        this.row = row;
         this.cardListAdapter = cardListAdapter;
-        this.updateSubscription = updateSubscription;
+        disposables.add(updateSubscription);
     }
 
     /**
@@ -76,7 +89,7 @@ public class ShowUnitsDialog extends OverlayDialog {
                             Disposable updateSubscription = repository.getUnitsFlowable(row)
                                     .map(factory::createCardUiState)
                                     .subscribe(adapter::submitList);
-                            return new ShowUnitsDialog(context, adapter, updateSubscription);
+                            return new ShowUnitsDialog(context, row, adapter, updateSubscription);
                         })
                 );
     }
@@ -121,12 +134,23 @@ public class ShowUnitsDialog extends OverlayDialog {
         });
 
         findViewById(R.id.popup_cards_add_button).setOnClickListener(v -> {
-            dismiss();
-            // TODO: hide()
+            hide();
+            new AddCardDialog(ShowUnitsDialog.this).show();
         });
 
         findViewById(R.id.popup_cards_cancel_button).setOnClickListener(v -> dismiss());
 
-        setOnDismissListener(dialog -> updateSubscription.dispose());
+        setOnDismissListener(dialog -> disposables.dispose());
+    }
+
+    /**
+     * Returns the row this ShowUnitsDialog is representing.
+     *
+     * @return A RowType defining the represented row.
+     * @see #row
+     */
+    @NonNull
+    public RowType getRow() {
+        return row;
     }
 }
