@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!-- TODO: Work with includes for NumberPicker and Label formatting -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -21,7 +21,6 @@
             android:id="@+id/popup_add_card_epic_picker_label"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/border_margin"
             android:layout_marginBottom="@dimen/popUp_add_card_label_marginBottom"
             android:gravity="center"
             android:labelFor="@id/popup_add_card_epic_picker"
@@ -29,26 +28,26 @@
             android:textColor="?attr/card_count_text_color"
             android:textSize="@dimen/popUp_add_card_label_textSize"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/popup_add_card_dmg_picker_label"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/popup_add_card_epic_picker"
+            app:layout_constraintStart_toStartOf="@id/popup_add_card_epic_picker"
             app:layout_constraintTop_toBottomOf="@id/popup_add_card_epic_picker" />
 
         <NumberPicker
             android:id="@+id/popup_add_card_epic_picker"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/border_margin"
             android:layout_marginTop="@dimen/border_margin"
             android:descendantFocusability="blocksDescendants"
             app:layout_constraintBottom_toTopOf="@id/popup_add_card_epic_picker_label"
-            app:layout_constraintEnd_toEndOf="@id/popup_add_card_epic_picker_label"
-            app:layout_constraintStart_toStartOf="@id/popup_add_card_epic_picker_label"
+            app:layout_constraintEnd_toStartOf="@id/popup_add_card_dmg_picker"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/popup_add_card_dmg_picker_label"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/border_margin"
             android:layout_marginBottom="@dimen/popUp_add_card_label_marginBottom"
             android:gravity="center"
             android:labelFor="@id/popup_add_card_dmg_picker"
@@ -56,25 +55,25 @@
             android:textColor="?attr/card_count_text_color"
             android:textSize="@dimen/popUp_add_card_label_textSize"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/popup_add_card_ability_picker_label"
-            app:layout_constraintStart_toEndOf="@id/popup_add_card_epic_picker_label"
+            app:layout_constraintEnd_toEndOf="@id/popup_add_card_dmg_picker"
+            app:layout_constraintStart_toStartOf="@id/popup_add_card_dmg_picker"
             app:layout_constraintTop_toBottomOf="@id/popup_add_card_dmg_picker" />
 
         <NumberPicker
             android:id="@+id/popup_add_card_dmg_picker"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/border_margin"
             android:layout_marginTop="@dimen/border_margin"
             app:layout_constraintBottom_toTopOf="@id/popup_add_card_dmg_picker_label"
-            app:layout_constraintEnd_toEndOf="@+id/popup_add_card_dmg_picker_label"
-            app:layout_constraintStart_toStartOf="@id/popup_add_card_dmg_picker_label"
+            app:layout_constraintEnd_toStartOf="@id/popup_add_card_ability_picker"
+            app:layout_constraintStart_toEndOf="@id/popup_add_card_epic_picker"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/popup_add_card_ability_picker_label"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/border_margin"
             android:layout_marginBottom="@dimen/popUp_add_card_label_marginBottom"
             android:gravity="center"
             android:labelFor="@id/popup_add_card_ability_picker"
@@ -82,55 +81,54 @@
             android:textColor="?attr/card_count_text_color"
             android:textSize="@dimen/popUp_add_card_label_textSize"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/popup_add_card_binding_picker_label"
-            app:layout_constraintStart_toEndOf="@id/popup_add_card_dmg_picker_label"
+            app:layout_constraintEnd_toEndOf="@id/popup_add_card_ability_picker"
+            app:layout_constraintStart_toStartOf="@id/popup_add_card_ability_picker"
             app:layout_constraintTop_toBottomOf="@id/popup_add_card_ability_picker" />
 
         <NumberPicker
             android:id="@+id/popup_add_card_ability_picker"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/border_margin"
             android:layout_marginTop="@dimen/border_margin"
             android:descendantFocusability="blocksDescendants"
             app:layout_constraintBottom_toTopOf="@id/popup_add_card_ability_picker_label"
-            app:layout_constraintEnd_toEndOf="@id/popup_add_card_ability_picker_label"
-            app:layout_constraintStart_toStartOf="@id/popup_add_card_ability_picker_label"
+            app:layout_constraintEnd_toStartOf="@id/popup_add_card_binding_picker"
+            app:layout_constraintStart_toEndOf="@id/popup_add_card_dmg_picker"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/popup_add_card_binding_picker_label"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/border_margin"
             android:layout_marginBottom="@dimen/popUp_add_card_label_marginBottom"
             android:gravity="center"
             android:labelFor="@id/popup_add_card_binding_picker"
             android:text="@string/popUp_add_card_label_binding"
             android:textColor="?attr/card_count_text_color"
             android:textSize="@dimen/popUp_add_card_label_textSize"
-            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/popup_add_card_number_picker_label"
-            app:layout_constraintStart_toEndOf="@id/popup_add_card_ability_picker_label"
+            app:layout_constraintEnd_toEndOf="@id/popup_add_card_binding_picker"
+            app:layout_constraintStart_toStartOf="@id/popup_add_card_binding_picker"
             app:layout_constraintTop_toBottomOf="@id/popup_add_card_binding_picker" />
 
         <NumberPicker
             android:id="@+id/popup_add_card_binding_picker"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/border_margin"
             android:layout_marginTop="@dimen/border_margin"
             android:descendantFocusability="blocksDescendants"
             android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@id/popup_add_card_binding_picker_label"
-            app:layout_constraintEnd_toEndOf="@id/popup_add_card_binding_picker_label"
-            app:layout_constraintStart_toStartOf="@id/popup_add_card_binding_picker_label"
+            app:layout_constraintEnd_toStartOf="@id/popup_add_card_number_picker"
+            app:layout_constraintStart_toEndOf="@id/popup_add_card_ability_picker"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/popup_add_card_number_picker_label"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/border_margin"
             android:layout_marginBottom="@dimen/popUp_add_card_label_marginBottom"
             android:gravity="center"
             android:labelFor="@id/popup_add_card_number_picker"
@@ -138,18 +136,19 @@
             android:textColor="?attr/card_count_text_color"
             android:textSize="@dimen/popUp_add_card_label_textSize"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/popup_add_card_binding_picker_label"
+            app:layout_constraintEnd_toEndOf="@id/popup_add_card_number_picker"
+            app:layout_constraintStart_toStartOf="@id/popup_add_card_number_picker"
             app:layout_constraintTop_toBottomOf="@id/popup_add_card_number_picker" />
 
         <NumberPicker
             android:id="@+id/popup_add_card_number_picker"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/border_margin"
             android:layout_marginTop="@dimen/border_margin"
             app:layout_constraintBottom_toTopOf="@id/popup_add_card_number_picker_label"
-            app:layout_constraintEnd_toEndOf="@id/popup_add_card_number_picker_label"
-            app:layout_constraintStart_toStartOf="@id/popup_add_card_number_picker_label"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/popup_add_card_binding_picker"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
