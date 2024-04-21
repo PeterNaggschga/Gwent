@@ -243,12 +243,11 @@ public class UnitEntity {
 
     /**
      * Getter for #damage.
-     * Only used by Room extension.
      *
      * @return Integer representing the card's base-damage.
      * @see #calculateDamage(DamageCalculator)
      */
-    int getDamage() {
+    public int getDamage() {
         return damage;
     }
 
