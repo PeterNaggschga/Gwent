@@ -23,23 +23,61 @@ import java.util.TreeMap;
 import io.reactivex.rxjava3.core.Completable;
 
 /**
- * @todo Documentation
+ * A helper class responsible for initializing the NumberPicker views of an AddCardDialog
+ * (in #CardNumperPickerAdapter())
+ * and adding UnitEntity objects with the selected attributes when #addSelectedUnits() is called.
+ * @see AddCardDialog
  */
 class CardNumberPickerAdapter {
+    /**
+     * List of Ability values that epic units can have.
+     */
     @NonNull
-    protected static final List<Ability> EPIC_UNIT_ABILITIES = Arrays.asList(Ability.NONE, Ability.HORN, Ability.MORAL_BOOST);
+    private static final List<Ability> EPIC_UNIT_ABILITIES = Arrays.asList(Ability.NONE, Ability.HORN, Ability.MORAL_BOOST);
 
+    /**
+     * ValuePicker used to decide the value of UnitEntity#epic.
+     */
     @NonNull
     private final ValuePicker<Boolean> epicPicker;
+
+    /**
+     * DamageValuePicker used to decide the value of UnitEntity#damage.
+     */
     @NonNull
     private final DamageValuePicker damagePicker;
+
+    /**
+     * ValuePicker used to decide the value of UnitEntity#ability.
+     *
+     * @see #squadPicker
+     */
     @NonNull
     private final ValuePicker<Ability> abilityPicker;
+
+    /**
+     * NumberPicker used to decide the value of UnitEntity#squad.
+     * Only visible if the value of #abilityPicker is set to Ability#BINDING.
+     * @see #abilityPicker
+     */
     @NonNull
     private final NumberPicker squadPicker;
+
+    /**
+     * NumberPicker used to decide the number of UnitEntity objects that are inserted.
+     */
     @NonNull
     private final NumberPicker numberPicker;
 
+    /**
+     * Constructor of a CardNumberPickerAdapter
+     * managing the NumberPicker views in the given ViewGroup using the given SquadManager.
+     * Sets value bounds and NumberPicker.OnValueChangedListener for the pickers in the ViewGroup.
+     * The ViewGroup must be the ConstraintLayout with the id R.id#card_layout from popup_add_card.xml.
+     * @see R.id#card_layout
+     * @param pickerGroup ViewGroup containing the managed NumberPicker views.
+     * @param squadManager SquadManager containing up-to-date SquadState.
+     */
     CardNumberPickerAdapter(@NonNull ViewGroup pickerGroup, @NonNull SquadManager squadManager) {
         SortedMap<Boolean, Integer> epicStringResources = new TreeMap<>();
         epicStringResources.put(false, R.string.add_picker_epic_normal);
@@ -92,6 +130,13 @@ class CardNumberPickerAdapter {
         );
     }
 
+    /**
+     * Creates a NumberPicker.OnValueChangeListener that only executes the given NumberPicker.OnValueChangeListener after 500 ms
+     * if the value has not changed.
+     * @see NumberPicker.OnValueChangeListener
+     * @param originalListener NumberPicker.OnValueChangeListener that is called when the value does not change.
+     * @return A NumberPicker.OnValueChangeListener with delayed execution.
+     */
     @NonNull
     @Contract(pure = true)
     static NumberPicker.OnValueChangeListener getDelayedOnValueChangeListener(@NonNull NumberPicker.OnValueChangeListener originalListener) {
@@ -102,6 +147,11 @@ class CardNumberPickerAdapter {
         }, 500);
     }
 
+    /**
+     * Adds new UnitEntity objects the attributes selected by the managed pickers.
+     * @param row RowType defining to which row the units are added.
+     * @return A Completable tracking operation status.
+     */
     @NonNull
     Completable addSelectedUnits(@NonNull RowType row) {
         return GwentApplication.getRepository(numberPicker.getContext())
