@@ -99,6 +99,7 @@ public class ShowUnitsDialog extends OverlayDialog {
      * and sets View.OnClickListener for each button.
      * Also registers a RecyclerView.AdapterDataObserver responsible for scrolling to the end of the RecyclerView
      * whenever an item is being inserted.
+     * @todo Initialize RecyclerView only once.
      * @see CardListAdapter#registerAdapterDataObserver(RecyclerView.AdapterDataObserver)
      * @param savedInstanceState If this dialog is being reinitialized after
      *                           the hosting activity was previously shut down, holds the result from
