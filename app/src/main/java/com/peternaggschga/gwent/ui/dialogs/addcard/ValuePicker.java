@@ -33,24 +33,27 @@ abstract class ValuePicker<T extends Comparable<T>> {
      *
      * @see #getValue()
      * @see #setValue(Comparable)
+     * @see #getPicker()
      */
     @NonNull
-    protected final NumberPicker picker;
+    private final NumberPicker picker;
 
     /**
      * Map mapping each of the #selectableValues to an Integer that may be used
      * to select the displayed value Strings in implementations of #getDisplayString().
+     * @see #getDisplayIntegers()
      */
     @NonNull
-    protected final Map<T, Integer> displayIntegers;
+    private final Map<T, Integer> displayIntegers;
 
     /**
      * List of values that are selectable using this ValuePicker.
      * @see #setSelectableValues(Collection)
      * @see #setSelectableValues(Collection, Comparable)
+     * @see #getSelectableValues()
      */
     @NonNull
-    protected final List<T> selectableValues;
+    private final List<T> selectableValues;
 
     /**
      * Constructor of a ValuePicker wrapping the given NumberPicker and offering the given values.
@@ -73,11 +76,13 @@ abstract class ValuePicker<T extends Comparable<T>> {
      * @param valueToStringRes SortedMap with all #selectableValues as keys and the respective #displayIntegers as value.
      * @param defaultValue Value that is shown in the beginning.
      *                     If null, then the first value defined by the Comparable interface is used.
-     * @throws org.valid4j.errors.RequireViolation When valueToStringRes is empty.
+     * @throws org.valid4j.errors.RequireViolation When valueToStringRes is empty
+     * or when defaultValue is not null but not contained in valueToStringRes.
      */
     ValuePicker(@NonNull NumberPicker picker, @NonNull SortedMap<T, Integer> valueToStringRes,
                 @Nullable T defaultValue) {
         require(!valueToStringRes.isEmpty());
+        require(defaultValue == null || valueToStringRes.containsKey(defaultValue));
         this.picker = picker;
         displayIntegers = new HashMap<>(valueToStringRes.size());
         displayIntegers.putAll(valueToStringRes);
@@ -88,30 +93,20 @@ abstract class ValuePicker<T extends Comparable<T>> {
     }
 
     /**
-     * Sets #selectableValues to the given values.
-     * Every given value must be in the key-set of #displayIntegers.
-     * Wrapper of #setSelectableValues(Collection, Comparable).
-     *
-     * @param values Collection of the new selectable values.
-     * @throws org.valid4j.errors.RequireViolation When values is empty or contains a value not present in the key-set of #displayIntegers.
-     * @see #setSelectableValues(Collection, Comparable)
-     */
-    void setSelectableValues(@NonNull Collection<T> values) {
-        setSelectableValues(values, null);
-    }
-
-    /**
      * Sets #selectableValues to the given values and show the given defaultValue.
      * Every given value must be in the key-set of #displayIntegers.
      * @see #setSelectableValues(Collection)
      * @param values Collection of the new selectable values.
      * @param defaultValue Value that is shown in the beginning.
      *                     If null, then the first value defined by the Comparable interface is used.
-     * @throws org.valid4j.errors.RequireViolation When values is empty or contains a value not present in the key-set of #displayIntegers.
+     * @throws org.valid4j.errors.RequireViolation When values is empty, or contains a value not present in the key-set of #displayIntegersor,
+     * or does not contain defaultValue when defaultValue is not null.
      */
     void setSelectableValues(@NonNull Collection<T> values, @Nullable T defaultValue) {
         require(!values.isEmpty());
         require(displayIntegers.keySet().containsAll(values));
+        require(defaultValue == null || values.contains(defaultValue));
+
         picker.setDisplayedValues(null);
         picker.setValue(0);
         picker.setMaxValue(values.size() - 1);
@@ -127,6 +122,17 @@ abstract class ValuePicker<T extends Comparable<T>> {
             displayValues[i++] = getDisplayString(value);
         }
         picker.setDisplayedValues(displayValues);
+    }
+
+    /**
+     * Returns the NumberPicker wrapped by this ValuePicker.
+     *
+     * @return A NumberPicker wrapped in this ValuePicker.
+     * @see #picker
+     */
+    @NonNull
+    protected NumberPicker getPicker() {
+        return picker;
     }
 
     /**
@@ -200,5 +206,41 @@ abstract class ValuePicker<T extends Comparable<T>> {
          * @param newVal Value that was newly selected.
          */
         void onValueChange(@NonNull ValuePicker<T> picker, T oldVal, T newVal);
+    }
+
+    /**
+     * Returns the #displayIntegers map.
+     *
+     * @return A Map from values to Integer objects representing information on their String representation.
+     * @see #displayIntegers
+     */
+    @NonNull
+    protected Map<T, Integer> getDisplayIntegers() {
+        return displayIntegers;
+    }
+
+    /**
+     * Returns a List of values that can be selected by this picker.
+     *
+     * @return A List of values that are selectable.
+     * @see #selectableValues
+     */
+    @NonNull
+    protected List<T> getSelectableValues() {
+        return selectableValues;
+    }
+
+    /**
+     * Sets #selectableValues to the given values.
+     * Every given value must be in the key-set of #displayIntegers.
+     * Wrapper of #setSelectableValues(Collection, Comparable).
+     *
+     * @param values Collection of the new selectable values.
+     * @throws org.valid4j.errors.RequireViolation When values is empty, or contains a value not present in the key-set of #displayIntegersor,
+     * or does not contain defaultValue when defaultValue is not null.
+     * @see #setSelectableValues(Collection, Comparable)
+     */
+    void setSelectableValues(@NonNull Collection<T> values) {
+        setSelectableValues(values, null);
     }
 }

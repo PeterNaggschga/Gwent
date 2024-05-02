@@ -38,13 +38,13 @@ class DamageValuePicker extends ValuePicker<Integer> {
     @Override
     @NonNull
     protected String getDisplayString(@NonNull Integer value) {
-        return epicValues ? String.valueOf(displayIntegers.get(value)) : String.valueOf(value);
+        return epicValues ? String.valueOf(getDisplayIntegers().get(value)) : String.valueOf(value);
     }
 
     @NonNull
     @Override
     Integer getValue() {
-        return epicValues ? super.getValue() : picker.getValue();
+        return epicValues ? super.getValue() : getPicker().getValue();
     }
 
     void setEpicValues(boolean epicValues) {
@@ -57,11 +57,11 @@ class DamageValuePicker extends ValuePicker<Integer> {
                     3);
             return;
         }
-        selectableValues.clear();
-        selectableValues.addAll(IntStream.rangeClosed(0, 20).boxed().collect(Collectors.toList()));
-        picker.setDisplayedValues(null);
-        picker.setMaxValue(20);
-        picker.setValue(5);
+        getSelectableValues().clear();
+        getSelectableValues().addAll(IntStream.rangeClosed(0, 20).boxed().collect(Collectors.toList()));
+        getPicker().setDisplayedValues(null);
+        getPicker().setMaxValue(20);
+        getPicker().setValue(5);
     }
 
     @Override
