@@ -36,6 +36,7 @@ class DamageValuePicker extends ValuePicker<Integer> {
     }
 
     @Override
+    @NonNull
     protected String getDisplayString(@NonNull Integer value) {
         return epicValues ? String.valueOf(displayIntegers.get(value)) : String.valueOf(value);
     }

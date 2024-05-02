@@ -23,6 +23,7 @@ class StringValuePicker<T extends Comparable<T>> extends ValuePicker<T> {
     }
 
     @Override
+    @NonNull
     protected String getDisplayString(@NonNull T value) {
         return picker.getContext().getString(Objects.requireNonNull(displayIntegers.get(value)));
     }
