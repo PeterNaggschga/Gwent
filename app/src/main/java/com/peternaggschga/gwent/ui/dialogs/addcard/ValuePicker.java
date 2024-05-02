@@ -25,7 +25,6 @@ import java.util.SortedMap;
  * is that #displayIntegers maps the #selectableValues to a String resource id.
  * @see NumberPicker
  * @see StringValuePicker
- * @todo Add testing.
  */
 abstract class ValuePicker<T extends Comparable<T>> {
     /**
@@ -116,10 +115,11 @@ abstract class ValuePicker<T extends Comparable<T>> {
         int i = 0;
         for (T value : values) {
             selectableValues.add(value);
-            if (value == defaultValue) {
-                picker.setValue(i);
-            }
             displayValues[i++] = getDisplayString(value);
+        }
+
+        if (defaultValue != null) {
+            setValue(defaultValue);
         }
         picker.setDisplayedValues(displayValues);
     }
