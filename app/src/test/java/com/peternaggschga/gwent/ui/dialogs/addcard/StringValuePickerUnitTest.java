@@ -14,8 +14,10 @@ import android.content.Context;
 import android.widget.NumberPicker;
 
 import androidx.annotation.NonNull;
+import androidx.test.core.app.ApplicationProvider;
 
 import com.peternaggschga.gwent.Ability;
+import com.peternaggschga.gwent.R;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -33,50 +35,42 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ValuePickerUnitTest {
+public class StringValuePickerUnitTest {
     static final SortedMap<Ability, Integer> ABILITY_TO_STRING_RES = new TreeMap<>();
     static final Ability NOT_SELECTABLE = Ability.values()[0];
     @Mock
     NumberPicker mockPicker;
-    ValuePicker<Ability> testPicker;
+    StringValuePicker<Ability> testPicker;
 
     @BeforeClass
     public static void initAbilityToStringRes() {
-        for (int i = 1; i < Ability.values().length; i++) {
-            ABILITY_TO_STRING_RES.put(Ability.values()[i], i);
-        }
+        ABILITY_TO_STRING_RES.put(Ability.HORN, R.string.add_picker_ability_horn);
+        ABILITY_TO_STRING_RES.put(Ability.REVENGE, R.string.add_picker_ability_revenge);
+        ABILITY_TO_STRING_RES.put(Ability.BINDING, R.string.add_picker_ability_binding);
+        ABILITY_TO_STRING_RES.put(Ability.MORAL_BOOST, R.string.add_picker_ability_moralBoost);
     }
 
     @Before
     public void initMocks() {
-        testPicker = new ValuePicker<Ability>(mockPicker, ABILITY_TO_STRING_RES) {
+        testPicker = new StringValuePicker<Ability>(mockPicker, ABILITY_TO_STRING_RES) {
             @NonNull
             protected String getDisplayString(@NonNull Ability value) {
                 return value.name();
             }
         };
         reset(mockPicker);
+        when(mockPicker.getContext()).thenReturn(ApplicationProvider.getApplicationContext());
     }
 
     @Test
     public void constructorAssertsValueToStringResIsNotEmpty() {
         try {
-            new ValuePicker<Ability>(mockPicker, Collections.emptySortedMap()) {
-                @NonNull
-                protected String getDisplayString(@NonNull Ability value) {
-                    return value.name();
-                }
-            };
+            new StringValuePicker<Ability>(mockPicker, Collections.emptySortedMap());
             fail();
         } catch (RequireViolation ignored) {
         }
         try {
-            new ValuePicker<Ability>(mockPicker, Collections.emptySortedMap(), null) {
-                @NonNull
-                protected String getDisplayString(@NonNull Ability value) {
-                    return value.name();
-                }
-            };
+            new StringValuePicker<Ability>(mockPicker, Collections.emptySortedMap(), null);
             fail();
         } catch (RequireViolation ignored) {
         }
@@ -85,12 +79,7 @@ public class ValuePickerUnitTest {
     @Test
     public void constructorAllowsNullDefaultValue() {
         try {
-            new ValuePicker<Ability>(mockPicker, ABILITY_TO_STRING_RES, null) {
-                @NonNull
-                protected String getDisplayString(@NonNull Ability value) {
-                    return value.name();
-                }
-            };
+            new StringValuePicker<>(mockPicker, ABILITY_TO_STRING_RES, null);
         } catch (Exception ignored) {
             fail();
         }
@@ -99,12 +88,7 @@ public class ValuePickerUnitTest {
     @Test
     public void constructorAssertsDefaultValueInKnownValues() {
         try {
-            new ValuePicker<Ability>(mockPicker, ABILITY_TO_STRING_RES, NOT_SELECTABLE) {
-                @NonNull
-                protected String getDisplayString(@NonNull Ability value) {
-                    return value.name();
-                }
-            };
+            new StringValuePicker<>(mockPicker, ABILITY_TO_STRING_RES, NOT_SELECTABLE);
             fail();
         } catch (RequireViolation ignored) {
         }
@@ -112,19 +96,9 @@ public class ValuePickerUnitTest {
 
     @Test
     public void constructorSetsPickerMinValue() {
-        new ValuePicker<Ability>(mockPicker, ABILITY_TO_STRING_RES) {
-            @NonNull
-            protected String getDisplayString(@NonNull Ability value) {
-                return value.name();
-            }
-        };
+        new StringValuePicker<>(mockPicker, ABILITY_TO_STRING_RES);
         verify(mockPicker).setMinValue(0);
-        new ValuePicker<Ability>(mockPicker, ABILITY_TO_STRING_RES, null) {
-            @NonNull
-            protected String getDisplayString(@NonNull Ability value) {
-                return value.name();
-            }
-        };
+        new StringValuePicker<>(mockPicker, ABILITY_TO_STRING_RES, null);
         verify(mockPicker, times(2)).setMinValue(0);
     }
 
@@ -249,5 +223,23 @@ public class ValuePickerUnitTest {
         when(mockPicker.getContext()).thenReturn(context);
         assertThat(testPicker.getContext()).isSameInstanceAs(context);
         verify(mockPicker).getContext();
+    }
+
+    @Test
+    public void getDisplayStringAssertsValueInMap() {
+        try {
+            testPicker.getDisplayString(Ability.NONE);
+            fail();
+        } catch (RequireViolation ignored) {
+        }
+    }
+
+    @Test
+    public void getDisplayStringReturnsResourceString() {
+        Context context = ApplicationProvider.getApplicationContext();
+        assertThat(testPicker.getDisplayString(Ability.HORN)).isEqualTo(context.getString(R.string.add_picker_ability_horn));
+        assertThat(testPicker.getDisplayString(Ability.REVENGE)).isEqualTo(context.getString(R.string.add_picker_ability_revenge));
+        assertThat(testPicker.getDisplayString(Ability.BINDING)).isEqualTo(context.getString(R.string.add_picker_ability_binding));
+        assertThat(testPicker.getDisplayString(Ability.MORAL_BOOST)).isEqualTo(context.getString(R.string.add_picker_ability_moralBoost));
     }
 }

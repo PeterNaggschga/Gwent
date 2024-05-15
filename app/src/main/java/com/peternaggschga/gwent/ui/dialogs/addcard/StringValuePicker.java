@@ -13,7 +13,6 @@ import java.util.SortedMap;
  * A ValuePicker displaying a resource String for each element in #selectableValues.
  * The resource String is retrieved from #displayIntegers by using the associated Integer as the String id in #getDisplayString().
  * @see #getDisplayString(Comparable)
- * @todo Add testing.
  */
 class StringValuePicker<T extends Comparable<T>> extends ValuePicker<T> {
     /**
