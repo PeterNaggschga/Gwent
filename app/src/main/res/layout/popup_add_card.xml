@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!-- TODO: Work with includes for NumberPicker and Label formatting -->
+<!-- TODO: Fix dark theme (white NumberPicker lines) -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -11,10 +12,10 @@
         android:layout_marginHorizontal="@dimen/border_margin"
         android:layout_marginTop="@dimen/border_margin"
         android:background="?attr/card_background_drawable"
-        app:layout_constraintBottom_toTopOf="@id/popup_add_card_cancel_button"
-        app:layout_constraintEnd_toEndOf="@id/popup_add_card_save_button"
+        app:layout_constraintBottom_toTopOf="@id/button_layout"
+        app:layout_constraintEnd_toEndOf="@id/button_layout"
         app:layout_constraintHeight_max="@dimen/popUp_add_card_max_card_height"
-        app:layout_constraintStart_toStartOf="@id/popup_add_card_cancel_button"
+        app:layout_constraintStart_toStartOf="@id/button_layout"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
@@ -152,35 +153,43 @@
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <Button
-        android:id="@+id/popup_add_card_cancel_button"
-        android:layout_width="@dimen/popUp_card_button_width"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/button_layout"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_margin="@dimen/border_margin"
-        android:background="@drawable/rectangle_cancel_popup"
-        android:text="@string/alertDialog_cancel"
-        android:textAllCaps="false"
-        android:textColor="@color/color_add_card_text"
-        android:textSize="@dimen/popUp_card_textSize"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/popup_add_card_save_button"
-        app:layout_constraintHeight_max="@dimen/popUp_card_button_height"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/card_layout" />
-
-    <Button
-        android:id="@+id/popup_add_card_save_button"
-        android:layout_width="@dimen/popUp_card_button_width"
-        android:layout_height="0dp"
-        android:layout_margin="@dimen/border_margin"
-        android:background="?attr/card_background_drawable"
-        android:text="@string/popUp_cards_save"
-        android:textAllCaps="false"
-        android:textColor="?attr/card_count_text_color"
-        android:textSize="@dimen/popUp_card_textSize"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_max="@dimen/popUp_card_button_height"
-        app:layout_constraintStart_toEndOf="@id/popup_add_card_cancel_button"
-        app:layout_constraintTop_toBottomOf="@id/card_layout" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/card_layout">
+
+        <Button
+            android:id="@+id/popup_add_card_cancel_button"
+            android:layout_width="@dimen/popUp_card_button_width"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/popUp_card_button_margin"
+            android:background="@drawable/rectangle_cancel_popup"
+            android:text="@string/alertDialog_cancel"
+            android:textAllCaps="false"
+            android:textColor="@color/color_add_card_text"
+            android:textSize="@dimen/popUp_card_textSize"
+            app:layout_constraintEnd_toStartOf="@id/popup_add_card_save_button"
+            app:layout_constraintHeight_max="@dimen/popUp_card_button_height"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/popup_add_card_save_button"
+            android:layout_width="@dimen/popUp_card_button_width"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/popUp_card_button_margin"
+            android:background="?attr/card_background_drawable"
+            android:text="@string/popUp_cards_save"
+            android:textAllCaps="false"
+            android:textColor="?attr/card_count_text_color"
+            android:textSize="@dimen/popUp_card_textSize"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_max="@dimen/popUp_card_button_height"
+            app:layout_constraintStart_toEndOf="@id/popup_add_card_cancel_button" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

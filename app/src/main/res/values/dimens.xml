@@ -26,6 +26,7 @@
     <dimen name="popUp_card_button_width">200dp</dimen>
     <dimen name="popUp_card_button_height">80dp</dimen>
     <dimen name="popUp_card_image_diameter">50dp</dimen>
+    <dimen name="popUp_card_button_margin">75dp</dimen>
 
     <dimen name="popUp_add_card_label_textSize">21sp</dimen>
     <dimen name="popUp_add_card_label_marginBottom">24dp</dimen>
