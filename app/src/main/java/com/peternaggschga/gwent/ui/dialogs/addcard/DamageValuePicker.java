@@ -7,7 +7,9 @@ import android.widget.NumberPicker;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
@@ -20,19 +22,10 @@ import java.util.stream.IntStream;
  */
 class DamageValuePicker extends ValuePicker<Integer> {
     /**
-     * SortedMap mapping NumberPicker values to the respective epic damage value.
-     *
-     * @see #DamageValuePicker(NumberPicker)
+     * Integer array containing every damage value an epic unit may have.
      */
     @NonNull
-    private static final SortedMap<Integer, Integer> EPIC_DAMAGE_VALUES = new TreeMap<>();
-
-    static {
-        int i = 0;
-        for (Integer damage : new Integer[]{0, 7, 8, 10, 11, 15}) {
-            EPIC_DAMAGE_VALUES.put(i++, damage);
-        }
-    }
+    private static final Integer[] EPIC_DAMAGE_VALUES = new Integer[]{0, 7, 8, 10, 11, 15};
 
     /**
      * Boolean defining whether or not this DamageValuePicker shows epic damage values.
@@ -42,14 +35,17 @@ class DamageValuePicker extends ValuePicker<Integer> {
 
     /**
      * Constructor of a DamageValuePicker wrapping the given NumberPicker.
-     * Calls #ValuePicker(NumberPicker, SortedMap) with #EPIC_DAMAGE_VALUES.0
      * Calls #setEpicValues() to initialize the NumberPicker with non-epic damage values.
      * @see #ValuePicker(NumberPicker, SortedMap)
      * @see #setEpicValues(boolean)
      * @param picker NumberPicker wrapped by the created DamageValuePicker.
      */
     DamageValuePicker(@NonNull NumberPicker picker) {
-        super(picker, EPIC_DAMAGE_VALUES);
+        super(picker, Arrays.stream(EPIC_DAMAGE_VALUES).collect(
+                TreeMap::new,
+                (map, integer) -> map.put(integer, integer),
+                Map::putAll)
+        );
         setEpicValues(false);
     }
 
@@ -87,10 +83,7 @@ class DamageValuePicker extends ValuePicker<Integer> {
         this.epicValues = epicValues;
 
         if (epicValues) {
-            super.setSelectableValues(IntStream.range(0, EPIC_DAMAGE_VALUES.size())
-                            .boxed()
-                            .collect(Collectors.toList()),
-                    3);
+            super.setSelectableValues(Arrays.asList(EPIC_DAMAGE_VALUES), EPIC_DAMAGE_VALUES[3]);
             return;
         }
         getSelectableValues().clear();
