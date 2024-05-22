@@ -112,7 +112,7 @@ public class ShowUnitsDialog extends OverlayDialog {
 
         LinearLayoutManager llm = new LinearLayoutManager(getContext());
         llm.setOrientation(RecyclerView.HORIZONTAL);
-        RecyclerView recyclerView = findViewById(R.id.cardsList);
+        RecyclerView recyclerView = findViewById(R.id.cards_list);
         ((DefaultItemAnimator) Objects.requireNonNull(recyclerView.getItemAnimator())).setSupportsChangeAnimations(false);
         recyclerView.setLayoutManager(llm);
         recyclerView.setAdapter(cardListAdapter);

@@ -7,44 +7,50 @@
     app:layout_constraintTop_toTopOf="parent">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/cardsList"
+        android:id="@+id/cards_list"
         android:layout_width="0dp"
         android:layout_height="@dimen/popUp_card_list_height"
         android:layout_margin="@dimen/activity_horizontal_margin"
-        app:layout_constraintBottom_toTopOf="@id/popup_cards_cancel_button"
+        app:layout_constraintBottom_toTopOf="@id/button_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/popup_cards_cancel_button"
-        android:layout_width="@dimen/popUp_card_button_width"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/button_layout"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_margin="@dimen/border_margin"
-        android:background="@drawable/rectangle_cancel_popup"
-        android:text="@string/alertDialog_cancel"
-        android:textAllCaps="false"
-        android:textColor="@color/color_add_card_text"
-        android:textSize="@dimen/popUp_card_textSize"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/popup_cards_add_button"
-        app:layout_constraintHeight_max="@dimen/popUp_card_button_height"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cardsList" />
-
-    <Button
-        android:id="@+id/popup_cards_add_button"
-        android:layout_width="@dimen/popUp_card_button_width"
-        android:layout_height="0dp"
-        android:layout_margin="@dimen/border_margin"
-        android:background="?attr/card_background_drawable"
-        android:text="@string/popUp_cards_add"
-        android:textAllCaps="false"
-        android:textColor="?attr/card_count_text_color"
-        android:textSize="@dimen/popUp_card_textSize"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_max="@dimen/popUp_card_button_height"
-        app:layout_constraintStart_toEndOf="@id/popup_cards_cancel_button"
-        app:layout_constraintTop_toBottomOf="@id/cardsList" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cards_list">
+
+        <Button
+            android:id="@+id/popup_cards_cancel_button"
+            android:layout_width="@dimen/popUp_card_button_width"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/popUp_card_button_margin"
+            android:background="@drawable/rectangle_cancel_popup"
+            android:text="@string/alertDialog_cancel"
+            android:textAllCaps="false"
+            android:textColor="@color/color_add_card_text"
+            android:textSize="@dimen/popUp_card_textSize"
+            app:layout_constraintEnd_toStartOf="@id/popup_cards_add_button"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/popup_cards_add_button"
+            android:layout_width="@dimen/popUp_card_button_width"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/popUp_card_button_margin"
+            android:background="?attr/card_background_drawable"
+            android:text="@string/popUp_cards_add"
+            android:textAllCaps="false"
+            android:textColor="?attr/card_count_text_color"
+            android:textSize="@dimen/popUp_card_textSize"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/popup_cards_cancel_button" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

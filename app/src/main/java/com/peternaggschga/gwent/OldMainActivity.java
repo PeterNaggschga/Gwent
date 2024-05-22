@@ -876,7 +876,7 @@ public class OldMainActivity extends AppCompatActivity {
     private void inflateCardPopup(@NonNull final Row row, View view) {
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         ConstraintLayout popupLayout = (ConstraintLayout) inflater.inflate(R.layout.popup_cards, (ViewGroup) getWindow().getDecorView(), false);
-        LinearLayout cardsList = popupLayout.findViewById(R.id.cardsList).findViewById(R.id.cardsList);
+        LinearLayout cardsList = popupLayout.findViewById(R.id.cards_list).findViewById(R.id.cards_list);
         for (final Unit unit : row.getAllUnits()) {
             final View cardView = inflater.inflate(R.layout.card, cardsList, false);
             TextView damageView = cardView.findViewById(R.id.damageView);
