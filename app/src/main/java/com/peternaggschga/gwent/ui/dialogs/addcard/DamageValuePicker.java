@@ -18,7 +18,6 @@ import java.util.stream.IntStream;
 /**
  * A ValuePicker used for selection of damage values for UnitEntity#damage.
  * Allows for switching between epic and normal damage values using #setEpicValues().
- * @todo Add testing.
  */
 class DamageValuePicker extends ValuePicker<Integer> {
     /**

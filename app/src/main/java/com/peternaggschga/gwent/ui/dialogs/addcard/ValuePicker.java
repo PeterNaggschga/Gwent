@@ -83,8 +83,7 @@ abstract class ValuePicker<T extends Comparable<T>> {
         require(!valueToStringRes.isEmpty());
         require(defaultValue == null || valueToStringRes.containsKey(defaultValue));
         this.picker = picker;
-        displayIntegers = new HashMap<>(valueToStringRes.size());
-        displayIntegers.putAll(valueToStringRes);
+        displayIntegers = new HashMap<>(valueToStringRes);
         selectableValues = new ArrayList<>(valueToStringRes.size());
 
         picker.setMinValue(0);
