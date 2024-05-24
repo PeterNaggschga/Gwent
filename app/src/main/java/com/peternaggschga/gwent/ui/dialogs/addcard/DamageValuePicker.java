@@ -25,7 +25,12 @@ class DamageValuePicker extends ValuePicker<Integer> {
      * Integer array containing every damage value an epic unit may have.
      */
     @NonNull
-    private static final Integer[] EPIC_DAMAGE_VALUES = new Integer[]{0, 7, 8, 10, 11, 15};
+    public static final Integer[] EPIC_DAMAGE_VALUES = new Integer[]{0, 7, 8, 10, 11, 15};
+
+    /**
+     * Integer defining what the maximum damage of a non-epic UnitEntity can be.
+     */
+    public static final int NON_EPIC_DAMAGE_VALUES_UPPER_BOUND = 20;
 
     /**
      * Boolean defining whether or not this DamageValuePicker shows epic damage values.
@@ -64,6 +69,25 @@ class DamageValuePicker extends ValuePicker<Integer> {
     }
 
     /**
+     * Sets the picker to the given value.
+     * If #epicValues is true, ValuePicker#setValue() is called.
+     * Otherwise the #picker is simply set to the given value.
+     *
+     * @param value Value that the picker is set to.
+     * @throws org.valid4j.errors.RequireViolation When #epicValues is false and the given value is not in [0,20].
+     * @see ValuePicker#setValue(Comparable)
+     */
+    @Override
+    void setValue(@NonNull Integer value) {
+        if (epicValues) {
+            super.setValue(value);
+        } else {
+            require(0 <= value && value <= NON_EPIC_DAMAGE_VALUES_UPPER_BOUND);
+            getPicker().setValue(value);
+        }
+    }
+
+    /**
      * Returns the currently selected value.
      * @return A value that is selected in #picker.
      */
@@ -87,9 +111,9 @@ class DamageValuePicker extends ValuePicker<Integer> {
             return;
         }
         getSelectableValues().clear();
-        getSelectableValues().addAll(IntStream.rangeClosed(0, 20).boxed().collect(Collectors.toList()));
+        getSelectableValues().addAll(IntStream.rangeClosed(0, NON_EPIC_DAMAGE_VALUES_UPPER_BOUND).boxed().collect(Collectors.toList()));
         getPicker().setDisplayedValues(null);
-        getPicker().setMaxValue(20);
+        getPicker().setMaxValue(NON_EPIC_DAMAGE_VALUES_UPPER_BOUND);
         getPicker().setValue(5);
     }
 
