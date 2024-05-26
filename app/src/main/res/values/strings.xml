@@ -10,15 +10,15 @@
     <string name="popUp_cards_add">Add card</string>
     <string name="popUp_cards_save">Save</string>
     <string name="popUp_add_card_label_epic" translatable="false">Status</string>
-    <string name="array_add_epic_normal" translatable="false">Normal</string>
-    <string name="array_add_epic_epic">Hero</string>
+    <string name="add_picker_epic_normal" translatable="false">Normal</string>
+    <string name="add_picker_epic_epic">Hero</string>
     <string name="popUp_add_card_label_dmg">Strength</string>
     <string name="popUp_add_card_label_ability">Ability</string>
-    <string name="array_add_ability_default">None</string>
-    <string name="array_add_ability_moralBoost">Morale boost</string>
-    <string name="array_add_ability_horn" translatable="false">Horn</string>
-    <string name="array_add_ability_revenge">Avenger</string>
-    <string name="array_add_ability_binding">Tight bond</string>
+    <string name="add_picker_ability_default">None</string>
+    <string name="add_picker_ability_moralBoost">Morale boost</string>
+    <string name="add_picker_ability_horn" translatable="false">Horn</string>
+    <string name="add_picker_ability_revenge">Avenger</string>
+    <string name="add_picker_ability_binding">Tight bond</string>
     <string name="popUp_add_card_label_binding">Squad</string>
     <string name="popUp_add_card_label_number">Number</string>
     <string name="popUp_add_card_binding_count">Number of units in squad %1$d: %2$d</string>

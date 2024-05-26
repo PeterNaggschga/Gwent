@@ -162,17 +162,17 @@ public class Unit {
             builder.append(context.getString(R.string.unit_toString_unit));
         }
         if (baseAD || buffAD || (ability && (this.jaskier || this.revenge || this.moralBoost || this.binding != 0))) {
-            String[] abilities = context.getResources().getStringArray(R.array.popup_add_card_ability_values);
+            //String[] abilities = context.getResources().getStringArray(R.array.popup_add_card_ability_values);
             builder.append(" (");
             if (ability && (this.jaskier || this.revenge || this.moralBoost || this.binding != 0)) {
                 if (this.jaskier) {
-                    builder.append(abilities[2]);
+                    //builder.append(abilities[2]);
                 } else if (this.revenge) {
-                    builder.append(abilities[3]);
+                    //builder.append(abilities[3]);
                 } else if (this.moralBoost) {
-                    builder.append(abilities[1]);
+                    //builder.append(abilities[1]);
                 } else {
-                    builder.append(abilities[4]);
+                    //builder.append(abilities[4]);
                 }
                 if (baseAD || buffAD) {
                     builder.append(", ");

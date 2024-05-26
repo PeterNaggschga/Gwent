@@ -667,13 +667,13 @@ public class OldMainActivity extends AppCompatActivity {
         numberPicker = popupView.findViewById(R.id.popup_add_card_number_picker);
         epicPicker.setMinValue(0);
         epicPicker.setMaxValue(1);
-        epicPicker.setDisplayedValues(getResources().getStringArray(R.array.popup_add_card_epic_values));
+        //epicPicker.setDisplayedValues(getResources().getStringArray(R.array.popup_add_card_epic_values));
         dmgPicker.setMinValue(0);
         dmgPicker.setMaxValue(18);
         dmgPicker.setValue(5);
         abilityPicker.setMinValue(0);
         abilityPicker.setMaxValue(4);
-        abilityPicker.setDisplayedValues(getResources().getStringArray(R.array.popup_add_card_ability_values));
+        //abilityPicker.setDisplayedValues(getResources().getStringArray(R.array.popup_add_card_ability_values));
         bindingPicker.setMinValue(1);
         bindingPicker.setMaxValue(3);
         numberPicker.setMinValue(1);
@@ -687,16 +687,16 @@ public class OldMainActivity extends AppCompatActivity {
             dmgPicker.setValue(epic ? 3 : 5);
             dmgPicker.setEnabled(epic);
             if (epic) {
-                dmgPicker.setDisplayedValues(getResources().getStringArray(R.array.popup_add_card_dmg_values_epic));
+                //dmgPicker.setDisplayedValues(getResources().getStringArray(R.array.popup_add_card_dmg_values_epic));
 
                 abilityPicker.setMinValue(0);
                 abilityPicker.setMaxValue(1);
-                abilityPicker.setDisplayedValues(getResources().getStringArray(R.array.popup_add_card_ability_values_epic));
+                //abilityPicker.setDisplayedValues(getResources().getStringArray(R.array.popup_add_card_ability_values_epic));
 
                 bindingPicker.setVisibility(View.GONE);
                 bindingPickerLabel.setVisibility(View.GONE);
             } else {
-                abilityPicker.setDisplayedValues(getResources().getStringArray(R.array.popup_add_card_ability_values));
+                //abilityPicker.setDisplayedValues(getResources().getStringArray(R.array.popup_add_card_ability_values));
                 abilityPicker.setMinValue(0);
                 abilityPicker.setMaxValue(4);
             }
@@ -706,7 +706,7 @@ public class OldMainActivity extends AppCompatActivity {
                 dmgPicker.setMinValue(0);
                 dmgPicker.setMaxValue(1);
                 dmgPicker.setValue(0);
-                dmgPicker.setDisplayedValues(getResources().getStringArray(i1 == 0 ? R.array.popup_add_card_dmg_values_moralboost_normal : R.array.popup_add_card_dmg_values_moralboost_epic));
+                //dmgPicker.setDisplayedValues(getResources().getStringArray(i1 == 0 ? R.array.popup_add_card_dmg_values_moralboost_normal : R.array.popup_add_card_dmg_values_moralboost_epic));
             }
         });
         abilityPicker.setOnValueChangedListener((numberPicker, i, i1) -> {
@@ -718,7 +718,7 @@ public class OldMainActivity extends AppCompatActivity {
                     dmgPicker.setMaxValue(epic ? 4 : 18);
                     dmgPicker.setValue(epic ? 3 : 5);
                     if (epic) {
-                        dmgPicker.setDisplayedValues(getResources().getStringArray(R.array.popup_add_card_dmg_values_epic));
+                        //dmgPicker.setDisplayedValues(getResources().getStringArray(R.array.popup_add_card_dmg_values_epic));
                     }
                     dmgPicker.setEnabled(true);
                     break;
@@ -738,7 +738,7 @@ public class OldMainActivity extends AppCompatActivity {
                     boolean epic = !(epicPicker.getValue() == 0);
                     dmgPicker.setMaxValue(epic ? 1 : 4);
                     dmgPicker.setValue(1);
-                    dmgPicker.setDisplayedValues(getResources().getStringArray(epic ? R.array.popup_add_card_dmg_values_moralboost_epic : R.array.popup_add_card_dmg_values_moralboost_normal));
+                    //dmgPicker.setDisplayedValues(getResources().getStringArray(epic ? R.array.popup_add_card_dmg_values_moralboost_epic : R.array.popup_add_card_dmg_values_moralboost_normal));
                     break;
                 case 2:
                     dmgPicker.setValue(2);
@@ -876,7 +876,7 @@ public class OldMainActivity extends AppCompatActivity {
     private void inflateCardPopup(@NonNull final Row row, View view) {
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         ConstraintLayout popupLayout = (ConstraintLayout) inflater.inflate(R.layout.popup_cards, (ViewGroup) getWindow().getDecorView(), false);
-        LinearLayout cardsList = popupLayout.findViewById(R.id.cardsList).findViewById(R.id.cardListLayout);
+        LinearLayout cardsList = popupLayout.findViewById(R.id.cards_list).findViewById(R.id.cards_list);
         for (final Unit unit : row.getAllUnits()) {
             final View cardView = inflater.inflate(R.layout.card, cardsList, false);
             TextView damageView = cardView.findViewById(R.id.damageView);
@@ -933,7 +933,7 @@ public class OldMainActivity extends AppCompatActivity {
                 abilityView.setVisibility(View.VISIBLE);
             }
 
-            final ImageView copyButtonBackground = cardView.findViewById(R.id.copyButtonBackground);
+            final ImageView copyButtonBackground = cardView.findViewById(R.id.copyButton);
             cardView.findViewById(R.id.copyButton).setOnClickListener(view1 -> {
                 boolean contained = copyUnits.contains(unit);
                 ImageViewAnimatedChange(OldMainActivity.this, (ImageView) view1, copyButtonBackground, contained ? R.drawable.icon_copy_grey : R.drawable.icon_copy);
@@ -943,7 +943,7 @@ public class OldMainActivity extends AppCompatActivity {
                     copyUnits.add(unit);
                 }
             });
-            final ImageView deleteButtonBackground = cardView.findViewById(R.id.deleteButtonBackground);
+            final ImageView deleteButtonBackground = cardView.findViewById(R.id.deleteButton);
             cardView.findViewById(R.id.deleteButton).setOnClickListener(view12 -> {
                 boolean contained = deleteUnits.contains(unit);
                 ImageViewAnimatedChange(OldMainActivity.this, (ImageView) view12, deleteButtonBackground, contained ? R.drawable.icon_delete_grey : R.drawable.icon_delete);
@@ -955,7 +955,7 @@ public class OldMainActivity extends AppCompatActivity {
             });
             cardsList.addView(cardView);
         }
-        cardsList.findViewById(R.id.popup_cards_add).setOnClickListener(view13 -> {
+        cardsList.findViewById(R.id.popup_cards_add_button).setOnClickListener(view13 -> {
             popupWindow.dismiss();
             inflateAddCardPopup(row, view13);
         });
@@ -964,7 +964,7 @@ public class OldMainActivity extends AppCompatActivity {
             deleteUnits.clear();
             popupWindow.dismiss();
         });
-        popupLayout.findViewById(R.id.popup_cards_save_button).setOnClickListener(view15 -> {
+        popupLayout.findViewById(R.id.popup_cards_add_button).setOnClickListener(view15 -> {
             int revengeUnits = 0;
             for (Unit unit : deleteUnits) {
                 if (unit.isRevenge()) {

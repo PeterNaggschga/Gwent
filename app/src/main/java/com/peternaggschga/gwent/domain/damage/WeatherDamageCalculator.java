@@ -1,5 +1,7 @@
 package com.peternaggschga.gwent.domain.damage;
 
+import static com.peternaggschga.gwent.domain.damage.DamageCalculator.Color.DEBUFFED;
+import static com.peternaggschga.gwent.domain.damage.DamageCalculator.Color.DEFAULT;
 import static org.valid4j.Assertive.require;
 
 import androidx.annotation.IntRange;
@@ -43,5 +45,19 @@ class WeatherDamageCalculator implements DamageCalculator {
             return damage;
         }
         return weather ? 1 : damage;
+    }
+
+    /**
+     * Calculates whether the unit with the given id is shown as Color#BUFFED,
+     * Color#DEBUFFED, or Color#DEFAULT.
+     * Returns Color#DEBUFFED if #weather is true or else Color#DEFAULT.
+     *
+     * @param id Integer representing the UnitEntity#id of the unit buff status is calculated.
+     * @return Color representing whether the unit is buffed, de-buffed or not affected.
+     * @see Color
+     */
+    @Override
+    public Color isBuffed(int id) {
+        return weather ? DEBUFFED : DEFAULT;
     }
 }

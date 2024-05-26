@@ -50,7 +50,7 @@ public class RowUiStateObserverUnitTest {
                         ((ImageView) invocation.getArgument(0)).setImageResource(invocation.getArgument(1));
                         return Completable.complete();
                     });
-            testObserver.onChanged(mockState);
+            testObserver.accept(mockState);
             verify(mockState, atLeastOnce()).getDamage();
             verify(mockState, atLeastOnce()).isWeather();
             verify(mockState, atLeastOnce()).isHorn();
@@ -67,7 +67,7 @@ public class RowUiStateObserverUnitTest {
                         return Completable.complete();
                     });
             for (RowUiState state : new RowUiState[]{NEGATIVE_TEST_STATE, POSITIVE_TEST_STATE}) {
-                testObserver.onChanged(state);
+                testObserver.accept(state);
                 verify(damageView, atLeastOnce()).setText(String.valueOf(state.getDamage()));
                 verify(weatherView, atLeastOnce()).setImageResource(state.isWeather() ? R.drawable.frost_weather : R.drawable.good_weather);
                 verify(hornView, atLeastOnce()).setImageResource(state.isHorn() ? R.drawable.horn : R.drawable.horn_grey);

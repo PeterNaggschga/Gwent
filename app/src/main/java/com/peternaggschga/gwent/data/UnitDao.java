@@ -16,6 +16,7 @@ import java.util.Collection;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Single;
 
 /**
@@ -26,7 +27,7 @@ import io.reactivex.rxjava3.core.Single;
 @SuppressWarnings("NullableProblems")
 interface UnitDao {
     /**
-     * Inserts the given UnitEntity into `units` asynchronously.
+     * Inserts the given UnitEntity into `units`.
      * If the same UnitEntity#id is already in the table, the new insert is ignored.
      *
      * @param unit UnitEntity that is being inserted.
@@ -36,7 +37,7 @@ interface UnitDao {
     Completable insertUnit(@NonNull UnitEntity unit);
 
     /**
-     * Inserts a UnitEntity with the given values into `units` asynchronously.
+     * Inserts a UnitEntity with the given values into `units`.
      *
      * @param epic    Boolean defining whether the unit is epic.
      * @param damage  Non-Negative value defining the base-damage of the unit.
@@ -50,7 +51,16 @@ interface UnitDao {
     Completable insertUnit(boolean epic, @IntRange(from = 0) int damage, @NonNull Ability ability, @IntRange(from = 0) @Nullable Integer squad, @NonNull RowType row);
 
     /**
-     * Deletes the given UnitEntity objects from `units` asynchronously.
+     * Deletes the UnitEntity object with the given id from `units`.
+     * @todo Add testing.
+     * @param id Integer representing the UnitEntity#id of the deleted UnitEntity.
+     * @return A Completable tracking operation status.
+     */
+    @Query("DELETE FROM units WHERE `id` = :id")
+    Completable deleteUnit(int id);
+
+    /**
+     * Deletes the given UnitEntity objects from `units`.
      *
      * @param units List of UnitEntity that are being inserted.
      * @return A Completable tracking operation status.
@@ -59,8 +69,17 @@ interface UnitDao {
     Completable deleteUnits(@NonNull Collection<UnitEntity> units);
 
     /**
-     * Fetches all UnitEntity objects from `units` in the given row asynchronously.
-     *
+     * Fetches the UnitEntity object with the given id from `units`.
+     * @todo Add testing.
+     * @param id Integer representing the UnitEntity#id of the requested UnitEntity. 
+     * @return A Single tracking operation status and returning the value.
+     */
+    @Query("SELECT * FROM units WHERE `id` = :id")
+    Single<UnitEntity> getUnit(int id);
+
+    /**
+     * Fetches all UnitEntity objects from `units` in the given row.
+     * @see #getUnitsFlowable(RowType)
      * @param row RowType defining the UnitEntity#row foreign key.
      * @return A Single tracking operation status and returning the value.
      */
@@ -68,16 +87,37 @@ interface UnitDao {
     Single<List<UnitEntity>> getUnits(@NonNull RowType row);
 
     /**
-     * Fetches all UnitEntity objects from `units` asynchronously.
+     * Fetches a Flowable for all UnitEntity objects from `units` in the given row.
      *
+     * @param row RowType defining the UnitEntity#row foreign key.
+     * @return A Flowable emitting the values.
+     * @todo Add testing.
+     * @see #getUnits(RowType)
+     */
+    @Query("SELECT * FROM units WHERE `row` = :row")
+    Flowable<List<UnitEntity>> getUnitsFlowable(@NonNull RowType row);
+
+    /**
+     * Fetches all UnitEntity objects from `units`.
+     * @see #getUnitsFlowable()
      * @return A Single tracking operation status and returning the value.
      */
     @Query("SELECT * FROM units")
     Single<List<UnitEntity>> getUnits();
 
     /**
-     * Counts UnitEntity objects in `units` in the given row asynchronously.
+     * Fetches a Flowable for all UnitEntity objects from `units`.
      *
+     * @return A Flowable emitting the values.
+     * @todo Add testing.
+     * @see #getUnits()
+     */
+    @Query("SELECT * FROM units")
+    Flowable<List<UnitEntity>> getUnitsFlowable();
+
+    /**
+     * Counts UnitEntity objects in `units` in the given row.
+     * @see #countUnitsFlowable(RowType)
      * @param row RowType defining the UnitEntity#row foreign key.
      * @return A Single tracking operation status and returning the value.
      */
@@ -85,10 +125,32 @@ interface UnitDao {
     Single<Integer> countUnits(@NonNull RowType row);
 
     /**
-     * Counts UnitEntity objects in `units` asynchronously.
+     * Fetches a Flowable counting UnitEntity objects in `units` in the given row.
      *
+     * @param row RowType defining the UnitEntity#row foreign key.
+     * @return A Flowable emitting the values.
+     * @todo Add testing.
+     * @see #countUnits(RowType)
+     */
+    @Query("SELECT COUNT(*) FROM units WHERE `row` = :row")
+    Flowable<Integer> countUnitsFlowable(@NonNull RowType row);
+
+    /**
+     * Counts UnitEntity objects in `units`.
+     *
+     * @see #countUnitsFlowable()
      * @return A Single tracking operation status and returning the value.
      */
     @Query("SELECT COUNT(*) FROM units")
     Single<Integer> countUnits();
+
+    /**
+     * Fetches a Flowable counting UnitEntity objects in `units`.
+     *
+     * @return A Flowable emitting the values.
+     * @todo Add testing.
+     * @see #countUnits()
+     */
+    @Query("SELECT COUNT(*) FROM units")
+    Flowable<Integer> countUnitsFlowable();
 }

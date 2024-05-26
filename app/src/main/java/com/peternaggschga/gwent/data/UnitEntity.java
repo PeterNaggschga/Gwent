@@ -1,5 +1,7 @@
 package com.peternaggschga.gwent.data;
 
+import static com.peternaggschga.gwent.domain.damage.DamageCalculator.Color;
+import static com.peternaggschga.gwent.domain.damage.DamageCalculator.Color.DEFAULT;
 import static org.valid4j.Assertive.require;
 
 import android.content.Context;
@@ -114,6 +116,22 @@ public class UnitEntity {
     }
 
     /**
+     * Returns whether this unit is (de-)buffed.
+     * Returns Color#DEFAULT if #epic is true.
+     * Otherwise, whether the unit is (de-)buffed is calculated through the given DamageCalculator,
+     * which follows the visitor pattern.
+     *
+     * @param calculator DamageCalculator visitor used for damage calculation.
+     * @return Integer representing the units (de-)buffed damage.
+     * @todo Add testing.
+     * @see #getDamage()
+     */
+    @NonNull
+    public Color isBuffed(@NonNull DamageCalculator calculator) {
+        return epic ? DEFAULT : calculator.isBuffed(id);
+    }
+
+    /**
      * Creates a String containing the descriptions of all units in the given collection,
      * separated by commas.
      * Unit descriptions are created using #toString(Context).
@@ -166,17 +184,17 @@ public class UnitEntity {
         String squad = "";
         switch (getAbility()) {
             case HORN:
-                ability = context.getString(R.string.array_add_ability_horn);
+                ability = context.getString(R.string.add_picker_ability_horn);
                 break;
             case BINDING:
-                ability = context.getString(R.string.array_add_ability_binding);
+                ability = context.getString(R.string.add_picker_ability_binding);
                 squad = context.getString(R.string.unit_toString_squad, getSquad());
                 break;
             case MORAL_BOOST:
-                ability = context.getString(R.string.array_add_ability_moralBoost);
+                ability = context.getString(R.string.add_picker_ability_moralBoost);
                 break;
             case REVENGE:
-                ability = context.getString(R.string.array_add_ability_revenge);
+                ability = context.getString(R.string.add_picker_ability_revenge);
                 break;
             case NONE:
             default:
@@ -225,12 +243,11 @@ public class UnitEntity {
 
     /**
      * Getter for #damage.
-     * Only used by Room extension.
      *
      * @return Integer representing the card's base-damage.
      * @see #calculateDamage(DamageCalculator)
      */
-    int getDamage() {
+    public int getDamage() {
         return damage;
     }
 

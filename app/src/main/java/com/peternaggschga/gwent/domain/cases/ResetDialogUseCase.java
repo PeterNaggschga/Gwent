@@ -12,6 +12,7 @@ import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.preference.PreferenceManager;
 
+import com.peternaggschga.gwent.GwentApplication;
 import com.peternaggschga.gwent.R;
 import com.peternaggschga.gwent.RowType;
 import com.peternaggschga.gwent.data.UnitRepository;
@@ -48,6 +49,26 @@ public class ResetDialogUseCase {
      * May invoke a Dialog asking whether the user really wants
      * to reset depending on the given trigger and warning settings.
      * ResetRepositoryUseCase is used for resetting.
+     * Wrapper for #reset(Context, UnitRepository, int).
+     *
+     * @param context Context where a Dialog can be inflated.
+     * @param trigger Integer defining what triggered this reset.
+     * @return A Single emitting a Boolean defining whether the reset really took place.
+     * @see #reset(Context, UnitRepository, int)
+     * @see ResetRepositoryUseCase#reset(Context, UnitRepository, boolean)
+     */
+    @NonNull
+    public static Single<Boolean> reset(@NonNull Context context,
+                                        @IntRange(from = TRIGGER_BUTTON_CLICK, to = TRIGGER_FACTION_SWITCH) int trigger) {
+        return GwentApplication.getRepository(context)
+                .flatMap(repository -> reset(context, repository, trigger));
+    }
+
+    /**
+     * Resets the given UnitRepository.
+     * May invoke a Dialog asking whether the user really wants
+     * to reset depending on the given trigger and warning settings.
+     * ResetRepositoryUseCase is used for resetting.
      *
      * @param context    Context where a Dialog can be inflated.
      * @param repository UnitRepository that is reset.
@@ -56,8 +77,8 @@ public class ResetDialogUseCase {
      * @see ResetRepositoryUseCase#reset(Context, UnitRepository, boolean)
      */
     @NonNull
-    public static Single<Boolean> reset(@NonNull Context context, @NonNull UnitRepository repository,
-                                        @IntRange(from = TRIGGER_BUTTON_CLICK, to = TRIGGER_FACTION_SWITCH) int trigger) {
+    protected static Single<Boolean> reset(@NonNull Context context, @NonNull UnitRepository repository,
+                                           @IntRange(from = TRIGGER_BUTTON_CLICK, to = TRIGGER_FACTION_SWITCH) int trigger) {
         return getDialogType(context, repository, trigger).flatMap(dialogType -> {
             if (dialogType == DialogType.NONE) {
                 return ResetRepositoryUseCase.reset(context, repository).andThen(Single.just(true));

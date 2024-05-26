@@ -1,5 +1,6 @@
 package com.peternaggschga.gwent.domain.damage;
 
+import static com.peternaggschga.gwent.domain.damage.DamageCalculator.Color.BUFFED;
 import static org.valid4j.Assertive.require;
 
 import androidx.annotation.IntRange;
@@ -55,5 +56,22 @@ class MoralDamageCalculatorDecorator extends DamageCalculatorDecorator {
         require(damage >= 0);
         int componentDamage = component.calculateDamage(id, damage) + unitIds.size();
         return unitIds.contains(id) ? componentDamage - 1 : componentDamage;
+    }
+
+    /**
+     * Calculates whether the unit with the given id is shown as Color#BUFFED,
+     * Color#DEBUFFED, or Color#DEFAULT.
+     * Units are shown as Color#BUFFED when they are affected by a moral boost buff,
+     * otherwise their Color is defined by #component.
+     *
+     * @param id Integer representing the UnitEntity#id of the unit buff status is calculated.
+     * @return Color representing whether the unit is buffed, de-buffed or not affected.
+     * @see Color
+     */
+    @Override
+    public Color isBuffed(int id) {
+        return (!unitIds.isEmpty() && (!unitIds.contains(id) || (unitIds.size() > 1)))
+                ? BUFFED
+                : component.isBuffed(id);
     }
 }

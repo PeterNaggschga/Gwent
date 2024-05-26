@@ -9,6 +9,7 @@ import androidx.room.Query;
 import com.peternaggschga.gwent.RowType;
 
 import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Single;
 
 /**
@@ -19,7 +20,7 @@ import io.reactivex.rxjava3.core.Single;
 @SuppressWarnings("NullableProblems")
 interface RowDao {
     /**
-     * Inserts the given RowEntity into `rows` asynchronously.
+     * Inserts the given RowEntity into `rows`.
      * If the same RowType is already in the table, the new insert is ignored.
      *
      * @param row RowEntity that is being inserted.
@@ -29,7 +30,7 @@ interface RowDao {
     Completable insertRow(@NonNull RowEntity row);
 
     /**
-     * Deletes all RowEntity objects from `rows` asynchronously.
+     * Deletes all RowEntity objects from `rows`.
      *
      * @return A Completable tracking operation status.
      */
@@ -37,7 +38,7 @@ interface RowDao {
     Completable clearRows();
 
     /**
-     * Flips RowEntity#weather for the given RowType in `rows` asynchronously.
+     * Flips RowEntity#weather for the given RowType in `rows`.
      *
      * @param row RowType of the updated RowEntity.
      * @return A Completable tracking operation status.
@@ -46,7 +47,7 @@ interface RowDao {
     Completable updateWeather(@NonNull RowType row);
 
     /**
-     * Sets RowEntity#weather to `false` for all RowEntity elements in `rows` asynchronously.
+     * Sets RowEntity#weather to `false` for all RowEntity elements in `rows`.
      *
      * @return A Completable tracking operation status.
      */
@@ -54,7 +55,7 @@ interface RowDao {
     Completable clearWeather();
 
     /**
-     * Flips RowEntity#horn for the given RowType in `rows` asynchronously.
+     * Flips RowEntity#horn for the given RowType in `rows`.
      *
      * @param row RowType of the updated RowEntity.
      * @return A Completable tracking operation status.
@@ -63,8 +64,8 @@ interface RowDao {
     Completable updateHorn(@NonNull RowType row);
 
     /**
-     * Fetches RowEntity#weather for the given RowType in `rows` asynchronously.
-     *
+     * Fetches RowEntity#weather for the given RowType in `rows`.
+     * @see #isWeatherFlowable(RowType)
      * @param row RowType of the queried RowEntity.
      * @return A Single tracking operation status and returning the value.
      */
@@ -72,11 +73,33 @@ interface RowDao {
     Single<Boolean> isWeather(@NonNull RowType row);
 
     /**
-     * Fetches RowEntity#horn for the given RowType in `rows` asynchronously.
+     * Fetches a Flowable of RowEntity#weather for the given RowType in `rows`.
      *
+     * @param row RowType of the queried RowEntity.
+     * @return A Flowable emitting the values.
+     * @todo Add testing.
+     * @see #isWeather(RowType)
+     */
+    @Query("SELECT weather FROM rows WHERE id = :row")
+    Flowable<Boolean> isWeatherFlowable(@NonNull RowType row);
+
+    /**
+     * Fetches RowEntity#horn for the given RowType in `rows`.
+     * @see #isHornFlowable(RowType)
      * @param row RowType of the queried RowEntity.
      * @return A Single tracking operation status and returning the value.
      */
     @Query("SELECT horn FROM rows WHERE id = :row")
     Single<Boolean> isHorn(@NonNull RowType row);
+
+    /**
+     * Fetches a Flowable of RowEntity#horn for the given RowType in `rows`.
+     *
+     * @param row RowType of the queried RowEntity.
+     * @return A Flowable emitting the values.
+     * @todo Add testing.
+     * @see #isHorn(RowType)
+     */
+    @Query("SELECT horn FROM rows WHERE id = :row")
+    Flowable<Boolean> isHornFlowable(@NonNull RowType row);
 }

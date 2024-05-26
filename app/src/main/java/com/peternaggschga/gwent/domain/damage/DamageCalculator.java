@@ -11,11 +11,25 @@ import java.util.Collection;
  * see com.peternaggschga.gwent.data.UnitEntity#calculateDamage()
  * The respective visitors are created as a decorator hierarchy,
  * see DamageCalculatorBuildDirector#getCalculator().
- *
+ * @todo Add testing for #isBuffed().
  * @see com.peternaggschga.gwent.data.UnitEntity#calculateDamage(DamageCalculator)
  * @see DamageCalculatorBuildDirector#getCalculator(boolean, boolean, Collection)
  */
 public interface DamageCalculator {
+    /**
+     * Calculates whether the unit with the given id is shown as Color#BUFFED,
+     * Color#DEBUFFED, or Color#DEFAULT.
+     * Units are shown as Color#DEFAULT
+     * when they are not affected by any damage changing buffs or de-buffs.
+     * Units are shown as Color#DEBUFFED when they are only affected by the weather de-buff.
+     * Units are shown as Color#BUFFED when they are affected by any damage-increasing buff.
+     *
+     * @param id Integer representing the UnitEntity#id of the unit buff status is calculated.
+     * @return Color representing whether the unit is buffed, de-buffed or not affected.
+     * @see Color
+     */
+    Color isBuffed(int id);
+
     /**
      * Calculates the (de-)buffed damage of unit with the given id and the given base-damage.
      * Calculation is defined by the underlying decorator structure
@@ -28,4 +42,23 @@ public interface DamageCalculator {
      * @see WeatherDamageCalculator
      */
     int calculateDamage(int id, @IntRange(from = 0) int damage);
+
+    /**
+     * An enum containing values representing whether a unit is buffed,
+     * de-buffed or not affected by status effects.
+     */
+    enum Color {
+        /**
+         * The unit is not affected by status effects.
+         */
+        DEFAULT,
+        /**
+         * The unit is buffed by status effects.
+         */
+        BUFFED,
+        /**
+         * The unit is de-buffed by weather effects.
+         */
+        DEBUFFED
+    }
 }

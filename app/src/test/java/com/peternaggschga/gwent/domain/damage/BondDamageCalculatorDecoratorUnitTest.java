@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.stubbing.Answer;
 import org.valid4j.errors.RequireViolation;
 
 import java.util.Collections;
@@ -70,10 +71,9 @@ public class BondDamageCalculatorDecoratorUnitTest {
     public void calculateDamageMultipliesSizeOfSquadToDamage() {
         // noinspection unchecked cast
         Map<Integer, Integer> map = (Map<Integer, Integer>) Mockito.mock(Map.class);
-        when(map.containsKey(anyInt())).thenReturn(true);
         BondDamageCalculatorDecorator decorator = new BondDamageCalculatorDecorator(component, map);
         for (int squadSize = 1; squadSize <= TESTING_DEPTH; squadSize++) {
-            when(map.get(anyInt())).thenReturn(squadSize);
+            when(map.getOrDefault(anyInt(), anyInt())).thenReturn(squadSize);
             assertThat(decorator.calculateDamage(0, TESTING_DAMAGE)).isEqualTo(TESTING_DAMAGE * squadSize);
         }
     }
@@ -82,7 +82,7 @@ public class BondDamageCalculatorDecoratorUnitTest {
     public void calculateDamageReturnsDefaultWhenNoSquad() {
         // noinspection unchecked cast
         Map<Integer, Integer> map = (Map<Integer, Integer>) Mockito.mock(Map.class);
-        when(map.containsKey(anyInt())).thenReturn(false);
+        when(map.getOrDefault(anyInt(), anyInt())).then((Answer<Integer>) invocation -> invocation.getArgument(1));
         BondDamageCalculatorDecorator decorator = new BondDamageCalculatorDecorator(component, map);
         assertThat(decorator.calculateDamage(0, TESTING_DAMAGE)).isEqualTo(TESTING_DAMAGE);
     }

@@ -1,38 +1,41 @@
 package com.peternaggschga.gwent;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
 
 import com.peternaggschga.gwent.ui.dialogs.ChangeFactionDialog;
 import com.peternaggschga.gwent.ui.dialogs.CoinFlipDialog;
+import com.peternaggschga.gwent.ui.dialogs.cards.ShowUnitsDialog;
 import com.peternaggschga.gwent.ui.main.FactionSwitchListener;
 import com.peternaggschga.gwent.ui.main.GameBoardViewModel;
 import com.peternaggschga.gwent.ui.main.MenuUiStateObserver;
 import com.peternaggschga.gwent.ui.main.RowUiStateObserver;
 import com.peternaggschga.gwent.ui.sounds.SoundManager;
 
-import io.reactivex.rxjava3.schedulers.Schedulers;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
 
 /**
  * @todo Documentation
  */
 public class MainActivity extends AppCompatActivity {
     private SoundManager soundManager;
-    private GameBoardViewModel gameBoard;
+    private final CompositeDisposable disposables = new CompositeDisposable();
     @SuppressWarnings("FieldCanBeLocal")
     private SharedPreferences.OnSharedPreferenceChangeListener factionSwitchListener;
     private boolean resetOnFactionSwitch;
+    /**
+     * @todo Initialize ViewModel only once in #onCreate().
+     */
+    private GameBoardViewModel gameBoard;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,12 +61,13 @@ public class MainActivity extends AppCompatActivity {
 
         soundManager = new SoundManager(this);
 
-        Schedulers.io().scheduleDirect(() -> {
-            gameBoard = new ViewModelProvider(MainActivity.this,
-                    ViewModelProvider.Factory.from(GameBoardViewModel.initializer)
-            ).get(GameBoardViewModel.class);
-            new Handler(Looper.getMainLooper()).post(MainActivity.this::initializeViewModel);
-        });
+        // noinspection CheckResult, ResultOfMethodCallIgnored
+        GwentApplication.getRepository(this)
+                .map(repository -> GameBoardViewModel.getModel(MainActivity.this, repository))
+                .subscribe(gameBoardViewModel -> {
+                    gameBoard = gameBoardViewModel;
+                    initializeViewModel();
+                });
 
         factionSwitchListener = FactionSwitchListener.getListener(getWindow());
         PreferenceManager.getDefaultSharedPreferences(this)
@@ -82,6 +86,13 @@ public class MainActivity extends AppCompatActivity {
                         getResources().getBoolean(R.bool.faction_reset_preference_default));
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        disposables.dispose();
+        disposables.clear();
+    }
+
     private void initializeViewModel() {
         int[] rowIds = {R.id.firstRow, R.id.secondRow, R.id.thirdRow};
         for (int rowId = 0; rowId < rowIds.length; rowId++) {
@@ -90,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
 
             ImageView weather = rowLayout.findViewById(R.id.weatherView);
             ImageView horn = rowLayout.findViewById(R.id.hornView);
+            ConstraintLayout cards = rowLayout.findViewById(R.id.cardView);
 
             weather.setOnClickListener(v -> {
                 // noinspection CheckResult, ResultOfMethodCallIgnored
@@ -107,13 +119,18 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
             });
+            cards.setOnClickListener(v -> {
+                        // noinspection CheckResult, ResultOfMethodCallIgnored
+                        ShowUnitsDialog.getDialog(MainActivity.this, row).subscribe(Dialog::show);
+                    }
+            );
 
             final RowUiStateObserver observer = RowUiStateObserver.getObserver(row,
                     rowLayout.findViewById(R.id.pointView),
                     weather,
                     horn,
                     rowLayout.findViewById(R.id.cardCountView));
-            gameBoard.getRowUiState(row).observe(this, observer);
+            disposables.add(gameBoard.getRowUiState(row).subscribe(observer));
         }
 
         ImageButton reset = findViewById(R.id.resetButton);
@@ -124,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
                 reset,
                 weather,
                 burn);
-        gameBoard.getMenuUiState().observe(this, observer);
+        disposables.add(gameBoard.getMenuUiState().subscribe(observer));
 
         reset.setOnClickListener(v -> {
             // noinspection CheckResult, ResultOfMethodCallIgnored
@@ -147,8 +164,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         });
-
-        gameBoard.updateUi().subscribe();
     }
 
     private void inflateFactionPopup() {

@@ -20,7 +20,7 @@ import io.reactivex.rxjava3.core.Single;
  * @see DamageCalculatorBuildDirector
  * @see DamageCalculator
  */
-class DamageCalculatorUseCase {
+public class DamageCalculatorUseCase {
     /**
      * Returns a Single emitting a DamageCalculator object for the given row with properties retrieved from the given UnitRepository.
      *
@@ -29,7 +29,7 @@ class DamageCalculatorUseCase {
      * @return A Single emitting a DamageCalculator object for the given row.
      */
     @NonNull
-    static Single<DamageCalculator> getDamageCalculator(@NonNull UnitRepository repository, @NonNull RowType row) {
+    public static Single<DamageCalculator> getDamageCalculator(@NonNull UnitRepository repository, @NonNull RowType row) {
         return repository.isWeather(row)
                 .zipWith(repository.isHorn(row), Pair::create)
                 .zipWith(repository.getUnits(row), (weatherHorn, units) ->
@@ -47,7 +47,7 @@ class DamageCalculatorUseCase {
      * @see DamageCalculatorBuildDirector#getCalculator(boolean, boolean, Collection)
      */
     @NonNull
-    static DamageCalculator getDamageCalculator(boolean weather, boolean horn, @NonNull Collection<UnitEntity> units) {
+    public static DamageCalculator getDamageCalculator(boolean weather, boolean horn, @NonNull Collection<UnitEntity> units) {
         return DamageCalculatorBuildDirector.getCalculator(weather, horn, units);
     }
 }

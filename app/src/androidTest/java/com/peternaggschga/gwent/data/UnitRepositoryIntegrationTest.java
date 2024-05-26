@@ -28,8 +28,9 @@ public class UnitRepositoryIntegrationTest {
 
     @Before
     public void initDatabase() {
-        database = Room.inMemoryDatabaseBuilder(ApplicationProvider.getApplicationContext(), AppDatabase.class).build();
-        repository = new UnitRepository(database);
+        database = Room.inMemoryDatabaseBuilder(ApplicationProvider.getApplicationContext(), AppDatabase.class)
+                .build();
+        repository = UnitRepository.getRepository(database).blockingGet();
     }
 
     @After
@@ -48,26 +49,26 @@ public class UnitRepositoryIntegrationTest {
     }
 
     @Test
-    public void constructorAssertsNonNull() {
+    public void getRepositoryAssertsNonNull() {
         try {
             //noinspection DataFlowIssue
-            repository = new UnitRepository(null);
+            repository = UnitRepository.getRepository(null).blockingGet();
             fail();
         } catch (NullPointerException ignored) {
         }
     }
 
     @Test
-    public void constructorInitializesRows() {
+    public void getRepositoryInitializesRows() {
         for (RowType row : RowType.values()) {
             database.rows().isWeather(row).test().assertValue(false);
         }
     }
 
     @Test
-    public void constructorDoesntResetDatabase() {
+    public void getRepositoryDoesNotResetDatabase() {
         insertDummys();
-        repository = new UnitRepository(database);
+        repository = UnitRepository.getRepository(database).blockingGet();
         assertThat(database.units().countUnits().blockingGet()).isGreaterThan(0);
     }
 
@@ -115,18 +116,6 @@ public class UnitRepositoryIntegrationTest {
 
     @Test
     public void insertUnitAddsUnits() {
-        for (int unitNumber = 0; unitNumber < TESTING_DEPTH; unitNumber++) {
-            repository.insertUnit(unitNumber % 5 == 0,
-                    unitNumber % 10,
-                    Ability.values()[unitNumber % 3],
-                    null,
-                    RowType.values()[unitNumber % 3]).blockingAwait();
-        }
-        database.units().countUnits().test().assertValue(TESTING_DEPTH);
-    }
-
-    @Test
-    public void insertUnitNumberAddsUnits() {
         assertThat(repository.insertUnit(false, 5, Ability.NONE, null, RowType.MELEE, TESTING_DEPTH)
                 .observeOn(Schedulers.io())
                 .andThen(database.units().countUnits())
@@ -137,7 +126,7 @@ public class UnitRepositoryIntegrationTest {
     @Test
     public void insertUnitAssertsNonNegativeDamage() {
         try {
-            repository.insertUnit(false, -1, Ability.NONE, null, RowType.MELEE).blockingAwait();
+            repository.insertUnit(false, -1, Ability.NONE, null, RowType.MELEE, 1).blockingAwait();
             fail();
         } catch (RequireViolation ignored) {
         }
@@ -151,7 +140,7 @@ public class UnitRepositoryIntegrationTest {
     @Test
     public void insertUnitAllowsZeroDamage() {
         try {
-            repository.insertUnit(false, 0, Ability.NONE, null, RowType.MELEE)
+            repository.insertUnit(false, 0, Ability.NONE, null, RowType.MELEE, 1)
                     .andThen(repository.insertUnit(false, 0, Ability.NONE, null, RowType.MELEE, 5))
                     .blockingAwait();
         } catch (Exception ignored) {
@@ -162,7 +151,7 @@ public class UnitRepositoryIntegrationTest {
     @Test
     public void insertUnitAssertsSquadNullForOtherAbilities() {
         try {
-            repository.insertUnit(false, 0, Ability.NONE, 0, RowType.MELEE).blockingAwait();
+            repository.insertUnit(false, 0, Ability.NONE, 0, RowType.MELEE, 1).blockingAwait();
             fail();
         } catch (RequireViolation ignored) {
         }
@@ -176,7 +165,7 @@ public class UnitRepositoryIntegrationTest {
     @Test
     public void insertUnitAssertsSquadNonNegativeForBinding() {
         try {
-            repository.insertUnit(false, 0, Ability.BINDING, -1, RowType.MELEE).blockingAwait();
+            repository.insertUnit(false, 0, Ability.BINDING, -1, RowType.MELEE, 1).blockingAwait();
             fail();
         } catch (RequireViolation ignored) {
         }
@@ -190,7 +179,7 @@ public class UnitRepositoryIntegrationTest {
     @Test
     public void insertUnitAllowsZeroForBinding() {
         try {
-            repository.insertUnit(false, 0, Ability.BINDING, 0, RowType.MELEE)
+            repository.insertUnit(false, 0, Ability.BINDING, 0, RowType.MELEE, 1)
                     .andThen(repository.insertUnit(false, 0, Ability.BINDING, 0, RowType.MELEE, 5))
                     .blockingAwait();
         } catch (Exception ignored) {
@@ -201,7 +190,7 @@ public class UnitRepositoryIntegrationTest {
     @Test
     public void insertUnitAssertsSquadNonNullForBinding() {
         try {
-            repository.insertUnit(false, 0, Ability.BINDING, null, RowType.MELEE).blockingAwait();
+            repository.insertUnit(false, 0, Ability.BINDING, null, RowType.MELEE, 1).blockingAwait();
             fail();
         } catch (RequireViolation ignored) {
         }
@@ -216,7 +205,7 @@ public class UnitRepositoryIntegrationTest {
     public void insertUnitAssertsRowNotNull() {
         try {
             //noinspection DataFlowIssue
-            repository.insertUnit(false, 5, Ability.NONE, null, null).blockingAwait();
+            repository.insertUnit(false, 5, Ability.NONE, null, null, 1).blockingAwait();
             fail();
         } catch (NullPointerException ignored) {
         }
@@ -361,22 +350,11 @@ public class UnitRepositoryIntegrationTest {
         insertDummys();
 
         List<UnitEntity> units = database.units().getUnits().blockingGet();
-        assertThat(repository.copy(units)
+        assertThat(repository.copy(units.get(0).getId())
                 .observeOn(Schedulers.io())
                 .andThen(database.units().countUnits())
                 .blockingGet())
-                .isEqualTo(units.size() * 2);
-    }
-
-    @Test
-    public void copyAssertsNonNull() {
-        try {
-            //noinspection DataFlowIssue
-            repository.copy(null)
-                    .blockingAwait();
-            fail();
-        } catch (NullPointerException ignored) {
-        }
+                .isEqualTo(units.size() + 1);
     }
 
     @Test

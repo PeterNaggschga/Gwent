@@ -49,7 +49,7 @@ public class MenuUiStateObserverUnitTest {
                         ((ImageView) invocation.getArgument(0)).setImageResource(invocation.getArgument(1));
                         return Completable.complete();
                     });
-            testObserver.onChanged(mockState);
+            testObserver.accept(mockState);
             verify(mockState, atLeastOnce()).getDamage();
             verify(mockState, atLeastOnce()).isReset();
             verify(mockState, atLeastOnce()).isWeather();
@@ -66,7 +66,7 @@ public class MenuUiStateObserverUnitTest {
                         return Completable.complete();
                     });
             for (MenuUiState state : new MenuUiState[]{NEGATIVE_TEST_STATE, POSITIVE_TEST_STATE}) {
-                testObserver.onChanged(state);
+                testObserver.accept(state);
                 verify(damageView, atLeastOnce()).setText(String.valueOf(state.getDamage()));
                 verify(resetButton, atLeastOnce()).setImageResource(state.isReset() ? R.drawable.icon_reset : R.drawable.icon_reset_grey);
                 verify(resetButton, atLeastOnce()).setClickable(state.isReset());

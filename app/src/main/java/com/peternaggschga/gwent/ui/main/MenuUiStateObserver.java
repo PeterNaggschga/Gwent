@@ -4,18 +4,18 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.Observer;
 
 import com.peternaggschga.gwent.R;
 
+import io.reactivex.rxjava3.functions.Consumer;
+
 /**
  * An observer class responsible for updating the menu views when notified,
- * i.e., when a new MenuUiState is produced by MenuUpdateObserver.
+ * i.e., when a new MenuUiState is produced by the subscribed Flowable.
  *
  * @see MenuUiState
- * @see MenuUpdateObserver
  */
-public class MenuUiStateObserver implements Observer<MenuUiState> {
+public class MenuUiStateObserver implements Consumer<MenuUiState> {
     /**
      * A TextView showing the user the summed-up damage of all units, i.e., MenuUiState#damage.
      */
@@ -69,7 +69,7 @@ public class MenuUiStateObserver implements Observer<MenuUiState> {
      * @see ImageViewSwitchAnimator
      */
     @Override
-    public void onChanged(@NonNull MenuUiState menuUiState) {
+    public void accept(@NonNull MenuUiState menuUiState) {
         damageView.setText(String.valueOf(menuUiState.getDamage()));
         resetButton.setClickable(menuUiState.isReset());
         ImageViewSwitchAnimator.animatedSwitch(resetButton, menuUiState.isReset() ? R.drawable.icon_reset : R.drawable.icon_reset_grey)

@@ -5,26 +5,19 @@ import static com.peternaggschga.gwent.ui.main.FactionSwitchListener.THEME_NILFG
 import static com.peternaggschga.gwent.ui.main.FactionSwitchListener.THEME_NORTHERN_KINGDOMS;
 import static com.peternaggschga.gwent.ui.main.FactionSwitchListener.THEME_SCOIATAEL;
 
-import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
 
 import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 
 import com.peternaggschga.gwent.R;
 
-import java.util.Objects;
-
 /**
- * A Dialog class used to change the faction design.
+ * An OverlayDialog class used to change the faction design.
  */
-public class ChangeFactionDialog extends Dialog {
+public class ChangeFactionDialog extends OverlayDialog {
     /**
      * Callback that is called when a theme is selected.
      */
@@ -38,30 +31,21 @@ public class ChangeFactionDialog extends Dialog {
      * @param callback Callback that is called when a theme is selected.
      */
     public ChangeFactionDialog(@NonNull Context context, @NonNull Callback callback) {
-        super(context);
+        super(context, R.layout.popup_faction, R.id.factionBackground);
         this.callback = callback;
     }
 
     /**
-     * Initializes Layout using #setContentView(int) and sets listeners for each view.
+     * Initializes layout and sets listeners for each view.
      *
      * @param savedInstanceState If this dialog is being reinitialized after
      *                           the hosting activity was previously shut down, holds the result from
      *                           the most recent call to {@link #onSaveInstanceState}, or null if this
      *                           is the first time.
-     * @see #setContentView(int)
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.popup_faction);
-
-        Window window = Objects.requireNonNull(getWindow());
-        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        findViewById(R.id.factionBackground).setOnClickListener(v -> cancel());
 
         findViewById(R.id.monsterCardView).setOnClickListener(getOnThemeClickListener(THEME_MONSTER));
         findViewById(R.id.monsterButton).setOnClickListener(getOnThemeClickListener(THEME_MONSTER));
@@ -74,8 +58,6 @@ public class ChangeFactionDialog extends Dialog {
 
         findViewById(R.id.scoiataelCardView).setOnClickListener(getOnThemeClickListener(THEME_SCOIATAEL));
         findViewById(R.id.scoiataelButton).setOnClickListener(getOnThemeClickListener(THEME_SCOIATAEL));
-
-        setCancelable(true);
     }
 
     /**

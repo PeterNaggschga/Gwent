@@ -1,5 +1,6 @@
 package com.peternaggschga.gwent.domain.damage;
 
+import static com.peternaggschga.gwent.domain.damage.DamageCalculator.Color.BUFFED;
 import static org.valid4j.Assertive.require;
 
 import androidx.annotation.IntRange;
@@ -41,9 +42,19 @@ class HornDamageCalculatorDecorator extends DamageCalculatorDecorator {
     }
 
     /**
+     * Decides whether the unit with the given id is affected by the horn buff.
+     *
+     * @param id Integer representing the UnitEntity#id of the unit that is being evaluated.
+     * @return A Boolean value defining whether the horn buff affects the given unit.
+     */
+    private boolean doubleDamage(int id) {
+        return unitIds.contains(null) || !(unitIds.isEmpty() || unitIds.contains(id)) || unitIds.size() > 1;
+    }
+
+    /**
      * Calculates the (de-)buffed damage of unit with the given id and the given base-damage.
      * Returns given damage times two if the unit is buffed by a commander's horn.
-     *
+     * @see #doubleDamage(int)
      * @param id     Integer representing the UnitEntity#id of the unit whose (de-)buff damage is calculated.
      * @param damage Integer representing the base-damage of the unit whose (de-)buff damage is calculated.
      * @return Integer representing the (de-)buffed damage of the unit.
@@ -52,8 +63,22 @@ class HornDamageCalculatorDecorator extends DamageCalculatorDecorator {
     @Override
     public int calculateDamage(int id, @IntRange(from = 0) int damage) {
         require(damage >= 0);
-        int componentDamage = component.calculateDamage(id, damage);
-        boolean doubleDamage = unitIds.contains(null) || !(unitIds.isEmpty() || unitIds.contains(id)) || unitIds.size() > 1;
-        return doubleDamage ? componentDamage * 2 : componentDamage;
+        return (doubleDamage(id) ? 2 : 1) * component.calculateDamage(id, damage);
+    }
+
+    /**
+     * Calculates whether the unit with the given id is shown as Color#BUFFED,
+     * Color#DEBUFFED, or Color#DEFAULT.
+     * Units are shown as Color#BUFFED when they are affected by a horn buff,
+     * otherwise their Color is defined by #component.
+     *
+     * @param id Integer representing the UnitEntity#id of the unit buff status is calculated.
+     * @return Color representing whether the unit is buffed, de-buffed or not affected.
+     * @see Color
+     * @see #doubleDamage(int)
+     */
+    @Override
+    public Color isBuffed(int id) {
+        return doubleDamage(id) ? BUFFED : component.isBuffed(id);
     }
 }
