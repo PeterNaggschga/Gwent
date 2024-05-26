@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 /**
  * A data class encapsulating information about the squad defined by #squadNumber, i.e.,
  * how many #squadMembers are there and what is the #memberBaseDamage of units in this squad.
+ * @see SquadManager
  */
 class SquadState {
     /**
