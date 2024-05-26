@@ -10,6 +10,9 @@ import android.widget.ImageView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.core.view.WindowInsetsControllerCompat;
 import androidx.preference.PreferenceManager;
 
 import com.peternaggschga.gwent.ui.dialogs.ChangeFactionDialog;
@@ -84,6 +87,13 @@ public class MainActivity extends AppCompatActivity {
         resetOnFactionSwitch = PreferenceManager.getDefaultSharedPreferences(this)
                 .getBoolean(getString(R.string.preference_key_faction_reset),
                         getResources().getBoolean(R.bool.faction_reset_preference_default));
+
+        // hide system UI
+        // TODO: hide also after Dialogs are closed
+        WindowInsetsControllerCompat windowController = WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView());
+        windowController.hide(WindowInsetsCompat.Type.systemBars());
+        windowController.hide(WindowInsetsCompat.Type.tappableElement());
+        windowController.setSystemBarsBehavior(WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE);
     }
 
     @Override
