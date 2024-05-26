@@ -87,13 +87,19 @@ public class MainActivity extends AppCompatActivity {
         resetOnFactionSwitch = PreferenceManager.getDefaultSharedPreferences(this)
                 .getBoolean(getString(R.string.preference_key_faction_reset),
                         getResources().getBoolean(R.bool.faction_reset_preference_default));
+    }
 
-        // hide system UI
-        // TODO: hide also after Dialogs are closed
-        WindowInsetsControllerCompat windowController = WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView());
-        windowController.hide(WindowInsetsCompat.Type.systemBars());
-        windowController.hide(WindowInsetsCompat.Type.tappableElement());
-        windowController.setSystemBarsBehavior(WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE);
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+
+        if (hasFocus) {
+            // hide system UI
+            WindowInsetsControllerCompat windowController = WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView());
+            windowController.hide(WindowInsetsCompat.Type.systemBars());
+            windowController.hide(WindowInsetsCompat.Type.tappableElement());
+            windowController.setSystemBarsBehavior(WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE);
+        }
     }
 
     @Override
