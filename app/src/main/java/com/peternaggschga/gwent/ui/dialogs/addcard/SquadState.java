@@ -1,6 +1,7 @@
 package com.peternaggschga.gwent.ui.dialogs.addcard;
 
 import static com.peternaggschga.gwent.ui.dialogs.addcard.SquadManager.MAX_NR_SQUADS;
+import static org.valid4j.Assertive.require;
 
 import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
@@ -13,7 +14,6 @@ import java.util.stream.Collectors;
 /**
  * A data class encapsulating information about the squad defined by #squadNumber, i.e.,
  * how many #squadMembers are there and what is the #memberBaseDamage of units in this squad.
- * @todo Add testing.
  */
 class SquadState {
     /**
@@ -49,9 +49,13 @@ class SquadState {
      * @param squadMembers     Integer representing the number of members in the squad.
      * @param memberBaseDamage Integer containing the base damage of members of this squad.
      * @see #getState(int, List)
+     * @throws org.valid4j.errors.RequireViolation When one of the parameters doesn't meet its IntRange constraint.
      */
     private SquadState(@IntRange(from = 1, to = MAX_NR_SQUADS) int squadNumber,
                @IntRange(from = 0) int squadMembers, @IntRange(from = 0) int memberBaseDamage) {
+        require(1 <= squadNumber && squadNumber <= MAX_NR_SQUADS);
+        require(squadMembers >= 0);
+        require(memberBaseDamage >= 0);
         this.squadNumber = squadNumber;
         this.squadMembers = squadMembers;
         this.memberBaseDamage = memberBaseDamage;
@@ -63,10 +67,12 @@ class SquadState {
      * @param squadNumber Integer containing the number of the represented squad.
      * @param units List of UnitEntity objects used to count squad-members.
      * @return A SquadState object that is newly created from the given List of units.
+     * @throws org.valid4j.errors.RequireViolation When the given squad number is not between 1 and #MAX_NR_SQUADS.
      */
     @NonNull
     static SquadState getState(@IntRange(from = 1, to = MAX_NR_SQUADS) int squadNumber,
                                @NonNull List<UnitEntity> units) {
+        require(1 <= squadNumber && squadNumber <= MAX_NR_SQUADS);
         units = units.stream()
                 .filter(unit -> unit.getSquad() != null && unit.getSquad() == squadNumber)
                 .collect(Collectors.toList());
