@@ -20,7 +20,6 @@ import java.util.stream.Collectors;
  * A class used by the CardNumberPickerAdapter to determine the first squad with members
  * or set the default damage according to the squads base damage.
  * @see CardNumberPickerAdapter
- * @todo Add testing.
  */
 class SquadManager {
     /**
