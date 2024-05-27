@@ -1,5 +1,12 @@
 package com.peternaggschga.gwent;
 
+import static com.peternaggschga.gwent.ui.main.FactionSwitchListener.THEME_MONSTER;
+import static com.peternaggschga.gwent.ui.main.FactionSwitchListener.THEME_NILFGAARD;
+import static com.peternaggschga.gwent.ui.main.FactionSwitchListener.THEME_NORTHERN_KINGDOMS;
+import static com.peternaggschga.gwent.ui.main.FactionSwitchListener.THEME_PREFERENCE_KEY;
+import static com.peternaggschga.gwent.ui.main.FactionSwitchListener.THEME_SCOIATAEL;
+import static com.peternaggschga.gwent.ui.main.FactionSwitchListener.getListener;
+
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -22,7 +29,6 @@ import androidx.preference.PreferenceManager;
 import com.peternaggschga.gwent.ui.dialogs.ChangeFactionDialog;
 import com.peternaggschga.gwent.ui.dialogs.CoinFlipDialog;
 import com.peternaggschga.gwent.ui.dialogs.cards.ShowUnitsDialog;
-import com.peternaggschga.gwent.ui.main.FactionSwitchListener;
 import com.peternaggschga.gwent.ui.main.GameBoardViewModel;
 import com.peternaggschga.gwent.ui.main.MenuUiStateObserver;
 import com.peternaggschga.gwent.ui.main.RowUiStateObserver;
@@ -47,19 +53,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        switch (PreferenceManager.getDefaultSharedPreferences(this)
-                .getInt(FactionSwitchListener.THEME_PREFERENCE_KEY,
-                        FactionSwitchListener.THEME_SCOIATAEL)) {
-            case FactionSwitchListener.THEME_MONSTER:
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        switch (preferences.getInt(THEME_PREFERENCE_KEY, THEME_SCOIATAEL)) {
+            case THEME_MONSTER:
                 setTheme(R.style.MonsterTheme);
                 break;
-            case FactionSwitchListener.THEME_NILFGAARD:
+            case THEME_NILFGAARD:
                 setTheme(R.style.NilfgaardTheme);
                 break;
-            case FactionSwitchListener.THEME_NORTHERN_KINGDOMS:
+            case THEME_NORTHERN_KINGDOMS:
                 setTheme(R.style.NorthernKingdomsTheme);
                 break;
-            case FactionSwitchListener.THEME_SCOIATAEL:
+            case THEME_SCOIATAEL:
                 setTheme(R.style.ScoiataelTheme);
         }
 
@@ -67,17 +73,17 @@ public class MainActivity extends AppCompatActivity {
 
         soundManager = new SoundManager(this);
 
-        // noinspection CheckResult, ResultOfMethodCallIgnored
-        GwentApplication.getRepository(this)
-                .map(repository -> GameBoardViewModel.getModel(MainActivity.this, repository))
-                .subscribe(gameBoardViewModel -> {
-                    gameBoard = gameBoardViewModel;
-                    initializeViewModel();
-                });
+        disposables.add(
+                GwentApplication.getRepository(this)
+                        .map(repository -> GameBoardViewModel.getModel(MainActivity.this, repository))
+                        .subscribe(gameBoardViewModel -> {
+                            gameBoard = gameBoardViewModel;
+                            initializeViewModel();
+                        })
+        );
 
-        factionSwitchListener = FactionSwitchListener.getListener(getWindow());
-        PreferenceManager.getDefaultSharedPreferences(this)
-                .registerOnSharedPreferenceChangeListener(factionSwitchListener);
+        factionSwitchListener = getListener(getWindow());
+        preferences.registerOnSharedPreferenceChangeListener(factionSwitchListener);
 
         findViewById(R.id.factionButton).setOnClickListener(v -> inflateFactionPopup());
         findViewById(R.id.coinButton).setOnClickListener(v -> inflateCoinFlipPopup());
@@ -147,27 +153,23 @@ public class MainActivity extends AppCompatActivity {
             ImageView horn = rowLayout.findViewById(R.id.hornView);
             ConstraintLayout cards = rowLayout.findViewById(R.id.cardView);
 
-            weather.setOnClickListener(v -> {
-                // noinspection CheckResult, ResultOfMethodCallIgnored
-                gameBoard.onWeatherViewPressed(row).subscribe(aBoolean -> {
-                    if (aBoolean) {
-                        soundManager.playWeatherSound(row);
-                    }
-                });
-            });
-            horn.setOnClickListener(v -> {
-                // noinspection CheckResult, ResultOfMethodCallIgnored
-                gameBoard.onHornViewPressed(row).subscribe(aBoolean -> {
-                    if (aBoolean) {
-                        soundManager.playHornSound();
-                    }
-                });
-            });
-            cards.setOnClickListener(v -> {
-                        // noinspection CheckResult, ResultOfMethodCallIgnored
-                        ShowUnitsDialog.getDialog(MainActivity.this, row).subscribe(Dialog::show);
-                    }
-            );
+            weather.setOnClickListener(v -> disposables.add(
+                    gameBoard.onWeatherViewPressed(row).subscribe(weatherActivated -> {
+                        if (weatherActivated) {
+                            soundManager.playWeatherSound(row);
+                        }
+                    })
+            ));
+            horn.setOnClickListener(v -> disposables.add(
+                    gameBoard.onHornViewPressed(row).subscribe(hornActivated -> {
+                        if (hornActivated) {
+                            soundManager.playHornSound();
+                        }
+                    })
+            ));
+            cards.setOnClickListener(v -> disposables.add(
+                    ShowUnitsDialog.getDialog(MainActivity.this, row).subscribe(Dialog::show)
+            ));
 
             final RowUiStateObserver observer = RowUiStateObserver.getObserver(row,
                     rowLayout.findViewById(R.id.pointView),
@@ -187,27 +189,25 @@ public class MainActivity extends AppCompatActivity {
                 burn);
         disposables.add(gameBoard.getMenuUiState().subscribe(observer));
 
-        reset.setOnClickListener(v -> {
-            // noinspection CheckResult, ResultOfMethodCallIgnored
-            gameBoard.onResetButtonPressed(this)
-                    .subscribe(playSound -> {
-                        if (playSound) {
-                            soundManager.playResetSound();
-                        }
-                    });
-        });
+        reset.setOnClickListener(v -> disposables.add(
+                gameBoard.onResetButtonPressed(this)
+                        .subscribe(playSound -> {
+                            if (playSound) {
+                                soundManager.playResetSound();
+                            }
+                        })
+        ));
         weather.setOnClickListener(v -> {
-            gameBoard.onWeatherButtonPressed().subscribe();
+            disposables.add(gameBoard.onWeatherButtonPressed().subscribe());
             soundManager.playClearWeatherSound();
         });
-        burn.setOnClickListener(v -> {
-            // noinspection CheckResult, ResultOfMethodCallIgnored
-            gameBoard.onBurnButtonPressed(MainActivity.this).subscribe(aBoolean -> {
+        burn.setOnClickListener(v -> disposables.add(
+                gameBoard.onBurnButtonPressed(MainActivity.this).subscribe(aBoolean -> {
                 if (aBoolean) {
                     soundManager.playBurnSound();
                 }
-            });
-        });
+                })
+        ));
     }
 
     private void inflateFactionPopup() {
@@ -218,16 +218,16 @@ public class MainActivity extends AppCompatActivity {
                     getResources().getBoolean(R.bool.faction_reset_preference_default)
             );
             if (resetOnFactionSwitch) {
-                // noinspection CheckResult, ResultOfMethodCallIgnored
-                gameBoard.onFactionSwitchReset(this)
-                        .subscribe(playSound -> {
+                disposables.add(
+                        gameBoard.onFactionSwitchReset(this).subscribe(playSound -> {
                             if (playSound) {
                                 soundManager.playResetSound();
                             }
-                        });
+                        })
+                );
             }
             preferences.edit()
-                    .putInt(FactionSwitchListener.THEME_PREFERENCE_KEY, theme)
+                    .putInt(THEME_PREFERENCE_KEY, theme)
                     .apply();
         }).show();
     }
