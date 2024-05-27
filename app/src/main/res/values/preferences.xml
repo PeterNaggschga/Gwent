@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="preference_key_design" translatable="false">design</string>
+    <string name="design_preference_default" translatable="false">0</string>
     <bool name="warning_preference_default">true</bool>
     <string name="preference_key_warning" translatable="false">warnings</string>
     <bool name="faction_reset_preference_default">false</bool>

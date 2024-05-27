@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -85,9 +86,26 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        resetOnFactionSwitch = PreferenceManager.getDefaultSharedPreferences(this)
-                .getBoolean(getString(R.string.preference_key_faction_reset),
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        resetOnFactionSwitch = preferences.getBoolean(getString(R.string.preference_key_faction_reset),
                         getResources().getBoolean(R.bool.faction_reset_preference_default));
+
+        // set background image according to preferences
+        int backgroundImageKey = Integer.parseInt(preferences.getString(getString(R.string.preference_key_design),
+                getString(R.string.design_preference_default)));
+        ImageView backgroundImage = findViewById(R.id.backgroundImageView);
+        if (backgroundImageKey != 0) {
+            backgroundImage.setVisibility(View.VISIBLE);
+            backgroundImage.setImageResource(new int[]{
+                    R.drawable.background_geralt,
+                    R.drawable.background_ciri,
+                    R.drawable.background_jaskier,
+                    R.drawable.background_yennefer,
+                    R.drawable.background_eredin
+            }[backgroundImageKey - 1]);
+        } else {
+            backgroundImage.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override

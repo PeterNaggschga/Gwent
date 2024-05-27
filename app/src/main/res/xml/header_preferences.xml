@@ -5,7 +5,7 @@
         app:entries="@array/design_names"
         app:entryValues="@array/design_values"
         app:icon="@drawable/icon_design"
-        app:key="design"
+        app:key="@string/preference_key_design"
         app:title="@string/preference_design"
         app:useSimpleSummaryProvider="true" />
 
