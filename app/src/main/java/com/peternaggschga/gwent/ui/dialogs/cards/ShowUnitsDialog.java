@@ -63,7 +63,7 @@ public class ShowUnitsDialog extends OverlayDialog {
      */
     private ShowUnitsDialog(@NonNull Context context, @NonNull RowType row,
                             @NonNull CardListAdapter cardListAdapter, @NonNull Disposable initialDisposable) {
-        super(context, R.layout.popup_cards);
+        super(context, R.layout.popup_cards, R.id.popup_cards_cancel_button);
         this.row = row;
         this.cardListAdapter = cardListAdapter;
         disposables.add(initialDisposable);
@@ -148,8 +148,6 @@ public class ShowUnitsDialog extends OverlayDialog {
             hide();
             new AddCardDialog(ShowUnitsDialog.this).show();
         });
-
-        findViewById(R.id.popup_cards_cancel_button).setOnClickListener(v -> dismiss());
 
         setOnDismissListener(dialog -> disposables.dispose());
     }

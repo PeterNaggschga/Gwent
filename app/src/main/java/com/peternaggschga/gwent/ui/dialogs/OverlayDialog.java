@@ -17,16 +17,15 @@ import java.util.Objects;
 /**
  * A Dialog class which is used for popups that are shown on top of the calling Activity.
  * The Dialog uses the layout specified in #layout with the #BACKGROUND color as the background.
- * The Dialog is cancelable when a #cancelViewId is specified (else it is #NO_CANCEL_VIEW).
- * The view specified by #cancelViewId may be clicked to dismiss the dialog.
+ * The view specified by #dismissViewId may be clicked to dismiss the dialog.
  */
 public class OverlayDialog extends Dialog {
     /**
-     * Integer used as #cancelViewId, when the Dialog shouldn't be cancelable.
+     * Integer used as #dismissViewId, when the Dialog shouldn't be cancelable by clicking on a View.
      *
-     * @see #cancelViewId
+     * @see #dismissViewId
      */
-    static final int NO_CANCEL_VIEW = -1;
+    static final int NO_DISMISS_VIEW = -1;
     /**
      * ColorDrawable shown as the background of the Dialog (above the calling Activity).
      */
@@ -40,39 +39,39 @@ public class OverlayDialog extends Dialog {
     /**
      * Integer referencing a view that can be clicked to dismiss the Dialog.
      * Should be equal to #NO_CANCEL_VIEW, when the Dialog is not cancelable.
-     * @see #NO_CANCEL_VIEW
+     * @see #NO_DISMISS_VIEW
      */
     @IdRes
-    private final int cancelViewId;
+    private final int dismissViewId;
 
     /**
-     * Constructor of an OverlayDialog in the given Context, with the given layout and cancelViewId.
-     * When cancelViewId is equal to #NO_CANCEL_VIEW, the Dialog is not cancelable;
-     * otherwise it may be canceled by clicking on the referenced view.
+     * Constructor of an OverlayDialog in the given Context, with the given layout and dismissViewId.
+     * When dismissViewId is equal to #NO_CANCEL_VIEW, the Dialog is not cancelable by clicking on a certain view.
      * @param context Context of the created OverlayDialog.
      * @param layout Integer referencing the layout shown by the created OverlayDialog.
-     * @param cancelViewId Integer referencing the cancel view or #NO_CANCEL_VIEW.
+     * @param dismissViewId Integer referencing the cancel view or #NO_CANCEL_VIEW.
      */
-    protected OverlayDialog(@NonNull Context context, @LayoutRes int layout, @IdRes int cancelViewId) {
+    protected OverlayDialog(@NonNull Context context, @LayoutRes int layout, @IdRes int dismissViewId) {
         super(context);
         this.layout = layout;
-        this.cancelViewId = cancelViewId;
+        this.dismissViewId = dismissViewId;
     }
 
     /**
-     * Constructor of a non-cancelable OverlayDialog in the given Context and with the given layout.
+     * Constructor of an OverlayDialog in the given Context and with the given layout.
      * Wrapper of #OverlayDialog(Context, int, int).
      * @see #OverlayDialog(Context, int, int)
      * @param context Context of the created OverlayDialog.
      * @param layout Integer referencing the layout shown by the created OverlayDialog.
      */
+    @SuppressWarnings("unused")
     protected OverlayDialog(@NonNull Context context, @LayoutRes int layout) {
-        this(context, layout, NO_CANCEL_VIEW);
+        this(context, layout, NO_DISMISS_VIEW);
     }
 
     /**
      * Initializes #layout using #setContentView(int).
-     * Sets View.OnClickListener canceling the dialog for the View referenced by #cancelViewId
+     * Sets View.OnClickListener canceling the dialog for the View referenced by #dismissViewId
      * if it is set.
      * Switches whether the Dialog is cancelable using #setCancelable().
      * @param savedInstanceState If this dialog is being reinitialized after
@@ -92,11 +91,9 @@ public class OverlayDialog extends Dialog {
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         window.setBackgroundDrawable(BACKGROUND);
 
-        if (cancelViewId != NO_CANCEL_VIEW) {
-            setCancelable(true);
-            findViewById(cancelViewId).setOnClickListener(v -> cancel());
-        } else {
-            setCancelable(false);
+        if (dismissViewId != NO_DISMISS_VIEW) {
+            findViewById(dismissViewId).setOnClickListener(v -> dismiss());
         }
+        setCancelable(true);
     }
 }

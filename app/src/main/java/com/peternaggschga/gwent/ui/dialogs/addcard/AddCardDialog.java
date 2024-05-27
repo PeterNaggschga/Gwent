@@ -71,7 +71,7 @@ public class AddCardDialog extends OverlayDialog {
      * @param row     RowType defining which row the new UnitEntity objects are added to.
      */
     public AddCardDialog(@NonNull Context context, @NonNull RowType row) {
-        super(context, R.layout.popup_add_card);
+        super(context, R.layout.popup_add_card, R.id.popup_add_card_cancel_button);
         this.row = row;
 
         setOnDismissListener(dialog -> disposables.dispose());
@@ -106,7 +106,5 @@ public class AddCardDialog extends OverlayDialog {
                 disposables.add(pickerAdapter.addSelectedUnits(row).subscribe(this::dismiss));
             }
         });
-
-        findViewById(R.id.popup_add_card_cancel_button).setOnClickListener(v -> dismiss());
     }
 }
