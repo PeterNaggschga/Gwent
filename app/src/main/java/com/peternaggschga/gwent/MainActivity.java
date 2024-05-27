@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
     private final CompositeDisposable disposables = new CompositeDisposable();
     @SuppressWarnings("FieldCanBeLocal")
     private SharedPreferences.OnSharedPreferenceChangeListener factionSwitchListener;
-    private boolean resetOnFactionSwitch;
     /**
      * @todo Initialize ViewModel only once in #onCreate().
      */
@@ -88,13 +87,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        resetOnFactionSwitch = preferences.getBoolean(getString(R.string.preference_key_faction_reset),
-                        getResources().getBoolean(R.bool.faction_reset_preference_default));
-
         // set background image according to preferences
-        int backgroundImageKey = Integer.parseInt(preferences.getString(getString(R.string.preference_key_design),
-                getString(R.string.design_preference_default)));
+        int backgroundImageKey = Integer.parseInt(
+                PreferenceManager.getDefaultSharedPreferences(this)
+                        .getString(getString(R.string.preference_key_design),
+                                getString(R.string.design_preference_default))
+        );
         ImageView backgroundImage = findViewById(R.id.backgroundImageView);
         if (backgroundImageKey != 0) {
             backgroundImage.setVisibility(View.VISIBLE);
@@ -214,6 +212,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void inflateFactionPopup() {
         new ChangeFactionDialog(this, theme -> {
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+            boolean resetOnFactionSwitch = preferences.getBoolean(
+                    getString(R.string.preference_key_faction_reset),
+                    getResources().getBoolean(R.bool.faction_reset_preference_default)
+            );
             if (resetOnFactionSwitch) {
                 // noinspection CheckResult, ResultOfMethodCallIgnored
                 gameBoard.onFactionSwitchReset(this)
@@ -223,8 +226,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                         });
             }
-            PreferenceManager.getDefaultSharedPreferences(this)
-                    .edit()
+            preferences.edit()
                     .putInt(FactionSwitchListener.THEME_PREFERENCE_KEY, theme)
                     .apply();
         }).show();
