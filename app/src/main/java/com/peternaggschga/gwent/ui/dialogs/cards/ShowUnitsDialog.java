@@ -2,6 +2,7 @@ package com.peternaggschga.gwent.ui.dialogs.cards;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -58,15 +59,14 @@ public class ShowUnitsDialog extends OverlayDialog {
      * @param context            Context this Dialog is shown in.
      * @param row                RowType defining which row all shown units belong to.
      * @param cardListAdapter    CardListAdapter providing an always up-to-date list of CardUiState objects for a certain row.
-     * @param updateSubscription Disposable managing the running updates of the given CardListAdapter.
-     *                           When disposed, the adapter is not updated anymore.
+     * @param initialDisposable Disposable value that should be disposed when this Dialog is dismissed.
      */
     private ShowUnitsDialog(@NonNull Context context, @NonNull RowType row,
-                            @NonNull CardListAdapter cardListAdapter, @NonNull Disposable updateSubscription) {
+                            @NonNull CardListAdapter cardListAdapter, @NonNull Disposable initialDisposable) {
         super(context, R.layout.popup_cards);
         this.row = row;
         this.cardListAdapter = cardListAdapter;
-        disposables.add(updateSubscription);
+        disposables.add(initialDisposable);
     }
 
     /**
@@ -82,14 +82,24 @@ public class ShowUnitsDialog extends OverlayDialog {
                         .zipWith(repository.isHorn(row), (weather, horn) ->
                                 new CardUiStateFactory(context, weather, horn))
                         .map(factory -> {
+                            CompositeDisposable initialDisposables = new CompositeDisposable();
                             CardListAdapter adapter = new CardListAdapter(
-                                    id -> repository.copy(id).subscribe(),
-                                    id -> RemoveUnitsUseCase.remove(context, repository, id).subscribe()
+                                    id -> initialDisposables.add(repository.copy(id).subscribe()),
+                                    id -> initialDisposables.add(
+                                            RemoveUnitsUseCase.remove(context, repository, id)
+                                                    .subscribe(() -> {
+                                                    }, throwable -> Log.e(ShowUnitsDialog.class.getSimpleName(),
+                                                            "There has been an error with the removal of a unit. " +
+                                                                    "A reason might be tapping delete buttons too fast!",
+                                                            throwable))
+                                    )
                             );
-                            Disposable updateSubscription = repository.getUnitsFlowable(row)
-                                    .map(factory::createCardUiState)
-                                    .subscribe(adapter::submitList);
-                            return new ShowUnitsDialog(context, row, adapter, updateSubscription);
+                            initialDisposables.add(
+                                    repository.getUnitsFlowable(row)
+                                            .map(factory::createCardUiState)
+                                            .subscribe(adapter::submitList)
+                            );
+                            return new ShowUnitsDialog(context, row, adapter, initialDisposables);
                         })
                 );
     }
