@@ -4,6 +4,8 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
@@ -113,14 +115,20 @@ public class MainActivity extends AppCompatActivity {
         super.onWindowFocusChanged(hasFocus);
 
         if (hasFocus) {
-            // hide system UI
-            WindowInsetsControllerCompat windowController = WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView());
-            windowController.hide(WindowInsetsCompat.Type.systemBars());
-            windowController.hide(WindowInsetsCompat.Type.tappableElement());
-            windowController.setSystemBarsBehavior(WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE);
+            new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                if (!hasWindowFocus()) {
+                    return;
+                }
 
-            // keep screen on
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+                // hide system UI
+                WindowInsetsControllerCompat windowController = WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView());
+                windowController.hide(WindowInsetsCompat.Type.systemBars());
+                windowController.hide(WindowInsetsCompat.Type.tappableElement());
+                windowController.setSystemBarsBehavior(WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE);
+
+                // keep screen on
+                getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+            }, 250);
         }
     }
 
