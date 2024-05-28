@@ -55,6 +55,10 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
+        if (preferences.getBoolean("firstUse", true)) {
+            startActivity(new Intent(this, OnboardingSupportActivity.class));
+        }
+
         switch (preferences.getInt(THEME_PREFERENCE_KEY, THEME_SCOIATAEL)) {
             case THEME_MONSTER:
                 setTheme(R.style.MonsterTheme);

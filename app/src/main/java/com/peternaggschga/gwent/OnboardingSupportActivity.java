@@ -1,6 +1,5 @@
 package com.peternaggschga.gwent;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -26,8 +25,9 @@ public class OnboardingSupportActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_onboarding_support);
-        OldMainActivity.hideSystemUI(getWindow());
+
         final Button skipButton = findViewById(R.id.onboarding_button_skip);
         final ImageButton nextButton = findViewById(R.id.onboarding_button_next);
         final Button finishButton = findViewById(R.id.onboarding_button_finish);
@@ -37,12 +37,10 @@ public class OnboardingSupportActivity extends AppCompatActivity {
         indicators.add(findViewById(R.id.onboarding_indicator_3));
         indicators.add(findViewById(R.id.onboarding_indicator_4));
         View.OnClickListener onFinish = view -> {
-            if (PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean("firstUse", true)) {
-                PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putBoolean("firstUse", false).apply();
-                startActivity(new Intent(getApplicationContext(), OldMainActivity.class));
-                // TODO: Don't use an Intent here,
-                //  rather return to calling activity by calling onBackPressed()
-            }
+            PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
+                    .edit()
+                    .putBoolean("firstUse", false)
+                    .apply();
             callback.setEnabled(false);
             getOnBackPressedDispatcher().onBackPressed();
         };
