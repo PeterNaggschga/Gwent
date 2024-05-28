@@ -22,6 +22,9 @@ import androidx.preference.PreferenceManager;
 
 import java.util.Objects;
 
+/**
+ * @todo Documentation
+ */
 public class SettingsActivity extends AppCompatActivity implements
         PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
 

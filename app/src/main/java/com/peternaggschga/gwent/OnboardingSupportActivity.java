@@ -17,6 +17,9 @@ import com.peternaggschga.gwent.ui.onboarding.SectionsPagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @todo Documentation
+ */
 public class OnboardingSupportActivity extends AppCompatActivity {
 
     private OnBackPressedCallback callback;

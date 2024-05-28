@@ -11,6 +11,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Objects;
 
+/**
+ * @todo Documentation
+ */
 public class RuleActivity extends AppCompatActivity {
 
     @Override
