@@ -97,6 +97,13 @@
     <string name="preference_rules_cards_title">Deck and playboard</string>
     <string name="preference_rules_card_abilities_title">Card abilities</string>
     <string name="preference_rules_special_cards_title">Special cards</string>
+    <string name="preference_rules_general_key" translatable="false">rules_general</string>
+    <string name="preference_rules_course_key" translatable="false">rules_course</string>
+    <string name="preference_rules_factions_key" translatable="false">rules_factions</string>
+    <string name="preference_rules_commander_key" translatable="false">rules_commander</string>
+    <string name="preference_rules_cards_key" translatable="false">rules_cards</string>
+    <string name="preference_rules_card_abilities_key" translatable="false">rules_card_abilities</string>
+    <string name="preference_rules_special_cards_key" translatable="false">rules_special_cards</string>
 
     <string name="onboardingSupport_button_skip">Skip</string>
     <string name="onboardingSupport_button_finish">Finish</string>

@@ -1,5 +1,12 @@
 package com.peternaggschga.gwent;
 
+import static com.peternaggschga.gwent.RuleSection.CARDS;
+import static com.peternaggschga.gwent.RuleSection.CARD_ABILITIES;
+import static com.peternaggschga.gwent.RuleSection.COMMANDER;
+import static com.peternaggschga.gwent.RuleSection.COURSE;
+import static com.peternaggschga.gwent.RuleSection.FACTIONS;
+import static com.peternaggschga.gwent.RuleSection.GENERAL;
+import static com.peternaggschga.gwent.RuleSection.SPECIAL_CARDS;
 import static com.peternaggschga.gwent.ui.main.FactionSwitchListener.THEME_MONSTER;
 import static com.peternaggschga.gwent.ui.main.FactionSwitchListener.THEME_NILFGAARD;
 import static com.peternaggschga.gwent.ui.main.FactionSwitchListener.THEME_NORTHERN_KINGDOMS;
@@ -20,6 +27,8 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 
+import org.jetbrains.annotations.Contract;
+
 import java.util.Objects;
 
 /**
@@ -27,8 +36,6 @@ import java.util.Objects;
  */
 public class SettingsActivity extends AppCompatActivity implements
         PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
-
-    private static final String TITLE_TAG = "settingsActivityTitle";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,32 +58,16 @@ public class SettingsActivity extends AppCompatActivity implements
         }
 
         setContentView(R.layout.activity_settings);
-        setSupportActionBar(findViewById(R.id.settingsToolbar));
 
-        if (savedInstanceState == null) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.settingsFrameLayout, new HeaderFragment())
-                    .commit();
-        } else {
-            setTitle(savedInstanceState.getCharSequence(TITLE_TAG));
-        }
-        getSupportFragmentManager().addOnBackStackChangedListener(() -> {
-                    if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
-                        setTitle(R.string.settings_title);
-                    }
-                });
+        setSupportActionBar(findViewById(R.id.settingsToolbar));
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-    }
 
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        // Save the current activity title, so we can set it again after a configuration change
-        outState.putCharSequence(TITLE_TAG, getTitle());
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.settingsFrameLayout, new HeaderFragment())
+                .commit();
     }
 
     @Override
@@ -101,8 +92,11 @@ public class SettingsActivity extends AppCompatActivity implements
         // Instantiate the new Fragment
         final Bundle args = pref.getExtras();
 
-        Fragment fragment = Objects.equals(pref.getFragment(), "com.peternaggschga.gwent.SettingsActivity$SoundFragment") ? getSupportFragmentManager().getFragmentFactory().instantiate(getClassLoader(), SoundFragment.class.getName()) : getSupportFragmentManager().getFragmentFactory().instantiate(getClassLoader(), RuleHeaderFragment.class.getName());
+        Fragment fragment = getSupportFragmentManager()
+                .getFragmentFactory()
+                .instantiate(getClassLoader(), Objects.requireNonNull(pref.getFragment()));
         fragment.setArguments(args);
+
         // Replace the existing Fragment with the new Fragment
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.settingsFrameLayout, fragment)
@@ -113,16 +107,12 @@ public class SettingsActivity extends AppCompatActivity implements
     }
 
     public static class HeaderFragment extends PreferenceFragmentCompat {
-
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.header_preferences, rootKey);
-            Preference design = findPreference("design");
-            assert design != null;
 
             Preference onboardingSupport = findPreference("onboardingSupport");
-            assert onboardingSupport != null;
-            onboardingSupport.setOnPreferenceClickListener(preference -> {
+            Objects.requireNonNull(onboardingSupport).setOnPreferenceClickListener(preference -> {
                 startActivity(new Intent(getContext(), OnboardingSupportActivity.class));
                 return true;
             });
@@ -130,7 +120,6 @@ public class SettingsActivity extends AppCompatActivity implements
     }
 
     public static class SoundFragment extends PreferenceFragmentCompat {
-
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.sound_preferences, rootKey);
@@ -138,52 +127,42 @@ public class SettingsActivity extends AppCompatActivity implements
     }
 
     public static class RuleHeaderFragment extends PreferenceFragmentCompat {
+        @NonNull
+        @Contract(pure = true)
+        private Preference.OnPreferenceClickListener getSectionClickListener(@NonNull RuleSection section) {
+            return preference -> {
+                startActivity(
+                        new Intent(getContext(), RuleActivity.class)
+                                .putExtra(RuleActivity.INTENT_EXTRA_TAG, section)
+                );
+                return true;
+            };
+        }
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.rule_preferences, rootKey);
-            Preference rulesGeneral = findPreference("rules_general");
-            assert rulesGeneral != null;
-            rulesGeneral.setOnPreferenceClickListener(preference -> {
-                startActivity(new Intent(getContext(), RuleActivity.class).putExtra(RuleActivity.INTENT_EXTRA_TAG, RuleSection.GENERAL));
-                return true;
-            });
-            Preference rulesCourse = findPreference("rules_course");
-            assert rulesCourse != null;
-            rulesCourse.setOnPreferenceClickListener(preference -> {
-                startActivity(new Intent(getContext(), RuleActivity.class).putExtra(RuleActivity.INTENT_EXTRA_TAG, RuleSection.COURSE));
-                return true;
-            });
-            Preference ruleFactions = findPreference("rules_factions");
-            assert ruleFactions != null;
-            ruleFactions.setOnPreferenceClickListener(preference -> {
-                startActivity(new Intent(getContext(), RuleActivity.class).putExtra(RuleActivity.INTENT_EXTRA_TAG, RuleSection.FACTIONS));
-                return true;
-            });
-            Preference rulesCommander = findPreference("rules_commander");
-            assert rulesCommander != null;
-            rulesCommander.setOnPreferenceClickListener(preference -> {
-                startActivity(new Intent(getContext(), RuleActivity.class).putExtra(RuleActivity.INTENT_EXTRA_TAG, RuleSection.COMMANDER));
-                return true;
-            });
-            Preference rulesCards = findPreference("rules_cards");
-            assert rulesCards != null;
-            rulesCards.setOnPreferenceClickListener(preference -> {
-                startActivity(new Intent(getContext(), RuleActivity.class).putExtra(RuleActivity.INTENT_EXTRA_TAG, RuleSection.CARDS));
-                return true;
-            });
-            Preference ruleCardAbilities = findPreference("rules_card_abilities");
-            assert ruleCardAbilities != null;
-            ruleCardAbilities.setOnPreferenceClickListener(preference -> {
-                startActivity(new Intent(getContext(), RuleActivity.class).putExtra(RuleActivity.INTENT_EXTRA_TAG, RuleSection.CARD_ABILITIES));
-                return true;
-            });
-            Preference rulesSpecialCards = findPreference("rules_special_cards");
-            assert rulesSpecialCards != null;
-            rulesSpecialCards.setOnPreferenceClickListener(preference -> {
-                startActivity(new Intent(getContext(), RuleActivity.class).putExtra(RuleActivity.INTENT_EXTRA_TAG, RuleSection.SPECIAL_CARDS));
-                return true;
-            });
+
+            Preference rulesGeneral = Objects.requireNonNull(findPreference(getString(R.string.preference_rules_general_key)));
+            rulesGeneral.setOnPreferenceClickListener(getSectionClickListener(GENERAL));
+
+            Preference rulesCourse = Objects.requireNonNull(findPreference(getString(R.string.preference_rules_course_key)));
+            rulesCourse.setOnPreferenceClickListener(getSectionClickListener(COURSE));
+
+            Preference ruleFactions = Objects.requireNonNull(findPreference(getString(R.string.preference_rules_factions_key)));
+            ruleFactions.setOnPreferenceClickListener(getSectionClickListener(FACTIONS));
+
+            Preference rulesCommander = Objects.requireNonNull(findPreference(getString(R.string.preference_rules_commander_key)));
+            rulesCommander.setOnPreferenceClickListener(getSectionClickListener(COMMANDER));
+
+            Preference rulesCards = Objects.requireNonNull(findPreference(getString(R.string.preference_rules_cards_key)));
+            rulesCards.setOnPreferenceClickListener(getSectionClickListener(CARDS));
+
+            Preference ruleCardAbilities = Objects.requireNonNull(findPreference(getString(R.string.preference_rules_card_abilities_key)));
+            ruleCardAbilities.setOnPreferenceClickListener(getSectionClickListener(CARD_ABILITIES));
+
+            Preference rulesSpecialCards = Objects.requireNonNull(findPreference(getString(R.string.preference_rules_special_cards_key)));
+            rulesSpecialCards.setOnPreferenceClickListener(getSectionClickListener(SPECIAL_CARDS));
         }
     }
 }
