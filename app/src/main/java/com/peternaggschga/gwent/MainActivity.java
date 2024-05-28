@@ -217,6 +217,11 @@ public class MainActivity extends AppCompatActivity {
     private void inflateFactionPopup() {
         new ChangeFactionDialog(this, theme -> {
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+            if (preferences.getInt(THEME_PREFERENCE_KEY, THEME_SCOIATAEL) == theme) {
+                return;
+            }
+
             boolean resetOnFactionSwitch = preferences.getBoolean(
                     getString(R.string.preference_key_faction_reset),
                     getResources().getBoolean(R.bool.faction_reset_preference_default)
