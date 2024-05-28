@@ -1,5 +1,11 @@
 package com.peternaggschga.gwent;
 
+import static com.peternaggschga.gwent.ui.main.FactionSwitchListener.THEME_MONSTER;
+import static com.peternaggschga.gwent.ui.main.FactionSwitchListener.THEME_NILFGAARD;
+import static com.peternaggschga.gwent.ui.main.FactionSwitchListener.THEME_NORTHERN_KINGDOMS;
+import static com.peternaggschga.gwent.ui.main.FactionSwitchListener.THEME_PREFERENCE_KEY;
+import static com.peternaggschga.gwent.ui.main.FactionSwitchListener.THEME_SCOIATAEL;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -25,10 +31,24 @@ public class SettingsActivity extends AppCompatActivity implements
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        setTheme(sharedPreferences.getInt("faction", OldMainActivity.THEME.SCOIATAEL.ordinal()));
+
+        // TODO: move mapping from preference to style id to FactionSwitchListener
+        switch (sharedPreferences.getInt(THEME_PREFERENCE_KEY, THEME_SCOIATAEL)) {
+            case THEME_MONSTER:
+                setTheme(R.style.MonsterTheme);
+                break;
+            case THEME_NILFGAARD:
+                setTheme(R.style.NilfgaardTheme);
+                break;
+            case THEME_NORTHERN_KINGDOMS:
+                setTheme(R.style.NorthernKingdomsTheme);
+                break;
+            case THEME_SCOIATAEL:
+                setTheme(R.style.ScoiataelTheme);
+        }
+
         setContentView(R.layout.activity_settings);
         setSupportActionBar(findViewById(R.id.settingsToolbar));
-        OldMainActivity.hideSystemUI(getWindow());
 
         if (savedInstanceState == null) {
             getSupportFragmentManager()
@@ -96,10 +116,6 @@ public class SettingsActivity extends AppCompatActivity implements
             setPreferencesFromResource(R.xml.header_preferences, rootKey);
             Preference design = findPreference("design");
             assert design != null;
-            design.setOnPreferenceChangeListener((preference, newValue) -> {
-                OldMainActivity.hideSystemUI(requireActivity().getWindow());
-                return true;
-            });
 
             Preference onboardingSupport = findPreference("onboardingSupport");
             assert onboardingSupport != null;

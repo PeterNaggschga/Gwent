@@ -21,7 +21,6 @@ public class RuleActivity extends AppCompatActivity {
         RULES rule = (RULES) getIntent().getSerializableExtra(INTENT_EXTRA_TAG);
 
         setSupportActionBar(findViewById(R.id.rulesToolbar));
-        OldMainActivity.hideSystemUI(getWindow());
 
         TextView textView = findViewById(R.id.rulesTextView);
 
