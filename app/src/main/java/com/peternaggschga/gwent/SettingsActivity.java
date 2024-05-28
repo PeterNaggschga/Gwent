@@ -145,43 +145,43 @@ public class SettingsActivity extends AppCompatActivity implements
             Preference rulesGeneral = findPreference("rules_general");
             assert rulesGeneral != null;
             rulesGeneral.setOnPreferenceClickListener(preference -> {
-                startActivity(new Intent(getContext(), RuleActivity.class).putExtra(RuleActivity.INTENT_EXTRA_TAG, RuleActivity.RULES.GENERAL));
+                startActivity(new Intent(getContext(), RuleActivity.class).putExtra(RuleActivity.INTENT_EXTRA_TAG, RuleSection.GENERAL));
                 return true;
             });
             Preference rulesCourse = findPreference("rules_course");
             assert rulesCourse != null;
             rulesCourse.setOnPreferenceClickListener(preference -> {
-                startActivity(new Intent(getContext(), RuleActivity.class).putExtra(RuleActivity.INTENT_EXTRA_TAG, RuleActivity.RULES.COURSE));
+                startActivity(new Intent(getContext(), RuleActivity.class).putExtra(RuleActivity.INTENT_EXTRA_TAG, RuleSection.COURSE));
                 return true;
             });
             Preference ruleFactions = findPreference("rules_factions");
             assert ruleFactions != null;
             ruleFactions.setOnPreferenceClickListener(preference -> {
-                startActivity(new Intent(getContext(), RuleActivity.class).putExtra(RuleActivity.INTENT_EXTRA_TAG, RuleActivity.RULES.FACTIONS));
+                startActivity(new Intent(getContext(), RuleActivity.class).putExtra(RuleActivity.INTENT_EXTRA_TAG, RuleSection.FACTIONS));
                 return true;
             });
             Preference rulesCommander = findPreference("rules_commander");
             assert rulesCommander != null;
             rulesCommander.setOnPreferenceClickListener(preference -> {
-                startActivity(new Intent(getContext(), RuleActivity.class).putExtra(RuleActivity.INTENT_EXTRA_TAG, RuleActivity.RULES.COMMANDER));
+                startActivity(new Intent(getContext(), RuleActivity.class).putExtra(RuleActivity.INTENT_EXTRA_TAG, RuleSection.COMMANDER));
                 return true;
             });
             Preference rulesCards = findPreference("rules_cards");
             assert rulesCards != null;
             rulesCards.setOnPreferenceClickListener(preference -> {
-                startActivity(new Intent(getContext(), RuleActivity.class).putExtra(RuleActivity.INTENT_EXTRA_TAG, RuleActivity.RULES.CARDS));
+                startActivity(new Intent(getContext(), RuleActivity.class).putExtra(RuleActivity.INTENT_EXTRA_TAG, RuleSection.CARDS));
                 return true;
             });
             Preference ruleCardAbilities = findPreference("rules_card_abilities");
             assert ruleCardAbilities != null;
             ruleCardAbilities.setOnPreferenceClickListener(preference -> {
-                startActivity(new Intent(getContext(), RuleActivity.class).putExtra(RuleActivity.INTENT_EXTRA_TAG, RuleActivity.RULES.CARD_ABILITIES));
+                startActivity(new Intent(getContext(), RuleActivity.class).putExtra(RuleActivity.INTENT_EXTRA_TAG, RuleSection.CARD_ABILITIES));
                 return true;
             });
             Preference rulesSpecialCards = findPreference("rules_special_cards");
             assert rulesSpecialCards != null;
             rulesSpecialCards.setOnPreferenceClickListener(preference -> {
-                startActivity(new Intent(getContext(), RuleActivity.class).putExtra(RuleActivity.INTENT_EXTRA_TAG, RuleActivity.RULES.SPECIAL_CARDS));
+                startActivity(new Intent(getContext(), RuleActivity.class).putExtra(RuleActivity.INTENT_EXTRA_TAG, RuleSection.SPECIAL_CARDS));
                 return true;
             });
         }
