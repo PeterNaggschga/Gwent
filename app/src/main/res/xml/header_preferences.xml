@@ -26,7 +26,6 @@
     <Preference
         app:fragment="com.peternaggschga.gwent.SettingsActivity$SoundFragment"
         app:icon="@drawable/icon_sounds"
-        app:key="sounds_header"
         app:title="@string/preference_sounds_header" />
 
     <PreferenceCategory
@@ -37,12 +36,11 @@
         <Preference
             app:fragment="com.peternaggschga.gwent.SettingsActivity$RuleHeaderFragment"
             app:icon="@drawable/icon_rules"
-            app:key="rules"
             app:title="@string/preference_rules_header" />
 
         <Preference
             app:icon="@drawable/icon_explore"
-            app:key="onboardingSupport"
+            app:key="@string/preference_key_onboarding"
             app:title="@string/preference_info_onboardingSupport" />
 
     </PreferenceCategory>

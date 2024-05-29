@@ -6,6 +6,7 @@
     <string name="preference_key_warning" translatable="false">warnings</string>
     <bool name="faction_reset_preference_default">false</bool>
     <string name="preference_key_faction_reset" translatable="false">factionReset</string>
+    <string name="preference_key_onboarding" translatable="false">onboardingSupport</string>
 
     <!-- Sound preferences -->
     <bool name="sound_preference_default">true</bool>

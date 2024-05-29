@@ -29,14 +29,21 @@ import androidx.preference.PreferenceManager;
 
 import org.jetbrains.annotations.Contract;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * @todo Documentation
+ * An {@link AppCompatActivity} implementing {@link PreferenceFragmentCompat.OnPreferenceStartFragmentCallback}
+ * that is used by the user to manage the {@link SharedPreferences} of the application.
  */
-public class SettingsActivity extends AppCompatActivity implements
-        PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
-
+public class SettingsActivity extends AppCompatActivity implements PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
+    /**
+     * Initializes layout and {@link ActionBar} as well as creates and displays a new {@link HeaderFragment}.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *                           previously being shut down then this Bundle contains the data it most
+     *                           recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +77,13 @@ public class SettingsActivity extends AppCompatActivity implements
                 .commit();
     }
 
+    /**
+     * Called, whenever the user chooses to navigate Up from the action bar.
+     * If a {@link Fragment} is present on top of the back stack of
+     * the current {@link androidx.fragment.app.FragmentManager}, it is popped.
+     *
+     * @return {@link Boolean} defining whether the call has been handled.
+     */
     @Override
     public boolean onSupportNavigateUp() {
         if (getSupportFragmentManager().popBackStackImmediate()) {
@@ -78,6 +92,13 @@ public class SettingsActivity extends AppCompatActivity implements
         return super.onSupportNavigateUp();
     }
 
+    /**
+     * Called whenever a {@link MenuItem} in the options menu is selected.
+     * Returns to the calling {@link android.app.Activity} when the {@link android.R.id#home} item was selected.
+     * @param item {@link MenuItem} that was selected.
+     *
+     * @return {@link Boolean} defining whether the call has been handled.
+     */
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
@@ -87,6 +108,14 @@ public class SettingsActivity extends AppCompatActivity implements
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Called when the user has clicked on a {@link Preference} that has a {@link Fragment} class name
+     * associated with it.
+     * Switches to an instance of the given {@link Fragment}.
+     * @param caller {@link PreferenceFragmentCompat} requesting navigation.
+     * @param pref   {@link Preference} requesting the {@link Fragment}.
+     * @return {@link Boolean} defining whether the {@link Fragment} creation has been handled.
+     */
     @Override
     public boolean onPreferenceStartFragment(@NonNull PreferenceFragmentCompat caller, @NonNull Preference pref) {
         // Instantiate the new Fragment
@@ -106,27 +135,68 @@ public class SettingsActivity extends AppCompatActivity implements
         return true;
     }
 
+    /**
+     * A {@link PreferenceFragmentCompat} class encapsulating the main preference screen,
+     * i.e., the {@link Preference}s defined in {@link R.xml#header_preferences}.
+     * @todo Move to own class file.
+     */
     public static class HeaderFragment extends PreferenceFragmentCompat {
+        /**
+         * Called during {@link #onCreate(Bundle)} to supply the preferences for this fragment.
+         * Sets shown {@link Preference}s from {@link R.xml#header_preferences}
+         * and registers an {@link androidx.preference.Preference.OnPreferenceClickListener}
+         * on the {@link Preference} at {@link R.string#preference_key_onboarding} to start a new {@link OnboardingSupportActivity}.
+         * @param savedInstanceState If the fragment is being re-created from a previous saved state,
+         *                           this is the state.
+         * @param rootKey            If non-null, this preference fragment should be rooted at the
+         *                           {@link androidx.preference.PreferenceScreen} with this key.
+         */
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.header_preferences, rootKey);
 
-            Preference onboardingSupport = findPreference("onboardingSupport");
-            Objects.requireNonNull(onboardingSupport).setOnPreferenceClickListener(preference -> {
+            Preference onboardingSupport = Objects.requireNonNull(findPreference(getString(R.string.preference_key_onboarding)));
+            onboardingSupport.setOnPreferenceClickListener(preference -> {
                 startActivity(new Intent(getContext(), OnboardingSupportActivity.class));
                 return true;
             });
         }
     }
 
+    /**
+     * A {@link PreferenceFragmentCompat} class encapsulating the sound preference screen,
+     * i.e., the {@link Preference}s defined in {@link R.xml#sound_preferences}.
+     * @todo Move to own class file.
+     */
     public static class SoundFragment extends PreferenceFragmentCompat {
+        /**
+         * Called during {@link #onCreate(Bundle)} to supply the preferences for this fragment.
+         * Sets shown {@link Preference}s from {@link R.xml#sound_preferences}.
+         * @param savedInstanceState If the fragment is being re-created from a previous saved state,
+         *                           this is the state.
+         * @param rootKey            If non-null, this preference fragment should be rooted at the
+         *                           {@link androidx.preference.PreferenceScreen} with this key.
+         */
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.sound_preferences, rootKey);
         }
     }
 
+    /**
+     * A {@link PreferenceFragmentCompat} class encapsulating the rule preference screen,
+     * i.e., the rule sections defined in {@link R.xml#rule_preferences}.
+     * @todo Move to own class file.
+     */
     public static class RuleHeaderFragment extends PreferenceFragmentCompat {
+        /**
+         * Creates an {@link Preference.OnPreferenceClickListener} that starts a new {@link RuleActivity}
+         * for the given {@link RuleSection} using an {@link Intent}.
+         * The {@link Intent} provides the requested {@link RuleSection} to the {@link RuleActivity}
+         * using {@link Intent#putExtra(String, Serializable)} with {@link RuleActivity#INTENT_EXTRA_TAG} as a tag.
+         * @param section {@link RuleSection} that is requested.
+         * @return An {@link Preference.OnPreferenceClickListener} calling a {@link RuleActivity}.
+         */
         @NonNull
         @Contract(pure = true)
         private Preference.OnPreferenceClickListener getSectionClickListener(@NonNull RuleSection section) {
@@ -139,6 +209,17 @@ public class SettingsActivity extends AppCompatActivity implements
             };
         }
 
+        /**
+         * Called during {@link #onCreate(Bundle)} to supply the preferences for this fragment.
+         * Sets shown {@link Preference}s from {@link R.xml#rule_preferences}.
+         * Also provides each element with an {@link Preference.OnPreferenceClickListener}
+         * that starts a new {@link RuleActivity} for the respective {@link RuleSection}.
+         * @see #getSectionClickListener(RuleSection)
+         * @param savedInstanceState If the fragment is being re-created from a previous saved state,
+         *                           this is the state.
+         * @param rootKey            If non-null, this preference fragment should be rooted at the
+         *                           {@link androidx.preference.PreferenceScreen} with this key.
+         */
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.rule_preferences, rootKey);
