@@ -109,8 +109,6 @@
     <string name="introduction_button_skip">Skip</string>
     <string name="introduction_button_finish">Finish</string>
 
-    <!-- TODO: remove background description -->
-    <string name="content_description_background_resource">background element</string>
     <string name="content_description_activity_main_background">background</string>
     <string name="content_description_activity_main_point_ball">total score</string>
     <string name="content_description_activity_main_faction_button">faction logo</string>
