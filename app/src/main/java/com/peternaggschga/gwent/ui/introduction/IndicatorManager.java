@@ -1,4 +1,4 @@
-package com.peternaggschga.gwent;
+package com.peternaggschga.gwent.ui.introduction;
 
 import static org.valid4j.Assertive.require;
 
@@ -7,6 +7,8 @@ import android.widget.ImageView;
 
 import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
+
+import com.peternaggschga.gwent.R;
 
 class IndicatorManager {
     @NonNull

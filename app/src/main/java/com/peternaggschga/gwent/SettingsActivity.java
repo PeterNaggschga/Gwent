@@ -27,6 +27,8 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 
+import com.peternaggschga.gwent.ui.introduction.IntroductionActivity;
+
 import org.jetbrains.annotations.Contract;
 
 import java.io.Serializable;

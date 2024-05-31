@@ -17,7 +17,7 @@
         android:theme="@style/ScoiataelTheme"
         tools:targetApi="o">
         <activity
-            android:name=".IntroductionActivity"
+            android:name=".ui.introduction.IntroductionActivity"
             android:screenOrientation="fullSensor" />
         <activity
             android:name=".MainActivity"

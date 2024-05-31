@@ -1,4 +1,4 @@
-package com.peternaggschga.gwent;
+package com.peternaggschga.gwent.ui.introduction;
 
 import android.os.Bundle;
 import android.view.View;
@@ -10,8 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.peternaggschga.gwent.ui.introduction.IntroductionFragment;
-import com.peternaggschga.gwent.ui.introduction.SectionsPagerAdapter;
+import com.peternaggschga.gwent.R;
 
 /**
  * An {@link AppCompatActivity} that gives the user an introduction into the usage of the application.
