@@ -8,6 +8,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
  * one of the sections/tabs/pages.
+ * @todo Documentation
  */
 public class SectionsPagerAdapter extends FragmentStateAdapter {
     public SectionsPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
@@ -22,6 +23,6 @@ public class SectionsPagerAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        return PlaceholderFragment.newInstance(position + 1);
+        return PlaceholderFragment.newInstance(position);
     }
 }
