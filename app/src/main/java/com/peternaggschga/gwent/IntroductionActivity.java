@@ -10,8 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.peternaggschga.gwent.ui.onboarding.PlaceholderFragment;
-import com.peternaggschga.gwent.ui.onboarding.SectionsPagerAdapter;
+import com.peternaggschga.gwent.ui.introduction.PlaceholderFragment;
+import com.peternaggschga.gwent.ui.introduction.SectionsPagerAdapter;
 
 /**
  * @todo Documentation
@@ -23,13 +23,13 @@ public class IntroductionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_onboarding_support);
+        setContentView(R.layout.activity_introduction);
 
         if (indicatorManager == null) {
             indicatorManager = new IndicatorManager(getWindow());
         }
 
-        final ViewPager2 viewPager = findViewById(R.id.onboarding_viewPager);
+        final ViewPager2 viewPager = findViewById(R.id.introduction_viewPager);
         OnBackPressedCallback callback = new OnBackPressedCallback(false) {
             @Override
             public void handleOnBackPressed() {
@@ -53,9 +53,9 @@ public class IntroductionActivity extends AppCompatActivity {
             getOnBackPressedDispatcher().onBackPressed();
         };
 
-        final Button skipButton = findViewById(R.id.onboarding_button_skip);
-        final ImageButton nextButton = findViewById(R.id.onboarding_button_next);
-        final Button finishButton = findViewById(R.id.onboarding_button_finish);
+        final Button skipButton = findViewById(R.id.introduction_button_skip);
+        final ImageButton nextButton = findViewById(R.id.introduction_button_next);
+        final Button finishButton = findViewById(R.id.introduction_button_finish);
 
         skipButton.setOnClickListener(onFinish);
         nextButton.setOnClickListener(v -> viewPager.setCurrentItem(viewPager.getCurrentItem() + 1));

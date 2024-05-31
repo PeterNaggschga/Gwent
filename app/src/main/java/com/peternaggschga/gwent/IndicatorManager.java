@@ -16,11 +16,11 @@ class IndicatorManager {
     private int currentView = 0;
 
     IndicatorManager(@NonNull Window window) {
-        indicators[0] = window.findViewById(R.id.onboarding_indicator_0);
-        indicators[1] = window.findViewById(R.id.onboarding_indicator_1);
-        indicators[2] = window.findViewById(R.id.onboarding_indicator_2);
-        indicators[3] = window.findViewById(R.id.onboarding_indicator_3);
-        indicators[4] = window.findViewById(R.id.onboarding_indicator_4);
+        indicators[0] = window.findViewById(R.id.introduction_indicator_0);
+        indicators[1] = window.findViewById(R.id.introduction_indicator_1);
+        indicators[2] = window.findViewById(R.id.introduction_indicator_2);
+        indicators[3] = window.findViewById(R.id.introduction_indicator_3);
+        indicators[4] = window.findViewById(R.id.introduction_indicator_4);
     }
 
     void updateIndicators(@IntRange(from = 0, to = 4) int position) {

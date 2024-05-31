@@ -40,8 +40,8 @@
 
         <Preference
             app:icon="@drawable/icon_explore"
-            app:key="@string/preference_key_onboarding"
-            app:title="@string/preference_info_onboardingSupport" />
+            app:key="@string/preference_key_introduction"
+            app:title="@string/preference_info_introduction" />
 
     </PreferenceCategory>
 </PreferenceScreen>
