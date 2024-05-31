@@ -3,7 +3,7 @@ package com.peternaggschga.gwent.ui.settings;
 /**
  * An {@link Enum} used to discern the different possible sections shown by {@link RuleActivity}.
  */
-public enum RuleSection {
+enum RuleSection {
     /**
      * Represents a section containing general background-information on the game Gwent.
      */
