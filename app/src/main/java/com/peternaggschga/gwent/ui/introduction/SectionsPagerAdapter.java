@@ -39,6 +39,6 @@ public class SectionsPagerAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        return IntroductionFragment.newInstance(position);
+        return new IntroductionFragment(position);
     }
 }
