@@ -18,7 +18,7 @@ import com.peternaggschga.gwent.R;
  * A placeholder fragment containing a simple view.
  * @todo Documentation
  */
-public class PlaceholderFragment extends Fragment {
+public class IntroductionFragment extends Fragment {
 
     public static final int PAGES_COUNT = 5;
     private static final String ARG_SECTION_NUMBER = "section_number";
@@ -26,8 +26,8 @@ public class PlaceholderFragment extends Fragment {
     private static final int[] imageIds = {R.drawable.introduction_1, R.drawable.introduction_2, R.drawable.introduction_3, R.drawable.introduction_4, R.drawable.introduction_5};
 
     @NonNull
-    public static PlaceholderFragment newInstance(int index) {
-        PlaceholderFragment fragment = new PlaceholderFragment();
+    public static IntroductionFragment newInstance(int index) {
+        IntroductionFragment fragment = new IntroductionFragment();
         Bundle bundle = new Bundle();
         bundle.putInt(ARG_SECTION_NUMBER, index);
         fragment.setArguments(bundle);

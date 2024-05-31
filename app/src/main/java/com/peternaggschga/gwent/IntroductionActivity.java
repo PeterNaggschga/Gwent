@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.peternaggschga.gwent.ui.introduction.PlaceholderFragment;
+import com.peternaggschga.gwent.ui.introduction.IntroductionFragment;
 import com.peternaggschga.gwent.ui.introduction.SectionsPagerAdapter;
 
 /**
@@ -49,7 +49,7 @@ public class IntroductionActivity extends AppCompatActivity {
         OnBackPressedCallback callback = new OnBackPressedCallback(false) {
             /**
              * Called when enabled and the user clicks on the back-button.
-             * Switches the {@link ViewPager2} containing the {@link PlaceholderFragment}s to the last position.
+             * Switches the {@link ViewPager2} containing the {@link IntroductionFragment}s to the last position.
              */
             @Override
             public void handleOnBackPressed() {
@@ -86,9 +86,9 @@ public class IntroductionActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 indicatorManager.updateIndicators(position);
-                skipButton.setVisibility(position == PlaceholderFragment.PAGES_COUNT - 1 ? View.GONE : View.VISIBLE);
-                nextButton.setVisibility(position == PlaceholderFragment.PAGES_COUNT - 1 ? View.GONE : View.VISIBLE);
-                finishButton.setVisibility(position == PlaceholderFragment.PAGES_COUNT - 1 ? View.VISIBLE : View.GONE);
+                skipButton.setVisibility(position == IntroductionFragment.PAGES_COUNT - 1 ? View.GONE : View.VISIBLE);
+                nextButton.setVisibility(position == IntroductionFragment.PAGES_COUNT - 1 ? View.GONE : View.VISIBLE);
+                finishButton.setVisibility(position == IntroductionFragment.PAGES_COUNT - 1 ? View.VISIBLE : View.GONE);
                 callback.setEnabled(position != 0);
             }
         });
