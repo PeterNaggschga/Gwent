@@ -14,11 +14,27 @@ import com.peternaggschga.gwent.ui.introduction.PlaceholderFragment;
 import com.peternaggschga.gwent.ui.introduction.SectionsPagerAdapter;
 
 /**
- * @todo Documentation
+ * An {@link AppCompatActivity} that gives the user an introduction into the usage of the application.
+ * Is called when the app is first started 
+ * (as tracked by the {@link androidx.preference.Preference} at key {@link R.string#preference_first_use_key}.
+ * @todo Introduce ViewModel for indicators and buttons.
  */
 public class IntroductionActivity extends AppCompatActivity {
+    /**
+     * {@link IndicatorManager} used to update the progress indicators according to the currently shown page.
+     * Is initialized in {@link #onCreate(Bundle)}.
+     */
     private IndicatorManager indicatorManager;
 
+    /**
+     * Sets layout to {@link R.layout#activity_introduction}, initializes {@link #indicatorManager},
+     * sets listeners on the buttons, and creates a new {@link OnBackPressedCallback} that switches to the
+     * previous page, if it is not the first one.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *                           previously being shut down then this Bundle contains the data it most
+     *                           recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,15 +47,13 @@ public class IntroductionActivity extends AppCompatActivity {
 
         final ViewPager2 viewPager = findViewById(R.id.introduction_viewPager);
         OnBackPressedCallback callback = new OnBackPressedCallback(false) {
+            /**
+             * Called when enabled and the user clicks on the back-button.
+             * Switches the {@link ViewPager2} containing the {@link PlaceholderFragment}s to the last position.
+             */
             @Override
             public void handleOnBackPressed() {
-                int item = viewPager.getCurrentItem();
-                if (item != 0) {
-                    viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
-                } else {
-                    setEnabled(false);
-                    getOnBackPressedDispatcher().onBackPressed();
-                }
+                viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
             }
         };
         getOnBackPressedDispatcher().addCallback(callback);
@@ -63,6 +77,12 @@ public class IntroductionActivity extends AppCompatActivity {
 
         viewPager.setAdapter(new SectionsPagerAdapter(this));
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            /**
+             * Updates the {@link IntroductionActivity#indicatorManager}, changes button-visibility
+             * and whether the callback for onBackPressed is active.
+             * @see IndicatorManager#updateIndicators(int)
+             * @param position Position index of the new selected page.
+             */
             @Override
             public void onPageSelected(int position) {
                 indicatorManager.updateIndicators(position);
