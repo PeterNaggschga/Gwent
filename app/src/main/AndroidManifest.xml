@@ -20,7 +20,7 @@
             android:name=".ui.introduction.IntroductionActivity"
             android:screenOrientation="fullSensor" />
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.main.MainActivity"
             android:screenOrientation="sensorLandscape"
             android:exported="true">
             <intent-filter>
