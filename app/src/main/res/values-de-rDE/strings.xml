@@ -78,7 +78,6 @@
     <string name="introduction_button_skip">Überspringen</string>
     <string name="introduction_button_finish">Fertig</string>
 
-    <string name="content_description_background_resource">Hintergrundelement</string>
     <string name="content_description_activity_main_background">Hintergrundbild</string>
     <string name="content_description_activity_main_point_ball">Gesamtpunktzahl</string>
     <string name="content_description_activity_main_faction_button">Fraktionslogo</string>
