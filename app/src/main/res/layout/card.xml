@@ -59,7 +59,6 @@
         app:layout_constraintTop_toBottomOf="@id/abilityView"
         app:srcCompat="@drawable/icon_copy_grey" />
 
-    <!-- TODO: icon_copy und icon_delete entfernen -->
     <!-- TODO: dynamische Farbveränderung der Buttons mit tint -->
 
     <ImageButton
