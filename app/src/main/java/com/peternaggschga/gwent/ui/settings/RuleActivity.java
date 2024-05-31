@@ -1,4 +1,4 @@
-package com.peternaggschga.gwent;
+package com.peternaggschga.gwent.ui.settings;
 
 import android.os.Bundle;
 import android.text.Html;
@@ -8,6 +8,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.peternaggschga.gwent.R;
 
 import java.util.Objects;
 

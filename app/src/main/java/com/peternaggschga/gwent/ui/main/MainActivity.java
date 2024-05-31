@@ -29,12 +29,12 @@ import androidx.preference.PreferenceManager;
 
 import com.peternaggschga.gwent.GwentApplication;
 import com.peternaggschga.gwent.R;
-import com.peternaggschga.gwent.SettingsActivity;
 import com.peternaggschga.gwent.data.RowType;
 import com.peternaggschga.gwent.ui.dialogs.ChangeFactionDialog;
 import com.peternaggschga.gwent.ui.dialogs.CoinFlipDialog;
 import com.peternaggschga.gwent.ui.dialogs.cards.ShowUnitsDialog;
 import com.peternaggschga.gwent.ui.introduction.IntroductionActivity;
+import com.peternaggschga.gwent.ui.settings.SettingsActivity;
 import com.peternaggschga.gwent.ui.sounds.SoundManager;
 
 import io.reactivex.rxjava3.disposables.CompositeDisposable;

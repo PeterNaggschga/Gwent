@@ -1,17 +1,17 @@
-package com.peternaggschga.gwent;
+package com.peternaggschga.gwent.ui.settings;
 
-import static com.peternaggschga.gwent.RuleSection.CARDS;
-import static com.peternaggschga.gwent.RuleSection.CARD_ABILITIES;
-import static com.peternaggschga.gwent.RuleSection.COMMANDER;
-import static com.peternaggschga.gwent.RuleSection.COURSE;
-import static com.peternaggschga.gwent.RuleSection.FACTIONS;
-import static com.peternaggschga.gwent.RuleSection.GENERAL;
-import static com.peternaggschga.gwent.RuleSection.SPECIAL_CARDS;
 import static com.peternaggschga.gwent.ui.main.FactionSwitchListener.THEME_MONSTER;
 import static com.peternaggschga.gwent.ui.main.FactionSwitchListener.THEME_NILFGAARD;
 import static com.peternaggschga.gwent.ui.main.FactionSwitchListener.THEME_NORTHERN_KINGDOMS;
 import static com.peternaggschga.gwent.ui.main.FactionSwitchListener.THEME_PREFERENCE_KEY;
 import static com.peternaggschga.gwent.ui.main.FactionSwitchListener.THEME_SCOIATAEL;
+import static com.peternaggschga.gwent.ui.settings.RuleSection.CARDS;
+import static com.peternaggschga.gwent.ui.settings.RuleSection.CARD_ABILITIES;
+import static com.peternaggschga.gwent.ui.settings.RuleSection.COMMANDER;
+import static com.peternaggschga.gwent.ui.settings.RuleSection.COURSE;
+import static com.peternaggschga.gwent.ui.settings.RuleSection.FACTIONS;
+import static com.peternaggschga.gwent.ui.settings.RuleSection.GENERAL;
+import static com.peternaggschga.gwent.ui.settings.RuleSection.SPECIAL_CARDS;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -27,6 +27,7 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 
+import com.peternaggschga.gwent.R;
 import com.peternaggschga.gwent.ui.introduction.IntroductionActivity;
 
 import org.jetbrains.annotations.Contract;

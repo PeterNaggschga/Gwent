@@ -30,7 +30,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SettingsActivity"
+            android:name=".ui.settings.SettingsActivity"
             android:label="@string/settings_title"
             android:screenOrientation="fullSensor"
             android:exported="true">
@@ -39,7 +39,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".RuleActivity"
+            android:name=".ui.settings.RuleActivity"
             android:label="@string/preference_rules_header"
             android:screenOrientation="sensor" />
     </application>

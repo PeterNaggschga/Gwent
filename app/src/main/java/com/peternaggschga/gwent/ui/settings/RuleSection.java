@@ -1,4 +1,4 @@
-package com.peternaggschga.gwent;
+package com.peternaggschga.gwent.ui.settings;
 
 /**
  * An {@link Enum} used to discern the different possible sections shown by {@link RuleActivity}.
