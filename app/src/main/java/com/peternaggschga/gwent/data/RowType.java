@@ -1,4 +1,4 @@
-package com.peternaggschga.gwent;
+package com.peternaggschga.gwent.data;
 
 /**
  * An enum listing the different types of attack rows.

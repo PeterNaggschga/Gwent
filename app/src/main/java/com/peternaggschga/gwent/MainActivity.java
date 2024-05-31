@@ -27,6 +27,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
 import androidx.preference.PreferenceManager;
 
+import com.peternaggschga.gwent.data.RowType;
 import com.peternaggschga.gwent.ui.dialogs.ChangeFactionDialog;
 import com.peternaggschga.gwent.ui.dialogs.CoinFlipDialog;
 import com.peternaggschga.gwent.ui.dialogs.cards.ShowUnitsDialog;

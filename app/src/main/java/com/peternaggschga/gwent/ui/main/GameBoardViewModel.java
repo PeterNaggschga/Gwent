@@ -14,7 +14,7 @@ import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.lifecycle.viewmodel.ViewModelInitializer;
 
 import com.peternaggschga.gwent.GwentApplication;
-import com.peternaggschga.gwent.RowType;
+import com.peternaggschga.gwent.data.RowType;
 import com.peternaggschga.gwent.data.UnitEntity;
 import com.peternaggschga.gwent.data.UnitRepository;
 import com.peternaggschga.gwent.domain.cases.BurnDialogUseCase;
@@ -103,7 +103,7 @@ public class GameBoardViewModel extends AndroidViewModel {
                             (weather, horn, units) -> {
                                 DamageCalculator calculator = DamageCalculatorUseCase.getDamageCalculator(weather, horn, units);
                                 int damage = units.stream()
-                                        .map((Function<UnitEntity, Integer>) unitEntity -> unitEntity.calculateDamage(calculator))
+                                        .map(unitEntity -> unitEntity.calculateDamage(calculator))
                                         .reduce(0, Integer::sum);
                                 return new RowUiState(damage, weather, horn, units.size());
                             }).distinctUntilChanged().onBackpressureLatest()

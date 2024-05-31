@@ -7,7 +7,7 @@ import androidx.appcompat.app.AlertDialog;
 
 import com.peternaggschga.gwent.GwentApplication;
 import com.peternaggschga.gwent.R;
-import com.peternaggschga.gwent.RowType;
+import com.peternaggschga.gwent.data.RowType;
 import com.peternaggschga.gwent.data.UnitEntity;
 import com.peternaggschga.gwent.data.UnitRepository;
 import com.peternaggschga.gwent.domain.damage.DamageCalculator;

@@ -5,8 +5,6 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import com.peternaggschga.gwent.RowType;
-
 /**
  * A class representing the state of an attack row, i.e., weather and commanders horn.
  * Is a persistent Entity and is therefore saved in a database table named `rows`.

@@ -10,8 +10,8 @@ import androidx.annotation.NonNull;
 
 import com.peternaggschga.gwent.GwentApplication;
 import com.peternaggschga.gwent.R;
-import com.peternaggschga.gwent.RowType;
 import com.peternaggschga.gwent.data.Ability;
+import com.peternaggschga.gwent.data.RowType;
 
 import org.jetbrains.annotations.Contract;
 

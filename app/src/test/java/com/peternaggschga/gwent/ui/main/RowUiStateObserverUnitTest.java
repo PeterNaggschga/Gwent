@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.peternaggschga.gwent.R;
-import com.peternaggschga.gwent.RowType;
+import com.peternaggschga.gwent.data.RowType;
 
 import org.junit.Before;
 import org.junit.Test;

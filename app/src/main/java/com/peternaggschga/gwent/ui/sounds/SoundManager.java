@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.preference.PreferenceManager;
 
 import com.peternaggschga.gwent.R;
-import com.peternaggschga.gwent.RowType;
+import com.peternaggschga.gwent.data.RowType;
 
 import java.util.Arrays;
 
