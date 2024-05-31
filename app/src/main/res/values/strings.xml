@@ -104,6 +104,7 @@
     <string name="preference_rules_cards_key" translatable="false">rules_cards</string>
     <string name="preference_rules_card_abilities_key" translatable="false">rules_card_abilities</string>
     <string name="preference_rules_special_cards_key" translatable="false">rules_special_cards</string>
+    <string name="preference_first_use_key" translatable="false">firstUse</string>
 
     <string name="onboardingSupport_button_skip">Skip</string>
     <string name="onboardingSupport_button_finish">Finish</string>

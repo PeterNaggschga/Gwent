@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
-        if (preferences.getBoolean("firstUse", true)) {
+        if (preferences.getBoolean(getString(R.string.preference_first_use_key), true)) {
             startActivity(new Intent(this, OnboardingSupportActivity.class));
         }
 

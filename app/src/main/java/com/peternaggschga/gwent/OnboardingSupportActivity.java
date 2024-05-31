@@ -42,7 +42,7 @@ public class OnboardingSupportActivity extends AppCompatActivity {
         View.OnClickListener onFinish = view -> {
             PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
                     .edit()
-                    .putBoolean("firstUse", false)
+                    .putBoolean(getString(R.string.preference_first_use_key), false)
                     .apply();
             callback.setEnabled(false);
             getOnBackPressedDispatcher().onBackPressed();
