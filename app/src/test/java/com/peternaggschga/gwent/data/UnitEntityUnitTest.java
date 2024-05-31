@@ -8,7 +8,6 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.only;
 import static org.mockito.Mockito.verify;
 
-import com.peternaggschga.gwent.Ability;
 import com.peternaggschga.gwent.RowType;
 import com.peternaggschga.gwent.domain.damage.DamageCalculator;
 

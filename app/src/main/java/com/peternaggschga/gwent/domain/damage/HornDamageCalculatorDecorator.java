@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * A DamageCalculator class responsible for calculating the horn buff if necessary,
- * i.e., if there are units with the com.peternaggschga.gwent.Ability#HORN ability
+ * i.e., if there are units with the com.peternaggschga.gwent.data.Ability#HORN ability
  * that are not the unit the damage is calculated for
  * or if there is a commander's horn in this row.
  * Acts as a ConcreteDecorator in the implemented decorator pattern and should decorate a
@@ -19,7 +19,7 @@ import java.util.List;
 class HornDamageCalculatorDecorator extends DamageCalculatorDecorator {
     /**
      * A List of Integers
-     * containing the ids of all units with the com.peternaggschga.gwent.Ability#HORN ability.
+     * containing the ids of all units with the com.peternaggschga.gwent.data.Ability#HORN ability.
      * If a commander's horn is in the respective row, #unitIds contains ``null``.
      */
     private final List<Integer> unitIds;
@@ -33,7 +33,7 @@ class HornDamageCalculatorDecorator extends DamageCalculatorDecorator {
      *
      * @param component DamageCalculator that is being decorated by this decorator.
      * @param unitIds   List of Integers
-     *                  representing ids of units with the com.peternaggschga.gwent.Ability#HORN ability.
+     *                  representing ids of units with the com.peternaggschga.gwent.data.Ability#HORN ability.
      * @see DamageCalculatorBuilder
      */
     HornDamageCalculatorDecorator(@NonNull DamageCalculator component, @NonNull List<Integer> unitIds) {

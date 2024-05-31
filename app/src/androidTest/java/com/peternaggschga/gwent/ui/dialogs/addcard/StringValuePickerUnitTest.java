@@ -8,8 +8,8 @@ import android.widget.NumberPicker;
 
 import androidx.test.core.app.ApplicationProvider;
 
-import com.peternaggschga.gwent.Ability;
 import com.peternaggschga.gwent.R;
+import com.peternaggschga.gwent.data.Ability;
 
 import org.junit.Before;
 import org.junit.BeforeClass;

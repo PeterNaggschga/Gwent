@@ -6,8 +6,8 @@ import static org.mockito.Mockito.when;
 import androidx.annotation.NonNull;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import com.peternaggschga.gwent.Ability;
 import com.peternaggschga.gwent.RowType;
+import com.peternaggschga.gwent.data.Ability;
 import com.peternaggschga.gwent.data.UnitEntity;
 import com.peternaggschga.gwent.data.UnitRepository;
 import com.peternaggschga.gwent.domain.damage.DamageCalculator;

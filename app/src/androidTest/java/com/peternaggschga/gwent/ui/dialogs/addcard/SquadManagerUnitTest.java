@@ -5,7 +5,7 @@ import static com.peternaggschga.gwent.ui.dialogs.addcard.SquadManager.MAX_NR_SQ
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import com.peternaggschga.gwent.Ability;
+import com.peternaggschga.gwent.data.Ability;
 import com.peternaggschga.gwent.data.UnitEntity;
 
 import org.junit.Test;

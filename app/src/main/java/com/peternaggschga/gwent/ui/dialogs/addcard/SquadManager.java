@@ -8,8 +8,8 @@ import android.widget.Toast;
 import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 
-import com.peternaggschga.gwent.Ability;
 import com.peternaggschga.gwent.R;
+import com.peternaggschga.gwent.data.Ability;
 import com.peternaggschga.gwent.data.UnitEntity;
 
 import java.util.Arrays;

@@ -3,7 +3,7 @@ package com.peternaggschga.gwent.domain.damage;
 import static com.google.common.truth.Truth.assertThat;
 import static org.mockito.Mockito.when;
 
-import com.peternaggschga.gwent.Ability;
+import com.peternaggschga.gwent.data.Ability;
 import com.peternaggschga.gwent.data.UnitEntity;
 
 import org.junit.Test;

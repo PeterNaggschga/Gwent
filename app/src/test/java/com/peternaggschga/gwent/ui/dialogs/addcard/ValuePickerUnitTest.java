@@ -15,7 +15,7 @@ import android.widget.NumberPicker;
 
 import androidx.annotation.NonNull;
 
-import com.peternaggschga.gwent.Ability;
+import com.peternaggschga.gwent.data.Ability;
 
 import org.junit.Before;
 import org.junit.BeforeClass;

@@ -11,8 +11,8 @@ import androidx.core.util.Pair;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import com.peternaggschga.gwent.Ability;
 import com.peternaggschga.gwent.R;
+import com.peternaggschga.gwent.data.Ability;
 import com.peternaggschga.gwent.data.UnitEntity;
 import com.peternaggschga.gwent.domain.cases.DamageCalculatorUseCase;
 import com.peternaggschga.gwent.domain.damage.DamageCalculator;
