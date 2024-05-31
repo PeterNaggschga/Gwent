@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         if (preferences.getBoolean(getString(R.string.preference_first_use_key), true)) {
-            startActivity(new Intent(this, OnboardingSupportActivity.class));
+            startActivity(new Intent(this, IntroductionActivity.class));
         }
 
         switch (preferences.getInt(THEME_PREFERENCE_KEY, THEME_SCOIATAEL)) {

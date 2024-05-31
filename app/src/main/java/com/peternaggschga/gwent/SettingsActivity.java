@@ -145,7 +145,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
          * Called during {@link #onCreate(Bundle)} to supply the preferences for this fragment.
          * Sets shown {@link Preference}s from {@link R.xml#header_preferences}
          * and registers an {@link androidx.preference.Preference.OnPreferenceClickListener}
-         * on the {@link Preference} at {@link R.string#preference_key_onboarding} to start a new {@link OnboardingSupportActivity}.
+         * on the {@link Preference} at {@link R.string#preference_key_onboarding} to start a new {@link IntroductionActivity}.
          * @param savedInstanceState If the fragment is being re-created from a previous saved state,
          *                           this is the state.
          * @param rootKey            If non-null, this preference fragment should be rooted at the
@@ -157,7 +157,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
             Preference onboardingSupport = Objects.requireNonNull(findPreference(getString(R.string.preference_key_onboarding)));
             onboardingSupport.setOnPreferenceClickListener(preference -> {
-                startActivity(new Intent(getContext(), OnboardingSupportActivity.class));
+                startActivity(new Intent(getContext(), IntroductionActivity.class));
                 return true;
             });
         }

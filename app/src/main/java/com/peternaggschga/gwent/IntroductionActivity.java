@@ -16,7 +16,7 @@ import com.peternaggschga.gwent.ui.onboarding.SectionsPagerAdapter;
 /**
  * @todo Documentation
  */
-public class OnboardingSupportActivity extends AppCompatActivity {
+public class IntroductionActivity extends AppCompatActivity {
     private IndicatorManager indicatorManager;
 
     @Override
