@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.widget.Toast;
 
-import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.preference.PreferenceManager;
 
@@ -26,40 +25,25 @@ import io.reactivex.rxjava3.core.Single;
  * A use case class responsible for dispatching a reset call to ResetRepositoryUseCase,
  * possibly after a confirmation by the user obtained from a Dialog.
  *
- * @todo Change Integer constants to enum fields.
  * @see ResetRepositoryUseCase
  */
 public class ResetDialogUseCase {
-    /**
-     * Integer constant representing that a reset was triggered by a click on the reset button.
-     */
-    public static final int TRIGGER_BUTTON_CLICK = 0;
-
-    /**
-     * Integer constant representing that a reset was triggered by a faction switch.
-     * Only relevant if faction reset is activated, i.e.,
-     * the SharedPreference referenced by R.string#preference_key_faction_reset.
-     *
-     * @see R.string#preference_key_faction_reset
-     */
-    public static final int TRIGGER_FACTION_SWITCH = 1;
-
     /**
      * Resets the given UnitRepository.
      * May invoke a Dialog asking whether the user really wants
      * to reset depending on the given trigger and warning settings.
      * ResetRepositoryUseCase is used for resetting.
-     * Wrapper for #reset(Context, UnitRepository, int).
+     * Wrapper for #reset(Context, UnitRepository, Trigger).
      *
      * @param context Context where a Dialog can be inflated.
-     * @param trigger Integer defining what triggered this reset.
+     * @param trigger {@link Trigger} defining what triggered this reset.
      * @return A Single emitting a Boolean defining whether the reset really took place.
-     * @see #reset(Context, UnitRepository, int)
+     * @see #reset(Context, UnitRepository, Trigger)
      * @see ResetRepositoryUseCase#reset(Context, UnitRepository, boolean)
      */
     @NonNull
     public static Single<Boolean> reset(@NonNull Context context,
-                                        @IntRange(from = TRIGGER_BUTTON_CLICK, to = TRIGGER_FACTION_SWITCH) int trigger) {
+                                        @NonNull Trigger trigger) {
         return GwentApplication.getRepository(context)
                 .flatMap(repository -> reset(context, repository, trigger));
     }
@@ -72,38 +56,34 @@ public class ResetDialogUseCase {
      *
      * @param context    Context where a Dialog can be inflated.
      * @param repository UnitRepository that is reset.
-     * @param trigger    Integer defining what triggered this reset.
+     * @param trigger    {@link Trigger} defining what triggered this reset.
      * @return A Single emitting a Boolean defining whether the reset really took place.
      * @see ResetRepositoryUseCase#reset(Context, UnitRepository, boolean)
      */
     @NonNull
     protected static Single<Boolean> reset(@NonNull Context context, @NonNull UnitRepository repository,
-                                           @IntRange(from = TRIGGER_BUTTON_CLICK, to = TRIGGER_FACTION_SWITCH) int trigger) {
+                                           @NonNull Trigger trigger) {
         return getDialogType(context, repository, trigger).flatMap(dialogType -> {
             if (dialogType == DialogType.NONE) {
                 return ResetRepositoryUseCase.reset(context, repository).andThen(Single.just(true));
             }
-            return Single.create(emitter -> {
-                new ResetAlertDialogBuilderAdapter(context, (resetDecision, keepUnit) -> {
-                    if (!resetDecision) {
-                        emitter.onSuccess(false);
-                        return;
-                    }
-                    // noinspection CheckResult, ResultOfMethodCallIgnored
-                    ResetRepositoryUseCase.reset(context, repository, keepUnit)
-                            .doAfterTerminate(() -> emitter.onSuccess(true))
-                            .subscribe(unit ->
-                                    Toast.makeText(context,
-                                                    context.getString(R.string.alertDialog_factionreset_monster_toast_keep, unit.toString(context)),
-                                                    Toast.LENGTH_LONG)
-                                            .show());
-                }).setTrigger(trigger)
-                        .setMonsterDialog(dialogType == DialogType.MONSTER)
-                        .create()
-                        .show();
-
-
-            });
+            return Single.create(emitter -> new ResetAlertDialogBuilderAdapter(context, (resetDecision, keepUnit) -> {
+                if (!resetDecision) {
+                    emitter.onSuccess(false);
+                    return;
+                }
+                // noinspection CheckResult, ResultOfMethodCallIgnored
+                ResetRepositoryUseCase.reset(context, repository, keepUnit)
+                        .doAfterTerminate(() -> emitter.onSuccess(true))
+                        .subscribe(unit ->
+                                Toast.makeText(context,
+                                                context.getString(R.string.alertDialog_factionreset_monster_toast_keep, unit.toString(context)),
+                                                Toast.LENGTH_LONG)
+                                        .show());
+            }).setTrigger(trigger)
+                    .setMonsterDialog(dialogType == DialogType.MONSTER)
+                    .create()
+                    .show());
         });
     }
 
@@ -112,13 +92,13 @@ public class ResetDialogUseCase {
      *
      * @param context    Context used for retrieval of SharedPreferences.
      * @param repository UnitRepository used to check if a certain DialogType is even necessary.
-     * @param trigger    Integer defining what triggered the reset.
+     * @param trigger    {@link Trigger} defining what triggered the reset.
      * @return A DialogType defining the kind of Dialog.
      * @see DialogType
      */
     @NonNull
     private static Single<DialogType> getDialogType(@NonNull Context context, @NonNull UnitRepository repository,
-                                                    @IntRange(from = TRIGGER_BUTTON_CLICK, to = TRIGGER_FACTION_SWITCH) int trigger) {
+                                                    @NonNull Trigger trigger) {
         return Single.concat(Arrays.stream(RowType.values()).map(row ->
                         repository.isWeather(row)
                                 .concatWith(repository.isHorn(row))
@@ -126,7 +106,7 @@ public class ResetDialogUseCase {
                 ).collect(Collectors.toList())).any(state -> state)
                 .zipWith(repository.getUnits(), (statusEffects, units) -> {
                     SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-                    boolean monsterDialog = trigger != TRIGGER_FACTION_SWITCH;
+                    boolean monsterDialog = trigger != Trigger.FACTION_SWITCH;
                     monsterDialog &= preferences.getInt(THEME_PREFERENCE_KEY, THEME_SCOIATAEL) == THEME_MONSTER;
                     monsterDialog &= units.stream().anyMatch(unit -> !unit.isEpic());
                     if (monsterDialog) {
@@ -143,9 +123,25 @@ public class ResetDialogUseCase {
     }
 
     /**
-     * Enum defining which form of Dialog should be shown.
+     * An {@link Enum} listing the possible triggers of a reset.
+     */
+    public enum Trigger {
+        /**
+         * Represents, that a reset was triggered by a click on the reset button.
+         */
+        BUTTON_CLICK,
+        /**
+         * Represents that a reset was triggered by a faction switch.
+         * Only relevant if faction reset is activated, i.e.,
+         * the preference at the key referenced by {@link  R.string#preference_key_faction_reset} is true.
+         */
+        FACTION_SWITCH
+    }
+
+    /**
+     * An {@link Enum} defining which form of Dialog should be shown.
      *
-     * @see #getDialogType(Context, UnitRepository, int)
+     * @see #getDialogType(Context, UnitRepository, Trigger)
      */
     private enum DialogType {
         /**

@@ -1,14 +1,9 @@
 package com.peternaggschga.gwent.domain.cases;
 
-import static com.peternaggschga.gwent.domain.cases.ResetDialogUseCase.TRIGGER_BUTTON_CLICK;
-import static com.peternaggschga.gwent.domain.cases.ResetDialogUseCase.TRIGGER_FACTION_SWITCH;
-import static org.valid4j.Assertive.require;
-
 import android.content.Context;
 import android.view.View;
 import android.widget.CheckBox;
 
-import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 
@@ -61,20 +56,16 @@ class ResetAlertDialogBuilderAdapter {
     /**
      * Changes the shown message of the AlertDialog
      * and whether it is cancelable depending on the trigger of the dialog.
-     * The trigger must be either #TRIGGER_BUTTON_CLICK or #TRIGGER_FACTION_SWITCH.
      *
-     * @param trigger Integer representing
+     * @param trigger {@link ResetDialogUseCase.Trigger} defining what triggered the reset.
      * @return The ResetAlertDialogBuilderAdapter with the changed trigger.
-     * @see ResetDialogUseCase#TRIGGER_BUTTON_CLICK
-     * @see ResetDialogUseCase#TRIGGER_FACTION_SWITCH
      */
     @NonNull
-    ResetAlertDialogBuilderAdapter setTrigger(@IntRange(from = TRIGGER_BUTTON_CLICK, to = TRIGGER_FACTION_SWITCH) int trigger) {
-        require(TRIGGER_BUTTON_CLICK <= trigger && trigger <= TRIGGER_FACTION_SWITCH);
-        adapteeBuilder.setMessage((trigger != TRIGGER_FACTION_SWITCH) ?
+    ResetAlertDialogBuilderAdapter setTrigger(@NonNull ResetDialogUseCase.Trigger trigger) {
+        adapteeBuilder.setMessage((trigger != ResetDialogUseCase.Trigger.FACTION_SWITCH) ?
                         R.string.alertDialog_reset_msg_default :
                         R.string.alertDialog_reset_msg_faction_switch)
-                .setCancelable(trigger != TRIGGER_FACTION_SWITCH);
+                .setCancelable(trigger != ResetDialogUseCase.Trigger.FACTION_SWITCH);
         return this;
     }
 

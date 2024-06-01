@@ -1,12 +1,9 @@
 package com.peternaggschga.gwent.ui.main;
 
 import static androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY;
-import static com.peternaggschga.gwent.domain.cases.ResetDialogUseCase.TRIGGER_BUTTON_CLICK;
-import static com.peternaggschga.gwent.domain.cases.ResetDialogUseCase.TRIGGER_FACTION_SWITCH;
 
 import android.content.Context;
 
-import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.ViewModelProvider;
@@ -15,7 +12,6 @@ import androidx.lifecycle.viewmodel.ViewModelInitializer;
 
 import com.peternaggschga.gwent.GwentApplication;
 import com.peternaggschga.gwent.data.RowType;
-import com.peternaggschga.gwent.data.UnitEntity;
 import com.peternaggschga.gwent.data.UnitRepository;
 import com.peternaggschga.gwent.domain.cases.BurnDialogUseCase;
 import com.peternaggschga.gwent.domain.cases.DamageCalculatorUseCase;
@@ -25,7 +21,6 @@ import com.peternaggschga.gwent.domain.damage.DamageCalculator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.function.Function;
 
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
@@ -197,12 +192,12 @@ public class GameBoardViewModel extends AndroidViewModel {
      * Wrapper for #reset().
      * @param context Context object used to acquire SharedPreferences and inflate Dialog views.
      * @return A Single emitting a Boolean defining whether a reset was actually conducted.
-     * @see #reset(Context, int)
-     * @see ResetDialogUseCase#TRIGGER_BUTTON_CLICK
+     * @see #reset(Context, ResetDialogUseCase.Trigger)
+     * @see ResetDialogUseCase.Trigger#BUTTON_CLICK
      */
     @NonNull
     public Single<Boolean> onResetButtonPressed(@NonNull Context context) {
-        return reset(context, TRIGGER_BUTTON_CLICK);
+        return reset(context, ResetDialogUseCase.Trigger.BUTTON_CLICK);
     }
 
     /**
@@ -211,26 +206,22 @@ public class GameBoardViewModel extends AndroidViewModel {
      * Wrapper for #reset().
      * @param context Context object used to acquire SharedPreferences and inflate Dialog views.
      * @return A Single emitting a Boolean defining whether a reset was actually conducted.
-     * @see #reset(Context, int)
-     * @see ResetDialogUseCase#TRIGGER_FACTION_SWITCH
+     * @see #reset(Context, ResetDialogUseCase.Trigger)
      */
     @NonNull
     public Single<Boolean> onFactionSwitchReset(@NonNull Context context) {
-        return reset(context, TRIGGER_FACTION_SWITCH);
+        return reset(context, ResetDialogUseCase.Trigger.FACTION_SWITCH);
     }
 
     /**
      * Triggers a reset and possibly an alert dialog, depending on preferences.
      * @param context Context object used to acquire SharedPreferences and inflate Dialog views.
-     * @param trigger Integer defining which action triggered the reset.
+     * @param trigger {@link com.peternaggschga.gwent.domain.cases.ResetDialogUseCase.Trigger} defining which action triggered the reset.
      * @return A Single emitting a Boolean defining whether a reset was actually conducted.
-     * @see #reset(Context, int)
-     * @see ResetDialogUseCase#TRIGGER_BUTTON_CLICK
-     * @see ResetDialogUseCase#TRIGGER_FACTION_SWITCH
+     * @see #reset(Context, ResetDialogUseCase.Trigger)
      */
     @NonNull
-    private Single<Boolean> reset(@NonNull Context context,
-                                  @IntRange(from = TRIGGER_BUTTON_CLICK, to = TRIGGER_FACTION_SWITCH) int trigger) {
+    private Single<Boolean> reset(@NonNull Context context, @NonNull ResetDialogUseCase.Trigger trigger) {
         return ResetDialogUseCase.reset(context, trigger);
     }
 

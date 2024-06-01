@@ -1,6 +1,5 @@
 package com.peternaggschga.gwent.domain.cases;
 
-import static com.peternaggschga.gwent.domain.cases.ResetDialogUseCase.TRIGGER_BUTTON_CLICK;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
@@ -48,7 +47,7 @@ public class ResetDialogUseCaseUnitTest {
                 .apply();
         ResetDialogUseCase.reset(ApplicationProvider.getApplicationContext(),
                         repository,
-                        TRIGGER_BUTTON_CLICK)
+                        ResetDialogUseCase.Trigger.BUTTON_CLICK)
                 .blockingSubscribe();
         verify(repository, atLeastOnce()).reset(null);
     }
