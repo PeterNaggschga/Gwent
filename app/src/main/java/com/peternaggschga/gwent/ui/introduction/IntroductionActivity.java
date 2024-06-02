@@ -16,7 +16,6 @@ import com.peternaggschga.gwent.R;
  * An {@link AppCompatActivity} that gives the user an introduction into the usage of the application.
  * Is called when the app is first started 
  * (as tracked by the {@link androidx.preference.Preference} at key {@link R.string#preference_first_use_key}.
- * @todo Introduce ViewModel for indicators and buttons.
  */
 public class IntroductionActivity extends AppCompatActivity {
     /**
