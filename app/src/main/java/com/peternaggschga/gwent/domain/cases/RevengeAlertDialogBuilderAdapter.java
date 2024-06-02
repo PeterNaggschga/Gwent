@@ -1,6 +1,5 @@
 package com.peternaggschga.gwent.domain.cases;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 
@@ -17,14 +16,12 @@ import com.peternaggschga.gwent.data.UnitRepository;
 import io.reactivex.rxjava3.core.Completable;
 
 /**
- * A factory class providing a Dialog asking whether the Ability#REVENGE ability should be activated
- * and uses the given Callbacks in #getRevengeDialog().
+ * An adapter class adapting AlertDialog.Builder to provide an interface
+ * for creating an AlertDialog asking the user whether they want to invoke the Ability#REVENGE ability.
  *
- * @todo Restructure as an adapter class for AlertDialog.Builder (see ResetAlertDialogBuilderAdapter)
- * @see Ability#REVENGE
- * @see #getRevengeDialog(Context, DialogInterface.OnClickListener, DialogInterface.OnClickListener)
+ * @todo Add testing.
  */
-class RevengeDialogFactory {
+class RevengeAlertDialogBuilderAdapter {
     /**
      * Boolean constant defining
      * whether the default UnitEntity summoned by the Ability#REVENGE ability is epic.
@@ -71,27 +68,25 @@ class RevengeDialogFactory {
     private static final RowType AVENGER_ROW = RowType.MELEE;
 
     /**
-     * Creates a Dialog
-     * asking whether the Ability#REVENGE ability of a removed UnitEntity should be activated.
-     * The onPositiveClickListener should call #insertAvengers().
-     *
-     * @param context                 Context of the created Dialog.
-     * @param onPositiveClickListener DialogInterface.OnClickListener which is called when the positive button is clicked.
-     * @param onNegativeClickListener DialogInterface.OnClickListener which is called when the negative button is clicked.
-     * @return A Dialog asking about the activation of the Ability#REVENGE ability.
-     * @see #insertAvengers(UnitRepository, int)
+     * AlertDialog.Builder that is adapted by this class.
      */
     @NonNull
-    public static Dialog getRevengeDialog(@NonNull Context context, @NonNull DialogInterface.OnClickListener onPositiveClickListener,
-                                          @NonNull DialogInterface.OnClickListener onNegativeClickListener) {
-        return new AlertDialog.Builder(context)
+    private final AlertDialog.Builder adapteeBuilder;
+
+    /**
+     * Constructor of a RevengeAlertDialogBuilderAdapter.
+     * Initializes the buttons with empty callbacks.
+     *
+     * @param context Context of the built AlertDialog.
+     */
+    RevengeAlertDialogBuilderAdapter(@NonNull Context context) {
+        this.adapteeBuilder = new AlertDialog.Builder(context)
                 .setIconAttribute(android.R.attr.alertDialogIcon)
                 .setTitle(R.string.alertDialog_revenge_title)
                 .setMessage(R.string.alertDialog_revenge_msg)
                 .setCancelable(false)
-                .setPositiveButton(R.string.alertDialog_revenge_positive, onPositiveClickListener)
-                .setNegativeButton(R.string.alertDialog_revenge_negative, onNegativeClickListener)
-                .create();
+                .setPositiveButton(R.string.alertDialog_revenge_positive, (dialog, which) -> dialog.cancel())
+                .setNegativeButton(R.string.alertDialog_revenge_negative, (dialog, which) -> dialog.cancel());
     }
 
     /**
@@ -106,5 +101,42 @@ class RevengeDialogFactory {
     @NonNull
     public static Completable insertAvengers(@NonNull UnitRepository repository, @IntRange(from = 0) int numberOfAvengers) {
         return repository.insertUnit(AVENGER_EPIC, AVENGER_DAMAGE, AVENGER_ABILITY, AVENGER_SQUAD, AVENGER_ROW, numberOfAvengers);
+    }
+
+    /**
+     * Creates an AlertDialog with the arguments supplied to this builder.
+     * Basically just calls AlertDialog.Builder#create() on #adapteeBuilder.
+     *
+     * @see AlertDialog.Builder#create()
+     */
+    @NonNull
+    AlertDialog create() {
+        return adapteeBuilder.create();
+    }
+
+    /**
+     * Adds the given callback to the positive button of the built Dialog.
+     * Callback should call insertAvengers().
+     *
+     * @param onPositiveButtonClick DialogInterface.OnClickListener that is called, when the positive button is clicked.
+     * @return The RevengeAlertDialogBuilder with the updated positive callback.
+     * @see #insertAvengers(UnitRepository, int)
+     */
+    @NonNull
+    RevengeAlertDialogBuilderAdapter setPositiveCallback(@NonNull DialogInterface.OnClickListener onPositiveButtonClick) {
+        adapteeBuilder.setPositiveButton(R.string.alertDialog_revenge_positive, onPositiveButtonClick);
+        return this;
+    }
+
+    /**
+     * Adds the given callback to the negative button of the built Dialog.
+     *
+     * @param onNegativeButtonClick DialogInterface.OnClickListener that is called, when the negative button is clicked.
+     * @return The RevengeAlertDialogBuilder with the updated negative callback.
+     */
+    @NonNull
+    RevengeAlertDialogBuilderAdapter setNegativeCallback(@NonNull DialogInterface.OnClickListener onNegativeButtonClick) {
+        adapteeBuilder.setNegativeButton(R.string.alertDialog_revenge_negative, onNegativeButtonClick);
+        return this;
     }
 }

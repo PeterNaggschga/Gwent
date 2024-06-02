@@ -2,7 +2,6 @@ package com.peternaggschga.gwent.domain.cases;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 
 import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
@@ -76,7 +75,7 @@ class ResetRepositoryUseCase {
 
     /**
      * Creates a Dialog asking whether the Ability#REVENGE ability should be activated.
-     * The Dialog is created using RevengeDialogFactory.
+     * The Dialog is created using an RevengeAlertDialogBuilderAdapter.
      *
      * @param context      Context of the shown Dialog.
      * @param repository   UnitRepository where the UnitEntity objects are removed and avengers are inserted.
@@ -85,25 +84,24 @@ class ResetRepositoryUseCase {
      * @param keptUnit     UnitEntity that should be kept.
      * @param revengeUnits Long representing the number of revenge units.
      * @return A Dialog asking whether the Ability#REVENGE ability should be activated.
-     * @see RevengeDialogFactory#getRevengeDialog(Context, DialogInterface.OnClickListener, DialogInterface.OnClickListener)
-     * @see RevengeDialogFactory#insertAvengers(UnitRepository, int)
+     * @see RevengeAlertDialogBuilderAdapter#insertAvengers(UnitRepository, int)
      */
     @NonNull
     private static Dialog getRevengeDialog(@NonNull Context context, @NonNull UnitRepository repository,
                                            @NonNull CompletableEmitter emitter, @Nullable UnitEntity keptUnit,
                                            @IntRange(from = 1) int revengeUnits) {
-        return RevengeDialogFactory.getRevengeDialog(context,
-                (dialogInterface, which) -> {
+        return new RevengeAlertDialogBuilderAdapter(context)
+                .setPositiveCallback((dialogInterface, which) -> {
                     // noinspection CheckResult, ResultOfMethodCallIgnored
                     repository.reset(keptUnit)
-                            .andThen(RevengeDialogFactory.insertAvengers(repository, revengeUnits))
+                            .andThen(RevengeAlertDialogBuilderAdapter.insertAvengers(repository, revengeUnits))
                             .subscribe(emitter::onComplete);
-                },
-                ((dialog, which) -> {
+                })
+                .setNegativeCallback(((dialog, which) -> {
                     // noinspection CheckResult, ResultOfMethodCallIgnored
                     repository.reset(keptUnit).subscribe(emitter::onComplete);
-                })
-        );
+                }))
+                .create();
     }
 
     /**

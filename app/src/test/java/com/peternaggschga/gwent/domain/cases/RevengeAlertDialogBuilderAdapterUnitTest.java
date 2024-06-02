@@ -15,14 +15,14 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 @RunWith(JUnit4.class)
-public class RevengeDialogFactoryUnitTest {
+public class RevengeAlertDialogBuilderAdapterUnitTest {
     private static final int TESTING_DEPTH = 50;
 
     @Test
     public void insertAvengersInsertsUnits() {
         UnitRepository repository = mock(UnitRepository.class);
         for (int numberOfAvengers = 0; numberOfAvengers < TESTING_DEPTH; numberOfAvengers++) {
-            RevengeDialogFactory.insertAvengers(repository, numberOfAvengers);
+            RevengeAlertDialogBuilderAdapter.insertAvengers(repository, numberOfAvengers);
             verify(repository, atLeastOnce()).insertUnit(anyBoolean(), anyInt(), any(), any(), any(), eq(numberOfAvengers));
         }
     }
