@@ -1,8 +1,5 @@
 package com.peternaggschga.gwent.ui.main;
 
-import static com.peternaggschga.gwent.ui.main.FactionSwitchListener.THEME_MONSTER;
-import static com.peternaggschga.gwent.ui.main.FactionSwitchListener.THEME_NILFGAARD;
-import static com.peternaggschga.gwent.ui.main.FactionSwitchListener.THEME_NORTHERN_KINGDOMS;
 import static com.peternaggschga.gwent.ui.main.FactionSwitchListener.THEME_PREFERENCE_KEY;
 import static com.peternaggschga.gwent.ui.main.FactionSwitchListener.THEME_SCOIATAEL;
 
@@ -98,20 +95,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(this, IntroductionActivity.class));
         }
 
-        switch (preferences.getInt(THEME_PREFERENCE_KEY, THEME_SCOIATAEL)) {
-            case THEME_MONSTER:
-                setTheme(R.style.MonsterTheme);
-                break;
-            case THEME_NILFGAARD:
-                setTheme(R.style.NilfgaardTheme);
-                break;
-            case THEME_NORTHERN_KINGDOMS:
-                setTheme(R.style.NorthernKingdomsTheme);
-                break;
-            case THEME_SCOIATAEL:
-                setTheme(R.style.ScoiataelTheme);
-        }
-
+        FactionSwitchListener.setTheme(this);
         setContentView(R.layout.activity_main);
 
         if (soundManager == null) {

@@ -1,10 +1,5 @@
 package com.peternaggschga.gwent.ui.settings;
 
-import static com.peternaggschga.gwent.ui.main.FactionSwitchListener.THEME_MONSTER;
-import static com.peternaggschga.gwent.ui.main.FactionSwitchListener.THEME_NILFGAARD;
-import static com.peternaggschga.gwent.ui.main.FactionSwitchListener.THEME_NORTHERN_KINGDOMS;
-import static com.peternaggschga.gwent.ui.main.FactionSwitchListener.THEME_PREFERENCE_KEY;
-import static com.peternaggschga.gwent.ui.main.FactionSwitchListener.THEME_SCOIATAEL;
 import static com.peternaggschga.gwent.ui.settings.RuleSection.CARDS;
 import static com.peternaggschga.gwent.ui.settings.RuleSection.CARD_ABILITIES;
 import static com.peternaggschga.gwent.ui.settings.RuleSection.COMMANDER;
@@ -25,10 +20,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
-import androidx.preference.PreferenceManager;
 
 import com.peternaggschga.gwent.R;
 import com.peternaggschga.gwent.ui.introduction.IntroductionActivity;
+import com.peternaggschga.gwent.ui.main.FactionSwitchListener;
 
 import org.jetbrains.annotations.Contract;
 
@@ -50,22 +45,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-
-        // TODO: move mapping from preference to style id to FactionSwitchListener
-        switch (sharedPreferences.getInt(THEME_PREFERENCE_KEY, THEME_SCOIATAEL)) {
-            case THEME_MONSTER:
-                setTheme(R.style.MonsterTheme);
-                break;
-            case THEME_NILFGAARD:
-                setTheme(R.style.NilfgaardTheme);
-                break;
-            case THEME_NORTHERN_KINGDOMS:
-                setTheme(R.style.NorthernKingdomsTheme);
-                break;
-            case THEME_SCOIATAEL:
-                setTheme(R.style.ScoiataelTheme);
-        }
+        FactionSwitchListener.setTheme(this);
 
         setContentView(R.layout.activity_settings);
 

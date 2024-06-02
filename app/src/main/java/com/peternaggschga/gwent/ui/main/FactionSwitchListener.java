@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.preference.PreferenceManager;
 
 import com.peternaggschga.gwent.R;
 
@@ -139,6 +140,30 @@ public class FactionSwitchListener implements SharedPreferences.OnSharedPreferen
     }
 
     /**
+     * Changes the theme of the content referenced by the given {@link Context} depending on the
+     * preferences obtainable by said {@link Context}.
+     *
+     * @param context {@link Context} that is used to query the current theme preference and that gets it theme updated accordingly.
+     */
+    public static void setTheme(@NonNull Context context) {
+        switch (PreferenceManager.getDefaultSharedPreferences(context)
+                .getInt(THEME_PREFERENCE_KEY, THEME_SCOIATAEL)) {
+            case THEME_MONSTER:
+                context.setTheme(R.style.MonsterTheme);
+                break;
+            case THEME_NILFGAARD:
+                context.setTheme(R.style.NilfgaardTheme);
+                break;
+            case THEME_NORTHERN_KINGDOMS:
+                context.setTheme(R.style.NorthernKingdomsTheme);
+                break;
+            case THEME_SCOIATAEL:
+            default:
+                context.setTheme(R.style.ScoiataelTheme);
+        }
+    }
+
+    /**
      * Called when a shared preference is changed, added, or removed.
      * Only handles changes when the given key is equal to #THEME_PREFERENCE_KEY.
      * Updates the View objects in #ballViews,
@@ -182,6 +207,7 @@ public class FactionSwitchListener implements SharedPreferences.OnSharedPreferen
                 factionButtonImageRes = attributeValues.getResourceId(R.styleable.theme_android_alertDialogIcon, R.drawable.icon_round_scoiatael);
             }
         } else {
+            //noinspection resource
             TypedArray attributeValues = context.getTheme().obtainStyledAttributes(R.styleable.theme);
             ballImageRes = attributeValues.getResourceId(R.styleable.theme_point_ball_mipmap, R.drawable.ball_green);
             cardImageRes = attributeValues.getResourceId(R.styleable.theme_card_view_mipmap, R.drawable.card_scoiatael_landscape_free);
