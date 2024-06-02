@@ -20,7 +20,6 @@ import java.util.Objects;
 
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
-import io.reactivex.rxjava3.disposables.Disposable;
 
 /**
  * An OverlayDialog used to list the units of a certain row and enabling the user to copy, add,
@@ -58,20 +57,17 @@ public class ShowUnitsDialog extends OverlayDialog {
     private RecyclerView unitRecyclerView;
 
     /**
-     * Constructor of a ShowUnitsDialog shown in the given Context,
-     * with the given CardListAdapter and update subscription.
+     * Constructor of a ShowUnitsDialog shown in the given Context and with the given CardListAdapter.
      *
-     * @param context            Context this Dialog is shown in.
-     * @param row                RowType defining which row all shown units belong to.
-     * @param cardListAdapter    CardListAdapter providing an always up-to-date list of CardUiState objects for a certain row.
-     * @param initialDisposable Disposable value that should be disposed when this Dialog is dismissed.
+     * @param context         Context this Dialog is shown in.
+     * @param row             RowType defining which row all shown units belong to.
+     * @param cardListAdapter CardListAdapter providing an always up-to-date list of CardUiState objects for a certain row.
      */
     private ShowUnitsDialog(@NonNull Context context, @NonNull RowType row,
-                            @NonNull CardListAdapter cardListAdapter, @NonNull Disposable initialDisposable) {
+                            @NonNull CardListAdapter cardListAdapter) {
         super(context, R.layout.popup_cards, R.id.popup_cards_cancel_button);
         this.row = row;
         this.cardListAdapter = cardListAdapter;
-        disposables.add(initialDisposable);
     }
 
     /**
@@ -104,7 +100,9 @@ public class ShowUnitsDialog extends OverlayDialog {
                                             .map(factory::createCardUiState)
                                             .subscribe(adapter::submitList)
                             );
-                            return new ShowUnitsDialog(context, row, adapter, initialDisposables);
+                            ShowUnitsDialog result = new ShowUnitsDialog(context, row, adapter);
+                            result.disposables.add(initialDisposables);
+                            return result;
                         })
                 );
     }
