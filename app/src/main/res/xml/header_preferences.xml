@@ -24,7 +24,7 @@
         app:title="@string/preference_faction_reset_title" />
 
     <Preference
-        app:fragment="com.peternaggschga.gwent.SettingsActivity$SoundFragment"
+        app:fragment="com.peternaggschga.gwent.ui.settings.SettingsSoundFragment"
         app:icon="@drawable/icon_sounds"
         app:title="@string/preference_sounds_header" />
 
@@ -34,7 +34,7 @@
         app:title="@string/preference_info_category_header">
 
         <Preference
-            app:fragment="com.peternaggschga.gwent.SettingsActivity$RuleHeaderFragment"
+            app:fragment="com.peternaggschga.gwent.ui.settings.SettingsRuleFragment"
             app:icon="@drawable/icon_rules"
             app:title="@string/preference_rules_header" />
 
