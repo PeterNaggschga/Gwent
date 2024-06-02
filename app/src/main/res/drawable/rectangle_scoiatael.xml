@@ -13,4 +13,4 @@
         android:centerColor="@color/color_background_scoiatael"
         android:endColor="@color/color_gradient_scoiatael"
         android:startColor="@color/color_gradient_scoiatael" />
-</shape>
+</shape><!-- TODO: View mit Farben parametrisieren -->

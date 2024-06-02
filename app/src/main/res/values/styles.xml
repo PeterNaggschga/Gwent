@@ -48,8 +48,5 @@
         <item name="card_background_drawable">@drawable/rectangle_scoiatael</item>
     </style>
 
-    <style name="popUpAnimation">
-        <item name="android:windowEnterAnimation">@anim/popup_show</item>
-        <item name="android:windowExitAnimation">@anim/popup_hide</item>
-    </style>
+    <!-- TODO: Remove redundant point_all images using tint and remove redundant card_background_drawable using parameterized colors -->
 </resources>
