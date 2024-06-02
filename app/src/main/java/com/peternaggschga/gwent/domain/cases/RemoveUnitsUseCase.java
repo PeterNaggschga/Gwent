@@ -62,11 +62,9 @@ public class RemoveUnitsUseCase {
      * @param repository UnitRepository where the UnitEntity objects are removed.
      * @param id         Integer
      * @return A Completable tracking operation status.
-     * @todo Add testing.
      * @see #remove(Context, UnitRepository, Collection)
      */
-    public static Completable remove(@NonNull Context context, @NonNull UnitRepository repository,
-                                     int id) {
+    public static Completable remove(@NonNull Context context, @NonNull UnitRepository repository, int id) {
         return repository.getUnit(id)
                 .flatMapCompletable(unitEntity ->
                         remove(context, repository, Collections.singletonList(unitEntity)));

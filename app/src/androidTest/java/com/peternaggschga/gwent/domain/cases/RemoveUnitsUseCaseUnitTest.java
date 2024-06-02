@@ -2,6 +2,7 @@ package com.peternaggschga.gwent.domain.cases;
 
 import static org.junit.Assert.fail;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -21,6 +22,8 @@ import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 import java.util.Collection;
+
+import io.reactivex.rxjava3.core.Single;
 
 @RunWith(AndroidJUnit4.class)
 public class RemoveUnitsUseCaseUnitTest {
@@ -44,7 +47,7 @@ public class RemoveUnitsUseCaseUnitTest {
     }
 
     @Test
-    public void removeThrowsNullPointerExceptionWhenNullIsInCollection() {
+    public void removeCollectionThrowsNullPointerExceptionWhenNullIsInCollection() {
         for (int numberOfUnits = 0; numberOfUnits < TESTING_DEPTH; numberOfUnits++) {
             Collection<UnitEntity> units = getUnitMockList(numberOfUnits);
             units.add(null);
@@ -58,11 +61,19 @@ public class RemoveUnitsUseCaseUnitTest {
     }
 
     @Test
-    public void removeCallsDeleteOnRepositoryWithoutRevengeUnits() {
+    public void removeCollectionCallsDeleteOnRepositoryWithoutRevengeUnits() {
         for (int numberOfUnits = 0; numberOfUnits < TESTING_DEPTH; numberOfUnits++) {
             Collection<UnitEntity> units = getUnitMockList(numberOfUnits);
             RemoveUnitsUseCase.remove(ApplicationProvider.getApplicationContext(), mockRepository, units);
             verify(mockRepository, atLeastOnce()).delete(units);
         }
+    }
+
+    @Test
+    public void removeCallsDeleteOnRepositoryIfNotRevengeUnit() {
+        UnitEntity mockUnit = mock(UnitEntity.class);
+        when(mockUnit.getAbility()).thenReturn(Ability.NONE);
+        when(mockRepository.getUnit(anyInt())).thenReturn(Single.just(mockUnit));
+        RemoveUnitsUseCase.remove(ApplicationProvider.getApplicationContext(), mockRepository, 0);
     }
 }
