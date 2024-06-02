@@ -6,7 +6,7 @@
     android:viewportHeight="112.7125">
 
     <path
-        android:fillColor="#787878"
+        android:fillColor="?attr/card_view_button_background"
         android:pathData="M56.356,56.356m-56.356,0a56.356,56.356 0,1 1,112.713 0a56.356,56.356 0,1 1,-112.713 0"
         android:strokeWidth="0.907308" />
 

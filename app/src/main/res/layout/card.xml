@@ -57,9 +57,7 @@
         app:layout_constraintEnd_toStartOf="@id/deleteButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/abilityView"
-        app:srcCompat="@drawable/icon_copy_grey" />
-
-    <!-- TODO: dynamische Farbveränderung der Buttons mit tint -->
+        app:srcCompat="@drawable/icon_copy" />
 
     <ImageButton
         android:id="@+id/deleteButton"
@@ -71,5 +69,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/copyButton"
         app:layout_constraintTop_toTopOf="@id/copyButton"
-        app:srcCompat="@drawable/icon_delete_grey" />
+        app:srcCompat="@drawable/icon_delete" />
 </androidx.constraintlayout.widget.ConstraintLayout>
