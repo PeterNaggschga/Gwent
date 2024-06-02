@@ -1,6 +1,9 @@
 package com.peternaggschga.gwent.domain.damage;
 
 import static com.google.common.truth.Truth.assertThat;
+import static com.peternaggschga.gwent.domain.damage.DamageCalculator.Color.BUFFED;
+import static com.peternaggschga.gwent.domain.damage.DamageCalculator.Color.DEBUFFED;
+import static com.peternaggschga.gwent.domain.damage.DamageCalculator.Color.DEFAULT;
 import static org.mockito.Mockito.when;
 
 import androidx.annotation.NonNull;
@@ -53,6 +56,18 @@ public class DamageCalculatorIntegrationTest {
     }
 
     @Test
+    public void isBuffedNoAbilities() {
+        assertThat(DamageCalculatorBuildDirector.getCalculator(false, false, Collections.emptyList())
+                .isBuffed(0)).isEqualTo(DEFAULT);
+        assertThat(DamageCalculatorBuildDirector.getCalculator(false, true, Collections.emptyList())
+                .isBuffed(0)).isEqualTo(BUFFED);
+        assertThat(DamageCalculatorBuildDirector.getCalculator(true, false, Collections.emptyList())
+                .isBuffed(0)).isEqualTo(DEBUFFED);
+        assertThat(DamageCalculatorBuildDirector.getCalculator(true, true, Collections.emptyList())
+                .isBuffed(0)).isEqualTo(BUFFED);
+    }
+
+    @Test
     public void calculateDamageBindingAbility() {
         List<UnitEntity> list = getUnitEntityList(Ability.BINDING, false);
 
@@ -64,6 +79,20 @@ public class DamageCalculatorIntegrationTest {
                 .calculateDamage(0, TESTING_DAMAGE)).isEqualTo(UNIT_NUMBER);
         assertThat(DamageCalculatorBuildDirector.getCalculator(true, true, list)
                 .calculateDamage(0, TESTING_DAMAGE)).isEqualTo(UNIT_NUMBER * 2);
+    }
+
+    @Test
+    public void isBuffedBindingAbility() {
+        List<UnitEntity> list = getUnitEntityList(Ability.BINDING, false);
+
+        assertThat(DamageCalculatorBuildDirector.getCalculator(false, false, list)
+                .isBuffed(0)).isEqualTo(BUFFED);
+        assertThat(DamageCalculatorBuildDirector.getCalculator(false, true, list)
+                .isBuffed(0)).isEqualTo(BUFFED);
+        assertThat(DamageCalculatorBuildDirector.getCalculator(true, false, list)
+                .isBuffed(0)).isEqualTo(BUFFED);
+        assertThat(DamageCalculatorBuildDirector.getCalculator(true, true, list)
+                .isBuffed(0)).isEqualTo(BUFFED);
     }
 
     @Test
@@ -81,6 +110,20 @@ public class DamageCalculatorIntegrationTest {
     }
 
     @Test
+    public void isBuffedMoralAbility() {
+        List<UnitEntity> list = getUnitEntityList(Ability.MORAL_BOOST, false);
+
+        assertThat(DamageCalculatorBuildDirector.getCalculator(false, false, list)
+                .isBuffed(0)).isEqualTo(BUFFED);
+        assertThat(DamageCalculatorBuildDirector.getCalculator(false, true, list)
+                .isBuffed(0)).isEqualTo(BUFFED);
+        assertThat(DamageCalculatorBuildDirector.getCalculator(true, false, list)
+                .isBuffed(0)).isEqualTo(BUFFED);
+        assertThat(DamageCalculatorBuildDirector.getCalculator(true, true, list)
+                .isBuffed(0)).isEqualTo(BUFFED);
+    }
+
+    @Test
     public void calculateDamageMoralAbilityExcludesMoralUnit() {
         List<UnitEntity> list = getUnitEntityList(Ability.MORAL_BOOST, false);
 
@@ -92,6 +135,20 @@ public class DamageCalculatorIntegrationTest {
                 .calculateDamage(0, TESTING_DAMAGE)).isEqualTo(1 + UNIT_NUMBER - 1);
         assertThat(DamageCalculatorBuildDirector.getCalculator(true, true, list)
                 .calculateDamage(0, TESTING_DAMAGE)).isEqualTo((1 + UNIT_NUMBER - 1) * 2);
+    }
+
+    @Test
+    public void isBuffedMoralAbilityExcludesMoralUnit() {
+        List<UnitEntity> list = getUnitEntityList(Ability.MORAL_BOOST, false);
+
+        assertThat(DamageCalculatorBuildDirector.getCalculator(false, false, list)
+                .isBuffed(UNIT_NUMBER)).isEqualTo(BUFFED);
+        assertThat(DamageCalculatorBuildDirector.getCalculator(false, true, list)
+                .isBuffed(UNIT_NUMBER)).isEqualTo(BUFFED);
+        assertThat(DamageCalculatorBuildDirector.getCalculator(true, false, list)
+                .isBuffed(UNIT_NUMBER)).isEqualTo(BUFFED);
+        assertThat(DamageCalculatorBuildDirector.getCalculator(true, true, list)
+                .isBuffed(UNIT_NUMBER)).isEqualTo(BUFFED);
     }
 
     @Test
@@ -110,6 +167,21 @@ public class DamageCalculatorIntegrationTest {
     }
 
     @Test
+    public void isBuffedBindingMoralAbility() {
+        List<UnitEntity> list = getUnitEntityList(Ability.MORAL_BOOST, false);
+        list.addAll(getUnitEntityList(Ability.BINDING, false));
+
+        assertThat(DamageCalculatorBuildDirector.getCalculator(false, false, list)
+                .isBuffed(0)).isEqualTo(BUFFED);
+        assertThat(DamageCalculatorBuildDirector.getCalculator(false, true, list)
+                .isBuffed(0)).isEqualTo(BUFFED);
+        assertThat(DamageCalculatorBuildDirector.getCalculator(true, false, list)
+                .isBuffed(0)).isEqualTo(BUFFED);
+        assertThat(DamageCalculatorBuildDirector.getCalculator(true, true, list)
+                .isBuffed(0)).isEqualTo(BUFFED);
+    }
+
+    @Test
     public void calculateDamageHornAbility() {
         List<UnitEntity> list = getUnitEntityList(Ability.NONE, true);
 
@@ -121,6 +193,20 @@ public class DamageCalculatorIntegrationTest {
                 .calculateDamage(0, TESTING_DAMAGE)).isEqualTo(2);
         assertThat(DamageCalculatorBuildDirector.getCalculator(true, true, list)
                 .calculateDamage(0, TESTING_DAMAGE)).isEqualTo(2);
+    }
+
+    @Test
+    public void isBuffedHornAbility() {
+        List<UnitEntity> list = getUnitEntityList(Ability.NONE, true);
+
+        assertThat(DamageCalculatorBuildDirector.getCalculator(false, false, list)
+                .isBuffed(0)).isEqualTo(BUFFED);
+        assertThat(DamageCalculatorBuildDirector.getCalculator(false, true, list)
+                .isBuffed(0)).isEqualTo(BUFFED);
+        assertThat(DamageCalculatorBuildDirector.getCalculator(true, false, list)
+                .isBuffed(0)).isEqualTo(BUFFED);
+        assertThat(DamageCalculatorBuildDirector.getCalculator(true, true, list)
+                .isBuffed(0)).isEqualTo(BUFFED);
     }
 
     @Test
@@ -138,6 +224,20 @@ public class DamageCalculatorIntegrationTest {
     }
 
     @Test
+    public void isBuffedHornAbilityExcludesHornUnit() {
+        List<UnitEntity> list = getUnitEntityList(Ability.NONE, true);
+
+        assertThat(DamageCalculatorBuildDirector.getCalculator(false, false, list)
+                .isBuffed(UNIT_NUMBER)).isEqualTo(DEFAULT);
+        assertThat(DamageCalculatorBuildDirector.getCalculator(false, true, list)
+                .isBuffed(UNIT_NUMBER)).isEqualTo(BUFFED);
+        assertThat(DamageCalculatorBuildDirector.getCalculator(true, false, list)
+                .isBuffed(UNIT_NUMBER)).isEqualTo(DEBUFFED);
+        assertThat(DamageCalculatorBuildDirector.getCalculator(true, true, list)
+                .isBuffed(UNIT_NUMBER)).isEqualTo(BUFFED);
+    }
+
+    @Test
     public void calculateDamageHornAbilityMultipleUnitsBuffAnother() {
         List<UnitEntity> list = getUnitEntityList(Ability.NONE, true);
         list.addAll(getUnitEntityList(Ability.NONE, true));
@@ -150,6 +250,21 @@ public class DamageCalculatorIntegrationTest {
                 .calculateDamage(UNIT_NUMBER, TESTING_DAMAGE)).isEqualTo(2);
         assertThat(DamageCalculatorBuildDirector.getCalculator(true, true, list)
                 .calculateDamage(UNIT_NUMBER, TESTING_DAMAGE)).isEqualTo(2);
+    }
+
+    @Test
+    public void isBuffedHornAbilityMultipleUnitsBuffAnother() {
+        List<UnitEntity> list = getUnitEntityList(Ability.NONE, true);
+        list.addAll(getUnitEntityList(Ability.NONE, true));
+
+        assertThat(DamageCalculatorBuildDirector.getCalculator(false, false, list)
+                .isBuffed(UNIT_NUMBER)).isEqualTo(BUFFED);
+        assertThat(DamageCalculatorBuildDirector.getCalculator(false, true, list)
+                .isBuffed(UNIT_NUMBER)).isEqualTo(BUFFED);
+        assertThat(DamageCalculatorBuildDirector.getCalculator(true, false, list)
+                .isBuffed(UNIT_NUMBER)).isEqualTo(BUFFED);
+        assertThat(DamageCalculatorBuildDirector.getCalculator(true, true, list)
+                .isBuffed(UNIT_NUMBER)).isEqualTo(BUFFED);
     }
 
     @Test
@@ -180,6 +295,19 @@ public class DamageCalculatorIntegrationTest {
                 .calculateDamage(0, TESTING_DAMAGE)).isEqualTo((1 + UNIT_NUMBER - 1) * 2);
     }
 
+    @Test
+    public void isBuffedHornMoralAbility() {
+        List<UnitEntity> list = getUnitEntityList(Ability.MORAL_BOOST, true);
+
+        assertThat(DamageCalculatorBuildDirector.getCalculator(false, false, list)
+                .isBuffed(0)).isEqualTo(BUFFED);
+        assertThat(DamageCalculatorBuildDirector.getCalculator(false, true, list)
+                .isBuffed(0)).isEqualTo(BUFFED);
+        assertThat(DamageCalculatorBuildDirector.getCalculator(true, false, list)
+                .isBuffed(0)).isEqualTo(BUFFED);
+        assertThat(DamageCalculatorBuildDirector.getCalculator(true, true, list)
+                .isBuffed(0)).isEqualTo(BUFFED);
+    }
 
     @Test
     public void calculateDamageAllAbilities() {
@@ -194,5 +322,20 @@ public class DamageCalculatorIntegrationTest {
                 .calculateDamage(0, TESTING_DAMAGE)).isEqualTo((UNIT_NUMBER + UNIT_NUMBER - 1) * 2);
         assertThat(DamageCalculatorBuildDirector.getCalculator(true, true, list)
                 .calculateDamage(0, TESTING_DAMAGE)).isEqualTo((UNIT_NUMBER + UNIT_NUMBER - 1) * 2);
+    }
+
+    @Test
+    public void isBuffedAllAbilities() {
+        List<UnitEntity> list = getUnitEntityList(Ability.MORAL_BOOST, true);
+        list.addAll(getUnitEntityList(Ability.BINDING, false));
+
+        assertThat(DamageCalculatorBuildDirector.getCalculator(false, false, list)
+                .isBuffed(0)).isEqualTo(BUFFED);
+        assertThat(DamageCalculatorBuildDirector.getCalculator(false, true, list)
+                .isBuffed(0)).isEqualTo(BUFFED);
+        assertThat(DamageCalculatorBuildDirector.getCalculator(true, false, list)
+                .isBuffed(0)).isEqualTo(BUFFED);
+        assertThat(DamageCalculatorBuildDirector.getCalculator(true, true, list)
+                .isBuffed(0)).isEqualTo(BUFFED);
     }
 }

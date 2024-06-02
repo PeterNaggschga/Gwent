@@ -1,8 +1,11 @@
 package com.peternaggschga.gwent.domain.damage;
 
 import static com.google.common.truth.Truth.assertThat;
+import static com.peternaggschga.gwent.domain.damage.DamageCalculator.Color.BUFFED;
+import static com.peternaggschga.gwent.domain.damage.DamageCalculator.Color.DEFAULT;
 import static org.junit.Assert.fail;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.junit.Before;
@@ -26,6 +29,7 @@ public class BondDamageCalculatorDecoratorUnitTest {
     @Before
     public void initMock() {
         when(component.calculateDamage(anyInt(), anyInt())).thenReturn(TESTING_DAMAGE);
+        when(component.isBuffed(anyInt())).thenReturn(DEFAULT);
     }
 
     @Test
@@ -85,5 +89,34 @@ public class BondDamageCalculatorDecoratorUnitTest {
         when(map.getOrDefault(anyInt(), anyInt())).then((Answer<Integer>) invocation -> invocation.getArgument(1));
         BondDamageCalculatorDecorator decorator = new BondDamageCalculatorDecorator(component, map);
         assertThat(decorator.calculateDamage(0, TESTING_DAMAGE)).isEqualTo(TESTING_DAMAGE);
+    }
+
+    @Test
+    public void isBuffedReturnsBuffedWhenSquadHasMultipleMembers() {
+        // noinspection unchecked cast
+        Map<Integer, Integer> map = (Map<Integer, Integer>) Mockito.mock(Map.class);
+        when(map.getOrDefault(0, 0)).thenReturn(2);
+        BondDamageCalculatorDecorator decorator = new BondDamageCalculatorDecorator(component, map);
+        assertThat(decorator.isBuffed(0)).isEqualTo(BUFFED);
+    }
+
+    @Test
+    public void isBuffedCallsComponentWhenSquadHasOneMember() {
+        // noinspection unchecked cast
+        Map<Integer, Integer> map = (Map<Integer, Integer>) Mockito.mock(Map.class);
+        when(map.getOrDefault(0, 0)).thenReturn(1);
+        BondDamageCalculatorDecorator decorator = new BondDamageCalculatorDecorator(component, map);
+        decorator.isBuffed(0);
+        verify(component).isBuffed(0);
+    }
+
+    @Test
+    public void isBuffedCallsComponentWhenSquadIsEmpty() {
+        // noinspection unchecked cast
+        Map<Integer, Integer> map = (Map<Integer, Integer>) Mockito.mock(Map.class);
+        when(map.getOrDefault(0, 0)).thenReturn(0);
+        BondDamageCalculatorDecorator decorator = new BondDamageCalculatorDecorator(component, map);
+        decorator.isBuffed(0);
+        verify(component).isBuffed(0);
     }
 }

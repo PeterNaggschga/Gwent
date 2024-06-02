@@ -11,7 +11,6 @@ import java.util.Collection;
  * see com.peternaggschga.gwent.data.UnitEntity#calculateDamage()
  * The respective visitors are created as a decorator hierarchy,
  * see DamageCalculatorBuildDirector#getCalculator().
- * @todo Add testing for #isBuffed().
  * @see com.peternaggschga.gwent.data.UnitEntity#calculateDamage(DamageCalculator)
  * @see DamageCalculatorBuildDirector#getCalculator(boolean, boolean, Collection)
  */

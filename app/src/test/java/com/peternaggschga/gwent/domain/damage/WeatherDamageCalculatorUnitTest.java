@@ -1,6 +1,8 @@
 package com.peternaggschga.gwent.domain.damage;
 
 import static com.google.common.truth.Truth.assertThat;
+import static com.peternaggschga.gwent.domain.damage.DamageCalculator.Color.DEBUFFED;
+import static com.peternaggschga.gwent.domain.damage.DamageCalculator.Color.DEFAULT;
 import static org.junit.Assert.fail;
 
 import org.junit.Test;
@@ -50,5 +52,15 @@ public class WeatherDamageCalculatorUnitTest {
                 assertThat(trueWeather.calculateDamage(id, damage)).isEqualTo(1);
             }
         }
+    }
+
+    @Test
+    public void isBuffedReturnsDefaultWhenWeatherIsFalse() {
+        assertThat(new WeatherDamageCalculator(false).isBuffed(0)).isEqualTo(DEFAULT);
+    }
+
+    @Test
+    public void isBuffedReturnsDebuffedWhenWeatherIsTrue() {
+        assertThat(new WeatherDamageCalculator(true).isBuffed(0)).isEqualTo(DEBUFFED);
     }
 }

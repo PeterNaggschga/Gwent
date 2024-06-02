@@ -1,8 +1,10 @@
 package com.peternaggschga.gwent.domain.damage;
 
 import static com.google.common.truth.Truth.assertThat;
+import static com.peternaggschga.gwent.domain.damage.DamageCalculator.Color.BUFFED;
 import static org.junit.Assert.fail;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.junit.Before;
@@ -74,5 +76,24 @@ public class MoralDamageCalculatorDecoratorUnitTest {
         when(list.size()).thenReturn(TESTING_DEPTH);
         MoralDamageCalculatorDecorator decorator = new MoralDamageCalculatorDecorator(component, list);
         assertThat(decorator.calculateDamage(0, 0)).isEqualTo(TESTING_DAMAGE + TESTING_DEPTH - 1);
+    }
+
+    @Test
+    public void isBuffedEmptyListCallsComponent() {
+        MoralDamageCalculatorDecorator decorator = new MoralDamageCalculatorDecorator(component, Collections.emptyList());
+        for (int id = 0; id < TESTING_DEPTH; id++) {
+            decorator.isBuffed(id);
+            verify(component).isBuffed(id);
+        }
+    }
+
+    @Test
+    public void isBuffedReturnsBuffedWhenUnitIsBuffed() {
+        // noinspection unchecked cast
+        List<Integer> list = (List<Integer>) Mockito.mock(List.class);
+        when(list.contains(anyInt())).thenReturn(true);
+        when(list.size()).thenReturn(TESTING_DEPTH);
+        MoralDamageCalculatorDecorator decorator = new MoralDamageCalculatorDecorator(component, list);
+        assertThat(decorator.isBuffed(0)).isEqualTo(BUFFED);
     }
 }
