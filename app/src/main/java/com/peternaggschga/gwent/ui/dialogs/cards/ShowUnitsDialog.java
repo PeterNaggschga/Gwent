@@ -158,8 +158,6 @@ public class ShowUnitsDialog extends OverlayDialog {
         });
 
         setOnDismissListener(dialog -> disposables.dispose());
-
-        // TODO: show AddCardDialog if no units are in the shown row
     }
 
     /**

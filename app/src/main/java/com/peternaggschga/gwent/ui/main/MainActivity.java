@@ -32,12 +32,16 @@ import com.peternaggschga.gwent.R;
 import com.peternaggschga.gwent.data.RowType;
 import com.peternaggschga.gwent.ui.dialogs.ChangeFactionDialog;
 import com.peternaggschga.gwent.ui.dialogs.CoinFlipDialog;
+import com.peternaggschga.gwent.ui.dialogs.OverlayDialog;
+import com.peternaggschga.gwent.ui.dialogs.addcard.AddCardDialog;
 import com.peternaggschga.gwent.ui.dialogs.cards.ShowUnitsDialog;
 import com.peternaggschga.gwent.ui.introduction.IntroductionActivity;
 import com.peternaggschga.gwent.ui.settings.SettingsActivity;
 import com.peternaggschga.gwent.ui.sounds.SoundManager;
 
+import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.functions.Function;
 
 /**
  * An {@link AppCompatActivity} that is called on startup and that encapsulates the main view onto the game board.
@@ -232,7 +236,14 @@ public class MainActivity extends AppCompatActivity {
                     })
             ));
             cards.setOnClickListener(v -> disposables.add(
-                    ShowUnitsDialog.getDialog(MainActivity.this, row).subscribe(Dialog::show)
+                    GwentApplication.getRepository(this)
+                            .flatMap(repository -> repository.countUnits(row))
+                            .map(count -> count == 0)
+                            .flatMap((Function<Boolean, Single<? extends OverlayDialog>>) rowEmpty ->
+                                    rowEmpty
+                                            ? Single.just(new AddCardDialog(MainActivity.this, row))
+                                            : ShowUnitsDialog.getDialog(MainActivity.this, row))
+                            .subscribe(Dialog::show)
             ));
 
             final RowUiStateObserver observer = RowUiStateObserver.getObserver(row,
