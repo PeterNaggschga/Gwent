@@ -15,7 +15,6 @@ import io.reactivex.rxjava3.core.Completable;
  * A class providing functionality for changing
  * the resource shown by an ImageView using a fading animation.
  *
- * @todo Remove res/anim
  * @see #animatedSwitch(ImageView, int)
  */
 public class ImageViewSwitchAnimator {
