@@ -4,7 +4,7 @@
     android:layout_width="@dimen/popUp_card_width"
     android:layout_height="match_parent"
     android:layout_margin="@dimen/border_margin"
-    android:background="?attr/card_background_drawable">
+    android:background="@drawable/rectangle">
 
     <TextView
         android:id="@+id/damageView"

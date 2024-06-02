@@ -6,7 +6,9 @@
 
     <attr name="point_ball_mipmap" format="reference" />
 
-    <attr name="card_background_drawable" format="reference" />
+    <attr name="card_background_color" format="reference" />
+
+    <attr name="card_background_gradient" format="reference" />
 
     <attr name="card_view_button_background" format="reference" />
 

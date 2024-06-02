@@ -36,7 +36,7 @@
             android:background="@drawable/rectangle_cancel_popup"
             android:text="@string/alertDialog_cancel"
             android:textAllCaps="false"
-            android:textColor="@color/color_add_card_text"
+            android:textColor="@color/color_popup_cancel_text"
             android:textSize="@dimen/popUp_card_textSize"
             app:layout_constraintEnd_toStartOf="@id/popup_cards_add_button"
             app:layout_constraintStart_toStartOf="parent" />
@@ -46,7 +46,7 @@
             android:layout_width="@dimen/popUp_card_button_width"
             android:layout_height="match_parent"
             android:layout_marginStart="@dimen/popUp_card_button_margin"
-            android:background="?attr/card_background_drawable"
+            android:background="@drawable/rectangle"
             android:text="@string/popUp_cards_add"
             android:textAllCaps="false"
             android:textColor="?attr/card_count_text_color"

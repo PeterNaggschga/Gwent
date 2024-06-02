@@ -15,7 +15,8 @@
         <item name="android:alertDialogIcon">@drawable/icon_round_monster</item>
         <item name="point_ball_mipmap">@drawable/ball_red</item>
         <item name="card_view_mipmap">@drawable/card_monster_landscape_free</item>
-        <item name="card_background_drawable">@drawable/rectangle_monster</item>
+        <item name="card_background_color">@color/color_background_monster</item>
+        <item name="card_background_gradient">@color/color_gradient_monster</item>
         <item name="card_view_button_background">@color/color_card_view_button_background_monster
         </item>
     </style>
@@ -27,7 +28,8 @@
         <item name="android:alertDialogIcon">@drawable/icon_round_nilfgaard</item>
         <item name="point_ball_mipmap">@drawable/ball_grey</item>
         <item name="card_view_mipmap">@drawable/card_nilfgaard_landscape_free</item>
-        <item name="card_background_drawable">@drawable/rectangle_nilfgaard</item>
+        <item name="card_background_color">@color/color_background_nilfgaard</item>
+        <item name="card_background_gradient">@color/color_gradient_nilfgaard</item>
         <item name="card_view_button_background">
             @color/color_card_view_button_background_nilfgaard
         </item>
@@ -40,7 +42,8 @@
         <item name="android:alertDialogIcon">@drawable/icon_round_northern_kingdoms</item>
         <item name="point_ball_mipmap">@drawable/ball_blue</item>
         <item name="card_view_mipmap">@drawable/card_northern_kingdoms_landscape_free</item>
-        <item name="card_background_drawable">@drawable/rectangle_northern_kingdoms</item>
+        <item name="card_background_color">@color/color_background_northern_kingdoms</item>
+        <item name="card_background_gradient">@color/color_gradient_northern_kingdoms</item>
         <item name="card_view_button_background">
             @color/color_card_view_button_background_northern_kingdoms
         </item>
@@ -53,11 +56,10 @@
         <item name="android:alertDialogIcon">@drawable/icon_round_scoiatael</item>
         <item name="point_ball_mipmap">@drawable/ball_green</item>
         <item name="card_view_mipmap">@drawable/card_scoiatael_landscape_free</item>
-        <item name="card_background_drawable">@drawable/rectangle_scoiatael</item>
+        <item name="card_background_color">@color/color_background_scoiatael</item>
+        <item name="card_background_gradient">@color/color_gradient_scoiatael</item>
         <item name="card_view_button_background">
             @color/color_card_view_button_background_scoiatael
         </item>
     </style>
-
-    <!-- TODO: Remove redundant point_all images using tint and remove redundant card_background_drawable using parameterized colors -->
 </resources>

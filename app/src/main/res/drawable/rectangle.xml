@@ -4,13 +4,13 @@
 
     <stroke
         android:width="@dimen/rectangle_stroke_width"
-        android:color="@color/color_text_nilfgaard" />
+        android:color="?attr/colorPrimary" />
 
     <corners android:radius="@dimen/rectangle_corner_radius" />
 
     <gradient
         android:angle="90"
-        android:centerColor="@color/color_background_nilfgaard"
-        android:endColor="@color/color_gradient_nilfgaard"
-        android:startColor="@color/color_gradient_nilfgaard" />
+        android:centerColor="?attr/card_background_color"
+        android:endColor="?attr/card_background_gradient"
+        android:startColor="?attr/card_background_gradient" />
 </shape>

@@ -2,8 +2,8 @@
 <resources>
     <color name="circle_text">#000000</color>
 
-    <color name="color_add_card_background">#BF000000</color>
-    <color name="color_add_card_text">#FFFFFF</color>
+    <color name="color_popup_background">#BF000000</color>
+    <color name="color_popup_cancel_text">#FFFFFF</color>
     <color name="color_coin_text">#FFFFFF</color>
     <color name="color_cancel_popup_background">#505050</color>
     <color name="color_cancel_popup_background_gradient">#000000</color>
