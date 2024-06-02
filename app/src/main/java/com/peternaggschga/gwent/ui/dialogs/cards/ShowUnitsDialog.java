@@ -53,6 +53,11 @@ public class ShowUnitsDialog extends OverlayDialog {
     private final CompositeDisposable disposables = new CompositeDisposable();
 
     /**
+     * {@link RecyclerView} presenting the units provided by the {@link #cardListAdapter}.
+     */
+    private RecyclerView unitRecyclerView;
+
+    /**
      * Constructor of a ShowUnitsDialog shown in the given Context,
      * with the given CardListAdapter and update subscription.
      *
@@ -109,7 +114,6 @@ public class ShowUnitsDialog extends OverlayDialog {
      * and sets View.OnClickListener for each button.
      * Also registers a RecyclerView.AdapterDataObserver responsible for scrolling to the end of the RecyclerView
      * whenever an item is being inserted.
-     * @todo Initialize RecyclerView only once.
      * @see CardListAdapter#registerAdapterDataObserver(RecyclerView.AdapterDataObserver)
      * @param savedInstanceState If this dialog is being reinitialized after
      *                           the hosting activity was previously shut down, holds the result from
@@ -120,29 +124,33 @@ public class ShowUnitsDialog extends OverlayDialog {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        LinearLayoutManager llm = new LinearLayoutManager(getContext());
-        llm.setOrientation(RecyclerView.HORIZONTAL);
-        RecyclerView recyclerView = findViewById(R.id.cards_list);
-        ((DefaultItemAnimator) Objects.requireNonNull(recyclerView.getItemAnimator())).setSupportsChangeAnimations(false);
-        recyclerView.setLayoutManager(llm);
-        recyclerView.setAdapter(cardListAdapter);
+        if (unitRecyclerView == null) {
+            LinearLayoutManager llm = new LinearLayoutManager(getContext());
+            llm.setOrientation(RecyclerView.HORIZONTAL);
+            unitRecyclerView = findViewById(R.id.cards_list);
+            ((DefaultItemAnimator) Objects.requireNonNull(unitRecyclerView.getItemAnimator())).setSupportsChangeAnimations(false);
+            unitRecyclerView.setLayoutManager(llm);
+            unitRecyclerView.setAdapter(cardListAdapter);
 
-        cardListAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
-            /** Smoothly scrolls to the last item in the RecyclerView
-             * to show the user that an item has been inserted.
-             * @see RecyclerView#smoothScrollToPosition(int)
-             * @param positionStart Integer defining the first position from where new items are inserted.
-             * @param itemCount Integer defining how many items have been inserted.
-             */
-            @Override
-            public void onItemRangeInserted(int positionStart, int itemCount) {
-                super.onItemRangeInserted(positionStart, itemCount);
-                int scrollPosition = positionStart + itemCount - 1;
-                if (scrollPosition >= 0) {
-                    recyclerView.smoothScrollToPosition(scrollPosition);
+            cardListAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+                /**
+                 * Smoothly scrolls to the last item in the RecyclerView
+                 * to show the user that an item has been inserted.
+                 *
+                 * @param positionStart Integer defining the first position from where new items are inserted.
+                 * @param itemCount     Integer defining how many items have been inserted.
+                 * @see RecyclerView#smoothScrollToPosition(int)
+                 */
+                @Override
+                public void onItemRangeInserted(int positionStart, int itemCount) {
+                    super.onItemRangeInserted(positionStart, itemCount);
+                    int scrollPosition = positionStart + itemCount - 1;
+                    if (scrollPosition >= 0) {
+                        unitRecyclerView.smoothScrollToPosition(scrollPosition);
+                    }
                 }
-            }
-        });
+            });
+        }
 
         findViewById(R.id.popup_cards_add_button).setOnClickListener(v -> {
             hide();
