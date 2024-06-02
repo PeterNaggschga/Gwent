@@ -19,14 +19,13 @@ import com.peternaggschga.gwent.R;
 
 /**
  * A {@link Fragment} containing an {@link ImageView} and a {@link TextView} conveying introductory information.
- * @todo Make package-private
  */
 public class IntroductionFragment extends Fragment {
     /**
      * {@link Integer} constant defining the number of possible pages represented by this fragment.
      * Is equivalent to the length of {@link #stringIds} and {@link #imageIds}.
      */
-    public static final int PAGES_COUNT = 5;
+    static final int PAGES_COUNT = 5;
     /**
      * {@link String} constant defining the argument key used to communicate the requested page to the fragment.
      */
