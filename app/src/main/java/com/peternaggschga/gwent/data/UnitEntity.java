@@ -17,8 +17,12 @@ import androidx.room.PrimaryKey;
 import com.peternaggschga.gwent.R;
 import com.peternaggschga.gwent.domain.damage.DamageCalculator;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 /**
  * A class representing a card on the game board.
@@ -132,25 +136,49 @@ public class UnitEntity {
     /**
      * Creates a String containing the descriptions of all units in the given collection,
      * separated by commas.
+     * If n units have the same description, instead of printing the same description n times,
+     * "n×" is printed in front of the description.
      * Unit descriptions are created using #toString(Context).
+     * Ordering of units in the given Collection is not guaranteed to be kept.
      *
      * @param context Context used to acquire String resources.
      * @param units   Collection of UnitEntity objects that should be in the created String.
      * @return A String containing the description of all units.
      * @throws org.valid4j.errors.RequireViolation When units collection is empty.
      * @todo Add unit tests.
-     * @todo Condense n units with same description into "Description (n)".
      * @see #toString(Context)
      */
     @NonNull
     public static String collectionToString(@NonNull Context context, @NonNull Collection<UnitEntity> units) {
         require(!units.isEmpty());
-        Iterator<UnitEntity> unitIterator = units.iterator();
-        final String[] result = {unitIterator.next().toString(context)};
-        if (unitIterator.hasNext()) {
-            result[0] = context.getString(R.string.unit_collection_toString_accumulation_word, unitIterator.next().toString(context), result[0]).trim();
+
+        Map<String, Integer> descriptionStrings = new HashMap<>(units.size());
+        for (UnitEntity unit : units) {
+            String description = unit.toString(context);
+            descriptionStrings.compute(description, (s, count) -> count == null ? 1 : count + 1);
         }
-        unitIterator.forEachRemaining(unitEntity -> result[0] = context.getString(R.string.unit_collection_toString_accumulation_symbol, unitIterator.next().toString(context), result[0]).trim());
+
+        List<String> descriptions = new ArrayList<>(descriptionStrings.size());
+        if (descriptionStrings.size() < units.size()) {
+            descriptionStrings.forEach((key, value) ->
+                    descriptions.add(context.getString(R.string.unit_toString_multiplicity, value, key)));
+        } else {
+            descriptions.addAll(descriptionStrings.keySet());
+        }
+
+        Iterator<String> descriptionIterator = descriptions.iterator();
+        String[] result = {descriptionIterator.next()};
+        if (descriptionIterator.hasNext()) {
+            result[0] = context.getString(R.string.unit_collection_toString_accumulation_word,
+                            descriptionIterator.next(),
+                            result[0])
+                    .trim();
+        }
+        descriptionIterator.forEachRemaining(description ->
+                result[0] = context.getString(R.string.unit_collection_toString_accumulation_symbol,
+                                description,
+                                result[0])
+                        .trim());
         return result[0];
     }
 

@@ -35,6 +35,7 @@
     <string name="popUp_coin_vin">Vin burned steel and pushed away your coin!</string>
 
     <string name="unit_toString">%1$s %2$s (%3$d) with %4$s ability %5$s</string>
+    <string name="unit_toString_multiplicity">%1$d× %2$s</string>
     <string name="unit_toString_melee">Close combat</string>
     <string name="unit_toString_range">Ranged combat</string>
     <string name="unit_toString_siege">Siege combat</string>

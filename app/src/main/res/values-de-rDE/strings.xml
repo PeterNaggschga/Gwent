@@ -21,6 +21,7 @@
     <string name="popUp_coin_vin">Vin hat Stahl verbrannt und die Münze weggedrückt!</string>
 
     <string name="unit_toString">%1$s%2$s (%3$d) - Fähigkeit: %4$s %5$s</string>
+    <string name="unit_toString_multiplicity">%1$d× %2$s</string>
     <string name="unit_toString_melee">Nahkampf</string>
     <string name="unit_toString_range">Fernkampf</string>
     <string name="unit_toString_siege">Belagerungs</string>
