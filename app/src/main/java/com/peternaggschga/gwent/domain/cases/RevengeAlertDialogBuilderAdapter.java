@@ -19,7 +19,6 @@ import io.reactivex.rxjava3.core.Completable;
  * An adapter class adapting AlertDialog.Builder to provide an interface
  * for creating an AlertDialog asking the user whether they want to invoke the Ability#REVENGE ability.
  *
- * @todo Add testing.
  */
 class RevengeAlertDialogBuilderAdapter {
     /**
