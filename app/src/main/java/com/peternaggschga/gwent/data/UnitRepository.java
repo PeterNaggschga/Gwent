@@ -101,21 +101,9 @@ public class UnitRepository {
     public Completable reset(@Nullable UnitEntity keptUnit) {
         Completable result = database.rows().clearRows().andThen(initializeRows());
         if (keptUnit != null) {
-            result = result.andThen(insertUnit(keptUnit));
+            result = result.andThen(database.units().insertUnit(keptUnit));
         }
         return result.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
-    }
-
-    /**
-     * Adds the given UnitEntity.
-     *
-     * @param unit UnitEntity that should be added.
-     * @return A Completable tracking operation status.
-     * @todo See if this can be removed.
-     */
-    @NonNull
-    private Completable insertUnit(@NonNull UnitEntity unit) {
-        return database.units().insertUnit(unit);
     }
 
     /**
