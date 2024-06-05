@@ -172,6 +172,23 @@ public class UnitEntityUnitTest {
     }
 
     @RunWith(MockitoJUnitRunner.class)
+    public static class IsBuffedTests {
+        @Test
+        public void epicUnitsDoNotCallCalculator() {
+            DamageCalculator calculator = mock(DamageCalculator.class);
+            new UnitEntity(true, 5, Ability.NONE, null, RowType.MELEE).isBuffed(calculator);
+            verify(calculator, never()).calculateDamage(anyInt(), anyInt());
+        }
+
+        @Test
+        public void nonEpicUnitsCallCalculator() {
+            DamageCalculator calculator = mock(DamageCalculator.class);
+            new UnitEntity(false, 5, Ability.NONE, null, RowType.MELEE).isBuffed(calculator);
+            verify(calculator, only()).isBuffed(anyInt());
+        }
+    }
+
+    @RunWith(MockitoJUnitRunner.class)
     public static class ToStringTests {
         @Mock
         UnitEntity mockUnit;

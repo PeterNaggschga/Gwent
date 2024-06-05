@@ -110,7 +110,7 @@ public class UnitEntity {
      * which follows the visitor pattern.
      *
      * @param calculator DamageCalculator visitor used for damage calculation.
-     * @return Integer representing the units (de-)buffed damage.
+     * @return An Integer representing the units (de-)buffed damage.
      * @see #getDamage()
      */
     public int calculateDamage(@NonNull DamageCalculator calculator) {
@@ -124,8 +124,7 @@ public class UnitEntity {
      * which follows the visitor pattern.
      *
      * @param calculator DamageCalculator visitor used for damage calculation.
-     * @return Integer representing the units (de-)buffed damage.
-     * @todo Add testing.
+     * @return A Color representing the units (de-)buffed damage.
      * @see #getDamage()
      */
     @NonNull
