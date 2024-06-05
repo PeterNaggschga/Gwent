@@ -13,7 +13,6 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Single;
-import io.reactivex.rxjava3.functions.BiPredicate;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 /**
@@ -22,31 +21,10 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
  * Some functions implement slightly more complex behavior by chaining multiple DAO calls,
  * e.g., #reset().
  *
- * @todo Check which methods can be dropped.
  * @todo Add method to get non-epic units and replace stream.filter() calls.
  * @todo Add method to get units of a certain ability and replace stream.filter() calls.
- * @todo Add caching proxy.
  */
 public class UnitRepository {
-    /**
-     * BiPredicate used to check whether two Lists of UnitEntity are the same.
-     *
-     * @see Flowable#distinctUntilChanged(BiPredicate)
-     * @see #getUnitsFlowable(RowType)
-     * @see #getUnitsFlowable()
-     */
-    private static final BiPredicate<List<UnitEntity>, List<UnitEntity>> UNIT_LIST_COMPARATOR = (list1, list2) -> {
-        if (list1.size() != list2.size()) {
-            return false;
-        }
-        for (int index = 0; index < list1.size(); index++) {
-            if (list1.get(index).getId() != list2.get(index).getId()) {
-                return false;
-            }
-        }
-        return true;
-    };
-
     /**
      * Defines the AppDatabase that is used as a data source by this repository.
      * Is provided by dependency injection in #UnitRepository().
@@ -314,7 +292,6 @@ public class UnitRepository {
 
     /**
      * Counts the units in the given attack row.
-     * @see #countUnitsFlowable(RowType)
      * @param row RowEntity#id where the units are counted.
      * @return A Single tracking operation status and returning the value.
      * @see #countUnits()
@@ -325,52 +302,14 @@ public class UnitRepository {
     }
 
     /**
-     * Returns a Flowable counting the units in the given attack row.
-     *
-     * @param row RowEntity#id where the units are counted.
-     * @return A Flowable emitting the values.
-     * @todo Add testing.
-     * @see #countUnits(RowType)
-     * @see #countUnits()
-     */
-    @NonNull
-    public Flowable<Integer> countUnitsFlowable(@NonNull RowType row) {
-        return database.units()
-                .countUnitsFlowable(row)
-                .onBackpressureLatest()
-                .distinctUntilChanged()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
-    }
-
-    /**
      * Counts the units in all attack rows.
      *
      * @return A Single tracking operation status and returning the value.
      * @see #countUnits(RowType)
-     * @see #countUnitsFlowable()
      */
     @NonNull
     public Single<Integer> countUnits() {
         return database.units().countUnits().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
-    }
-
-    /**
-     * Returns a Flowable counting the units in all attack rows.
-     *
-     * @return A Flowable emitting the values.
-     * @todo Add testing.
-     * @see #countUnitsFlowable(RowType)
-     * @see #countUnits()
-     */
-    @NonNull
-    public Flowable<Integer> countUnitsFlowable() {
-        return database.units()
-                .countUnitsFlowable()
-                .onBackpressureLatest()
-                .distinctUntilChanged()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
     }
 
     /**
@@ -411,7 +350,17 @@ public class UnitRepository {
         return database.units()
                 .getUnitsFlowable(row)
                 .onBackpressureLatest()
-                .distinctUntilChanged(UNIT_LIST_COMPARATOR)
+                .distinctUntilChanged((list1, list2) -> {
+                    if (list1.size() != list2.size()) {
+                        return false;
+                    }
+                    for (int index = 0; index < list1.size(); index++) {
+                        if (list1.get(index).getId() != list2.get(index).getId()) {
+                            return false;
+                        }
+                    }
+                    return true;
+                })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
@@ -421,28 +370,9 @@ public class UnitRepository {
      *
      * @return A Single tracking operation status and returning the value.
      * @see #getUnits(RowType)
-     * @see #getUnitsFlowable()
      */
     @NonNull
     public Single<List<UnitEntity>> getUnits() {
         return database.units().getUnits().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
-    }
-
-    /**
-     * Returns a Flowable emitting the units in the given attack row.
-     *
-     * @return A Flowable emitting the values.
-     * @todo Add testing.
-     * @see #getUnits()
-     * @see #getUnits(RowType)
-     */
-    @NonNull
-    public Flowable<List<UnitEntity>> getUnitsFlowable() {
-        return database.units()
-                .getUnitsFlowable()
-                .onBackpressureLatest()
-                .distinctUntilChanged(UNIT_LIST_COMPARATOR)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
     }
 }
