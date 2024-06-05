@@ -19,10 +19,12 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import com.peternaggschga.gwent.R;
 import com.peternaggschga.gwent.domain.damage.DamageCalculator;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.valid4j.errors.RequireViolation;
 
@@ -166,6 +168,75 @@ public class UnitEntityUnitTest {
             DamageCalculator calculator = mock(DamageCalculator.class);
             new UnitEntity(false, damage, Ability.NONE, null, RowType.MELEE).calculateDamage(calculator);
             verify(calculator, only()).calculateDamage(anyInt(), eq(damage));
+        }
+    }
+
+    @RunWith(MockitoJUnitRunner.class)
+    public static class ToStringTests {
+        @Mock
+        UnitEntity mockUnit;
+
+        @Before
+        public void initMock() {
+            when(mockUnit.toString(any())).thenCallRealMethod();
+            when(mockUnit.getRow()).thenReturn(RowType.MELEE);
+            when(mockUnit.getAbility()).thenReturn(Ability.NONE);
+        }
+
+        @Test
+        public void selectsCorrectRowString() {
+            Context context = ApplicationProvider.getApplicationContext();
+            when(mockUnit.getRow()).thenReturn(RowType.MELEE);
+            assertThat(mockUnit.toString(context)).startsWith(context.getString(R.string.unit_toString_melee));
+            when(mockUnit.getRow()).thenReturn(RowType.RANGE);
+            assertThat(mockUnit.toString(context)).startsWith(context.getString(R.string.unit_toString_range));
+            when(mockUnit.getRow()).thenReturn(RowType.SIEGE);
+            assertThat(mockUnit.toString(context)).startsWith(context.getString(R.string.unit_toString_siege));
+        }
+
+        @Test
+        public void selectsCorrectEpicString() {
+            Context context = ApplicationProvider.getApplicationContext();
+            when(mockUnit.isEpic()).thenReturn(true);
+            assertThat(mockUnit.toString(context)).contains(context.getString(R.string.unit_toString_epic));
+            when(mockUnit.isEpic()).thenReturn(false);
+            assertThat(mockUnit.toString(context)).contains(context.getString(R.string.unit_toString_unit));
+        }
+
+        @Test
+        public void selectsCorrectAbilityString() {
+            Context context = ApplicationProvider.getApplicationContext();
+            when(mockUnit.getAbility()).thenReturn(Ability.NONE);
+            assertThat(mockUnit.toString(context)).contains(context.getString(R.string.unit_toString_ability_none));
+            when(mockUnit.getAbility()).thenReturn(Ability.HORN);
+            assertThat(mockUnit.toString(context)).contains(context.getString(R.string.add_picker_ability_horn));
+            when(mockUnit.getAbility()).thenReturn(Ability.MORAL_BOOST);
+            assertThat(mockUnit.toString(context)).contains(context.getString(R.string.add_picker_ability_moralBoost));
+            when(mockUnit.getAbility()).thenReturn(Ability.BINDING);
+            assertThat(mockUnit.toString(context)).contains(context.getString(R.string.add_picker_ability_binding));
+            when(mockUnit.getAbility()).thenReturn(Ability.REVENGE);
+            assertThat(mockUnit.toString(context)).contains(context.getString(R.string.add_picker_ability_revenge));
+        }
+
+        @Test
+        public void selectsNoSquadStringWhenNotBindingUnit() {
+            Context context = ApplicationProvider.getApplicationContext();
+            when(mockUnit.getSquad()).thenReturn(1);
+            for (Ability ability : Ability.values()) {
+                if (ability == Ability.BINDING) {
+                    continue;
+                }
+                when(mockUnit.getAbility()).thenReturn(ability);
+                assertThat(mockUnit.toString(context)).doesNotContain(context.getString(R.string.unit_toString_squad, 1));
+            }
+        }
+
+        @Test
+        public void selectsSquadStringWhenBindingUnit() {
+            Context context = ApplicationProvider.getApplicationContext();
+            when(mockUnit.getAbility()).thenReturn(Ability.BINDING);
+            when(mockUnit.getSquad()).thenReturn(1);
+            assertThat(mockUnit.toString(context)).contains(context.getString(R.string.unit_toString_squad, 1));
         }
     }
 

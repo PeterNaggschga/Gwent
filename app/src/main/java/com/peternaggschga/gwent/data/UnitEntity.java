@@ -188,7 +188,6 @@ public class UnitEntity {
      *
      * @param context Context used to acquire String resources.
      * @return A string representing the unit.
-     * @todo Add unit test.
      */
     @NonNull
     public String toString(@NonNull Context context) {
