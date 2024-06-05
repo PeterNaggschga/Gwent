@@ -145,7 +145,6 @@ public class UnitEntity {
      * @param units   Collection of UnitEntity objects that should be in the created String.
      * @return A String containing the description of all units.
      * @throws org.valid4j.errors.RequireViolation When units collection is empty.
-     * @todo Add unit tests.
      * @see #toString(Context)
      */
     @NonNull

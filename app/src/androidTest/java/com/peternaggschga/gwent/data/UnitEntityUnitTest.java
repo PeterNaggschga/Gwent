@@ -1,13 +1,22 @@
 package com.peternaggschga.gwent.data;
 
+import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.fail;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.only;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
+import android.content.Context;
+
+import androidx.test.core.app.ApplicationProvider;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+
+import com.peternaggschga.gwent.R;
 import com.peternaggschga.gwent.domain.damage.DamageCalculator;
 
 import org.junit.Test;
@@ -16,6 +25,9 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.valid4j.errors.RequireViolation;
+
+import java.util.Arrays;
+import java.util.Collections;
 
 @RunWith(Enclosed.class)
 public class UnitEntityUnitTest {
@@ -154,6 +166,69 @@ public class UnitEntityUnitTest {
             DamageCalculator calculator = mock(DamageCalculator.class);
             new UnitEntity(false, damage, Ability.NONE, null, RowType.MELEE).calculateDamage(calculator);
             verify(calculator, only()).calculateDamage(anyInt(), eq(damage));
+        }
+    }
+
+    @RunWith(AndroidJUnit4.class)
+    public static class CollectionToStringTests {
+        private static final String MOCK_UNIT_DESCRIPTION = "MockUnit";
+
+        @Test
+        public void assertsNonEmptyCollection() {
+            try {
+                UnitEntity.collectionToString(ApplicationProvider.getApplicationContext(), Collections.emptyList());
+                fail();
+            } catch (RequireViolation ignored) {
+            }
+        }
+
+        @Test
+        public void returnsUnitToStringForSingularUnit() {
+            UnitEntity mockUnit = mock(UnitEntity.class);
+            when(mockUnit.toString(any())).thenReturn(MOCK_UNIT_DESCRIPTION);
+            assertThat(UnitEntity.collectionToString(ApplicationProvider.getApplicationContext(),
+                    Collections.singleton(mockUnit)))
+                    .isEqualTo(MOCK_UNIT_DESCRIPTION);
+        }
+
+        @Test
+        public void accumulatesUsingWord() {
+            Context context = ApplicationProvider.getApplicationContext();
+            UnitEntity mockUnit1 = mock(UnitEntity.class);
+            when(mockUnit1.toString(any())).thenReturn(MOCK_UNIT_DESCRIPTION + "1");
+            UnitEntity mockUnit2 = mock(UnitEntity.class);
+            when(mockUnit2.toString(any())).thenReturn(MOCK_UNIT_DESCRIPTION + "2");
+
+            assertThat(UnitEntity.collectionToString(context, Arrays.asList(mockUnit1, mockUnit2)))
+                    .isEqualTo(context.getString(R.string.unit_collection_toString_accumulation_word,
+                            MOCK_UNIT_DESCRIPTION + "1",
+                            MOCK_UNIT_DESCRIPTION + "2"));
+        }
+
+        @Test
+        public void accumulatesUsingComma() {
+            Context context = ApplicationProvider.getApplicationContext();
+            UnitEntity mockUnit1 = mock(UnitEntity.class);
+            when(mockUnit1.toString(any())).thenReturn(MOCK_UNIT_DESCRIPTION + "1");
+            UnitEntity mockUnit2 = mock(UnitEntity.class);
+            when(mockUnit2.toString(any())).thenReturn(MOCK_UNIT_DESCRIPTION + "2");
+            UnitEntity mockUnit3 = mock(UnitEntity.class);
+            when(mockUnit3.toString(any())).thenReturn(MOCK_UNIT_DESCRIPTION + "3");
+
+            assertThat(UnitEntity.collectionToString(context, Arrays.asList(mockUnit1, mockUnit2, mockUnit3)))
+                    .startsWith(context.getString(R.string.unit_collection_toString_accumulation_symbol,
+                            MOCK_UNIT_DESCRIPTION + "1",
+                            MOCK_UNIT_DESCRIPTION + "3"));
+        }
+
+        @Test
+        public void sameDescriptionIsReusedViaTimesSymbol() {
+            Context context = ApplicationProvider.getApplicationContext();
+            UnitEntity mockUnit = mock(UnitEntity.class);
+            when(mockUnit.toString(any())).thenReturn(MOCK_UNIT_DESCRIPTION);
+
+            assertThat(UnitEntity.collectionToString(context, Arrays.asList(mockUnit, mockUnit)))
+                    .isEqualTo(context.getString(R.string.unit_toString_multiplicity, 2, MOCK_UNIT_DESCRIPTION));
         }
     }
 }
