@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Completable;
@@ -336,6 +337,7 @@ public class UnitRepository {
         return database.units()
                 .getUnitsFlowable(row)
                 .onBackpressureLatest()
+                .debounce(10, TimeUnit.MILLISECONDS)
                 .distinctUntilChanged((list1, list2) -> {
                     if (list1.size() != list2.size()) {
                         return false;
