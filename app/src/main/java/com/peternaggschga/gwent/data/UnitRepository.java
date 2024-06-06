@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -342,12 +343,8 @@ public class UnitRepository {
                     if (list1.size() != list2.size()) {
                         return false;
                     }
-                    for (int index = 0; index < list1.size(); index++) {
-                        if (list1.get(index).getId() != list2.get(index).getId()) {
-                            return false;
-                        }
-                    }
-                    return true;
+                    Iterator<UnitEntity> list1Iterator = list1.iterator();
+                    return list2.stream().map(UnitEntity::getId).allMatch(id -> id.equals(list1Iterator.next().getId()));
                 })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
