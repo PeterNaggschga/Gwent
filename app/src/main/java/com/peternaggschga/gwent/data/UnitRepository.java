@@ -130,7 +130,6 @@ public class UnitRepository {
     /**
      * Adds a number of units with the given stats to the given row.
      * Essentially calls #insertUnit(boolean, int, Ability, Integer, RowType) multiple times.
-     * @todo Adding multiple units should be one transaction.
      * @param epic    Boolean representing whether card is #epic.
      * @param damage  Non-negative value representing the #damage of the card.
      * @param ability Ability representing the #ability of the card.

@@ -21,10 +21,13 @@ import com.peternaggschga.gwent.domain.damage.DamageCalculator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 /**
  * An AndroidViewModel class responsible for encapsulating
@@ -101,7 +104,12 @@ public class GameBoardViewModel extends AndroidViewModel {
                                         .map(unitEntity -> unitEntity.calculateDamage(calculator))
                                         .reduce(0, Integer::sum);
                                 return new RowUiState(damage, weather, horn, units.size());
-                            }).distinctUntilChanged().onBackpressureLatest()
+                            })
+                            .distinctUntilChanged()
+                            .onBackpressureLatest()
+                            .debounce(10, TimeUnit.MILLISECONDS)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
             );
         }
 
