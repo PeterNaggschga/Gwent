@@ -64,7 +64,7 @@ public class GameBoardViewModel extends AndroidViewModel {
      * @see RowUiState
      */
     @NonNull
-    private final Map<RowType, Flowable<RowUiState>> rowUiStates = new HashMap<>();
+    private final Map<RowType, Flowable<RowUiState>> rowUiStates = new HashMap<>(RowType.values().length);
 
     /**
      * Flowable emitting the MenuUiState for the right-hand side menu.

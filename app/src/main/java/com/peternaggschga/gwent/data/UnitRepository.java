@@ -273,7 +273,6 @@ public class UnitRepository {
     public Completable copy(int id) {
         return getUnit(id).flatMapCompletable(unit ->
                         insertUnit(unit.isEpic(), unit.getDamage(), unit.getAbility(), unit.getSquad(), unit.getRow()))
-
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
