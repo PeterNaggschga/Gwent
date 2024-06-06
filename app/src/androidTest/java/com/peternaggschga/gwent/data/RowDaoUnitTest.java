@@ -1,5 +1,6 @@
 package com.peternaggschga.gwent.data;
 
+import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.fail;
 
 import androidx.room.Room;
@@ -161,5 +162,23 @@ public class RowDaoUnitTest {
         } catch (NullPointerException ignored) {
         }
     }
-}
 
+    @Test
+    public void isWeatherFlowableAssertsNonNull() {
+        try {
+            //noinspection DataFlowIssue
+            rowDao.isWeatherFlowable(null)
+                    .test()
+                    .cancel();
+            fail();
+        } catch (NullPointerException ignored) {
+        }
+    }
+
+    @Test
+    public void isWeatherFlowableHasValueFromBeginning() {
+        assertThat(rowDao.insertRow(new RowEntity(RowType.MELEE))
+                .andThen(rowDao.isWeatherFlowable(RowType.MELEE))
+                .blockingFirst()).isFalse();
+    }
+}

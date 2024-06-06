@@ -75,7 +75,6 @@ interface RowDao {
      *
      * @param row RowType of the queried RowEntity.
      * @return A Flowable emitting the values.
-     * @todo Add testing.
      * @see #isWeather(RowType)
      */
     @Query("SELECT weather FROM rows WHERE id = :row")
