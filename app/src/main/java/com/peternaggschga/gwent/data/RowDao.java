@@ -94,7 +94,6 @@ interface RowDao {
      *
      * @param row RowType of the queried RowEntity.
      * @return A Flowable emitting the values.
-     * @todo Add testing.
      * @see #isHorn(RowType)
      */
     @Query("SELECT horn FROM rows WHERE id = :row")

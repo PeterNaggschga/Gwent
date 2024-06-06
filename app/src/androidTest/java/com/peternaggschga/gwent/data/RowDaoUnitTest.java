@@ -181,4 +181,23 @@ public class RowDaoUnitTest {
                 .andThen(rowDao.isWeatherFlowable(RowType.MELEE))
                 .blockingFirst()).isFalse();
     }
+
+    @Test
+    public void isHornFlowableAssertsNonNull() {
+        try {
+            //noinspection DataFlowIssue
+            rowDao.isHornFlowable(null)
+                    .test()
+                    .cancel();
+            fail();
+        } catch (NullPointerException ignored) {
+        }
+    }
+
+    @Test
+    public void isHornFlowableHasValueFromBeginning() {
+        assertThat(rowDao.insertRow(new RowEntity(RowType.MELEE))
+                .andThen(rowDao.isHornFlowable(RowType.MELEE))
+                .blockingFirst()).isFalse();
+    }
 }
