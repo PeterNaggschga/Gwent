@@ -78,6 +78,20 @@ public class UnitDaoUnitTest {
     }
 
     @Test
+    public void deleteUnitDeletesUnit() {
+        getUnitsReturnsAllUnits();
+        List<UnitEntity> units = unitDao.getUnits().blockingGet();
+        assertThat(units).hasSize(RowType.values().length * 5);
+
+        for (int i = 0; i < units.size(); ) {
+            unitDao.deleteUnit(units.get(i).getId())
+                    .andThen(unitDao.countUnits())
+                    .test()
+                    .assertValue(units.size() - ++i);
+        }
+    }
+
+    @Test
     public void deleteUnitsDeletesUnits() {
         getUnitsReturnsAllUnits();
         List<UnitEntity> units = unitDao.getUnits().blockingGet();

@@ -49,7 +49,6 @@ interface UnitDao {
 
     /**
      * Deletes the UnitEntity object with the given id from `units`.
-     * @todo Add testing.
      * @param id Integer representing the UnitEntity#id of the deleted UnitEntity.
      * @return A Completable tracking operation status.
      */
