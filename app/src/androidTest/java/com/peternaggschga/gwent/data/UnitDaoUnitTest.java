@@ -4,6 +4,7 @@ import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.fail;
 
 import androidx.room.Room;
+import androidx.room.rxjava3.EmptyResultSetException;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -139,6 +140,32 @@ public class UnitDaoUnitTest {
                     .dispose();
             fail();
         } catch (NullPointerException ignored) {
+        }
+    }
+
+    @Test
+    public void getUnitReturnsUnit() {
+        try {
+            UnitEntity unitEntity = unitDao.insertUnit(false, 0, Ability.NONE, null, RowType.MELEE)
+                    .andThen(unitDao.getUnit(1)).blockingGet();
+            assertThat(
+                    !unitEntity.isEpic() && unitEntity.getDamage() == 0 && unitEntity.getAbility() == Ability.NONE
+                            && unitEntity.getSquad() == null && unitEntity.getRow() == RowType.MELEE
+            ).isTrue();
+
+
+        } catch (Exception ignored) {
+            fail();
+        }
+    }
+
+    @Test
+    public void getUnitAssertsCorrectId() {
+        try {
+            // noinspection ResultOfMethodCallIgnored
+            unitDao.getUnit(-1).blockingGet();
+            fail();
+        } catch (EmptyResultSetException ignored) {
         }
     }
 

@@ -66,8 +66,7 @@ interface UnitDao {
 
     /**
      * Fetches the UnitEntity object with the given id from `units`.
-     * @todo Add testing.
-     * @param id Integer representing the UnitEntity#id of the requested UnitEntity. 
+     * @param id Integer representing the UnitEntity#id of the requested UnitEntity.
      * @return A Single tracking operation status and returning the value.
      */
     @Query("SELECT * FROM units WHERE `id` = :id")
@@ -115,5 +114,4 @@ interface UnitDao {
      */
     @Query("SELECT COUNT(*) FROM units")
     Single<Integer> countUnits();
-
 }
