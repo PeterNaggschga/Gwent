@@ -22,9 +22,6 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
  * The contained functions mostly redirect requests to package-private DAO methods in RowDao and UnitDao.
  * Some functions implement slightly more complex behavior by chaining multiple DAO calls,
  * e.g., #reset().
- *
- * @todo Add method to get non-epic units and replace stream.filter() calls.
- * @todo Add method to get units of a certain ability and replace stream.filter() calls.
  */
 public class UnitRepository {
     /**
