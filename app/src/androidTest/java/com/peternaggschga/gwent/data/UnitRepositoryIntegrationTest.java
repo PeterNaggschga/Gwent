@@ -14,6 +14,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.valid4j.errors.RequireViolation;
 
+import java.util.Iterator;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Flowable;
@@ -418,6 +419,26 @@ public class UnitRepositoryIntegrationTest {
                     .blockingAwait();
             fail();
         } catch (NullPointerException ignored) {
+        }
+    }
+
+    @Test
+    public void deleteUnitDeletesUnit() {
+        insertDummys();
+        List<UnitEntity> units = repository.getUnits().blockingGet();
+
+        int i = 0;
+        for (UnitEntity unit : units) {
+            List<UnitEntity> currentUnits = repository.delete(unit.getId())
+                    .andThen(repository.getUnits())
+                    .blockingGet();
+            assertThat(currentUnits).hasSize(units.size() - ++i);
+            Iterator<UnitEntity> unitIterator = units.subList(i, units.size()).iterator();
+            assertThat(
+                    currentUnits.stream()
+                            .map(UnitEntity::getId)
+                            .allMatch(id -> id == unitIterator.next().getId())
+            ).isTrue();
         }
     }
 

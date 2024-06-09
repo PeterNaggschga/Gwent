@@ -253,7 +253,6 @@ public class UnitRepository {
      *
      * @param id Integer representing the unit that should be deleted.
      * @return A Completable tracking operation status.
-     * @todo Add testing.
      */
     @NonNull
     public Completable delete(int id) {
