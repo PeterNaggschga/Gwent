@@ -300,7 +300,6 @@ public class UnitRepository {
      *
      * @param id Integer representing the queried unit.
      * @return A Single tracking operation status and returning the value.
-     * @todo Add testing.
      */
     @NonNull
     public Single<UnitEntity> getUnit(int id) {
