@@ -15,6 +15,8 @@ import org.junit.runner.RunWith;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Flowable;
+
 @RunWith(AndroidJUnit4.class)
 public class UnitDaoUnitTest {
     private AppDatabase database;
@@ -172,10 +174,11 @@ public class UnitDaoUnitTest {
     @Test
     public void getUnitsFlowableReturnsAllUnits() {
         for (RowType row : RowType.values()) {
+            Flowable<List<UnitEntity>> unitsFlowable = unitDao.getUnitsFlowable(row);
             for (int unitNumber = 0; unitNumber < 5; unitNumber++) {
                 assertThat(
                         unitDao.insertUnit(false, unitNumber, Ability.values()[unitNumber / 2], null, row)
-                                .andThen(unitDao.getUnitsFlowable(row))
+                                .andThen(unitsFlowable)
                                 .blockingFirst())
                         .hasSize(unitNumber + 1);
             }
