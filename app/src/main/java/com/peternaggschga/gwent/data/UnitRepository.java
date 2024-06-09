@@ -226,7 +226,6 @@ public class UnitRepository {
      *
      * @param row RowEntity#id where the horn status is queried.
      * @return A Flowable emitting the values.
-     * @todo Add testing.
      * @see #isHorn(RowType)
      */
     @NonNull

@@ -360,6 +360,44 @@ public class UnitRepositoryIntegrationTest {
     }
 
     @Test
+    public void isHornFlowableReturnsHorn() {
+        for (RowType row : RowType.values()) {
+            Flowable<Boolean> isHorn = repository.isHornFlowable(row);
+            assertThat(isHorn.blockingFirst()).isFalse();
+            assertThat(database.rows().updateHorn(row)
+                    .andThen(isHorn)
+                    .blockingFirst())
+                    .isTrue();
+        }
+    }
+
+    @Test
+    public void isHornFlowableIsDistinctUntilChanged() {
+        CompositeDisposable disposables = new CompositeDisposable();
+        for (RowType row : RowType.values()) {
+            final int[] calls = {0};
+            disposables.add(repository.isHornFlowable(row).subscribe(bool -> {
+                if (++calls[0] > 1) {
+                    fail();
+                }
+            }));
+            repository.reset().blockingAwait();
+            repository.reset().blockingAwait();
+        }
+        disposables.dispose();
+    }
+
+    @Test
+    public void isHornFlowableAssertsNonNull() {
+        try {
+            //noinspection DataFlowIssue, ResultOfMethodCallIgnored
+            repository.isHornFlowable(null).blockingFirst();
+            fail();
+        } catch (NullPointerException ignored) {
+        }
+    }
+
+    @Test
     public void deleteDeletesUnits() {
         insertDummys();
 
