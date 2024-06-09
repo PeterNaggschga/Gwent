@@ -493,4 +493,43 @@ public class UnitRepositoryIntegrationTest {
         } catch (NullPointerException ignored) {
         }
     }
+
+    @Test
+    public void getUnitsFlowableReturnsUnits() {
+        for (RowType row : RowType.values()) {
+            repository.insertUnit(false, 5, Ability.NONE, null, row, 5).blockingAwait();
+            Flowable<List<UnitEntity>> unitsFlowable = repository.getUnitsFlowable(row);
+            assertThat(unitsFlowable.blockingFirst()).hasSize(5);
+            assertThat(repository.reset()
+                    .andThen(unitsFlowable)
+                    .blockingFirst())
+                    .isEmpty();
+        }
+    }
+
+    @Test
+    public void getUnitsFlowableIsDistinctUntilChanged() {
+        CompositeDisposable disposables = new CompositeDisposable();
+        for (RowType row : RowType.values()) {
+            final int[] calls = {0};
+            disposables.add(repository.getUnitsFlowable(row).subscribe(bool -> {
+                if (++calls[0] > 1) {
+                    fail();
+                }
+            }));
+            repository.reset().blockingAwait();
+            repository.reset().blockingAwait();
+        }
+        disposables.dispose();
+    }
+
+    @Test
+    public void getUnitsFlowableAssertsNonNull() {
+        try {
+            //noinspection DataFlowIssue, ResultOfMethodCallIgnored
+            repository.getUnitsFlowable(null).blockingFirst();
+            fail();
+        } catch (NullPointerException ignored) {
+        }
+    }
 }

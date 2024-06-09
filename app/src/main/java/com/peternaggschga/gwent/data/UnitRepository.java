@@ -324,7 +324,6 @@ public class UnitRepository {
      *
      * @param row RowEntity#id where the units have been placed.
      * @return A Flowable emitting the values.
-     * @todo Add testing.
      * @see #getUnits(RowType)
      * @see #getUnits()
      */
