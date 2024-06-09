@@ -41,7 +41,7 @@ public class BurnDialogUseCase {
                         return Single.just(units);
                     }
 
-                    Single<Map<RowType, DamageCalculator>> calculators = Single.just(new HashMap<>());
+                    Single<Map<RowType, DamageCalculator>> calculators = Single.just(new HashMap<>(RowType.values().length));
                     for (RowType row : RowType.values()) {
                         calculators = calculators.zipWith(DamageCalculatorUseCase.getDamageCalculator(repository, row), (calculatorMap, damageCalculator) -> {
                             calculatorMap.put(row, damageCalculator);
