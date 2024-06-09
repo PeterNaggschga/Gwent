@@ -178,7 +178,6 @@ public class UnitRepository {
      *
      * @param row RowEntity#id where the weather is queried.
      * @return A Flowable emitting the values.
-     * @todo Add testing.
      * @see #isWeather(RowType)
      */
     @NonNull

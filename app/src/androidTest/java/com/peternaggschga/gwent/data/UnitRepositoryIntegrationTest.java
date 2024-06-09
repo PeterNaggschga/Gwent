@@ -15,6 +15,8 @@ import org.valid4j.errors.RequireViolation;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 @RunWith(AndroidJUnit4.class)
@@ -256,6 +258,44 @@ public class UnitRepositoryIntegrationTest {
         try {
             //noinspection DataFlowIssue
             repository.isWeather(null).test().dispose();
+            fail();
+        } catch (NullPointerException ignored) {
+        }
+    }
+
+    @Test
+    public void isWeatherFlowableReturnsWeather() {
+        for (RowType row : RowType.values()) {
+            Flowable<Boolean> isWeather = repository.isWeatherFlowable(row);
+            assertThat(isWeather.blockingFirst()).isFalse();
+            assertThat(database.rows().updateWeather(row)
+                    .andThen(isWeather)
+                    .blockingFirst())
+                    .isTrue();
+        }
+    }
+
+    @Test
+    public void isWeatherFlowableIsDistinctUntilChanged() {
+        CompositeDisposable disposables = new CompositeDisposable();
+        for (RowType row : RowType.values()) {
+            final int[] calls = {0};
+            disposables.add(repository.isWeatherFlowable(row).subscribe(bool -> {
+                if (++calls[0] > 1) {
+                    fail();
+                }
+            }));
+            repository.reset().blockingAwait();
+            repository.reset().blockingAwait();
+        }
+        disposables.dispose();
+    }
+
+    @Test
+    public void isWeatherFlowableAssertsNonNull() {
+        try {
+            //noinspection DataFlowIssue, ResultOfMethodCallIgnored
+            repository.isWeatherFlowable(null).blockingFirst();
             fail();
         } catch (NullPointerException ignored) {
         }
