@@ -86,7 +86,6 @@ interface UnitDao {
      *
      * @param row RowType defining the UnitEntity#row foreign key.
      * @return A Flowable emitting the values.
-     * @todo Add testing.
      * @see #getUnits(RowType)
      */
     @Query("SELECT * FROM units WHERE `row` = :row")

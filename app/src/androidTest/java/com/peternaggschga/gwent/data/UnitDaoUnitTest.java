@@ -170,6 +170,29 @@ public class UnitDaoUnitTest {
     }
 
     @Test
+    public void getUnitsFlowableReturnsAllUnits() {
+        for (RowType row : RowType.values()) {
+            for (int unitNumber = 0; unitNumber < 5; unitNumber++) {
+                assertThat(
+                        unitDao.insertUnit(false, unitNumber, Ability.values()[unitNumber / 2], null, row)
+                                .andThen(unitDao.getUnitsFlowable(row))
+                                .blockingFirst())
+                        .hasSize(unitNumber + 1);
+            }
+        }
+    }
+
+    @Test
+    public void getUnitsFlowableAssertsNonNull() {
+        try {
+            //noinspection DataFlowIssue, ResultOfMethodCallIgnored
+            unitDao.getUnitsFlowable(null).blockingFirst();
+            fail();
+        } catch (NullPointerException ignored) {
+        }
+    }
+
+    @Test
     public void countUnitsCountsCorrectly() {
         for (int rowTypeNumber = 0; rowTypeNumber < RowType.values().length; rowTypeNumber++) {
             RowType row = RowType.values()[rowTypeNumber];
