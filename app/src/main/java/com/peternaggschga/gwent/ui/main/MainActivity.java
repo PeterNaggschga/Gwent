@@ -63,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
      * Reference must be kept (even if not used) to avoid garbage collection of the registered listener
      * (see <a href="https://developer.android.com/reference/android/content/SharedPreferences.html#registerOnSharedPreferenceChangeListener(android.content.SharedPreferences.OnSharedPreferenceChangeListener)">here</a> for more information).
      */
-    @SuppressWarnings("FieldCanBeLocal")
     private SharedPreferences.OnSharedPreferenceChangeListener factionSwitchListener;
 
     /**

@@ -10,8 +10,6 @@
     <dimen name="margin_row_buttons">16dp</dimen>
     <dimen name="margin_menu_buttons">12dp</dimen>
 
-    <dimen name="card_height">200dp</dimen>
-
     <dimen name="rectangle_height">65dp</dimen>
     <dimen name="rectangle_stroke_width">4dp</dimen>
     <dimen name="rectangle_corner_radius">15dp</dimen>

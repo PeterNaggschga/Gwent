@@ -6,9 +6,6 @@ import androidx.annotation.IntRange;
 
 /**
  * A data class encapsulating the visible state of the menu in the main view of the application.
- * Should only be created by MenuUpdateObserver using RowUiState objects.
- *
- * @see MenuUpdateObserver
  */
 public class MenuUiState {
     /**

@@ -10,7 +10,6 @@ import androidx.appcompat.app.AlertDialog;
 import com.peternaggschga.gwent.R;
 import com.peternaggschga.gwent.data.Ability;
 import com.peternaggschga.gwent.data.RowType;
-import com.peternaggschga.gwent.data.UnitEntity;
 import com.peternaggschga.gwent.data.UnitRepository;
 
 import io.reactivex.rxjava3.core.Completable;
@@ -26,7 +25,6 @@ class RevengeAlertDialogBuilderAdapter {
      * whether the default UnitEntity summoned by the Ability#REVENGE ability is epic.
      *
      * @see Ability#REVENGE
-     * @see UnitEntity#epic
      */
     private static final boolean AVENGER_EPIC = false;
 
@@ -35,7 +33,6 @@ class RevengeAlertDialogBuilderAdapter {
      * summoned by the Ability#REVENGE ability.
      *
      * @see Ability#REVENGE
-     * @see UnitEntity#ability
      */
     private static final Ability AVENGER_ABILITY = Ability.NONE;
 
@@ -44,7 +41,6 @@ class RevengeAlertDialogBuilderAdapter {
      * summoned by the Ability#REVENGE ability.
      *
      * @see Ability#REVENGE
-     * @see UnitEntity#damage
      */
     private static final int AVENGER_DAMAGE = 8;
 
@@ -53,7 +49,6 @@ class RevengeAlertDialogBuilderAdapter {
      * summoned by the Ability#REVENGE ability.
      *
      * @see Ability#REVENGE
-     * @see UnitEntity#squad
      */
     private static final Integer AVENGER_SQUAD = null;
 
@@ -62,7 +57,6 @@ class RevengeAlertDialogBuilderAdapter {
      * summoned by the Ability#REVENGE ability.
      *
      * @see Ability#REVENGE
-     * @see UnitEntity#row
      */
     private static final RowType AVENGER_ROW = RowType.MELEE;
 

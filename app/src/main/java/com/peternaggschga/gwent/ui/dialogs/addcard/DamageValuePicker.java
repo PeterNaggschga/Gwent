@@ -40,7 +40,7 @@ class DamageValuePicker extends ValuePicker<Integer> {
     /**
      * Constructor of a DamageValuePicker wrapping the given NumberPicker.
      * Calls #setEpicValues() to initialize the NumberPicker with non-epic damage values.
-     * @see #ValuePicker(NumberPicker, SortedMap)
+     * @see ValuePicker#ValuePicker(NumberPicker, SortedMap)
      * @see #setEpicValues(boolean)
      * @param picker NumberPicker wrapped by the created DamageValuePicker.
      */

@@ -10,7 +10,7 @@ abstract class DamageCalculatorDecorator implements DamageCalculator {
     /**
      * A DamageCalculator which is decorated by this decorator.
      */
-    protected DamageCalculator component;
+    protected final DamageCalculator component;
 
     /**
      * Constructor of a DamageCalculatorDecorator.
