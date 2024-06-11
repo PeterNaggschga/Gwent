@@ -9,13 +9,13 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
  * A {@link FragmentStateAdapter} that returns an {@link IntroductionFragment} corresponding to
  * one of the sections/tabs/pages.
  */
-class SectionsPagerAdapter extends FragmentStateAdapter {
+public class SectionsPagerAdapter extends FragmentStateAdapter {
     /**
      * Constructor of a SectionsPagerAdapter for the given {@link FragmentActivity}.
      *
      * @param fragmentActivity {@link FragmentActivity} that uses this adapter.
      */
-    SectionsPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
+    public SectionsPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
     }
 
@@ -37,6 +37,6 @@ class SectionsPagerAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        return new IntroductionFragment(position);
+        return IntroductionFragment.newInstance(position);
     }
 }

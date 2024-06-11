@@ -25,7 +25,7 @@ public class IntroductionFragment extends Fragment {
      * {@link Integer} constant defining the number of possible pages represented by this fragment.
      * Is equivalent to the length of {@link #stringIds} and {@link #imageIds}.
      */
-    static final int PAGES_COUNT = 5;
+    public static final int PAGES_COUNT = 5;
     /**
      * {@link String} constant defining the argument key used to communicate the requested page to the fragment.
      */
@@ -42,17 +42,20 @@ public class IntroductionFragment extends Fragment {
             R.string.introduction_page3, R.string.introduction_page4, R.string.introduction_page5};
 
     /**
-     * Constructor of a new {@link IntroductionFragment} showing the page defined by the given index.
-     *
+     * Creates a new {@link IntroductionFragment} showing the page defined by the given index.
+     * Factory method of {@link IntroductionFragment}.
      * @param index {@link Integer} defining the page that the created fragment shows.
+     * @return An {@link IntroductionFragment} showing the page with the given index.
      * @throws org.valid4j.errors.RequireViolation When the given index is not in [0, {@link #PAGES_COUNT} - 1].
      */
-    IntroductionFragment(@IntRange(from = 0, to = PAGES_COUNT - 1) int index) {
-        super();
+    @NonNull
+    public static IntroductionFragment newInstance(@IntRange(from = 0, to = PAGES_COUNT - 1) int index) {
         require(0 <= index && index <= PAGES_COUNT - 1);
         Bundle arguments = new Bundle();
         arguments.putInt(ARG_SECTION_NUMBER, index);
-        setArguments(arguments);
+        IntroductionFragment fragment = new IntroductionFragment();
+        fragment.setArguments(arguments);
+        return fragment;
     }
 
     /**
