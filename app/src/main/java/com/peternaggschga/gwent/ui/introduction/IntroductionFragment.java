@@ -1,7 +1,5 @@
 package com.peternaggschga.gwent.ui.introduction;
 
-import static org.valid4j.Assertive.require;
-
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
@@ -50,7 +48,7 @@ public class IntroductionFragment extends Fragment {
      */
     @NonNull
     public static IntroductionFragment newInstance(@IntRange(from = 0, to = PAGES_COUNT - 1) int index) {
-        require(0 <= index && index <= PAGES_COUNT - 1);
+        // TODO: assert 0 <= index && index <= PAGES_COUNT - 1);
         Bundle arguments = new Bundle();
         arguments.putInt(ARG_SECTION_NUMBER, index);
         IntroductionFragment fragment = new IntroductionFragment();

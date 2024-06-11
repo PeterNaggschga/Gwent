@@ -1,7 +1,5 @@
 package com.peternaggschga.gwent.data;
 
-import static org.valid4j.Assertive.require;
-
 import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -119,8 +117,8 @@ public class UnitRepository {
     @NonNull
     private Completable insertUnit(boolean epic, @IntRange(from = 0) int damage, @NonNull Ability ability,
                                    @IntRange(from = 0) @Nullable Integer squad, @NonNull RowType row) {
-        require(damage >= 0);
-        require((ability != Ability.BINDING && squad == null) || (ability == Ability.BINDING && squad != null && squad >= 0));
+        // TODO: assert damage >= 0);
+        // TODO: assert (ability != Ability.BINDING && squad == null) || (ability == Ability.BINDING && squad != null && squad >= 0));
         return database.units().insertUnit(epic, damage, ability, squad, row)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());

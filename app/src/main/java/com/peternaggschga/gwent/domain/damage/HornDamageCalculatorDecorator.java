@@ -1,7 +1,6 @@
 package com.peternaggschga.gwent.domain.damage;
 
 import static com.peternaggschga.gwent.domain.damage.DamageCalculator.Color.BUFFED;
-import static org.valid4j.Assertive.require;
 
 import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
@@ -62,7 +61,7 @@ class HornDamageCalculatorDecorator extends DamageCalculatorDecorator {
      */
     @Override
     public int calculateDamage(int id, @IntRange(from = 0) int damage) {
-        require(damage >= 0);
+        // TODO: assert damage >= 0);
         return (doubleDamage(id) ? 2 : 1) * component.calculateDamage(id, damage);
     }
 

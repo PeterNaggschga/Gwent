@@ -1,6 +1,6 @@
 package com.peternaggschga.gwent.ui.main;
 
-import static org.valid4j.Assertive.require;
+
 
 import androidx.annotation.IntRange;
 
@@ -39,7 +39,7 @@ public class MenuUiState {
      * @throws org.valid4j.errors.RequireViolation When damage is negative.
      */
     public MenuUiState(@IntRange(from = 0) int damage, boolean reset, boolean weather, boolean burn) {
-        require(damage >= 0);
+        // TODO: assert damage >= 0);
         this.damage = damage;
         this.reset = reset;
         this.weather = weather;

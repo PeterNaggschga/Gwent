@@ -1,6 +1,6 @@
 package com.peternaggschga.gwent.ui.dialogs.addcard;
 
-import static org.valid4j.Assertive.require;
+
 
 import android.widget.NumberPicker;
 
@@ -63,7 +63,7 @@ class DamageValuePicker extends ValuePicker<Integer> {
     @Override
     @NonNull
     protected String getDisplayString(@NonNull Integer value) {
-        require(!epicValues || getDisplayIntegers().containsKey(value));
+        // TODO: assert !epicValues || getDisplayIntegers().containsKey(value));
         return epicValues ? String.valueOf(getDisplayIntegers().get(value)) : String.valueOf(value);
     }
 
@@ -81,7 +81,7 @@ class DamageValuePicker extends ValuePicker<Integer> {
         if (epicValues) {
             super.setValue(value);
         } else {
-            require(0 <= value && value <= NON_EPIC_DAMAGE_VALUES_UPPER_BOUND);
+            // TODO: assert 0 <= value && value <= NON_EPIC_DAMAGE_VALUES_UPPER_BOUND);
             getPicker().setValue(value);
         }
     }

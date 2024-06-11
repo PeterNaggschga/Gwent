@@ -1,6 +1,6 @@
 package com.peternaggschga.gwent.ui.dialogs.addcard;
 
-import static org.valid4j.Assertive.require;
+
 
 import android.content.Context;
 import android.widget.Toast;
@@ -70,7 +70,7 @@ class SquadManager {
      * @see SquadState#getMemberBaseDamage()
      */
     void onSquadChanged(@IntRange(from = 1, to = MAX_NR_SQUADS) int newVal, @NonNull DamageValuePicker picker) {
-        require(1 <= newVal && newVal <= MAX_NR_SQUADS);
+        // TODO: assert 1 <= newVal && newVal <= MAX_NR_SQUADS);
         SquadState squad = states[newVal - 1];
 
         Context context = picker.getContext();

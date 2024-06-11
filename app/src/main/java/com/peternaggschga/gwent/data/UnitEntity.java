@@ -2,7 +2,6 @@ package com.peternaggschga.gwent.data;
 
 import static com.peternaggschga.gwent.domain.damage.DamageCalculator.Color;
 import static com.peternaggschga.gwent.domain.damage.DamageCalculator.Color.DEFAULT;
-import static org.valid4j.Assertive.require;
 
 import android.content.Context;
 
@@ -93,9 +92,9 @@ public class UnitEntity {
      * @throws org.valid4j.errors.RequireViolation When damage is less than zero or if ability is Ability#BINDING and squad is null or less than zero or if ability is not Ability#BINDING and squad is not null.
      */
     UnitEntity(boolean epic, @IntRange(from = 0) int damage, @NonNull Ability ability, @IntRange(from = 0) @Nullable Integer squad, @NonNull RowType row) {
-        require(damage >= 0);
-        require(ability == Ability.BINDING || squad == null);
-        require(ability != Ability.BINDING || (squad != null && squad >= 0));
+        // TODO: assert damage >= 0);
+        // TODO: assert ability == Ability.BINDING || squad == null);
+        // TODO: assert ability != Ability.BINDING || (squad != null && squad >= 0));
         this.epic = epic;
         this.damage = damage;
         this.ability = ability;
@@ -148,7 +147,7 @@ public class UnitEntity {
      */
     @NonNull
     public static String collectionToString(@NonNull Context context, @NonNull Collection<UnitEntity> units) {
-        require(!units.isEmpty());
+        // TODO: assert !units.isEmpty());
 
         Map<String, Integer> descriptionStrings = new HashMap<>(units.size());
         for (UnitEntity unit : units) {
@@ -282,7 +281,7 @@ public class UnitEntity {
      * @throws org.valid4j.errors.RequireViolation When damage is less than zero.
      */
     void setDamage(@IntRange(from = 0) int damage) {
-        require(damage >= 0);
+        // TODO: assert damage >= 0);
         this.damage = damage;
     }
 
@@ -324,8 +323,8 @@ public class UnitEntity {
      * @throws org.valid4j.errors.RequireViolation When #ability is Ability#BINDING and squad is null or less than zero or if #ability is not Ability#BINDING and squad is not null.
      */
     void setSquad(@IntRange(from = 0) @Nullable Integer squad) {
-        require(ability == Ability.BINDING || squad == null);
-        require(ability != Ability.BINDING || (squad != null && squad >= 0));
+        // TODO: assert ability == Ability.BINDING || squad == null);
+        // TODO: assert ability != Ability.BINDING || (squad != null && squad >= 0));
         this.squad = squad;
     }
 

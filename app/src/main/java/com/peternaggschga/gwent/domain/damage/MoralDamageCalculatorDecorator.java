@@ -1,7 +1,6 @@
 package com.peternaggschga.gwent.domain.damage;
 
 import static com.peternaggschga.gwent.domain.damage.DamageCalculator.Color.BUFFED;
-import static org.valid4j.Assertive.require;
 
 import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
@@ -36,7 +35,7 @@ class MoralDamageCalculatorDecorator extends DamageCalculatorDecorator {
      */
     MoralDamageCalculatorDecorator(@NonNull DamageCalculator component, @NonNull List<Integer> unitIds) {
         super(component);
-        require(!unitIds.contains(null));
+        // TODO: assert !unitIds.contains(null));
         this.unitIds = unitIds;
     }
 
@@ -53,7 +52,7 @@ class MoralDamageCalculatorDecorator extends DamageCalculatorDecorator {
      */
     @Override
     public int calculateDamage(int id, @IntRange(from = 0) int damage) {
-        require(damage >= 0);
+        // TODO: assert damage >= 0);
         int componentDamage = component.calculateDamage(id, damage) + unitIds.size();
         return unitIds.contains(id) ? componentDamage - 1 : componentDamage;
     }

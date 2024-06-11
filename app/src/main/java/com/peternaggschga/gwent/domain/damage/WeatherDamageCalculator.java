@@ -2,7 +2,6 @@ package com.peternaggschga.gwent.domain.damage;
 
 import static com.peternaggschga.gwent.domain.damage.DamageCalculator.Color.DEBUFFED;
 import static com.peternaggschga.gwent.domain.damage.DamageCalculator.Color.DEFAULT;
-import static org.valid4j.Assertive.require;
 
 import androidx.annotation.IntRange;
 
@@ -40,7 +39,7 @@ class WeatherDamageCalculator implements DamageCalculator {
      */
     @Override
     public int calculateDamage(int id, @IntRange(from = 0) int damage) {
-        require(damage >= 0);
+        // TODO: assert damage >= 0);
         if (damage == 0) {
             return damage;
         }

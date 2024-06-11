@@ -1,6 +1,6 @@
 package com.peternaggschga.gwent.ui.dialogs.addcard;
 
-import static org.valid4j.Assertive.require;
+
 
 import android.content.Context;
 import android.widget.NumberPicker;
@@ -80,8 +80,8 @@ abstract class ValuePicker<T extends Comparable<T>> {
      */
     ValuePicker(@NonNull NumberPicker picker, @NonNull SortedMap<T, Integer> valueToStringRes,
                 @Nullable T defaultValue) {
-        require(!valueToStringRes.isEmpty());
-        require(defaultValue == null || valueToStringRes.containsKey(defaultValue));
+        // TODO: assert !valueToStringRes.isEmpty());
+        // TODO: assert defaultValue == null || valueToStringRes.containsKey(defaultValue));
         this.picker = picker;
         displayIntegers = new HashMap<>(valueToStringRes);
         selectableValues = new ArrayList<>(valueToStringRes.size());
@@ -101,9 +101,9 @@ abstract class ValuePicker<T extends Comparable<T>> {
      * or does not contain defaultValue when defaultValue is not null.
      */
     void setSelectableValues(@NonNull Collection<T> values, @Nullable T defaultValue) {
-        require(!values.isEmpty());
-        require(displayIntegers.keySet().containsAll(values));
-        require(defaultValue == null || values.contains(defaultValue));
+        // TODO: assert !values.isEmpty());
+        // TODO: assert displayIntegers.keySet().containsAll(values));
+        // TODO: assert defaultValue == null || values.contains(defaultValue));
 
         picker.setDisplayedValues(null);
         picker.setValue(0);
@@ -168,9 +168,8 @@ abstract class ValuePicker<T extends Comparable<T>> {
      * @throws org.valid4j.errors.RequireViolation When #selectableValues does not contain the given value.
      */
     void setValue(@NonNull T value) {
-        int position;
-        require((position = selectableValues.indexOf(value)) >= 0);
-        picker.setValue(position);
+        // TODO: assert (position = selectableValues.indexOf(value)) >= 0);
+        picker.setValue(selectableValues.indexOf(value));
     }
 
     /**

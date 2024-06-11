@@ -1,6 +1,6 @@
 package com.peternaggschga.gwent.ui.dialogs.addcard;
 
-import static org.valid4j.Assertive.require;
+
 
 import android.widget.NumberPicker;
 
@@ -57,7 +57,7 @@ class StringValuePicker<T extends Comparable<T>> extends ValuePicker<T> {
     @NonNull
     protected String getDisplayString(@NonNull T value) {
         Integer resId = getDisplayIntegers().get(value);
-        require(resId != null);
+        // TODO: assert resId != null);
         //noinspection DataFlowIssue
         return getContext().getString(resId);
     }

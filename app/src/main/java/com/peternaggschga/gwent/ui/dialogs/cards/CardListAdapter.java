@@ -1,7 +1,6 @@
 package com.peternaggschga.gwent.ui.dialogs.cards;
 
 import static androidx.recyclerview.widget.RecyclerView.NO_ID;
-import static org.valid4j.Assertive.require;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -180,11 +179,11 @@ class CardListAdapter extends ListAdapter<CardUiState, CardListAdapter.CardViewH
             bindingView = itemView.findViewById(R.id.bindingView);
 
             itemView.findViewById(R.id.copyButton).setOnClickListener(v -> {
-                require(itemId > NO_ID);
+                // TODO: assert itemId > NO_ID);
                 onCopy.accept(itemId);
             });
             itemView.findViewById(R.id.deleteButton).setOnClickListener(v -> {
-                require(itemId > NO_ID);
+                // TODO: assert itemId > NO_ID);
                 onRemove.accept(itemId);
             });
         }
@@ -227,7 +226,7 @@ class CardListAdapter extends ListAdapter<CardUiState, CardListAdapter.CardViewH
          * @see #itemId
          */
         void setItemId(int itemId) {
-            require(itemId != NO_ID);
+            // TODO: assert itemId != NO_ID);
             this.itemId = itemId;
         }
     }

@@ -1,7 +1,6 @@
 package com.peternaggschga.gwent.ui.dialogs.addcard;
 
 import static com.peternaggschga.gwent.ui.dialogs.addcard.SquadManager.MAX_NR_SQUADS;
-import static org.valid4j.Assertive.require;
 
 import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
@@ -54,9 +53,9 @@ class SquadState {
      */
     private SquadState(@IntRange(from = 1, to = MAX_NR_SQUADS) int squadNumber,
                @IntRange(from = 0) int squadMembers, @IntRange(from = 0) int memberBaseDamage) {
-        require(1 <= squadNumber && squadNumber <= MAX_NR_SQUADS);
-        require(squadMembers >= 0);
-        require(memberBaseDamage >= 0);
+        // TODO: assert 1 <= squadNumber && squadNumber <= MAX_NR_SQUADS);
+        // TODO: assert squadMembers >= 0);
+        // TODO: assert memberBaseDamage >= 0);
         this.squadNumber = squadNumber;
         this.squadMembers = squadMembers;
         this.memberBaseDamage = memberBaseDamage;
@@ -73,7 +72,7 @@ class SquadState {
     @NonNull
     static SquadState getState(@IntRange(from = 1, to = MAX_NR_SQUADS) int squadNumber,
                                @NonNull List<UnitEntity> units) {
-        require(1 <= squadNumber && squadNumber <= MAX_NR_SQUADS);
+        // TODO: assert 1 <= squadNumber && squadNumber <= MAX_NR_SQUADS);
         units = units.stream()
                 .filter(unit -> unit.getSquad() != null && unit.getSquad() == squadNumber)
                 .collect(Collectors.toList());

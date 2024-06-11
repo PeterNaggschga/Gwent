@@ -1,7 +1,6 @@
 package com.peternaggschga.gwent.domain.damage;
 
 import static com.peternaggschga.gwent.domain.damage.DamageCalculator.Color.BUFFED;
-import static org.valid4j.Assertive.require;
 
 import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
@@ -35,7 +34,7 @@ class BondDamageCalculatorDecorator extends DamageCalculatorDecorator {
      */
     BondDamageCalculatorDecorator(@NonNull DamageCalculator component, @NonNull Map<Integer, Integer> idToSquadSize) {
         super(component);
-        require(idToSquadSize.values().stream().noneMatch(integer -> integer == null || integer <= 0));
+        // TODO: assert idToSquadSize.values().stream().noneMatch(integer -> integer == null || integer <= 0));
         this.idToSquadSize = idToSquadSize;
     }
 
@@ -51,7 +50,7 @@ class BondDamageCalculatorDecorator extends DamageCalculatorDecorator {
      */
     @Override
     public int calculateDamage(int id, @IntRange(from = 0) int damage) {
-        require(damage >= 0);
+        // TODO: assert damage >= 0);
         return Objects.requireNonNull(idToSquadSize.getOrDefault(id, 1)) * component.calculateDamage(id, damage);
     }
 

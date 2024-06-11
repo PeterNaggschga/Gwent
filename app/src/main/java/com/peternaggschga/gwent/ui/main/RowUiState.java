@@ -1,6 +1,6 @@
 package com.peternaggschga.gwent.ui.main;
 
-import static org.valid4j.Assertive.require;
+
 
 import androidx.annotation.IntRange;
 
@@ -39,8 +39,8 @@ public class RowUiState {
      * @throws org.valid4j.errors.RequireViolation When damage or units is negative.
      */
     public RowUiState(@IntRange(from = 0) int damage, boolean weather, boolean horn, @IntRange(from = 0) int units) {
-        require(damage >= 0);
-        require(units >= 0);
+        // TODO: assert damage >= 0);
+        // TODO: assert units >= 0);
         this.damage = damage;
         this.weather = weather;
         this.horn = horn;

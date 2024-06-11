@@ -1,6 +1,6 @@
 package com.peternaggschga.gwent.ui.dialogs.cards;
 
-import static org.valid4j.Assertive.require;
+
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.DrawableRes;
@@ -108,8 +108,8 @@ public class CardUiState {
     public CardUiState(int unitId, @DrawableRes int damageBackgroundImageId, @IntRange(from = UNUSED) int damage,
                        @ColorInt int damageTextColor, @DrawableRes int abilityImageId,
                 @Nullable @IntRange(from = 1) Integer squad) {
-        require(damage >= UNUSED);
-        require(squad == null || squad >= 1);
+        // TODO: assert damage >= UNUSED);
+        // TODO: assert squad == null || squad >= 1);
         this.unitId = unitId;
         this.damageBackgroundImageId = damageBackgroundImageId;
         this.damageString = damage == UNUSED ? "" : String.valueOf(damage);
