@@ -10,6 +10,9 @@ import androidx.annotation.NonNull;
 
 import com.peternaggschga.gwent.R;
 
+/**
+ * @todo Documentation
+ */
 class IndicatorManager {
     @NonNull
     private final ImageView[] indicators = new ImageView[5];

@@ -24,7 +24,7 @@ import java.util.Objects;
 public class SettingsActivity extends AppCompatActivity implements PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
     /**
      * Initializes layout and {@link ActionBar} as well as creates and displays a new {@link SettingsHeaderFragment}.
-     *
+     * @todo Save current Fragment to keep correct view on rotation.
      * @param savedInstanceState If the activity is being re-initialized after
      *                           previously being shut down then this Bundle contains the data it most
      *                           recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
