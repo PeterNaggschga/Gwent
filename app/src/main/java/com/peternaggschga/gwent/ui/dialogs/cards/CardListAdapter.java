@@ -179,11 +179,15 @@ class CardListAdapter extends ListAdapter<CardUiState, CardListAdapter.CardViewH
             bindingView = itemView.findViewById(R.id.bindingView);
 
             itemView.findViewById(R.id.copyButton).setOnClickListener(v -> {
-                // TODO: assert itemId > NO_ID);
+                if (itemId <= NO_ID) {
+                    throw new IllegalArgumentException("ItemId must be greater than NO_ID (" + NO_ID + ") but is " + itemId + ".");
+                }
                 onCopy.accept(itemId);
             });
             itemView.findViewById(R.id.deleteButton).setOnClickListener(v -> {
-                // TODO: assert itemId > NO_ID);
+                if (itemId <= NO_ID) {
+                    throw new IllegalArgumentException("ItemId must be greater than NO_ID (" + NO_ID + ") but is " + itemId + ".");
+                }
                 onRemove.accept(itemId);
             });
         }
@@ -222,11 +226,13 @@ class CardListAdapter extends ListAdapter<CardUiState, CardListAdapter.CardViewH
          * Sets the #unitId of this ViewHolder.
          *
          * @param itemId Integer referencing the UnitEntity#id of the represented UnitEntity.
-         * @throws org.valid4j.errors.RequireViolation When itemid is negative.
+         * @throws IllegalArgumentException When itemId is negative.
          * @see #itemId
          */
         void setItemId(int itemId) {
-            // TODO: assert itemId != NO_ID);
+            if (itemId <= NO_ID) {
+                throw new IllegalArgumentException("ItemId must be greater than NO_ID (-1) but is " + itemId + ".");
+            }
             this.itemId = itemId;
         }
     }

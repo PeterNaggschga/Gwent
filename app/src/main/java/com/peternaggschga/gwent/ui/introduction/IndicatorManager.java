@@ -1,7 +1,5 @@
 package com.peternaggschga.gwent.ui.introduction;
 
-
-
 import android.view.Window;
 import android.widget.ImageView;
 
@@ -26,7 +24,6 @@ class IndicatorManager {
     }
 
     void updateIndicators(@IntRange(from = 0, to = 4) int position) {
-        // TODO: assert 0 <= position && position <= 4);
         indicators[currentView].setImageResource(R.drawable.indicator_unselected);
         indicators[position].setImageResource(R.drawable.indicator_selected);
         currentView = position;

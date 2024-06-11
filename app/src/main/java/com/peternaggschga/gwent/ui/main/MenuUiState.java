@@ -36,10 +36,12 @@ public class MenuUiState {
      * @param reset   Boolean defining whether the reset button is clickable.
      * @param weather Boolean defining whether the weather button is clickable.
      * @param burn    Boolean defining whether the burn button is clickable.
-     * @throws org.valid4j.errors.RequireViolation When damage is negative.
+     * @throws IllegalArgumentException When damage is negative.
      */
     public MenuUiState(@IntRange(from = 0) int damage, boolean reset, boolean weather, boolean burn) {
-        // TODO: assert damage >= 0);
+        if (damage < 0) {
+            throw new IllegalArgumentException("Damage must be greater or equal to 0 but is " + damage + ".");
+        }
         this.damage = damage;
         this.reset = reset;
         this.weather = weather;

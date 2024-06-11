@@ -21,7 +21,7 @@ class StringValuePicker<T extends Comparable<T>> extends ValuePicker<T> {
      *
      * @param picker           NumberPicker wrapped by the created StringValuePicker.
      * @param valueToStringRes SortedMap with all #selectableValues as keys and the respective #displayIntegers (String ids) as value.
-     * @throws org.valid4j.errors.RequireViolation When valueToStringRes is empty.
+     * @throws IllegalArgumentException When valueToStringRes is empty.
      * @see #StringValuePicker(NumberPicker, SortedMap, Comparable)
      */
     @SuppressWarnings("unused")
@@ -39,7 +39,7 @@ class StringValuePicker<T extends Comparable<T>> extends ValuePicker<T> {
      * @param valueToStringRes SortedMap with all #selectableValues as keys and the respective #displayIntegers (String ids) as value.
      * @param defaultValue Value that is shown in the beginning.
      *                     If null, then the first value defined by the Comparable interface is used.
-     * @throws org.valid4j.errors.RequireViolation When valueToStringRes is empty
+     * @throws IllegalArgumentException When valueToStringRes is empty.
      * or when defaultValue is not null but not contained in valueToStringRes.
      */
     StringValuePicker(@NonNull NumberPicker picker, @NonNull SortedMap<T, Integer> valueToStringRes, @Nullable T defaultValue) {
@@ -51,14 +51,15 @@ class StringValuePicker<T extends Comparable<T>> extends ValuePicker<T> {
      *
      * @param value Value that should be represented as a String.
      * @return A localized String representing the value.
-     * @throws org.valid4j.errors.RequireViolation When #displayIntegers does not contain a String id for the given value.
+     * @throws IllegalStateException When #displayIntegers does not contain a String id for the given value.
      */
     @Override
     @NonNull
     protected String getDisplayString(@NonNull T value) {
-        Integer resId = getDisplayIntegers().get(value);
-        // TODO: assert resId != null);
-        //noinspection DataFlowIssue
+        Integer resId;
+        if ((resId = getDisplayIntegers().get(value)) == null) {
+            throw new IllegalStateException("Value must be key in displayIntegers but is " + value + ".");
+        }
         return getContext().getString(resId);
     }
 }

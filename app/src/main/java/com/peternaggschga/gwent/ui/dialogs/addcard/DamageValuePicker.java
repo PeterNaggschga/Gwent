@@ -4,6 +4,7 @@ package com.peternaggschga.gwent.ui.dialogs.addcard;
 
 import android.widget.NumberPicker;
 
+import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -58,12 +59,14 @@ class DamageValuePicker extends ValuePicker<Integer> {
      *
      * @param value Value that should be represented as a String.
      * @return A localized String representing the value.
-     * @throws org.valid4j.errors.RequireViolation When #epicValues is true and #displayIntegers does not contain a mapping for the given value.
+     * @throws IllegalStateException When #epicValues is true and #displayIntegers does not contain a mapping for the given value.
      */
     @Override
     @NonNull
     protected String getDisplayString(@NonNull Integer value) {
-        // TODO: assert !epicValues || getDisplayIntegers().containsKey(value));
+        if (epicValues && !getDisplayIntegers().containsKey(value)) {
+            throw new IllegalStateException("When epicValues is true, displayIntegers must contain the given key but does not contain " + value + ".");
+        }
         return epicValues ? String.valueOf(getDisplayIntegers().get(value)) : String.valueOf(value);
     }
 
@@ -73,15 +76,16 @@ class DamageValuePicker extends ValuePicker<Integer> {
      * Otherwise the #picker is simply set to the given value.
      *
      * @param value Value that the picker is set to.
-     * @throws org.valid4j.errors.RequireViolation When #epicValues is false and the given value is not in [0,20].
+     * @throws IllegalStateException When #epicValues is false and the given value is not in [0,20].
      * @see ValuePicker#setValue(Comparable)
      */
     @Override
-    void setValue(@NonNull Integer value) {
+    void setValue(@NonNull @IntRange(from = 0, to = NON_EPIC_DAMAGE_VALUES_UPPER_BOUND) Integer value) {
         if (epicValues) {
             super.setValue(value);
+        } else if (value < 0 || value > NON_EPIC_DAMAGE_VALUES_UPPER_BOUND) {
+            throw new IllegalStateException("Value must be in [0, " + NON_EPIC_DAMAGE_VALUES_UPPER_BOUND + "] but is " + value + ".");
         } else {
-            // TODO: assert 0 <= value && value <= NON_EPIC_DAMAGE_VALUES_UPPER_BOUND);
             getPicker().setValue(value);
         }
     }

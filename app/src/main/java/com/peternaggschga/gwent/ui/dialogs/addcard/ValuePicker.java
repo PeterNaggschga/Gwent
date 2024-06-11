@@ -60,7 +60,7 @@ abstract class ValuePicker<T extends Comparable<T>> {
      * @see #ValuePicker(NumberPicker, SortedMap, Comparable)
      * @param picker NumberPicker wrapped by the created ValuePicker.
      * @param valueToStringRes SortedMap with all #selectableValues as keys and the respective #displayIntegers as value.
-     * @throws org.valid4j.errors.RequireViolation When valueToStringRes is empty.
+     * @throws IllegalArgumentException When valueToStringRes is empty.
      */
     ValuePicker(@NonNull NumberPicker picker, @NonNull SortedMap<T, Integer> valueToStringRes) {
         this(picker, valueToStringRes, null);
@@ -75,13 +75,17 @@ abstract class ValuePicker<T extends Comparable<T>> {
      * @param valueToStringRes SortedMap with all #selectableValues as keys and the respective #displayIntegers as value.
      * @param defaultValue Value that is shown in the beginning.
      *                     If null, then the first value defined by the Comparable interface is used.
-     * @throws org.valid4j.errors.RequireViolation When valueToStringRes is empty
+     * @throws IllegalArgumentException When valueToStringRes is empty.
      * or when defaultValue is not null but not contained in valueToStringRes.
      */
     ValuePicker(@NonNull NumberPicker picker, @NonNull SortedMap<T, Integer> valueToStringRes,
                 @Nullable T defaultValue) {
-        // TODO: assert !valueToStringRes.isEmpty());
-        // TODO: assert defaultValue == null || valueToStringRes.containsKey(defaultValue));
+        if (valueToStringRes.isEmpty()) {
+            throw new IllegalArgumentException("SortedMap<T, Integer> valueToStringRes must not be empty.");
+        }
+        if (defaultValue != null && !valueToStringRes.containsKey(defaultValue)) {
+            throw new IllegalArgumentException("DefaultValue must be null or a key in the given SortedMap.");
+        }
         this.picker = picker;
         displayIntegers = new HashMap<>(valueToStringRes);
         selectableValues = new ArrayList<>(valueToStringRes.size());
@@ -97,13 +101,19 @@ abstract class ValuePicker<T extends Comparable<T>> {
      * @param values Collection of the new selectable values.
      * @param defaultValue Value that is shown in the beginning.
      *                     If null, then the first value defined by the Comparable interface is used.
-     * @throws org.valid4j.errors.RequireViolation When values is empty, or contains a value not present in the key-set of #displayIntegersor,
-     * or does not contain defaultValue when defaultValue is not null.
+     * @throws IllegalArgumentException When values is empty or #displayIntegers does not contain defaultValue when defaultValue is not null.
+     * @throws IllegalStateException When values contains a value not present in the key-set of #displayIntegers.
      */
     void setSelectableValues(@NonNull Collection<T> values, @Nullable T defaultValue) {
-        // TODO: assert !values.isEmpty());
-        // TODO: assert displayIntegers.keySet().containsAll(values));
-        // TODO: assert defaultValue == null || values.contains(defaultValue));
+        if (values.isEmpty()) {
+            throw new IllegalArgumentException("Collection<T> values must not be empty.");
+        }
+        if (!displayIntegers.keySet().containsAll(values)) {
+            throw new IllegalStateException("DisplayIntegers must contain all given values.");
+        }
+        if (defaultValue != null && !displayIntegers.containsKey(defaultValue)) {
+            throw new IllegalArgumentException("DefaultValue must be null or a key in the given SortedMap.");
+        }
 
         picker.setDisplayedValues(null);
         picker.setValue(0);
@@ -165,11 +175,14 @@ abstract class ValuePicker<T extends Comparable<T>> {
     /**
      * Sets the picker to the given value.
      * @param value Value that the picker is set to.
-     * @throws org.valid4j.errors.RequireViolation When #selectableValues does not contain the given value.
+     * @throws IllegalStateException When #selectableValues does not contain the given value.
      */
     void setValue(@NonNull T value) {
-        // TODO: assert (position = selectableValues.indexOf(value)) >= 0);
-        picker.setValue(selectableValues.indexOf(value));
+        int position;
+        if ((position = selectableValues.indexOf(value)) < 0) {
+            throw new IllegalStateException("SelectableValues must contain the given value.");
+        }
+        picker.setValue(position);
     }
 
     /**
@@ -234,8 +247,8 @@ abstract class ValuePicker<T extends Comparable<T>> {
      * Wrapper of #setSelectableValues(Collection, Comparable).
      *
      * @param values Collection of the new selectable values.
-     * @throws org.valid4j.errors.RequireViolation When values is empty, or contains a value not present in the key-set of #displayIntegersor,
-     * or does not contain defaultValue when defaultValue is not null.
+     * @throws IllegalArgumentException When values is empty.
+     * @throws IllegalStateException When values contains a value not present in the key-set of #displayIntegers.
      * @see #setSelectableValues(Collection, Comparable)
      */
     void setSelectableValues(@NonNull Collection<T> values) {

@@ -102,14 +102,18 @@ public class CardUiState {
      * @param damageTextColor Integer representing the text color of the damage view.
      * @param abilityImageId Integer referencing the drawable resource shown by the ability image view or #UNUSED.
      * @param squad Integer representing the UnitEntity#squad of the represented UnitEntity.
-     * @throws org.valid4j.errors.RequireViolation When damage is less than #UNUSED or squad is neither null nor greater than zero.
+     * @throws IllegalArgumentException When damage is less than #UNUSED or squad is neither null nor greater than zero.
      * @see CardUiStateFactory#createCardUiState(UnitEntity, DamageCalculator)
      */
     public CardUiState(int unitId, @DrawableRes int damageBackgroundImageId, @IntRange(from = UNUSED) int damage,
                        @ColorInt int damageTextColor, @DrawableRes int abilityImageId,
-                @Nullable @IntRange(from = 1) Integer squad) {
-        // TODO: assert damage >= UNUSED);
-        // TODO: assert squad == null || squad >= 1);
+                       @Nullable @IntRange(from = 1) Integer squad) {
+        if (damage < UNUSED) {
+            throw new IllegalArgumentException("Damage must be greater or equal to UNUSED (" + UNUSED + ") but is " + damage + ".");
+        }
+        if (squad != null && squad < 1) {
+            throw new IllegalArgumentException("Squad must not be null or less than 1 but is " + squad + ".");
+        }
         this.unitId = unitId;
         this.damageBackgroundImageId = damageBackgroundImageId;
         this.damageString = damage == UNUSED ? "" : String.valueOf(damage);

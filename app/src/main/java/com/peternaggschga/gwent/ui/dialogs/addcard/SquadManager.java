@@ -66,11 +66,13 @@ class SquadManager {
      *
      * @param newVal Integer representing the newly selected squad.
      * @param picker DamageValuePicker that is updated.
-     * @throws org.valid4j.errors.RequireViolation When newVal is not between 1 and #MAX_NR_SQUADS.
+     * @throws IllegalArgumentException When newVal is not between 1 and #MAX_NR_SQUADS.
      * @see SquadState#getMemberBaseDamage()
      */
     void onSquadChanged(@IntRange(from = 1, to = MAX_NR_SQUADS) int newVal, @NonNull DamageValuePicker picker) {
-        // TODO: assert 1 <= newVal && newVal <= MAX_NR_SQUADS);
+        if (newVal < 1 || newVal > MAX_NR_SQUADS) {
+            throw new IllegalArgumentException("NewVal must be in [1, " + MAX_NR_SQUADS + "] but is " + newVal + ".");
+        }
         SquadState squad = states[newVal - 1];
 
         Context context = picker.getContext();

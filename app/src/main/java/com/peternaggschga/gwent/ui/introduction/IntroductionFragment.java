@@ -44,11 +44,13 @@ public class IntroductionFragment extends Fragment {
      * Factory method of {@link IntroductionFragment}.
      * @param index {@link Integer} defining the page that the created fragment shows.
      * @return An {@link IntroductionFragment} showing the page with the given index.
-     * @throws org.valid4j.errors.RequireViolation When the given index is not in [0, {@link #PAGES_COUNT} - 1].
+     * @throws IllegalArgumentException When the given index is not in [0, {@link #PAGES_COUNT} - 1].
      */
     @NonNull
     public static IntroductionFragment newInstance(@IntRange(from = 0, to = PAGES_COUNT - 1) int index) {
-        // TODO: assert 0 <= index && index <= PAGES_COUNT - 1);
+        if (index < 0 || index >= PAGES_COUNT) {
+            throw new IllegalArgumentException("Index must be in [0, PAGES_COUNT - 1] but is " + index + ".");
+        }
         Bundle arguments = new Bundle();
         arguments.putInt(ARG_SECTION_NUMBER, index);
         IntroductionFragment fragment = new IntroductionFragment();
