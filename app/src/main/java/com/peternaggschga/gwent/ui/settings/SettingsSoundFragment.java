@@ -2,6 +2,7 @@ package com.peternaggschga.gwent.ui.settings;
 
 import android.os.Bundle;
 
+import androidx.annotation.Keep;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
@@ -11,6 +12,7 @@ import com.peternaggschga.gwent.R;
  * A {@link PreferenceFragmentCompat} class encapsulating the sound preference screen,
  * i.e., the {@link Preference}s defined in {@link R.xml#sound_preferences}.
  */
+@Keep
 public class SettingsSoundFragment extends PreferenceFragmentCompat {
     /**
      * Called during {@link #onCreate(Bundle)} to supply the preferences for this fragment.

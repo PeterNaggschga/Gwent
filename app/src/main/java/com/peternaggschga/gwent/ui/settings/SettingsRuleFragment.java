@@ -11,6 +11,7 @@ import static com.peternaggschga.gwent.ui.settings.RuleSection.SPECIAL_CARDS;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.Keep;
 import androidx.annotation.NonNull;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
@@ -26,6 +27,7 @@ import java.util.Objects;
  * A {@link PreferenceFragmentCompat} class encapsulating the rule preference screen,
  * i.e., the rule sections defined in {@link R.xml#rule_preferences}.
  */
+@Keep
 public class SettingsRuleFragment extends PreferenceFragmentCompat {
     /**
      * Creates an {@link Preference.OnPreferenceClickListener} that starts a new {@link RuleActivity}
