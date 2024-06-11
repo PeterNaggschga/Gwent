@@ -6,7 +6,6 @@ import static org.junit.Assert.fail;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import org.valid4j.errors.RequireViolation;
 
 @RunWith(JUnit4.class)
 public class CardUiStateUnitTest {
@@ -36,7 +35,7 @@ public class CardUiStateUnitTest {
         try {
             new CardUiState(0, 0, CardUiState.UNUSED - 1, 0, CardUiState.UNUSED, null);
             fail();
-        } catch (RequireViolation ignored) {
+        } catch (IllegalArgumentException ignored) {
         }
     }
 
@@ -44,7 +43,7 @@ public class CardUiStateUnitTest {
     public void constructorAllowsUnusedDamage() {
         try {
             new CardUiState(0, 0, CardUiState.UNUSED, 0, CardUiState.UNUSED, null);
-        } catch (RequireViolation ignored) {
+        } catch (IllegalArgumentException ignored) {
             fail();
         }
     }
@@ -54,11 +53,11 @@ public class CardUiStateUnitTest {
         try {
             new CardUiState(0, 0, 0, 0, CardUiState.UNUSED, 0);
             fail();
-        } catch (RequireViolation ignored) {
+        } catch (IllegalArgumentException ignored) {
         }
         try {
             new CardUiState(0, 0, 0, 0, CardUiState.UNUSED, 1);
-        } catch (RequireViolation ignored) {
+        } catch (IllegalArgumentException ignored) {
             fail();
         }
     }
@@ -67,7 +66,7 @@ public class CardUiStateUnitTest {
     public void constructorAllowsNullSquad() {
         try {
             new CardUiState(0, 0, 0, 0, CardUiState.UNUSED, null);
-        } catch (RequireViolation ignored) {
+        } catch (IllegalArgumentException ignored) {
             fail();
         }
     }

@@ -2,7 +2,6 @@ package com.peternaggschga.gwent.data;
 
 import static com.peternaggschga.gwent.domain.damage.DamageCalculator.Color;
 import static com.peternaggschga.gwent.domain.damage.DamageCalculator.Color.DEFAULT;
-import static org.valid4j.Assertive.require;
 
 import android.content.Context;
 
@@ -69,7 +68,7 @@ public class UnitEntity {
      * If #ability is anything else, this value is `null`.
      */
     @ColumnInfo(defaultValue = "NULL")
-    @IntRange(from = 0)
+    @IntRange(from = 1)
     @Nullable
     private Integer squad;
 
@@ -90,12 +89,18 @@ public class UnitEntity {
      * @param ability Ability representing the #ability of the card.
      * @param squad   Integer representing the #squad of a card that has the Ability#BINDING #ability.
      * @param row     RowType representing the combat type of the card.
-     * @throws org.valid4j.errors.RequireViolation When damage is less than zero or if ability is Ability#BINDING and squad is null or less than zero or if ability is not Ability#BINDING and squad is not null.
+     * @throws IllegalArgumentException When damage is less than zero or if ability is Ability#BINDING and squad is null or less than one or if ability is not Ability#BINDING and squad is not null.
      */
-    UnitEntity(boolean epic, @IntRange(from = 0) int damage, @NonNull Ability ability, @IntRange(from = 0) @Nullable Integer squad, @NonNull RowType row) {
-        require(damage >= 0);
-        require(ability == Ability.BINDING || squad == null);
-        require(ability != Ability.BINDING || (squad != null && squad >= 0));
+    UnitEntity(boolean epic, @IntRange(from = 0) int damage, @NonNull Ability ability, @IntRange(from = 1) @Nullable Integer squad, @NonNull RowType row) {
+        if (damage < 0) {
+            throw new IllegalArgumentException("Damage must be greater or equal to 0 but is " + damage + ".");
+        }
+        if (ability != Ability.BINDING && squad != null) {
+            throw new IllegalArgumentException("Squad must be null or ability must be BINDING but squad is " + squad + " and ability is " + ability + ".");
+        }
+        if (ability == Ability.BINDING && (squad == null || squad < 1)) {
+            throw new IllegalArgumentException("Squad must not be null or less than one but squad is " + squad + ".");
+        }
         this.epic = epic;
         this.damage = damage;
         this.ability = ability;
@@ -143,12 +148,14 @@ public class UnitEntity {
      * @param context Context used to acquire String resources.
      * @param units   Collection of UnitEntity objects that should be in the created String.
      * @return A String containing the description of all units.
-     * @throws org.valid4j.errors.RequireViolation When units collection is empty.
+     * @throws IllegalArgumentException When units collection is empty.
      * @see #toString(Context)
      */
     @NonNull
     public static String collectionToString(@NonNull Context context, @NonNull Collection<UnitEntity> units) {
-        require(!units.isEmpty());
+        if (units.isEmpty()) {
+            throw new IllegalArgumentException("Units collection must not be empty.");
+        }
 
         Map<String, Integer> descriptionStrings = new HashMap<>(units.size());
         for (UnitEntity unit : units) {
@@ -279,10 +286,12 @@ public class UnitEntity {
      * Only used by Room extension.
      *
      * @param damage Integer representing the card's base-damage.
-     * @throws org.valid4j.errors.RequireViolation When damage is less than zero.
+     * @throws IllegalArgumentException When damage is less than zero.
      */
     void setDamage(@IntRange(from = 0) int damage) {
-        require(damage >= 0);
+        if (damage < 0) {
+            throw new IllegalArgumentException("Damage must not be less than zero but is " + damage + ".");
+        }
         this.damage = damage;
     }
 
@@ -321,11 +330,15 @@ public class UnitEntity {
      * Only used by Room extension.
      *
      * @param squad Integer representing the units' squad if #ability is Ability#BINDING or `null`.
-     * @throws org.valid4j.errors.RequireViolation When #ability is Ability#BINDING and squad is null or less than zero or if #ability is not Ability#BINDING and squad is not null.
+     * @throws IllegalArgumentException When #ability is Ability#BINDING and squad is null or less than 1 or if #ability is not Ability#BINDING and squad is not null.
      */
-    void setSquad(@IntRange(from = 0) @Nullable Integer squad) {
-        require(ability == Ability.BINDING || squad == null);
-        require(ability != Ability.BINDING || (squad != null && squad >= 0));
+    void setSquad(@IntRange(from = 1) @Nullable Integer squad) {
+        if (ability != Ability.BINDING && squad != null) {
+            throw new IllegalArgumentException("Squad must be null or ability must be BINDING but squad is " + squad + " and ability is " + ability + ".");
+        }
+        if (ability == Ability.BINDING && (squad == null || squad < 1)) {
+            throw new IllegalArgumentException("Squad must not be null or less than one but squad is " + squad + ".");
+        }
         this.squad = squad;
     }
 

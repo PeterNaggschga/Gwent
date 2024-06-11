@@ -1,7 +1,5 @@
 package com.peternaggschga.gwent.data;
 
-import static org.valid4j.Assertive.require;
-
 import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -114,13 +112,20 @@ public class UnitRepository {
      * @param squad   Integer representing the #squad of a card that has the Ability#BINDING #ability.
      * @param row     RowType representing the combat type of the card.
      * @return A Completable tracking operation status.
-     * @throws org.valid4j.errors.RequireViolation When damage is less than zero or if ability is Ability#BINDING and squad is null or less than zero or if ability is not Ability#BINDING and squad is not null.
+     * @throws IllegalArgumentException When damage is less than zero or if ability is Ability#BINDING and squad is null or less than zero or if ability is not Ability#BINDING and squad is not null.
      */
     @NonNull
     private Completable insertUnit(boolean epic, @IntRange(from = 0) int damage, @NonNull Ability ability,
                                    @IntRange(from = 0) @Nullable Integer squad, @NonNull RowType row) {
-        require(damage >= 0);
-        require((ability != Ability.BINDING && squad == null) || (ability == Ability.BINDING && squad != null && squad >= 0));
+        if (damage < 0) {
+            throw new IllegalArgumentException("Damage must not be less than zero but is " + damage + ".");
+        }
+        if (ability != Ability.BINDING && squad != null) {
+            throw new IllegalArgumentException("Squad must be null or ability must be BINDING but squad is " + squad + " and ability is " + ability + ".");
+        }
+        if (ability == Ability.BINDING && (squad == null || squad < 1)) {
+            throw new IllegalArgumentException("Squad must not be null or less than one but squad is " + squad + ".");
+        }
         return database.units().insertUnit(epic, damage, ability, squad, row)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
@@ -137,7 +142,7 @@ public class UnitRepository {
      * @param number  Integer representing the number of units to be added.
      * @return A Completable tracking operation status.
      * @see #insertUnit(boolean, int, Ability, Integer, RowType)
-     * @throws org.valid4j.errors.RequireViolation When damage is less than zero or if ability is Ability#BINDING and squad is null or less than zero
+     * @throws IllegalArgumentException When damage is less than zero or if ability is Ability#BINDING and squad is null or less than zero
      * or if ability is not Ability#BINDING and squad is not null.
      */
     @NonNull

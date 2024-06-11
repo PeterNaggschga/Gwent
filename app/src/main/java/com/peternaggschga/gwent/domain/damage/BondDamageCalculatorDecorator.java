@@ -1,7 +1,6 @@
 package com.peternaggschga.gwent.domain.damage;
 
 import static com.peternaggschga.gwent.domain.damage.DamageCalculator.Color.BUFFED;
-import static org.valid4j.Assertive.require;
 
 import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
@@ -30,12 +29,14 @@ class BondDamageCalculatorDecorator extends DamageCalculatorDecorator {
      *
      * @param component     DamageCalculator that is being decorated by this decorator.
      * @param idToSquadSize Map mapping the ids of all units with the com.peternaggschga.gwent.data.Ability#BINDING ability to the respective squad size.
-     * @throws org.valid4j.errors.RequireViolation When idToSquadSize contains negative or null values.
+     * @throws IllegalArgumentException When idToSquadSize contains non-positive or null values.
      * @see DamageCalculatorBuilder
      */
     BondDamageCalculatorDecorator(@NonNull DamageCalculator component, @NonNull Map<Integer, Integer> idToSquadSize) {
         super(component);
-        require(idToSquadSize.values().stream().noneMatch(integer -> integer == null || integer <= 0));
+        if (idToSquadSize.values().stream().anyMatch(integer -> integer == null || integer < 1)) {
+            throw new IllegalArgumentException("Map idToSquadSize must not contain non-positive or null values.");
+        }
         this.idToSquadSize = idToSquadSize;
     }
 
@@ -47,11 +48,13 @@ class BondDamageCalculatorDecorator extends DamageCalculatorDecorator {
      * @param id     Integer representing the UnitEntity#id of the unit whose (de-)buff damage is calculated.
      * @param damage Integer representing the base-damage of the unit whose (de-)buff damage is calculated.
      * @return Integer representing the (de-)buffed damage of the unit.
-     * @throws org.valid4j.errors.RequireViolation When damage is negative.
+     * @throws IllegalArgumentException When damage is negative.
      */
     @Override
     public int calculateDamage(int id, @IntRange(from = 0) int damage) {
-        require(damage >= 0);
+        if (damage < 0) {
+            throw new IllegalArgumentException("Damage must be greater or equal to 0.");
+        }
         return Objects.requireNonNull(idToSquadSize.getOrDefault(id, 1)) * component.calculateDamage(id, damage);
     }
 

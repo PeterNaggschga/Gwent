@@ -1,7 +1,6 @@
 package com.peternaggschga.gwent.domain.damage;
 
 import static com.peternaggschga.gwent.domain.damage.DamageCalculator.Color.BUFFED;
-import static org.valid4j.Assertive.require;
 
 import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
@@ -58,11 +57,13 @@ class HornDamageCalculatorDecorator extends DamageCalculatorDecorator {
      * @param id     Integer representing the UnitEntity#id of the unit whose (de-)buff damage is calculated.
      * @param damage Integer representing the base-damage of the unit whose (de-)buff damage is calculated.
      * @return Integer representing the (de-)buffed damage of the unit.
-     * @throws org.valid4j.errors.RequireViolation When damage is negative.
+     * @throws IllegalArgumentException When damage is negative.
      */
     @Override
     public int calculateDamage(int id, @IntRange(from = 0) int damage) {
-        require(damage >= 0);
+        if (damage < 0) {
+            throw new IllegalArgumentException("Damage must be greater or equal to 0 but is " + damage + ".");
+        }
         return (doubleDamage(id) ? 2 : 1) * component.calculateDamage(id, damage);
     }
 

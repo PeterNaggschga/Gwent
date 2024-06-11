@@ -18,7 +18,6 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.valid4j.errors.RequireViolation;
 
 import java.util.Collections;
 import java.util.List;
@@ -132,7 +131,7 @@ public class DamageValuePickerUnitTest {
         try {
             testPicker.setValue(1);
             fail();
-        } catch (RequireViolation ignored) {
+        } catch (IllegalStateException ignored) {
         }
     }
 
@@ -159,12 +158,12 @@ public class DamageValuePickerUnitTest {
         try {
             testPicker.setValue(-1);
             fail();
-        } catch (RequireViolation ignored) {
+        } catch (IllegalStateException ignored) {
         }
         try {
             testPicker.setValue(21);
             fail();
-        } catch (RequireViolation ignored) {
+        } catch (IllegalStateException ignored) {
         }
     }
 
@@ -179,7 +178,7 @@ public class DamageValuePickerUnitTest {
         try {
             testPicker.getDisplayString(1);
             fail();
-        } catch (RequireViolation ignored) {
+        } catch (IllegalStateException ignored) {
         }
     }
 

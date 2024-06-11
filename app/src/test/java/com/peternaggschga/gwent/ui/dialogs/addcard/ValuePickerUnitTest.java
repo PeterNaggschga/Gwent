@@ -24,7 +24,6 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.valid4j.errors.RequireViolation;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -68,7 +67,7 @@ public class ValuePickerUnitTest {
                 }
             };
             fail();
-        } catch (RequireViolation ignored) {
+        } catch (IllegalArgumentException ignored) {
         }
         try {
             new ValuePicker<Ability>(mockPicker, Collections.emptySortedMap(), null) {
@@ -78,7 +77,7 @@ public class ValuePickerUnitTest {
                 }
             };
             fail();
-        } catch (RequireViolation ignored) {
+        } catch (IllegalArgumentException ignored) {
         }
     }
 
@@ -106,7 +105,7 @@ public class ValuePickerUnitTest {
                 }
             };
             fail();
-        } catch (RequireViolation ignored) {
+        } catch (IllegalArgumentException ignored) {
         }
     }
 
@@ -133,12 +132,12 @@ public class ValuePickerUnitTest {
         try {
             testPicker.setSelectableValues(Collections.emptyList());
             fail();
-        } catch (RequireViolation ignored) {
+        } catch (IllegalArgumentException ignored) {
         }
         try {
             testPicker.setSelectableValues(Collections.emptyList(), null);
             fail();
-        } catch (RequireViolation ignored) {
+        } catch (IllegalArgumentException ignored) {
         }
     }
 
@@ -147,12 +146,12 @@ public class ValuePickerUnitTest {
         try {
             testPicker.setSelectableValues(Arrays.asList(Ability.values()));
             fail();
-        } catch (RequireViolation ignored) {
+        } catch (IllegalStateException ignored) {
         }
         try {
             testPicker.setSelectableValues(Arrays.asList(Ability.values()), null);
             fail();
-        } catch (RequireViolation ignored) {
+        } catch (IllegalStateException ignored) {
         }
     }
 
@@ -161,7 +160,7 @@ public class ValuePickerUnitTest {
         try {
             testPicker.setSelectableValues(ABILITY_TO_STRING_RES.keySet(), NOT_SELECTABLE);
             fail();
-        } catch (RequireViolation ignored) {
+        } catch (IllegalArgumentException ignored) {
         }
     }
 
@@ -231,7 +230,7 @@ public class ValuePickerUnitTest {
         try {
             testPicker.setValue(Ability.NONE);
             fail();
-        } catch (RequireViolation ignored) {
+        } catch (IllegalStateException ignored) {
         }
     }
 

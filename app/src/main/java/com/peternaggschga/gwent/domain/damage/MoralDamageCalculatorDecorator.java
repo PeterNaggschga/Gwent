@@ -1,7 +1,6 @@
 package com.peternaggschga.gwent.domain.damage;
 
 import static com.peternaggschga.gwent.domain.damage.DamageCalculator.Color.BUFFED;
-import static org.valid4j.Assertive.require;
 
 import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
@@ -31,12 +30,14 @@ class MoralDamageCalculatorDecorator extends DamageCalculatorDecorator {
      * @param component DamageCalculator that is being decorated by this decorator.
      * @param unitIds   List of Integers
      *                  representing ids of units with the com.peternaggschga.gwent.data.Ability#MORAL_BOOST ability.
-     * @throws org.valid4j.errors.RequireViolation When unitIds contains null values.
+     * @throws IllegalArgumentException When unitIds contains null values.
      * @see DamageCalculatorBuilder
      */
     MoralDamageCalculatorDecorator(@NonNull DamageCalculator component, @NonNull List<Integer> unitIds) {
         super(component);
-        require(!unitIds.contains(null));
+        if (unitIds.contains(null)) {
+            throw new IllegalArgumentException("List<Integer> unitIds must not contain null values.");
+        }
         this.unitIds = unitIds;
     }
 
@@ -49,11 +50,13 @@ class MoralDamageCalculatorDecorator extends DamageCalculatorDecorator {
      * @param id     Integer representing the UnitEntity#id of the unit whose (de-)buff damage is calculated.
      * @param damage Integer representing the base-damage of the unit whose (de-)buff damage is calculated.
      * @return Integer representing the (de-)buffed damage of the unit.
-     * @throws org.valid4j.errors.RequireViolation When damage is negative.
+     * @throws IllegalArgumentException When damage is negative.
      */
     @Override
     public int calculateDamage(int id, @IntRange(from = 0) int damage) {
-        require(damage >= 0);
+        if (damage < 0) {
+            throw new IllegalArgumentException("Damage must be greater or equal to 0 but is " + damage + ".");
+        }
         int componentDamage = component.calculateDamage(id, damage) + unitIds.size();
         return unitIds.contains(id) ? componentDamage - 1 : componentDamage;
     }

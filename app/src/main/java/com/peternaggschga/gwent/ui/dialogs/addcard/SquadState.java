@@ -1,7 +1,7 @@
 package com.peternaggschga.gwent.ui.dialogs.addcard;
 
+import static com.peternaggschga.gwent.ui.dialogs.addcard.DamageValuePicker.NON_EPIC_DAMAGE_VALUES_UPPER_BOUND;
 import static com.peternaggschga.gwent.ui.dialogs.addcard.SquadManager.MAX_NR_SQUADS;
-import static org.valid4j.Assertive.require;
 
 import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
@@ -39,7 +39,7 @@ class SquadState {
      * If #squadMembers is 0, #memberBaseDamage defaults to 5.
      * @see #getMemberBaseDamage()
      */
-    @IntRange(from = 0)
+    @IntRange(from = 0, to = NON_EPIC_DAMAGE_VALUES_UPPER_BOUND)
     private final int memberBaseDamage;
 
     /**
@@ -50,13 +50,19 @@ class SquadState {
      * @param squadMembers     Integer representing the number of members in the squad.
      * @param memberBaseDamage Integer containing the base damage of members of this squad.
      * @see #getState(int, List)
-     * @throws org.valid4j.errors.RequireViolation When one of the parameters doesn't meet its IntRange constraint.
+     * @throws IllegalArgumentException When one of the parameters doesn't meet its IntRange constraint.
      */
-    private SquadState(@IntRange(from = 1, to = MAX_NR_SQUADS) int squadNumber,
-               @IntRange(from = 0) int squadMembers, @IntRange(from = 0) int memberBaseDamage) {
-        require(1 <= squadNumber && squadNumber <= MAX_NR_SQUADS);
-        require(squadMembers >= 0);
-        require(memberBaseDamage >= 0);
+    private SquadState(@IntRange(from = 1, to = MAX_NR_SQUADS) int squadNumber, @IntRange(from = 0) int squadMembers,
+                       @IntRange(from = 0, to = NON_EPIC_DAMAGE_VALUES_UPPER_BOUND) int memberBaseDamage) {
+        if (squadNumber < 1 || squadNumber > MAX_NR_SQUADS) {
+            throw new IllegalArgumentException("SquadNumber must be in [1, " + MAX_NR_SQUADS + "] but is " + squadNumber + ".");
+        }
+        if (squadMembers < 0) {
+            throw new IllegalArgumentException("SquadMembers must be non-negative but is " + squadMembers + ".");
+        }
+        if (memberBaseDamage < 0 || memberBaseDamage > NON_EPIC_DAMAGE_VALUES_UPPER_BOUND) {
+            throw new IllegalArgumentException("MemberBaseDamage must be in [0, " + NON_EPIC_DAMAGE_VALUES_UPPER_BOUND + "] but is " + memberBaseDamage + ".");
+        }
         this.squadNumber = squadNumber;
         this.squadMembers = squadMembers;
         this.memberBaseDamage = memberBaseDamage;
@@ -68,12 +74,14 @@ class SquadState {
      * @param squadNumber Integer containing the number of the represented squad.
      * @param units List of UnitEntity objects used to count squad-members.
      * @return A SquadState object that is newly created from the given List of units.
-     * @throws org.valid4j.errors.RequireViolation When the given squad number is not between 1 and #MAX_NR_SQUADS.
+     * @throws IllegalArgumentException When the given squad number is not between 1 and #MAX_NR_SQUADS.
      */
     @NonNull
     static SquadState getState(@IntRange(from = 1, to = MAX_NR_SQUADS) int squadNumber,
                                @NonNull List<UnitEntity> units) {
-        require(1 <= squadNumber && squadNumber <= MAX_NR_SQUADS);
+        if (squadNumber < 1 || squadNumber > MAX_NR_SQUADS) {
+            throw new IllegalArgumentException("SquadNumber must be in [1, " + MAX_NR_SQUADS + "] but is " + squadNumber + ".");
+        }
         units = units.stream()
                 .filter(unit -> unit.getSquad() != null && unit.getSquad() == squadNumber)
                 .collect(Collectors.toList());
@@ -115,7 +123,7 @@ class SquadState {
      * @see #memberBaseDamage
      * @return An Integer defining the base damage of units in the represented squad.
      */
-    @IntRange(from = 0)
+    @IntRange(from = 0, to = NON_EPIC_DAMAGE_VALUES_UPPER_BOUND)
     int getMemberBaseDamage() {
         return memberBaseDamage;
     }

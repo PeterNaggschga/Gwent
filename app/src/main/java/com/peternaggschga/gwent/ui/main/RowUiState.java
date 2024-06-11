@@ -1,6 +1,6 @@
 package com.peternaggschga.gwent.ui.main;
 
-import static org.valid4j.Assertive.require;
+
 
 import androidx.annotation.IntRange;
 
@@ -36,11 +36,15 @@ public class RowUiState {
      * @param weather Boolean defining whether the weather debuff is active.
      * @param horn Boolean defining whether the commander's horn buff is active.
      * @param units Integer representing the number of units.
-     * @throws org.valid4j.errors.RequireViolation When damage or units is negative.
+     * @throws IllegalArgumentException When damage or units is negative.
      */
     public RowUiState(@IntRange(from = 0) int damage, boolean weather, boolean horn, @IntRange(from = 0) int units) {
-        require(damage >= 0);
-        require(units >= 0);
+        if (damage < 0) {
+            throw new IllegalArgumentException("Damage must be greater or equal to 0 but is " + damage + ".");
+        }
+        if (units < 0) {
+            throw new IllegalArgumentException("Units must be greater or equal to 0 but is " + units + ".");
+        }
         this.damage = damage;
         this.weather = weather;
         this.horn = horn;
