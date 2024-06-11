@@ -23,8 +23,13 @@ import java.util.Objects;
  */
 public class SettingsActivity extends AppCompatActivity implements PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
     /**
+     * {@link String} constant defining the key in savedInstanceState {@link Bundle}s
+     * where the last shown {@link Fragment} is saved.
+     */
+    private static final String CURRENT_FRAGMENT_KEY = "currentFragment";
+
+    /**
      * Initializes layout and {@link ActionBar} as well as creates and displays a new {@link SettingsHeaderFragment}.
-     * @todo Save current Fragment to keep correct view on rotation.
      * @param savedInstanceState If the activity is being re-initialized after
      *                           previously being shut down then this Bundle contains the data it most
      *                           recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
@@ -42,24 +47,31 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
+        Fragment currentFragment = null;
+        if (savedInstanceState != null) {
+            currentFragment = getSupportFragmentManager().getFragment(savedInstanceState, CURRENT_FRAGMENT_KEY);
+        }
+        currentFragment = currentFragment == null ? new SettingsHeaderFragment() : currentFragment;
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.settingsFrameLayout, new SettingsHeaderFragment())
+                .replace(R.id.settingsFrameLayout, currentFragment)
                 .commit();
     }
 
     /**
-     * Called, whenever the user chooses to navigate Up from the action bar.
-     * If a {@link Fragment} is present on top of the back stack of
-     * the current {@link androidx.fragment.app.FragmentManager}, it is popped.
+     * Saves the currently visible {@link Fragment} into the given {@link Bundle}.
+     * @param outState Bundle in which the currently used {@link Fragment} is saved.
      *
-     * @return {@link Boolean} defining whether the call has been handled.
      */
     @Override
-    public boolean onSupportNavigateUp() {
-        if (getSupportFragmentManager().popBackStackImmediate()) {
-            return true;
-        }
-        return super.onSupportNavigateUp();
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        getSupportFragmentManager().getFragments()
+                .stream()
+                .filter(Fragment::isVisible)
+                .findAny()
+                .ifPresent(fragment ->
+                        getSupportFragmentManager().putFragment(outState, CURRENT_FRAGMENT_KEY, fragment));
     }
 
     /**
