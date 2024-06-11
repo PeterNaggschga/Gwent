@@ -12,7 +12,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.valid4j.errors.RequireViolation;
 
 import java.util.Collections;
 import java.util.List;
@@ -41,7 +40,7 @@ public class HornDamageCalculatorDecoratorUnitTest {
         try {
             new HornDamageCalculatorDecorator(component, Collections.emptyList()).calculateDamage(0, -1);
             fail();
-        } catch (RequireViolation ignored) {
+        } catch (IllegalArgumentException ignored) {
         }
     }
 

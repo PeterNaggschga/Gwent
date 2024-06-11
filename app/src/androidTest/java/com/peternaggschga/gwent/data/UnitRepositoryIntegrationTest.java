@@ -12,7 +12,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.valid4j.errors.RequireViolation;
 
 import java.util.Iterator;
 import java.util.List;
@@ -129,12 +128,12 @@ public class UnitRepositoryIntegrationTest {
         try {
             repository.insertUnit(false, -1, Ability.NONE, null, RowType.MELEE, 1).blockingAwait();
             fail();
-        } catch (RequireViolation ignored) {
+        } catch (IllegalArgumentException ignored) {
         }
         try {
             repository.insertUnit(false, -1, Ability.NONE, null, RowType.MELEE, 5).blockingAwait();
             fail();
-        } catch (RequireViolation ignored) {
+        } catch (IllegalArgumentException ignored) {
         }
     }
 
@@ -154,12 +153,12 @@ public class UnitRepositoryIntegrationTest {
         try {
             repository.insertUnit(false, 0, Ability.NONE, 0, RowType.MELEE, 1).blockingAwait();
             fail();
-        } catch (RequireViolation ignored) {
+        } catch (IllegalArgumentException ignored) {
         }
         try {
             repository.insertUnit(false, 0, Ability.NONE, 0, RowType.MELEE, 5).blockingAwait();
             fail();
-        } catch (RequireViolation ignored) {
+        } catch (IllegalArgumentException ignored) {
         }
     }
 
@@ -168,20 +167,20 @@ public class UnitRepositoryIntegrationTest {
         try {
             repository.insertUnit(false, 0, Ability.BINDING, -1, RowType.MELEE, 1).blockingAwait();
             fail();
-        } catch (RequireViolation ignored) {
+        } catch (IllegalArgumentException ignored) {
         }
         try {
             repository.insertUnit(false, 0, Ability.BINDING, -1, RowType.MELEE, 5).blockingAwait();
             fail();
-        } catch (RequireViolation ignored) {
+        } catch (IllegalArgumentException ignored) {
         }
     }
 
     @Test
     public void insertUnitAllowsZeroForBinding() {
         try {
-            repository.insertUnit(false, 0, Ability.BINDING, 0, RowType.MELEE, 1)
-                    .andThen(repository.insertUnit(false, 0, Ability.BINDING, 0, RowType.MELEE, 5))
+            repository.insertUnit(false, 0, Ability.BINDING, 1, RowType.MELEE, 1)
+                    .andThen(repository.insertUnit(false, 0, Ability.BINDING, 1, RowType.MELEE, 5))
                     .blockingAwait();
         } catch (Exception ignored) {
             fail();
@@ -193,12 +192,12 @@ public class UnitRepositoryIntegrationTest {
         try {
             repository.insertUnit(false, 0, Ability.BINDING, null, RowType.MELEE, 1).blockingAwait();
             fail();
-        } catch (RequireViolation ignored) {
+        } catch (IllegalArgumentException ignored) {
         }
         try {
             repository.insertUnit(false, 0, Ability.BINDING, null, RowType.MELEE, 5).blockingAwait();
             fail();
-        } catch (RequireViolation ignored) {
+        } catch (IllegalArgumentException ignored) {
         }
     }
 

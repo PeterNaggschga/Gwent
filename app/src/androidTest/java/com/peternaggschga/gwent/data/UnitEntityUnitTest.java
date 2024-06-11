@@ -26,7 +26,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.valid4j.errors.RequireViolation;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -40,7 +39,7 @@ public class UnitEntityUnitTest {
             try {
                 new UnitEntity(false, -1, Ability.NONE, null, RowType.MELEE);
                 fail();
-            } catch (RequireViolation ignored) {
+            } catch (IllegalArgumentException ignored) {
             }
         }
 
@@ -48,7 +47,7 @@ public class UnitEntityUnitTest {
         public void constructorAllowsZeroDamage() {
             try {
                 new UnitEntity(false, 0, Ability.NONE, null, RowType.MELEE);
-            } catch (RequireViolation ignored) {
+            } catch (IllegalArgumentException ignored) {
                 fail();
             }
         }
@@ -58,7 +57,7 @@ public class UnitEntityUnitTest {
             try {
                 new UnitEntity(false, 0, Ability.NONE, 0, RowType.MELEE);
                 fail();
-            } catch (RequireViolation ignored) {
+            } catch (IllegalArgumentException ignored) {
             }
         }
 
@@ -67,15 +66,15 @@ public class UnitEntityUnitTest {
             try {
                 new UnitEntity(false, 0, Ability.BINDING, -1, RowType.MELEE);
                 fail();
-            } catch (RequireViolation ignored) {
+            } catch (IllegalArgumentException ignored) {
             }
         }
 
         @Test
         public void constructorAllowsZeroForBinding() {
             try {
-                new UnitEntity(false, 0, Ability.BINDING, 0, RowType.MELEE);
-            } catch (RequireViolation ignored) {
+                new UnitEntity(false, 0, Ability.BINDING, 1, RowType.MELEE);
+            } catch (IllegalArgumentException ignored) {
                 fail();
             }
         }
@@ -85,7 +84,7 @@ public class UnitEntityUnitTest {
             try {
                 new UnitEntity(false, 0, Ability.BINDING, null, RowType.MELEE);
                 fail();
-            } catch (RequireViolation ignored) {
+            } catch (IllegalArgumentException ignored) {
             }
         }
     }
@@ -97,7 +96,7 @@ public class UnitEntityUnitTest {
             try {
                 new UnitEntity(false, -1, Ability.NONE, null, RowType.MELEE);
                 fail();
-            } catch (RequireViolation ignored) {
+            } catch (IllegalArgumentException ignored) {
             }
         }
 
@@ -105,7 +104,7 @@ public class UnitEntityUnitTest {
         public void setDamageAllowsZero() {
             try {
                 new UnitEntity(false, 0, Ability.NONE, null, RowType.MELEE);
-            } catch (RequireViolation ignored) {
+            } catch (IllegalArgumentException ignored) {
                 fail();
             }
         }
@@ -113,7 +112,7 @@ public class UnitEntityUnitTest {
 
     @RunWith(JUnit4.class)
     public static class SetSquadTests {
-        private final UnitEntity testEntity = new UnitEntity(false, 0, Ability.BINDING, 0, RowType.MELEE);
+        private final UnitEntity testEntity = new UnitEntity(false, 0, Ability.BINDING, 1, RowType.MELEE);
 
         @Test
         public void setSquadAssertsSquadNullForOtherAbilities() {
@@ -121,24 +120,24 @@ public class UnitEntityUnitTest {
             try {
                 testEntity.setSquad(0);
                 fail();
-            } catch (RequireViolation ignored) {
+            } catch (IllegalArgumentException ignored) {
             }
         }
 
         @Test
-        public void setSquadAssertsSquadNonNegativeForBinding() {
-            try {
-                testEntity.setSquad(-1);
-                fail();
-            } catch (RequireViolation ignored) {
-            }
-        }
-
-        @Test
-        public void setSquadAllowsZeroForBinding() {
+        public void setSquadAssertsSquadPositiveForBinding() {
             try {
                 testEntity.setSquad(0);
-            } catch (RequireViolation ignored) {
+                fail();
+            } catch (IllegalArgumentException ignored) {
+            }
+        }
+
+        @Test
+        public void setSquadAllowsOneForBinding() {
+            try {
+                testEntity.setSquad(1);
+            } catch (IllegalArgumentException ignored) {
                 fail();
             }
         }
@@ -148,7 +147,7 @@ public class UnitEntityUnitTest {
             try {
                 testEntity.setSquad(null);
                 fail();
-            } catch (RequireViolation ignored) {
+            } catch (IllegalArgumentException ignored) {
             }
         }
     }
@@ -266,7 +265,7 @@ public class UnitEntityUnitTest {
             try {
                 UnitEntity.collectionToString(ApplicationProvider.getApplicationContext(), Collections.emptyList());
                 fail();
-            } catch (RequireViolation ignored) {
+            } catch (IllegalArgumentException ignored) {
             }
         }
 

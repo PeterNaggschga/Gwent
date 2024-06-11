@@ -8,7 +8,6 @@ import static org.junit.Assert.fail;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import org.valid4j.errors.RequireViolation;
 
 @RunWith(JUnit4.class)
 public class WeatherDamageCalculatorUnitTest {
@@ -27,12 +26,12 @@ public class WeatherDamageCalculatorUnitTest {
         try {
             trueWeather.calculateDamage(0, -1);
             fail();
-        } catch (RequireViolation ignored) {
+        } catch (IllegalArgumentException ignored) {
         }
         try {
             falseWeather.calculateDamage(0, -1);
             fail();
-        } catch (RequireViolation ignored) {
+        } catch (IllegalArgumentException ignored) {
         }
     }
 

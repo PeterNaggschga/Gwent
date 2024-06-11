@@ -11,7 +11,6 @@ import com.peternaggschga.gwent.data.UnitEntity;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import org.valid4j.errors.RequireViolation;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,12 +25,12 @@ public class SquadStateUnitTest {
         try {
             SquadState.getState(0, Collections.emptyList());
             fail();
-        } catch (RequireViolation ignored) {
+        } catch (IllegalArgumentException ignored) {
         }
         try {
             SquadState.getState(MAX_NR_SQUADS + 1, Collections.emptyList());
             fail();
-        } catch (RequireViolation ignored) {
+        } catch (IllegalArgumentException ignored) {
         }
     }
 
@@ -56,7 +55,7 @@ public class SquadStateUnitTest {
     public void getStateSetsMemberBaseDamage() {
         UnitEntity mockUnit = mock(UnitEntity.class);
         when(mockUnit.getSquad()).thenReturn(1);
-        for (int damage = 0; damage < TESTING_DEPTH; damage++) {
+        for (int damage = 0; damage < DamageValuePicker.NON_EPIC_DAMAGE_VALUES_UPPER_BOUND; damage++) {
             when(mockUnit.getDamage()).thenReturn(damage);
             assertThat(SquadState.getState(1, Collections.singletonList(mockUnit)).getMemberBaseDamage())
                     .isEqualTo(damage);

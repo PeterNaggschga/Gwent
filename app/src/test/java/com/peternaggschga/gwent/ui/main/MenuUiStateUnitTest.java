@@ -5,7 +5,6 @@ import static org.junit.Assert.fail;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import org.valid4j.errors.RequireViolation;
 
 @RunWith(JUnit4.class)
 public class MenuUiStateUnitTest {
@@ -14,7 +13,7 @@ public class MenuUiStateUnitTest {
         try {
             new MenuUiState(-1, false, false, false);
             fail();
-        } catch (RequireViolation ignored) {
+        } catch (IllegalArgumentException ignored) {
         }
     }
 
@@ -22,7 +21,7 @@ public class MenuUiStateUnitTest {
     public void constructorAllowsZeroDamage() {
         try {
             new MenuUiState(0, false, false, false);
-        } catch (RequireViolation ignored) {
+        } catch (IllegalArgumentException ignored) {
             fail();
         }
     }

@@ -14,7 +14,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.stubbing.Answer;
-import org.valid4j.errors.RequireViolation;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -39,7 +38,7 @@ public class BondDamageCalculatorDecoratorUnitTest {
         try {
             new BondDamageCalculatorDecorator(component, map);
             fail();
-        } catch (RequireViolation ignored) {
+        } catch (IllegalArgumentException ignored) {
         }
     }
 
@@ -50,7 +49,7 @@ public class BondDamageCalculatorDecoratorUnitTest {
         try {
             new BondDamageCalculatorDecorator(component, map);
             fail();
-        } catch (RequireViolation ignored) {
+        } catch (IllegalArgumentException ignored) {
         }
     }
 
@@ -67,7 +66,7 @@ public class BondDamageCalculatorDecoratorUnitTest {
         try {
             new BondDamageCalculatorDecorator(component, Collections.emptyMap()).calculateDamage(0, -1);
             fail();
-        } catch (RequireViolation ignored) {
+        } catch (IllegalArgumentException ignored) {
         }
     }
 

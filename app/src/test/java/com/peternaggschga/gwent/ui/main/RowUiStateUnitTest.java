@@ -5,7 +5,6 @@ import static org.junit.Assert.fail;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import org.valid4j.errors.RequireViolation;
 
 @RunWith(JUnit4.class)
 public class RowUiStateUnitTest {
@@ -14,7 +13,7 @@ public class RowUiStateUnitTest {
         try {
             new RowUiState(-1, false, false, 1);
             fail();
-        } catch (RequireViolation ignored) {
+        } catch (IllegalArgumentException ignored) {
         }
     }
 
@@ -22,7 +21,7 @@ public class RowUiStateUnitTest {
     public void constructorAllowsZeroDamage() {
         try {
             new RowUiState(0, false, false, 1);
-        } catch (RequireViolation ignored) {
+        } catch (IllegalArgumentException ignored) {
             fail();
         }
     }
@@ -32,7 +31,7 @@ public class RowUiStateUnitTest {
         try {
             new RowUiState(1, false, false, -1);
             fail();
-        } catch (RequireViolation ignored) {
+        } catch (IllegalArgumentException ignored) {
         }
     }
 
@@ -40,7 +39,7 @@ public class RowUiStateUnitTest {
     public void constructorAllowsZeroUnits() {
         try {
             new RowUiState(1, false, false, 0);
-        } catch (RequireViolation ignored) {
+        } catch (IllegalArgumentException ignored) {
             fail();
         }
     }

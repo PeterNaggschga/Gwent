@@ -12,7 +12,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.valid4j.errors.RequireViolation;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,7 +35,7 @@ public class MoralDamageCalculatorDecoratorUnitTest {
         try {
             new MoralDamageCalculatorDecorator(component, list);
             fail();
-        } catch (RequireViolation ignored) {
+        } catch (IllegalArgumentException ignored) {
         }
     }
 
@@ -53,7 +52,7 @@ public class MoralDamageCalculatorDecoratorUnitTest {
         try {
             new MoralDamageCalculatorDecorator(component, Collections.emptyList()).calculateDamage(0, -1);
             fail();
-        } catch (RequireViolation ignored) {
+        } catch (IllegalArgumentException ignored) {
         }
     }
 
