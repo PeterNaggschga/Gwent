@@ -229,4 +229,9 @@ public class UnitDaoUnitTest {
         } catch (NullPointerException ignored) {
         }
     }
+
+    @Test
+    public void hasNonEpicUnitsFlowableHasValueFromBeginning() {
+        assertThat(unitDao.hasNonEpicUnitsFlowable().blockingFirst()).isFalse();
+    }
 }

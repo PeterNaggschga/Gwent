@@ -115,8 +115,9 @@ interface UnitDao {
     Single<Integer> countUnits();
 
     /**
-     * @todo Documentation
-     * @todo Add testing.
+     * Fetches a Flowable of Booleans defining whether `units` contains units that are not epic.
+     *
+     * @return A Flowable emitting the values.
      */
     @Query("SELECT COUNT(*) > 0 FROM units WHERE epic = 0")
     Flowable<Boolean> hasNonEpicUnitsFlowable();
