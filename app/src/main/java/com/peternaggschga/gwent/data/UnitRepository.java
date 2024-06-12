@@ -359,8 +359,8 @@ public class UnitRepository {
     }
 
     /**
-     * @todo Documentation
-     * @todo Add testing.
+     * Returns a Flowable emitting Boolean values defining whether there are units in the game that are not epic.
+     * @return A Flowable emitting the values.
      */
     @NonNull
     public Flowable<Boolean> hasNonEpicUnitsFlowable() {

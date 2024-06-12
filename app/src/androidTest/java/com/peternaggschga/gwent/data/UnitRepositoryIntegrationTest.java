@@ -579,4 +579,28 @@ public class UnitRepositoryIntegrationTest {
         } catch (NullPointerException ignored) {
         }
     }
+
+    @Test
+    public void hasNonEpicUnitsFlowableReturnsHorn() {
+        Flowable<Boolean> hasNonEpicUnits = repository.hasNonEpicUnitsFlowable();
+        assertThat(hasNonEpicUnits.blockingFirst()).isFalse();
+        assertThat(database.units().insertUnit(false, 5, Ability.NONE, null, RowType.MELEE)
+                .andThen(hasNonEpicUnits)
+                .blockingFirst())
+                .isTrue();
+    }
+
+    @Test
+    public void hasNonEpicUnitsFlowableIsDistinctUntilChanged() {
+        CompositeDisposable disposables = new CompositeDisposable();
+        final int[] calls = {0};
+        disposables.add(repository.hasNonEpicUnitsFlowable().subscribe(bool -> {
+            if (++calls[0] > 1) {
+                fail();
+            }
+        }));
+        repository.insertUnit(true, 5, Ability.NONE, null, RowType.MELEE, 1).blockingAwait();
+        repository.insertUnit(true, 5, Ability.NONE, null, RowType.MELEE, 1).blockingAwait();
+        disposables.dispose();
+    }
 }
