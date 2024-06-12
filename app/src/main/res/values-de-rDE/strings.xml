@@ -20,28 +20,31 @@
     <string name="popUp_coin_stewie_1">Chris Griffin hat die Münze gegessen!</string>
     <string name="popUp_coin_vin">Vin hat Stahl verbrannt und die Münze weggedrückt!</string>
 
-    <string name="unit_toString_melee">Nahkampfeinheit</string>
-    <string name="unit_toString_range">Fernkampfeinheit</string>
-    <string name="unit_toString_siege">Belagerungseinheit</string>
-    <string name="unit_toString_unit">Einheit</string>
+    <string name="unit_toString">%1$s%2$s (%3$d) - Fähigkeit: %4$s %5$s</string>
+    <string name="unit_toString_multiplicity">%1$d× %2$s</string>
+    <string name="unit_toString_melee">Nahkampf</string>
+    <string name="unit_toString_range">Fernkampf</string>
+    <string name="unit_toString_siege">Belagerungs</string>
+    <string name="unit_toString_epic">held</string>
+    <string name="unit_toString_unit">einheit</string>
+    <string name="unit_toString_ability_none">Keine</string>
+    <string name="unit_toString_squad">(%1$d)</string>
+    <string name="unit_collection_toString_accumulation_word">%1$s und %2$s</string>
 
     <string name="alertDialog_cancel">Abbrechen</string>
 
     <string name="alertDialog_burn_title">Verbrennen</string>
+    <string name="alertDialog_burn_positive">Verbrennen</string>
+    <string name="alertDialog_burn_msg">Möchtest du wirklich %1$s verbrennen?</string>
+    <string name="alertDialog_burn_negative">Nicht verbrennen</string>
 
     <string name="alertDialog_reset_title">Spielfeld zurücksetzen</string>
-    <string name="alertDialog_reset_msg">Willst du wirklich das gesamte Spielfeld zurücksetzen?</string>
-    <string name="alertDialog_factionreset_msg">Du hast \"Zurücksetzen bei Fraktionswechsel\" aktiviert. Soll das Spielfeld wirklich zurückgesetzt werden?</string>
+    <string name="alertDialog_reset_msg_default">Willst du wirklich das gesamte Spielfeld zurücksetzen?</string>
+    <string name="alertDialog_reset_msg_faction_switch">Du hast \"Zurücksetzen bei Fraktionswechsel\" aktiviert. Soll das Spielfeld wirklich zurückgesetzt werden?</string>
     <string name="alertDialog_reset_checkbox">Die Fähigkeit der Monsterfraktion auslösen (du behältst eine zufällige Einheit)</string>
     <string name="alertDialog_factionreset_monster_toast_keep">Du behältst: %1$s</string>
-    <string name="alertDialog_factionreset_monster_toast_nokeep">Du behältst keine Einheit!</string>
     <string name="alertDialog_reset_positive">Zurücksetzen</string>
-    <string name="alertDialog_factionreset_negative">Nicht zurücksetzen</string>
-
-    <string name="alertDialog_monster_title">Fähigkeit auslösen</string>
-    <string name="alertDialog_monster_msg">Willst du die Fähigkeit der Monsterfraktion auslösen? Du kannst eine zufällig ausgewählte Einheit behalten.</string>
-    <string name="alertDialog_monster_positive">Auslösen</string>
-    <string name="alertDialog_monster_negative">Nicht auslösen</string>
+    <string name="alertDialog_reset_negative">Nicht zurücksetzen</string>
 
     <string name="alertDialog_revenge_title">Rächerfähigkeit</string>
     <string name="alertDialog_revenge_msg">Du hast eine Einheit vom Spielfeld entfernt, die einen Rächer herbeirufen kann. Möchtest du diese Fähigkeit auslösen?</string>
@@ -49,12 +52,9 @@
 
     <string name="preference_design">Hintergrundbild</string>
     <string name="preference_warnings_title">Warnungen</string>
-    <string name="preference_warnings_desc">Legt fest, ob beim Zurücksetzen und Verbrennen eine Warnung erscheinen soll.</string>
+    <string name="preference_warnings_desc">Legt fest, ob beim Zurücksetzen eine Warnung erscheinen soll.</string>
     <string name="preference_faction_reset_title">Zurücksetzen bei Fraktionswechsel</string>
     <string name="preference_faction_reset_desc">Legt fest, ob das Spielfeld beim Fraktionswechsel automatisch zurückgesetzt werden soll.</string>
-    <string name="preference_unit_string_title">Kartenbeschreibung</string>
-    <string name="preference_unit_string_desc">Legt fest, welche Daten bei der Kartenbeschreibung (zum Beispiel beim Verbrennen) angezeigt werden.</string>
-    <string name="preference_unit_string_alert">Beispiel: %1$s</string>
 
     <string name="preference_sounds_header">Tonausgabe</string>
     <string name="preference_sounds_category">Ereignisse</string>
@@ -65,7 +65,7 @@
     <string name="preference_sounds_burn">Verbrennen</string>
     <string name="preference_sounds_coin">Münzwurf</string>
 
-    <string name="preference_info_onboardingSupport">Einführung</string>
+    <string name="preference_info_introduction">Einführung</string>
 
     <string name="preference_rules_header">Spielregeln</string>
     <string name="preference_rules_general_title">Allgemein</string>
@@ -76,10 +76,9 @@
     <string name="preference_rules_card_abilities_title">Kartenfähigkeiten</string>
     <string name="preference_rules_special_cards_title">Spezialkarten</string>
 
-    <string name="onboardingSupport_button_skip">Überspringen</string>
-    <string name="onboardingSupport_button_finish">Fertig</string>
+    <string name="introduction_button_skip">Überspringen</string>
+    <string name="introduction_button_finish">Fertig</string>
 
-    <string name="content_description_background_resource">Hintergrundelement</string>
     <string name="content_description_activity_main_background">Hintergrundbild</string>
     <string name="content_description_activity_main_point_ball">Gesamtpunktzahl</string>
     <string name="content_description_activity_main_faction_button">Fraktionslogo</string>
@@ -106,9 +105,9 @@
     <string name="content_description_row_weather">Wetteranzeige der Angriffsreihe</string>
     <string name="content_description_row_horn">Hornanzeige der Angriffsreihe</string>
     <string name="content_description_row_card">Kartenanzeige der Angriffsreihe</string>
-    <string name="content_description_onboardingSupport_image">Screenshots der App</string>
-    <string name="content_description_onboardingSupport_indicator">Punkt, der den Fortschritt der Einführung zeigt</string>
-    <string name="content_description_onboardingSupport_next">Pfeil, der zum nächsten Schritt führt</string>
+    <string name="content_description_introduction_image">Screenshots der App</string>
+    <string name="content_description_introduction_indicator">Punkt, der den Fortschritt der Einführung zeigt</string>
+    <string name="content_description_introduction_next">Pfeil, der zum nächsten Schritt führt</string>
 
     <string name="rules_general_text"><![CDATA[<p>Gwint ist ein altes Kartenspiel für zwei Spieler, das vor allem bei Zwergen beliebt ist. Es stellt die Konfrontation zweier Armeen in einer Schlacht nach. Die Spieler sind die Generäle und die Karten ihre Streitkräfte. Jeder Gwintspieler verwendet seinen eigenen, individuell zusammengestellten Kartensatz. Für jede der vier Fraktionen lässt sich ein eigenes Deck erstellen: Monster, Kaiserreich Nilfgaard, Nördliche Königreiche und Scoia\'tael. Jede Fraktion enthält einige einzigartige Karten, die eine unterschiedliche Spielweise ermöglichen. Des Weiteren gibt es eine Anzahl neutraler Karten, die in allen vier Fraktionen eingesetzt werden können. Ziel des Spiels ist es, den Gegner zu besiegen, indem man in zwei von drei Runden eine höhere Punktzahl als der Gegner erreicht.</p>]]></string>
     <string name="rules_course_text"><![CDATA[<p>Zu Beginn der ersten Runde ziehen beide Spieler jeweils 10 Karten aus ihrem Deck. Danach dürfen zwei Karten abgelegt und neu gezogen werden. Dieser Schritt ist optional, die abgelegten Karten werden wieder in den Nachziehstapel eingemischt. Der Spieler, der den ersten Zug macht, wird per Münzwurf ermittelt.<br/>
@@ -176,21 +175,21 @@
     <p>Horn des Kommandanten: <br />Verdoppele die Stärke aller Einheitenkarte dieser Reihe (maximal einmal pro Reihe). Dieser Effekt kumuliert nicht mit dem Karteneffekt Rittersporns! Liegen also beide Karten in der Angriffsreihe, wird der Schaden aller Einheiten (einschließlich Rittersporn) nur einmal verdoppelt.</p>
     <p>Verbrennen: <br />Entferne die stärkste(n) Karte(n) beider Spieler auf dem Schlachtfeld und lege sie mit dieser Karte auf den Ablagestapel.</p>
     ]]></string>
-    <string name="onboarding_page1"><![CDATA[
+    <string name="introduction_page1"><![CDATA[
     <p>Danke, dass du „Gwint - Eine Rechenhilfe“ installiert hast! Bitte beachte, dass diese App nur dazu da ist, dich bei einem Spiel mit analogen Gwintkarten zu unterstützen, indem sie deinen Punktestand errechnet. Du kannst in dieser App nicht gegen KI-Gegner oder ohne analoge Gwintkarten spielen!</p>
     <p>Also falls du es noch nicht getan hast: Drucke dir einen Satz Gwintkarten aus (<a href="https://github.com/PeterNaggschga/Gwent#overview">Anleitung hier</a>) und suche dir einen Gegner, der dasselbe tut (ihr braucht beide diese App)!</p>
     ]]></string>
-    <string name="onboarding_page2"><![CDATA[
+    <string name="introduction_page2"><![CDATA[
     <p>Dein Spielfeld besteht aus drei Angriffsreihen: Nahkampfreihe, Fernkampfreihe und Belagerungsreihe (von links nach rechts). In diese Reihen werden die Einheitenkarten beim Ausspielen gelegt. Jede Angriffsreihe kann außerdem durch eine bestimmte Wetterlage geschwächt oder durch ein Horn des Kommandanten verstärkt werden.</p>
     ]]></string>
-    <string name="onboarding_page3"><![CDATA[
+    <string name="introduction_page3"><![CDATA[
     <p>Die Angriffsreihen sind wie folgt aufgebaut:</p>
     <p>1: Die Gesamtstärke aller Einheiten in der Reihe.</p>
     <p>2: Das aktuelle Wetter (kann durch antippen geändert werden).</p>
     <p>3: Die Verstärkung durch ein Horn des Kommandanten (kann durch antippen geändert werden).</p>
     <p>4: Die Anzahl der Einheiten in dieser Reihe (durch Tippen können Einheiten hinzugefügt oder entfernt werden).</p>
     ]]></string>
-    <string name="onboarding_page4"><![CDATA[
+    <string name="introduction_page4"><![CDATA[
     <p>Neben deinem eigentlichen Spielfeld gibt es an der Seite ein Menü mit weiteren nützlichen Funktionen:</p>
     <p>1: Gesamtstärke aller Einheiten auf dem Spielfeld</p>
     <p>2: Fraktion ändern</p>
@@ -200,7 +199,7 @@
     <p>6: Münzwurf</p>
     <p>7: Einstellungen</p>
     ]]></string>
-    <string name="onboarding_page5"><![CDATA[
+    <string name="introduction_page5"><![CDATA[
     <p>Weitere Informationen zum Spiel und seinen Regeln findest du in den Einstellungen. Dort kannst du diese Tour auch wiederholen!</p>
     <p>Doch jetzt erstmal: viel Spaß mit analogem Gwint! Über Verbesserungsvorschläge, Fehlermeldungen und sonstiges Feedback freue ich mich sehr, nutze dazu gerne den <a href="https://play.google.com/store/apps/details?id=com.peternaggschga.gwint">Google Play Store</a> oder <a href="https://github.com/PeterNaggschga/Gwent/issues/new/choose">GitHub</a>!</p>
     ]]></string>
@@ -209,15 +208,11 @@
     <string name="array_design_default">Standard</string>
     <string name="array_design_geralt">Geralt von Riva</string>
     <string name="array_design_yennefer">Yennefer von Vengerberg</string>
-    <string name="array_unit_string_type">Einheitentyp (Nahkampfeinheit, etc.)</string>
-    <string name="array_unit_string_baseAD">Grundangriff</string>
-    <string name="array_unit_string_buffAD">Verstärkter Angriff</string>
-    <string name="array_unit_string_ability">Fähigkeit (Enge Bindung, etc.)</string>
-    <string name="array_add_epic_epic">Held</string>
-    <string name="array_add_ability_default">Keine</string>
-    <string name="array_add_ability_moralBoost">Moralschub</string>
-    <string name="array_add_ability_revenge">Rächer</string>
-    <string name="array_add_ability_binding">Enge Bindung</string>
+    <string name="add_picker_epic_epic">Held</string>
+    <string name="add_picker_ability_default">Keine</string>
+    <string name="add_picker_ability_moralBoost">Moralschub</string>
+    <string name="add_picker_ability_revenge">Rächer</string>
+    <string name="add_picker_ability_binding">Enge Bindung</string>
     <string name="popUp_add_card_binding_count">Anzahl Einheiten in %1$d. Gruppe: %2$d</string>
-    <string name="alertDialog_burn_msg">Möchtest du wirklich %1$s verbrennen?</string>
+    <string name="alertDialog_revenge_negative">Nicht auslösen</string>
 </resources>

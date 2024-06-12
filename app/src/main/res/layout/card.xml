@@ -4,7 +4,7 @@
     android:layout_width="@dimen/popUp_card_width"
     android:layout_height="match_parent"
     android:layout_margin="@dimen/border_margin"
-    android:background="?attr/card_background_drawable">
+    android:background="@drawable/rectangle">
 
     <TextView
         android:id="@+id/damageView"
@@ -26,7 +26,7 @@
         android:layout_height="@dimen/popUp_card_image_diameter"
         android:contentDescription="@string/content_description_card_ability"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@id/copyLayout"
+        app:layout_constraintBottom_toTopOf="@id/copyButton"
         app:layout_constraintEnd_toStartOf="@id/bindingView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/damageView"
@@ -47,53 +47,27 @@
         app:layout_constraintStart_toEndOf="@id/abilityView"
         app:layout_constraintTop_toTopOf="@+id/abilityView" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/copyLayout"
+    <ImageButton
+        android:id="@+id/copyButton"
         android:layout_width="@dimen/popUp_card_image_diameter"
         android:layout_height="@dimen/popUp_card_image_diameter"
+        android:background="@null"
+        android:contentDescription="@string/content_description_card_copy"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/deleteLayout"
+        app:layout_constraintEnd_toStartOf="@id/deleteButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/abilityView">
+        app:layout_constraintTop_toBottomOf="@id/abilityView"
+        app:srcCompat="@drawable/icon_copy" />
 
-        <ImageButton
-            android:id="@+id/copyButton"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@null"
-            android:contentDescription="@string/content_description_card_copy"
-            android:translationZ="5dp"
-            app:srcCompat="@drawable/icon_copy_grey" />
-
-        <ImageView
-            android:id="@+id/copyButtonBackground"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:contentDescription="@string/content_description_background_resource" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/deleteLayout"
+    <ImageButton
+        android:id="@+id/deleteButton"
         android:layout_width="@dimen/popUp_card_image_diameter"
         android:layout_height="@dimen/popUp_card_image_diameter"
-        app:layout_constraintBottom_toBottomOf="@id/copyLayout"
+        android:background="@null"
+        android:contentDescription="@string/content_description_card_delete"
+        app:layout_constraintBottom_toBottomOf="@id/copyButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/copyLayout"
-        app:layout_constraintTop_toTopOf="@id/copyLayout">
-
-        <ImageButton
-            android:id="@+id/deleteButton"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@null"
-            android:contentDescription="@string/content_description_card_delete"
-            android:translationZ="5dp"
-            app:srcCompat="@drawable/icon_delete_grey" />
-
-        <ImageView
-            android:id="@+id/deleteButtonBackground"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:contentDescription="@string/content_description_background_resource" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        app:layout_constraintStart_toEndOf="@id/copyButton"
+        app:layout_constraintTop_toTopOf="@id/copyButton"
+        app:srcCompat="@drawable/icon_delete" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-    <uses-permission android:name="com.google.android.gms.permission.AD_ID" tools:node="remove"/>
 
+    <uses-permission
+        android:name="com.google.android.gms.permission.AD_ID"
+        tools:node="remove" />
     <application
-        android:allowBackup="true"
+        android:name=".GwentApplication"
         android:appCategory="game"
         android:description="@string/app_description"
         android:icon="@mipmap/icon_launcher"
@@ -13,34 +15,27 @@
         android:roundIcon="@mipmap/icon_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/ScoiataelTheme"
-        android:isGame="true"
         tools:targetApi="o">
+        <activity android:name=".ui.introduction.IntroductionActivity" />
         <activity
-            android:name=".OnboardingSupportActivity"
-            android:screenOrientation="fullSensor" />
-        <activity
-            android:name=".MainActivity"
-            android:screenOrientation="sensorLandscape"
-            android:exported="true">
+            android:name=".ui.main.MainActivity"
+            android:exported="true"
+            android:screenOrientation="userLandscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".SettingsActivity"
-            android:label="@string/settings_title"
-            android:screenOrientation="fullSensor"
-            android:exported="true">
+            android:name=".ui.settings.SettingsActivity"
+            android:exported="true"
+            android:label="@string/settings_title">
             <intent-filter>
                 <action android:name="android.intent.action.APPLICATION_PREFERENCES" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".RuleActivity"
-            android:label="@string/preference_rules_header"
-            android:screenOrientation="sensor" />
+            android:name=".ui.settings.RuleActivity"
+            android:label="@string/preference_rules_header" />
     </application>
-
 </manifest>

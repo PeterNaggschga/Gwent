@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_key_design" translatable="false">design</string>
+    <string name="design_preference_default" translatable="false">0</string>
+    <bool name="warning_preference_default">true</bool>
+    <string name="preference_key_warning" translatable="false">warnings</string>
+    <bool name="faction_reset_preference_default">false</bool>
+    <string name="preference_key_faction_reset" translatable="false">factionReset</string>
+    <string name="preference_key_introduction" translatable="false">introduction</string>
+
+    <!-- Sound preferences -->
+    <bool name="sound_preference_default">true</bool>
+
+    <string name="preference_key_sounds_all" translatable="false">sound_all</string>
+    <string name="preference_key_sounds_cards" translatable="false">sound_cards</string>
+    <string name="preference_key_sounds_reset" translatable="false">sound_reset</string>
+    <string name="preference_key_sounds_weather" translatable="false">sound_weather</string>
+    <string name="preference_key_sounds_horn" translatable="false">sound_horn</string>
+    <string name="preference_key_sounds_burn" translatable="false">sound_burn</string>
+    <string name="preference_key_sounds_coin" translatable="false">sound_coin</string>
+</resources>
