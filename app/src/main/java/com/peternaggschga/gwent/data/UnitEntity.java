@@ -160,7 +160,7 @@ public class UnitEntity {
         Map<String, Integer> descriptionStrings = new HashMap<>(units.size());
         for (UnitEntity unit : units) {
             String description = unit.toString(context);
-            descriptionStrings.compute(description, (s, count) -> count == null ? 1 : count + 1);
+            descriptionStrings.merge(description, 1, Integer::sum);
         }
 
         List<String> descriptions = new ArrayList<>(descriptionStrings.size());
