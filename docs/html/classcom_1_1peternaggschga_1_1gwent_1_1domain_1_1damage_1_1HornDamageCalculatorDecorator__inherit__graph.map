@@ -1,0 +1,5 @@
+<map id="HornDamageCalculatorDecorator" name="HornDamageCalculatorDecorator">
+<area shape="rect" id="node1" title="A DamageCalculator class responsible for calculating the horn buff if necessary, i...." alt="" coords="5,155,244,181"/>
+<area shape="rect" id="node2" href="$classcom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1DamageCalculatorDecorator.xhtml" title="An abstract DamageCalculator that is used as a superclass for the decorator classes implementing the ..." alt="" coords="21,80,228,107"/>
+<area shape="rect" id="node3" href="$interfacecom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1DamageCalculator.xhtml" title="An interface for a class capable of calculating the (de&#45;)buffed damage of a unit for a given UnitEnti..." alt="" coords="53,5,196,32"/>
+</map>

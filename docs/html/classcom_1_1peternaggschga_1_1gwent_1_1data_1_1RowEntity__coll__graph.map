@@ -1,0 +1,4 @@
+<map id="RowEntity" name="RowEntity">
+<area shape="rect" id="node1" title="A class representing the state of an attack row, i.e., weather and commanders horn." alt="" coords="5,95,93,121"/>
+<area shape="rect" id="node2" href="$enumcom_1_1peternaggschga_1_1gwent_1_1data_1_1RowType.xhtml" title="An enum listing the different types of attack rows." alt="" coords="9,5,89,32"/>
+</map>

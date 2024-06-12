@@ -1,0 +1,5 @@
+<map id="ResetAlertDialogBuilderAdapter" name="ResetAlertDialogBuilderAdapter">
+<area shape="rect" id="node1" title="An adapter class adapting AlertDialog.Builder to provide an interface for creating an AlertDialog ask..." alt="" coords="31,109,261,136"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,13,100,39"/>
+<area shape="rect" id="node3" href="$interfacecom_1_1peternaggschga_1_1gwent_1_1domain_1_1cases_1_1ResetAlertDialogBuilderAdapter_1_1Callback.xhtml" title="An interface defining functions to propagate the user&#39;s decision back to the creator." alt="" coords="125,5,357,47"/>
+</map>

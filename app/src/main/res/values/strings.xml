@@ -10,15 +10,15 @@
     <string name="popUp_cards_add">Add card</string>
     <string name="popUp_cards_save">Save</string>
     <string name="popUp_add_card_label_epic" translatable="false">Status</string>
-    <string name="array_add_epic_normal" translatable="false">Normal</string>
-    <string name="array_add_epic_epic">Hero</string>
+    <string name="add_picker_epic_normal" translatable="false">Normal</string>
+    <string name="add_picker_epic_epic">Hero</string>
     <string name="popUp_add_card_label_dmg">Strength</string>
     <string name="popUp_add_card_label_ability">Ability</string>
-    <string name="array_add_ability_default">None</string>
-    <string name="array_add_ability_moralBoost">Morale boost</string>
-    <string name="array_add_ability_horn" translatable="false">Horn</string>
-    <string name="array_add_ability_revenge">Avenger</string>
-    <string name="array_add_ability_binding">Tight bond</string>
+    <string name="add_picker_ability_default">None</string>
+    <string name="add_picker_ability_moralBoost">Morale boost</string>
+    <string name="add_picker_ability_horn" translatable="false">Horn</string>
+    <string name="add_picker_ability_revenge">Avenger</string>
+    <string name="add_picker_ability_binding">Tight bond</string>
     <string name="popUp_add_card_label_binding">Squad</string>
     <string name="popUp_add_card_label_number">Number</string>
     <string name="popUp_add_card_binding_count">Number of units in squad %1$d: %2$d</string>
@@ -34,33 +34,37 @@
     <string name="popUp_coin_stewie_4" translatable="false">It became a manhole cover for like three days—but then pow!</string>
     <string name="popUp_coin_vin">Vin burned steel and pushed away your coin!</string>
 
-    <string name="unit_toString_melee">Close combat unit</string>
-    <string name="unit_toString_range">Ranged combat unit</string>
-    <string name="unit_toString_siege">Siege combat unit</string>
-    <string name="unit_toString_unit">Unit</string>
+    <string name="unit_toString">%1$s %2$s (%3$d) with %4$s ability %5$s</string>
+    <string name="unit_toString_multiplicity">%1$d× %2$s</string>
+    <string name="unit_toString_melee">Close combat</string>
+    <string name="unit_toString_range">Ranged combat</string>
+    <string name="unit_toString_siege">Siege combat</string>
+    <string name="unit_toString_epic">hero</string>
+    <string name="unit_toString_unit">unit</string>
+    <string name="unit_toString_ability_none">no</string>
+    <string name="unit_toString_squad">(%1$d)</string>
+    <string name="unit_collection_toString_accumulation_symbol" translatable="false">%1$s, %2$s</string>
+    <string name="unit_collection_toString_accumulation_word">%1$s, and %2$s</string>
 
     <string name="alertDialog_cancel">Cancel</string>
 
     <string name="alertDialog_burn_title">Scorch</string>
+    <string name="alertDialog_burn_positive">Scorch</string>
+    <string name="alertDialog_burn_negative">Don\'t scorch</string>
     <string name="alertDialog_burn_msg">Do you really want to scorch %1$s?</string>
 
     <string name="alertDialog_reset_title">Reset board</string>
-    <string name="alertDialog_reset_msg">Do you really want to reset the board?</string>
-    <string name="alertDialog_factionreset_msg">You activated \"Reset on change of faction\". Do you really want to reset the board?</string>
+    <string name="alertDialog_reset_msg_default">Do you really want to reset the board?</string>
+    <string name="alertDialog_reset_msg_faction_switch">You activated \"Reset on change of faction\". Do you really want to reset the board?</string>
     <string name="alertDialog_reset_checkbox">Activate perk of monster faction (you keep one random unit)</string>
     <string name="alertDialog_factionreset_monster_toast_keep">You keep: %1$s</string>
-    <string name="alertDialog_factionreset_monster_toast_nokeep">You don\'t keep any units!</string>
     <string name="alertDialog_reset_positive">Reset</string>
-    <string name="alertDialog_factionreset_negative">Don\'t reset</string>
-
-    <string name="alertDialog_monster_title">Activate perk</string>
-    <string name="alertDialog_monster_msg">Do you want to activate the perk of monsters faction? You can keep one randomly chosen unit.</string>
-    <string name="alertDialog_monster_positive">Activate</string>
-    <string name="alertDialog_monster_negative">Don\'t Activate</string>
+    <string name="alertDialog_reset_negative">Don\'t reset</string>
 
     <string name="alertDialog_revenge_title">Avenger ability</string>
     <string name="alertDialog_revenge_msg">You removed units that can summon an avenger. Do you want to activate their ability?</string>
     <string name="alertDialog_revenge_positive">Summon avenger</string>
+    <string name="alertDialog_revenge_negative">Don\'t activate</string>
 
     <string name="array_design_default">Default</string>
     <string name="array_design_geralt">Geralt of Rivia</string>
@@ -70,16 +74,9 @@
     <string name="array_design_eredin" translatable="false">Eredin Bréacc Glas</string>
     <string name="preference_design">Background</string>
     <string name="preference_warnings_title">Warnings</string>
-    <string name="preference_warnings_desc">Determines if warnings are shown before you can reset the board or scorch units.</string>
+    <string name="preference_warnings_desc">Determines if warnings are shown before you can reset the board.</string>
     <string name="preference_faction_reset_title">"Reset on change of faction"</string>
     <string name="preference_faction_reset_desc">Determines if the board is reset on change of faction.</string>
-    <string name="array_unit_string_type">Type of unit (Close combat unit, etc.)</string>
-    <string name="array_unit_string_baseAD">Base strength</string>
-    <string name="array_unit_string_buffAD">Boosted strength</string>
-    <string name="array_unit_string_ability">Ability (Tight bond, etc.)</string>
-    <string name="preference_unit_string_title">Card description</string>
-    <string name="preference_unit_string_desc">Determines which data is shown in card description (for instance when units are scorched).</string>
-    <string name="preference_unit_string_alert">Example: %1$s</string>
 
     <string name="preference_sounds_header">Sounds</string>
     <string name="preference_sounds_category">Events</string>
@@ -91,7 +88,7 @@
     <string name="preference_sounds_coin">Coin-flip</string>
 
     <string name="preference_info_category_header" translatable="false">Info</string>
-    <string name="preference_info_onboardingSupport">Introduction</string>
+    <string name="preference_info_introduction">Introduction</string>
 
     <string name="preference_rules_header">Rules</string>
     <string name="preference_rules_general_title">General</string>
@@ -101,11 +98,18 @@
     <string name="preference_rules_cards_title">Deck and playboard</string>
     <string name="preference_rules_card_abilities_title">Card abilities</string>
     <string name="preference_rules_special_cards_title">Special cards</string>
+    <string name="preference_rules_general_key" translatable="false">rules_general</string>
+    <string name="preference_rules_course_key" translatable="false">rules_course</string>
+    <string name="preference_rules_factions_key" translatable="false">rules_factions</string>
+    <string name="preference_rules_commander_key" translatable="false">rules_commander</string>
+    <string name="preference_rules_cards_key" translatable="false">rules_cards</string>
+    <string name="preference_rules_card_abilities_key" translatable="false">rules_card_abilities</string>
+    <string name="preference_rules_special_cards_key" translatable="false">rules_special_cards</string>
+    <string name="preference_first_use_key" translatable="false">firstUse</string>
 
-    <string name="onboardingSupport_button_skip">Skip</string>
-    <string name="onboardingSupport_button_finish">Finish</string>
+    <string name="introduction_button_skip">Skip</string>
+    <string name="introduction_button_finish">Finish</string>
 
-    <string name="content_description_background_resource">background element</string>
     <string name="content_description_activity_main_background">background</string>
     <string name="content_description_activity_main_point_ball">total score</string>
     <string name="content_description_activity_main_faction_button">faction logo</string>
@@ -133,9 +137,9 @@
     <string name="content_description_row_weather">weather display of combat row</string>
     <string name="content_description_row_horn">horn display of combat row</string>
     <string name="content_description_row_card">card display of combat row</string>
-    <string name="content_description_onboardingSupport_image">screenshots of this app</string>
-    <string name="content_description_onboardingSupport_indicator">dot that indicates progress</string>
-    <string name="content_description_onboardingSupport_next">forward arrow</string>
+    <string name="content_description_introduction_image">screenshots of this app</string>
+    <string name="content_description_introduction_indicator">dot that indicates progress</string>
+    <string name="content_description_introduction_next">forward arrow</string>
 
     <string name="rules_general_text"><![CDATA[<p>Gwent is an old card game especially fancied by dwarfs. It represents the confrontation of two opposing armies. The players are generals and cards represent their units. Every player uses his own unique deck of cards. Decks can be created for each of the four factions: Monsters, Nilfgaardian Empire, Northern Kingdoms and Scoia\'tael. Each faction has unique cards which lead to different play styles. Moreover, there are cards that can be used for every faction. Your goal is to win two rounds out of three by having more strength than your opponent.</p>]]></string>
     <string name="rules_course_text"><![CDATA[<p>At the beginning of the first round each player draws ten cards from their deck. After drawing, you can discard two cards and draw a new card for each. This step is optional, discarded cards are put back into the deck. The beginning player is determined by flipping a coin.<br/>The players place cards alternately. You have to play one card every round! If a player doesn\'t want to play a card, they have to pass and aren\'t allowed to play another card until the round has ended. When one player passes, their opponent can still play cards until they pass too. If one of the opponents uses up all of his cards, he has to pass.<br />A round ends when both players pass. The player with the highest total score wins the round. When both opponents have the same number of points, the round is seen as a win for both sides. All cards are moved to the discard pile at the end of each round. Your hand is reused in the next round—you don\'t draw new cards. The winner of the last round gets the first turn. Goal of the game is to win two rounds.</p>]]></string>
@@ -204,24 +208,24 @@
     <p>Commander\'s Horn: <br />Doubles the strength of the selected row.</p>
     <p>Scorch: <br />Discard after playing. Kills the strongest card(s) on the battlefield.</p>
     ]]></string>
-    <string name="onboarding_page1"><![CDATA[
+    <string name="introduction_page1"><![CDATA[
     <p>Thanks for installing \"Gwent - A Calculator\"! Please note that this app is made to support you in playing Gwent using analog cards by calculating your points. This app does not allow you to play Gwent against AI or without analog cards!</p>
     <p>So if you didn\'t do so yet: Print out a deck of Gwent cards (<a href="https://github.com/PeterNaggschga/Gwent#overview">guidance here</a>) and find an opponent who does the same (both of you need to install this app).</p>
     ]]></string>
-    <string name="onboarding_page2"><![CDATA[
+    <string name="introduction_page2"><![CDATA[
     <p>Your game board consists of three combat rows: Close combat, Ranged combat and Siege row
     (left to right).
     These rows contain unit cards.
     Each of them can be weakened by certain weather cards or boosted by a Commander\'s Horn.</p>
     ]]></string>
-    <string name="onboarding_page3"><![CDATA[
+    <string name="introduction_page3"><![CDATA[
     <p>Combat rows consist of the following parts:</p>
     <p>1: Overall strength of all units placed in this row.</p>
     <p>2: The current weather (can be changed by tapping).</p>
     <p>3: The boost of a Commander\'s Horn (can be changed by tapping).</p>
     <p>4: Number of units in this combat row (you can add or remove units by tapping).</p>
     ]]></string>
-    <string name="onboarding_page4"><![CDATA[
+    <string name="introduction_page4"><![CDATA[
     <p>Next to the game board there is a menu providing useful functions:</p>
     <p>1: Overall strength of all units</p>
     <p>2: Change faction</p>
@@ -231,7 +235,7 @@
     <p>6: Coin-flip</p>
     <p>7: Settings</p>
     ]]></string>
-    <string name="onboarding_page5"><![CDATA[
+    <string name="introduction_page5"><![CDATA[
     <p>More information on Gwent and its rules can be found in the settings. There you can repeat this introduction too!</p>
     <p>But first: Have fun with analog Gwent! Please use the <a href="https://play.google.com/store/apps/details?id=com.peternaggschga.gwint">Google Play Store</a> or <a href="https://github.com/PeterNaggschga/Gwent/issues/new/choose">GitHub</a> to share improvement suggestions, bugs and other feedback with me!</p>
     ]]></string>

@@ -1,6 +1,5 @@
 var dir_7b47cca4d318623bb4270ab1fb592ef5 =
 [
-    [ "anim", "dir_7ba00030b4160b8525441cae5fb5958a.xhtml", "dir_7ba00030b4160b8525441cae5fb5958a" ],
     [ "drawable", "dir_fe186419eca7311375b58148564fa67b.xhtml", "dir_fe186419eca7311375b58148564fa67b" ],
     [ "layout", "dir_7bc5ec352005c5ae56c631308a54d683.xhtml", "dir_7bc5ec352005c5ae56c631308a54d683" ],
     [ "layout-land", "dir_7be913bd3d538163dc8ce649b6c48b3f.xhtml", "dir_7be913bd3d538163dc8ce649b6c48b3f" ],

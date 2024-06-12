@@ -33,7 +33,12 @@ var NAVTREE =
     [ "Classes", "annotated.xhtml", [
       [ "Class List", "annotated.xhtml", "annotated_dup" ],
       [ "Class Index", "classes.xhtml", null ],
-      [ "Class Hierarchy", "hierarchy.xhtml", "hierarchy" ]
+      [ "Class Hierarchy", "hierarchy.xhtml", "hierarchy" ],
+      [ "Class Members", "functions.xhtml", [
+        [ "All", "functions.xhtml", "functions_dup" ],
+        [ "Functions", "functions_func.xhtml", "functions_func" ],
+        [ "Variables", "functions_vars.xhtml", null ]
+      ] ]
     ] ],
     [ "Files", "files.xhtml", [
       [ "File List", "files.xhtml", "files_dup" ]
@@ -43,8 +48,9 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"AndroidManifest_8xml_source.xhtml",
-"icon__delete__grey_8xml_source.xhtml"
+"Ability_8java_source.xhtml",
+"classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1DamageValuePicker.xhtml#a9ead4146c22a6722c35ee954bfc2c0ba",
+"dir_9c8241a4c4c37e4674bc910f9cfcde5e.xhtml"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

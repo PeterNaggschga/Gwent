@@ -1,0 +1,6 @@
+<map id="IntroductionActivity" name="IntroductionActivity">
+<area shape="rect" id="node1" title="An AppCompatActivity that gives the user an introduction into the usage of the application." alt="" coords="25,184,176,211"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,95,153,121"/>
+<area shape="rect" id="node3" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1introduction_1_1IndicatorManager.xhtml" title="A class managing the indicator views shown in the bottom bar of the IntroductionActivity." alt="" coords="178,95,314,121"/>
+<area shape="rect" id="node4" title=" " alt="" coords="199,5,293,32"/>
+</map>

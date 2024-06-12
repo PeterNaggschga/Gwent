@@ -12,5 +12,5 @@
 
     <stroke
         android:width="@dimen/rectangle_stroke_width"
-        android:color="@color/color_add_card_text" />
+        android:color="@color/color_popup_cancel_text" />
 </shape>

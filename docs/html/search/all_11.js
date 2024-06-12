@@ -1,0 +1,16 @@
+var searchData=
+[
+  ['unitdao_325',['UnitDao',['../interfacecom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitDao.xhtml',1,'com::peternaggschga::gwent::data']]],
+  ['unitentity_326',['UnitEntity',['../classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml',1,'UnitEntity'],['../classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml#a27cc4faaa592b3e81af338e4bee3c1e4',1,'com.peternaggschga.gwent.data.UnitEntity.UnitEntity()']]],
+  ['unitid_327',['unitId',['../classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1cards_1_1CardUiState.xhtml#ad31e379faf2dc6f7099cfa1f29df992a',1,'com::peternaggschga::gwent::ui::dialogs::cards::CardUiState']]],
+  ['unitids_328',['unitIds',['../classcom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1HornDamageCalculatorDecorator.xhtml#a6044e030e228ebf94bd955c4045ffaea',1,'com.peternaggschga.gwent.domain.damage.HornDamageCalculatorDecorator.unitIds()'],['../classcom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1MoralDamageCalculatorDecorator.xhtml#a6044e030e228ebf94bd955c4045ffaea',1,'com.peternaggschga.gwent.domain.damage.MoralDamageCalculatorDecorator.unitIds()']]],
+  ['unitrecyclerview_329',['unitRecyclerView',['../classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1cards_1_1ShowUnitsDialog.xhtml#a1ccf691514632fe2d7cf89473114d584',1,'com::peternaggschga::gwent::ui::dialogs::cards::ShowUnitsDialog']]],
+  ['unitrepository_330',['UnitRepository',['../classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitRepository.xhtml',1,'UnitRepository'],['../classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitRepository.xhtml#adb52eae5866dac96b541aa662366a64e',1,'com.peternaggschga.gwent.data.UnitRepository.UnitRepository()']]],
+  ['units_331',['units',['../classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1RowUiState.xhtml#ad852d5da541daff8a49f376f9a217790',1,'com.peternaggschga.gwent.ui.main.RowUiState.units()'],['../classcom_1_1peternaggschga_1_1gwent_1_1data_1_1AppDatabase.xhtml#a97d783be99d0a8320dcb57f2279981c6',1,'com.peternaggschga.gwent.data.AppDatabase.units()']]],
+  ['unitview_332',['unitView',['../classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1RowUiStateObserver.xhtml#a5423544287b2a3083bd9a65a9ca567a3',1,'com::peternaggschga::gwent::ui::main::RowUiStateObserver']]],
+  ['unitviews_333',['unitViews',['../classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1FactionSwitchListener.xhtml#a5365a998ee15db132a4cc897bcfdeaff',1,'com::peternaggschga::gwent::ui::main::FactionSwitchListener']]],
+  ['unused_334',['UNUSED',['../classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1cards_1_1CardUiState.xhtml#ab350a814fcbff33d47716cff4dc4daf8',1,'com::peternaggschga::gwent::ui::dialogs::cards::CardUiState']]],
+  ['updatehorn_335',['updateHorn',['../interfacecom_1_1peternaggschga_1_1gwent_1_1data_1_1RowDao.xhtml#a8275d12540d80e92ee0d416fe97427e3',1,'com::peternaggschga::gwent::data::RowDao']]],
+  ['updateindicators_336',['updateIndicators',['../classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1introduction_1_1IndicatorManager.xhtml#ad3ff0653df4c683b877cff4ff55a9456',1,'com::peternaggschga::gwent::ui::introduction::IndicatorManager']]],
+  ['updateweather_337',['updateWeather',['../interfacecom_1_1peternaggschga_1_1gwent_1_1data_1_1RowDao.xhtml#a2254d896dcb2af86a174303d5d7cf7cb',1,'com::peternaggschga::gwent::data::RowDao']]]
+];

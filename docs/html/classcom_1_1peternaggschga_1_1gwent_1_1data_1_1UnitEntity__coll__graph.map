@@ -1,0 +1,5 @@
+<map id="UnitEntity" name="UnitEntity">
+<area shape="rect" id="node1" title="A class representing a card on the game board." alt="" coords="42,95,129,121"/>
+<area shape="rect" id="node2" href="$enumcom_1_1peternaggschga_1_1gwent_1_1data_1_1Ability.xhtml" title="An enum listing the different card abilities possible." alt="" coords="5,5,69,32"/>
+<area shape="rect" id="node3" href="$enumcom_1_1peternaggschga_1_1gwent_1_1data_1_1RowType.xhtml" title="An enum listing the different types of attack rows." alt="" coords="93,5,173,32"/>
+</map>

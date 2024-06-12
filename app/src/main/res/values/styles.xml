@@ -1,6 +1,6 @@
 <resources>
 
-    <style name="BaseTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+    <style name="BaseTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="android:windowFullscreen">true</item>
@@ -15,7 +15,10 @@
         <item name="android:alertDialogIcon">@drawable/icon_round_monster</item>
         <item name="point_ball_mipmap">@drawable/ball_red</item>
         <item name="card_view_mipmap">@drawable/card_monster_landscape_free</item>
-        <item name="card_background_drawable">@drawable/rectangle_monster</item>
+        <item name="card_background_color">@color/color_background_monster</item>
+        <item name="card_background_gradient">@color/color_gradient_monster</item>
+        <item name="card_view_button_background">@color/color_card_view_button_background_monster
+        </item>
     </style>
 
     <style name="NilfgaardTheme" parent="BaseTheme">
@@ -25,7 +28,11 @@
         <item name="android:alertDialogIcon">@drawable/icon_round_nilfgaard</item>
         <item name="point_ball_mipmap">@drawable/ball_grey</item>
         <item name="card_view_mipmap">@drawable/card_nilfgaard_landscape_free</item>
-        <item name="card_background_drawable">@drawable/rectangle_nilfgaard</item>
+        <item name="card_background_color">@color/color_background_nilfgaard</item>
+        <item name="card_background_gradient">@color/color_gradient_nilfgaard</item>
+        <item name="card_view_button_background">
+            @color/color_card_view_button_background_nilfgaard
+        </item>
     </style>
 
     <style name="NorthernKingdomsTheme" parent="BaseTheme">
@@ -35,7 +42,11 @@
         <item name="android:alertDialogIcon">@drawable/icon_round_northern_kingdoms</item>
         <item name="point_ball_mipmap">@drawable/ball_blue</item>
         <item name="card_view_mipmap">@drawable/card_northern_kingdoms_landscape_free</item>
-        <item name="card_background_drawable">@drawable/rectangle_northern_kingdoms</item>
+        <item name="card_background_color">@color/color_background_northern_kingdoms</item>
+        <item name="card_background_gradient">@color/color_gradient_northern_kingdoms</item>
+        <item name="card_view_button_background">
+            @color/color_card_view_button_background_northern_kingdoms
+        </item>
     </style>
 
     <style name="ScoiataelTheme" parent="BaseTheme">
@@ -45,11 +56,10 @@
         <item name="android:alertDialogIcon">@drawable/icon_round_scoiatael</item>
         <item name="point_ball_mipmap">@drawable/ball_green</item>
         <item name="card_view_mipmap">@drawable/card_scoiatael_landscape_free</item>
-        <item name="card_background_drawable">@drawable/rectangle_scoiatael</item>
-    </style>
-
-    <style name="popUpAnimation">
-        <item name="android:windowEnterAnimation">@anim/popup_show</item>
-        <item name="android:windowExitAnimation">@anim/popup_hide</item>
+        <item name="card_background_color">@color/color_background_scoiatael</item>
+        <item name="card_background_gradient">@color/color_gradient_scoiatael</item>
+        <item name="card_view_button_background">
+            @color/color_card_view_button_background_scoiatael
+        </item>
     </style>
 </resources>

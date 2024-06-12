@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".ui.introduction.IntroductionActivity">
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/introduction_viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_constraintBottom_toTopOf="@id/introduction_bottomLayout"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_strength"
+        android:alpha="0.12"
+        android:background="@android:color/white"
+        app:layout_constraintBottom_toTopOf="@id/introduction_bottomLayout" />
+
+    <FrameLayout
+        android:id="@+id/introduction_bottomLayout"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <Button
+            android:id="@+id/introduction_button_skip"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|center_vertical"
+            android:text="@string/introduction_button_skip" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/introduction_indicator_0"
+                android:layout_width="@dimen/indicator_radius"
+                android:layout_height="@dimen/indicator_radius"
+                android:layout_marginEnd="@dimen/border_margin"
+                app:srcCompat="@drawable/indicator_selected"
+                android:contentDescription="@string/content_description_introduction_indicator" />
+
+            <ImageView
+                android:id="@+id/introduction_indicator_1"
+                android:layout_width="@dimen/indicator_radius"
+                android:layout_height="@dimen/indicator_radius"
+                android:layout_marginEnd="@dimen/border_margin"
+                app:srcCompat="@drawable/indicator_unselected"
+                android:contentDescription="@string/content_description_introduction_indicator" />
+
+            <ImageView
+                android:id="@+id/introduction_indicator_2"
+                android:layout_width="@dimen/indicator_radius"
+                android:layout_height="@dimen/indicator_radius"
+                android:layout_marginEnd="@dimen/border_margin"
+                app:srcCompat="@drawable/indicator_unselected"
+                android:contentDescription="@string/content_description_introduction_indicator" />
+
+            <ImageView
+                android:id="@+id/introduction_indicator_3"
+                android:layout_width="@dimen/indicator_radius"
+                android:layout_height="@dimen/indicator_radius"
+                android:layout_marginEnd="@dimen/border_margin"
+                app:srcCompat="@drawable/indicator_unselected"
+                android:contentDescription="@string/content_description_introduction_indicator" />
+
+            <ImageView
+                android:id="@+id/introduction_indicator_4"
+                android:layout_width="@dimen/indicator_radius"
+                android:layout_height="@dimen/indicator_radius"
+                app:srcCompat="@drawable/indicator_unselected"
+                android:contentDescription="@string/content_description_introduction_indicator" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/introduction_button_finish"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical"
+            android:text="@string/introduction_button_finish"
+            android:visibility="gone" />
+
+        <ImageButton
+            android:id="@+id/introduction_button_next"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical"
+            android:contentDescription="@string/content_description_introduction_next"
+            android:padding="@dimen/activity_horizontal_margin"
+            app:srcCompat="@drawable/icon_next" />
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

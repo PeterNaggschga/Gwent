@@ -1,0 +1,8 @@
+<map id="OverlayDialog" name="OverlayDialog">
+<area shape="rect" id="node1" title="A Dialog class which is used for popups that are shown on top of the calling Activity." alt="" coords="261,80,375,107"/>
+<area shape="rect" id="node3" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1ChangeFactionDialog.xhtml" title="An OverlayDialog class used to change the faction design." alt="" coords="5,155,164,181"/>
+<area shape="rect" id="node4" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1CoinFlipDialog.xhtml" title="An OverlayDialog class showing the result of a coin&#45;flip." alt="" coords="189,155,306,181"/>
+<area shape="rect" id="node5" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1AddCardDialog.xhtml" title="An OverlayDialog used to add new UnitEntity objects to a certain row." alt="" coords="329,155,448,181"/>
+<area shape="rect" id="node6" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1cards_1_1ShowUnitsDialog.xhtml" title="An OverlayDialog used to list the units of a certain row and enabling the user to copy,..." alt="" coords="473,155,606,181"/>
+<area shape="rect" id="node2" title=" " alt="" coords="286,5,350,32"/>
+</map>

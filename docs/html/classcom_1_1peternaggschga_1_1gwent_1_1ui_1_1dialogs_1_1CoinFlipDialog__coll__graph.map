@@ -1,0 +1,7 @@
+<map id="CoinFlipDialog" name="CoinFlipDialog">
+<area shape="rect" id="node1" title="An OverlayDialog class showing the result of a coin&#45;flip." alt="" coords="96,184,213,211"/>
+<area shape="rect" id="node2" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1OverlayDialog.xhtml" title="A Dialog class which is used for popups that are shown on top of the calling Activity." alt="" coords="37,95,152,121"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,5,69,32"/>
+<area shape="rect" id="node4" title=" " alt="" coords="94,5,213,32"/>
+<area shape="rect" id="node5" title=" " alt="" coords="177,95,253,121"/>
+</map>

@@ -1,0 +1,6 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" title=" " alt="" coords="5,56,211,83"/>
+<area shape="rect" id="node2" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1settings_1_1SettingsHeaderFragment.xhtml" title="A PreferenceFragmentCompat class encapsulating the main preference screen, i.e., the Preferences defi..." alt="" coords="259,5,443,32"/>
+<area shape="rect" id="node3" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1settings_1_1SettingsRuleFragment.xhtml" title="A PreferenceFragmentCompat class encapsulating the rule preference screen, i.e., the rule sections de..." alt="" coords="267,56,434,83"/>
+<area shape="rect" id="node4" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1settings_1_1SettingsSoundFragment.xhtml" title="A PreferenceFragmentCompat class encapsulating the sound preference screen, i.e., the Preferences def..." alt="" coords="262,107,439,133"/>
+</map>

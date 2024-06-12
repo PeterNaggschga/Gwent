@@ -1,0 +1,3 @@
+<map id="DamageCalculator.Color" name="DamageCalculator.Color">
+<area shape="rect" id="node1" title="An enum containing values representing whether a unit is buffed, de&#45;buffed or not affected by status ..." alt="" coords="5,5,185,32"/>
+</map>

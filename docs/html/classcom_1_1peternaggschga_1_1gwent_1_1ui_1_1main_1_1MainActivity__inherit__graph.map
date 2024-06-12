@@ -1,0 +1,4 @@
+<map id="MainActivity" name="MainActivity">
+<area shape="rect" id="node1" title="An AppCompatActivity that is called on startup and that encapsulates the main view onto the game boar..." alt="" coords="27,80,131,107"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,5,153,32"/>
+</map>
