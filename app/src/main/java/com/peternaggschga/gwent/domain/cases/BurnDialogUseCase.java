@@ -12,13 +12,12 @@ import com.peternaggschga.gwent.data.UnitEntity;
 import com.peternaggschga.gwent.data.UnitRepository;
 import com.peternaggschga.gwent.domain.damage.DamageCalculator;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 import io.reactivex.rxjava3.core.Single;
 
@@ -48,13 +47,23 @@ public class BurnDialogUseCase {
                             return calculatorMap;
                         });
                     }
-                    return calculators.map(damageCalculators -> {
-                        units.sort(Comparator.comparingInt(o -> (-o.calculateDamage(Objects.requireNonNull(damageCalculators.get(o.getRow()))))));
-                        int maxDamage = units.get(0).calculateDamage(Objects.requireNonNull(damageCalculators.get(units.get(0).getRow())));
 
-                        return units.stream()
-                                .filter(unitEntity -> unitEntity.calculateDamage(Objects.requireNonNull(damageCalculators.get(unitEntity.getRow()))) == maxDamage)
-                                .collect(Collectors.toList());
+                    return calculators.map(damageCalculators -> {
+                        List<UnitEntity> maxDamageUnits = new ArrayList<>(units.size());
+                        final int[] maxDamage = {0};
+                        units.stream()
+                                .filter(unit -> !unit.isEpic())
+                                .forEach(unit -> {
+                                    int damage = unit.calculateDamage(Objects.requireNonNull(damageCalculators.get(unit.getRow())));
+                                    if (damage > maxDamage[0]) {
+                                        maxDamage[0] = damage;
+                                        maxDamageUnits.clear();
+                                        maxDamageUnits.add(unit);
+                                    } else if (damage == maxDamage[0]) {
+                                        maxDamageUnits.add(unit);
+                                    }
+                                });
+                        return maxDamageUnits;
                     });
                 });
     }

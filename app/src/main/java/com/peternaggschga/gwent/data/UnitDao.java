@@ -113,4 +113,11 @@ interface UnitDao {
      */
     @Query("SELECT COUNT(*) FROM units")
     Single<Integer> countUnits();
+
+    /**
+     * @todo Documentation
+     * @todo Add testing.
+     */
+    @Query("SELECT COUNT(*) > 0 FROM units WHERE epic = 0")
+    Flowable<Boolean> hasNonEpicUnitsFlowable();
 }

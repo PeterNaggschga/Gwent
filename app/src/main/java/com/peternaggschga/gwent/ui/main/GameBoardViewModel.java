@@ -113,21 +113,31 @@ public class GameBoardViewModel extends AndroidViewModel {
             );
         }
 
-        result.menuUiState = Flowable.combineLatest(result.rowUiStates.values(), (Object[] rowUiStates) -> {
+        Flowable<MenuUiState> combinedRowStates = Flowable.combineLatest(result.rowUiStates.values(), (Object[] rowUiStates) -> {
             int damage = 0;
             boolean reset = false;
             boolean weather = false;
-            boolean burn = false;
             for (Object state : rowUiStates) {
                 RowUiState rowUiState = (RowUiState) state;
                 damage += rowUiState.getDamage();
-                reset |= rowUiState.isHorn();
+                reset |= rowUiState.isHorn() || rowUiState.getUnits() != 0;
                 weather |= rowUiState.isWeather();
-                burn |= rowUiState.getUnits() != 0;
             }
-            reset |= weather || burn;
-            return new MenuUiState(damage, reset, weather, burn);
+            reset |= weather;
+            return new MenuUiState(damage, reset, weather, false);
         }).distinctUntilChanged().onBackpressureLatest();
+
+        result.menuUiState = Flowable.combineLatest(combinedRowStates,
+                        repository.hasNonEpicUnitsFlowable(),
+                        (menuUiState, hasNonEpicUnits) -> new MenuUiState(menuUiState.getDamage(),
+                                menuUiState.isReset(),
+                                menuUiState.isWeather(),
+                                hasNonEpicUnits))
+                .distinctUntilChanged()
+                .onBackpressureLatest()
+                .debounce(10, TimeUnit.MILLISECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
 
         return result;
     }

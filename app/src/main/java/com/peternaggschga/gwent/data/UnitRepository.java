@@ -357,4 +357,19 @@ public class UnitRepository {
     public Single<List<UnitEntity>> getUnits() {
         return database.units().getUnits().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
+
+    /**
+     * @todo Documentation
+     * @todo Add testing.
+     */
+    @NonNull
+    public Flowable<Boolean> hasNonEpicUnitsFlowable() {
+        return database.units()
+                .hasNonEpicUnitsFlowable()
+                .onBackpressureLatest()
+                .debounce(10, TimeUnit.MILLISECONDS)
+                .distinctUntilChanged()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
 }
