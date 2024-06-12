@@ -1,0 +1,4 @@
+<map id="MenuUiStateObserver" name="MenuUiStateObserver">
+<area shape="rect" id="node1" title="An observer class responsible for updating the menu views when notified, i.e., when a new MenuUiState..." alt="" coords="24,80,189,107"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,5,208,32"/>
+</map>

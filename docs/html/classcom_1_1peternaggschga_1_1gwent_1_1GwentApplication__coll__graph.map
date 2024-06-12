@@ -1,0 +1,7 @@
+<map id="GwentApplication" name="GwentApplication">
+<area shape="rect" id="node1" title="An Application encapsulating the Gwent app." alt="" coords="80,260,217,287"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,171,100,197"/>
+<area shape="rect" id="node3" href="$classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitRepository.xhtml" title="A facade class managing public access to the data layer." alt="" coords="243,171,361,197"/>
+<area shape="rect" id="node4" href="$classcom_1_1peternaggschga_1_1gwent_1_1data_1_1AppDatabase.xhtml" title="An abstract class extending RoomDatabase and representing the SQLite database of the application." alt="" coords="115,81,225,108"/>
+<area shape="rect" id="node5" title=" " alt="" coords="109,5,231,32"/>
+</map>

@@ -1,0 +1,3 @@
+<map id="ResetDialogUseCase" name="ResetDialogUseCase">
+<area shape="rect" id="node1" title="A use case class responsible for dispatching a reset call to ResetRepositoryUseCase,..." alt="" coords="5,5,164,32"/>
+</map>

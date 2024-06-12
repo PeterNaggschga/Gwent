@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Gwent: gwent/ui/main/SectionsPagerAdapter.java Source File</title>
+<title>Gwent: gwent/ui/introduction/SectionsPagerAdapter.java Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="icon.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Gwent
-   &#160;<span id="projectnumber">1.2.6</span>
+   &#160;<span id="projectnumber">2.0.0</span>
    </div>
    <div id="projectbrief">An app enabling you to play the Gwent card game from The Witcher 3 with analog cards.</div>
   </td>
@@ -88,37 +88,42 @@ $(document).ready(function(){initNavTree('SectionsPagerAdapter_8java_source.xhtm
 <div class="title">SectionsPagerAdapter.java</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="keyword">package </span>com.peternaggschga.gwent.ui.main;</div>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="keyword">package </span>com.peternaggschga.gwent.ui.introduction;</div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="keyword">import</span> androidx.annotation.NonNull;</div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="keyword">import</span> androidx.fragment.app.Fragment;</div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">import</span> androidx.fragment.app.FragmentActivity;</div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keyword">import</span> androidx.viewpager2.adapter.FragmentStateAdapter;</div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
-<div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1SectionsPagerAdapter.xhtml">   12</a></span>&#160;<span class="keyword">public</span> <span class="keyword">class </span><a class="code" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1SectionsPagerAdapter.xhtml">SectionsPagerAdapter</a> <span class="keyword">extends</span> FragmentStateAdapter {</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    <span class="keyword">public</span> <a class="code" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1SectionsPagerAdapter.xhtml">SectionsPagerAdapter</a>(@NonNull FragmentActivity fragmentActivity) {</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;        super(fragmentActivity);</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    }</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    @Override</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <span class="keyword">public</span> <span class="keywordtype">int</span> getItemCount() {</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1PlaceholderFragment.xhtml">PlaceholderFragment</a>.PAGES_COUNT;</div>
+<div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1introduction_1_1SectionsPagerAdapter.xhtml">   12</a></span>&#160;<span class="keyword">public</span> <span class="keyword">class </span><a class="code" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1introduction_1_1SectionsPagerAdapter.xhtml">SectionsPagerAdapter</a> <span class="keyword">extends</span> FragmentStateAdapter {</div>
+<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1introduction_1_1SectionsPagerAdapter.xhtml#abceaf21e557bf264bca02b3abcf8971b">   18</a></span>&#160;    <span class="keyword">public</span> <a class="code" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1introduction_1_1SectionsPagerAdapter.xhtml#abceaf21e557bf264bca02b3abcf8971b">SectionsPagerAdapter</a>(@NonNull FragmentActivity fragmentActivity) {</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        super(fragmentActivity);</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    }</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    @NonNull</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    @Override</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keyword">public</span> Fragment createFragment(<span class="keywordtype">int</span> position) {</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1PlaceholderFragment.xhtml">PlaceholderFragment</a>.newInstance(position + 1);</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    }</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;}</div>
-<div class="ttc" id="aclasscom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1PlaceholderFragment_xhtml"><div class="ttname"><a href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1PlaceholderFragment.xhtml">com.peternaggschga.gwent.ui.main.PlaceholderFragment</a></div><div class="ttdoc">A placeholder fragment containing a simple view.</div><div class="ttdef"><b>Definition:</b> <a href="PlaceholderFragment_8java_source.xhtml#l00022">PlaceholderFragment.java:22</a></div></div>
-<div class="ttc" id="aclasscom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1SectionsPagerAdapter_xhtml"><div class="ttname"><a href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1SectionsPagerAdapter.xhtml">com.peternaggschga.gwent.ui.main.SectionsPagerAdapter</a></div><div class="ttdoc">A [FragmentPagerAdapter] that returns a fragment corresponding to one of the sections/tabs/pages.</div><div class="ttdef"><b>Definition:</b> <a href="SectionsPagerAdapter_8java_source.xhtml#l00012">SectionsPagerAdapter.java:12</a></div></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    @Override</div>
+<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1introduction_1_1SectionsPagerAdapter.xhtml#a8984ba65cf6dc7fed5c476ccc9899433">   28</a></span>&#160;    <span class="keyword">public</span> <span class="keywordtype">int</span> <a class="code" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1introduction_1_1SectionsPagerAdapter.xhtml#a8984ba65cf6dc7fed5c476ccc9899433">getItemCount</a>() {</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1introduction_1_1IntroductionFragment.xhtml">IntroductionFragment</a>.<a class="code" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1introduction_1_1IntroductionFragment.xhtml#a01e3a49f7b1ee3c970172b1f5b4c1b02">PAGES_COUNT</a>;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    }</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    @NonNull</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    @Override</div>
+<div class="line"><a name="l00039"></a><span class="lineno"><a class="line" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1introduction_1_1SectionsPagerAdapter.xhtml#ac3631de851f80bd538198417f60a4a65">   39</a></span>&#160;    <span class="keyword">public</span> Fragment <a class="code" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1introduction_1_1SectionsPagerAdapter.xhtml#ac3631de851f80bd538198417f60a4a65">createFragment</a>(<span class="keywordtype">int</span> position) {</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1introduction_1_1IntroductionFragment.xhtml">IntroductionFragment</a>.<a class="code" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1introduction_1_1IntroductionFragment.xhtml#a4ee0b81a48e0b30bc67f0eef3ccda4bc">newInstance</a>(position);</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    }</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;}</div>
+<div class="ttc" id="aclasscom_1_1peternaggschga_1_1gwent_1_1ui_1_1introduction_1_1IntroductionFragment_xhtml"><div class="ttname"><a href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1introduction_1_1IntroductionFragment.xhtml">com.peternaggschga.gwent.ui.introduction.IntroductionFragment</a></div><div class="ttdoc">A Fragment containing an ImageView and a TextView conveying introductory information.</div><div class="ttdef"><b>Definition:</b> <a href="IntroductionFragment_8java_source.xhtml#l00021">IntroductionFragment.java:21</a></div></div>
+<div class="ttc" id="aclasscom_1_1peternaggschga_1_1gwent_1_1ui_1_1introduction_1_1IntroductionFragment_xhtml_a01e3a49f7b1ee3c970172b1f5b4c1b02"><div class="ttname"><a href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1introduction_1_1IntroductionFragment.xhtml#a01e3a49f7b1ee3c970172b1f5b4c1b02">com.peternaggschga.gwent.ui.introduction.IntroductionFragment.PAGES_COUNT</a></div><div class="ttdeci">static final int PAGES_COUNT</div><div class="ttdoc">Integer constant defining the number of possible pages represented by this fragment.</div><div class="ttdef"><b>Definition:</b> <a href="IntroductionFragment_8java_source.xhtml#l00026">IntroductionFragment.java:26</a></div></div>
+<div class="ttc" id="aclasscom_1_1peternaggschga_1_1gwent_1_1ui_1_1introduction_1_1IntroductionFragment_xhtml_a4ee0b81a48e0b30bc67f0eef3ccda4bc"><div class="ttname"><a href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1introduction_1_1IntroductionFragment.xhtml#a4ee0b81a48e0b30bc67f0eef3ccda4bc">com.peternaggschga.gwent.ui.introduction.IntroductionFragment.newInstance</a></div><div class="ttdeci">static IntroductionFragment newInstance(@IntRange(from=0, to=PAGES_COUNT - 1) int index)</div><div class="ttdoc">Creates a new IntroductionFragment showing the page defined by the given index.</div><div class="ttdef"><b>Definition:</b> <a href="IntroductionFragment_8java_source.xhtml#l00050">IntroductionFragment.java:50</a></div></div>
+<div class="ttc" id="aclasscom_1_1peternaggschga_1_1gwent_1_1ui_1_1introduction_1_1SectionsPagerAdapter_xhtml"><div class="ttname"><a href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1introduction_1_1SectionsPagerAdapter.xhtml">com.peternaggschga.gwent.ui.introduction.SectionsPagerAdapter</a></div><div class="ttdoc">A FragmentStateAdapter that returns an IntroductionFragment corresponding to one of the sections/tabs...</div><div class="ttdef"><b>Definition:</b> <a href="SectionsPagerAdapter_8java_source.xhtml#l00012">SectionsPagerAdapter.java:12</a></div></div>
+<div class="ttc" id="aclasscom_1_1peternaggschga_1_1gwent_1_1ui_1_1introduction_1_1SectionsPagerAdapter_xhtml_a8984ba65cf6dc7fed5c476ccc9899433"><div class="ttname"><a href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1introduction_1_1SectionsPagerAdapter.xhtml#a8984ba65cf6dc7fed5c476ccc9899433">com.peternaggschga.gwent.ui.introduction.SectionsPagerAdapter.getItemCount</a></div><div class="ttdeci">int getItemCount()</div><div class="ttdoc">Returns the total number of items in the data set held by the adapter.</div><div class="ttdef"><b>Definition:</b> <a href="SectionsPagerAdapter_8java_source.xhtml#l00028">SectionsPagerAdapter.java:28</a></div></div>
+<div class="ttc" id="aclasscom_1_1peternaggschga_1_1gwent_1_1ui_1_1introduction_1_1SectionsPagerAdapter_xhtml_abceaf21e557bf264bca02b3abcf8971b"><div class="ttname"><a href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1introduction_1_1SectionsPagerAdapter.xhtml#abceaf21e557bf264bca02b3abcf8971b">com.peternaggschga.gwent.ui.introduction.SectionsPagerAdapter.SectionsPagerAdapter</a></div><div class="ttdeci">SectionsPagerAdapter(@NonNull FragmentActivity fragmentActivity)</div><div class="ttdoc">Constructor of a SectionsPagerAdapter for the given FragmentActivity.</div><div class="ttdef"><b>Definition:</b> <a href="SectionsPagerAdapter_8java_source.xhtml#l00018">SectionsPagerAdapter.java:18</a></div></div>
+<div class="ttc" id="aclasscom_1_1peternaggschga_1_1gwent_1_1ui_1_1introduction_1_1SectionsPagerAdapter_xhtml_ac3631de851f80bd538198417f60a4a65"><div class="ttname"><a href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1introduction_1_1SectionsPagerAdapter.xhtml#ac3631de851f80bd538198417f60a4a65">com.peternaggschga.gwent.ui.introduction.SectionsPagerAdapter.createFragment</a></div><div class="ttdeci">Fragment createFragment(int position)</div><div class="ttdoc">Provides a new IntroductionFragment associated with the specified position.</div><div class="ttdef"><b>Definition:</b> <a href="SectionsPagerAdapter_8java_source.xhtml#l00039">SectionsPagerAdapter.java:39</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_568ea4c39f694937f0961519686c8847.xhtml">gwent</a></li><li class="navelem"><a class="el" href="dir_84658811abf8f8a1a9d3624edcea81a7.xhtml">ui</a></li><li class="navelem"><a class="el" href="dir_ce525cee2de0eb44fa0493a836d38534.xhtml">main</a></li><li class="navelem"><b>SectionsPagerAdapter.java</b></li>
+    <li class="navelem"><a class="el" href="dir_568ea4c39f694937f0961519686c8847.xhtml">gwent</a></li><li class="navelem"><a class="el" href="dir_84658811abf8f8a1a9d3624edcea81a7.xhtml">ui</a></li><li class="navelem"><a class="el" href="dir_e56bf3722899063ee2d3692614a4ed01.xhtml">introduction</a></li><li class="navelem"><b>SectionsPagerAdapter.java</b></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>

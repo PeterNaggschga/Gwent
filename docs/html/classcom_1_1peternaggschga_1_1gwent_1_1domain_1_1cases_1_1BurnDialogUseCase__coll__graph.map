@@ -1,0 +1,3 @@
+<map id="BurnDialogUseCase" name="BurnDialogUseCase">
+<area shape="rect" id="node1" title="A use case class responsible for dispatching a remove call to RemoveUnitsUseCase." alt="" coords="5,5,156,32"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="OverlayDialog" name="OverlayDialog">
+<area shape="rect" id="node1" title="A Dialog class which is used for popups that are shown on top of the calling Activity." alt="" coords="37,95,152,121"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,5,69,32"/>
+<area shape="rect" id="node3" title=" " alt="" coords="94,5,213,32"/>
+</map>

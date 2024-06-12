@@ -1,0 +1,26 @@
+var classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity =
+[
+    [ "UnitEntity", "classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml#a27cc4faaa592b3e81af338e4bee3c1e4", null ],
+    [ "calculateDamage", "classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml#ab7358cd524711854289beeacb701c4c0", null ],
+    [ "collectionToString", "classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml#a27cb3e2f2d60a07f21e7308387d824a5", null ],
+    [ "getAbility", "classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml#ae094c2923561135a1e3519607e85af29", null ],
+    [ "getDamage", "classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml#ac10b854131d21646691dcdd7da559a22", null ],
+    [ "getId", "classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml#a67283be3f45257d1e0c474c563ebb6b6", null ],
+    [ "getRow", "classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml#a7b4c7609164291af622cb5d223f05fc2", null ],
+    [ "getSquad", "classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml#a828d8843cccd0da546ac7dc56b73a554", null ],
+    [ "isBuffed", "classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml#ad7956b45ce2f5624ace02d85ae02e822", null ],
+    [ "isEpic", "classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml#a980415328b23e2d013670698b93c274e", null ],
+    [ "setAbility", "classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml#ad776fe4fc575627d76950bc95255f532", null ],
+    [ "setDamage", "classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml#a8650909d8bbffc2ec64cf8311d025a55", null ],
+    [ "setEpic", "classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml#a2c8e6a1cbd0a96c49599288e226eb096", null ],
+    [ "setId", "classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml#a3d929477fef71d52c9c6df2ba2d50841", null ],
+    [ "setRow", "classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml#af8499b484b27c56a0bfdea9dc6741f1f", null ],
+    [ "setSquad", "classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml#a3a8147552b52ee6088a8469dac5eb8c3", null ],
+    [ "toString", "classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml#ac81806a8e6b5fc4c387b0ccf9da10081", null ],
+    [ "ability", "classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml#a5166d6b9d9497ed5d402127ab50d3fb8", null ],
+    [ "damage", "classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml#a9b39867abc3f09243fcdc739bd9e6c90", null ],
+    [ "epic", "classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml#ab9b91da433ef42b138de453dd30cfd65", null ],
+    [ "id", "classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml#a7441ef0865bcb3db9b8064dd7375c1ea", null ],
+    [ "row", "classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml#a3c8d8f00a01f8f79a14c7cdf972b518a", null ],
+    [ "squad", "classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml#a637c5da5eaf4033fca4c69bc47131db9", null ]
+];

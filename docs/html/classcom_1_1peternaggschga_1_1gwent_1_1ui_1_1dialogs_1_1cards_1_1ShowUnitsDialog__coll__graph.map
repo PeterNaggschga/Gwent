@@ -1,0 +1,13 @@
+<map id="ShowUnitsDialog" name="ShowUnitsDialog">
+<area shape="rect" id="node1" title="An OverlayDialog used to list the units of a certain row and enabling the user to copy,..." alt="" coords="296,303,429,329"/>
+<area shape="rect" id="node2" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1OverlayDialog.xhtml" title="A Dialog class which is used for popups that are shown on top of the calling Activity." alt="" coords="37,213,152,240"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,102,69,129"/>
+<area shape="rect" id="node4" title=" " alt="" coords="94,102,213,129"/>
+<area shape="rect" id="node5" href="$enumcom_1_1peternaggschga_1_1gwent_1_1data_1_1RowType.xhtml" title="An enum listing the different types of attack rows." alt="" coords="176,213,256,240"/>
+<area shape="rect" id="node6" title=" " alt="" coords="281,213,445,240"/>
+<area shape="rect" id="node7" title=" " alt="" coords="469,213,579,240"/>
+<area shape="rect" id="node8" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1cards_1_1CardListAdapter.xhtml" title="A ListAdapter used to provide CardListAdapter.CardViewHolder objects created from CardUiState objects..." alt="" coords="609,213,735,240"/>
+<area shape="rect" id="node9" title=" " alt="" coords="476,95,729,136"/>
+<area shape="rect" id="node10" title=" " alt="" coords="754,102,918,129"/>
+<area shape="rect" id="node11" title=" " alt="" coords="792,5,880,32"/>
+</map>

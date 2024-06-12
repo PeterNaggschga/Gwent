@@ -1,0 +1,5 @@
+<map id="ChangeFactionDialog" name="ChangeFactionDialog">
+<area shape="rect" id="node1" title="An OverlayDialog class used to change the faction design." alt="" coords="5,155,164,181"/>
+<area shape="rect" id="node2" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1OverlayDialog.xhtml" title="A Dialog class which is used for popups that are shown on top of the calling Activity." alt="" coords="27,80,142,107"/>
+<area shape="rect" id="node3" title=" " alt="" coords="53,5,117,32"/>
+</map>

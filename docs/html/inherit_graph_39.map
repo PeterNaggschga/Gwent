@@ -1,0 +1,8 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" title=" " alt="" coords="5,5,208,47"/>
+<area shape="rect" id="node2" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1settings_1_1SettingsActivity.xhtml" title="An AppCompatActivity implementing PreferenceFragmentCompat.OnPreferenceStartFragmentCallback that is ..." alt="" coords="269,13,394,39"/>
+<area shape="rect" id="node3" title=" " alt="" coords="33,93,181,119"/>
+<area shape="rect" id="node4" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1introduction_1_1IntroductionActivity.xhtml" title="An AppCompatActivity that gives the user an introduction into the usage of the application." alt="" coords="256,63,407,90"/>
+<area shape="rect" id="node5" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1MainActivity.xhtml" title="An AppCompatActivity that is called on startup and that encapsulates the main view onto the game boar..." alt="" coords="279,114,383,141"/>
+<area shape="rect" id="node6" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1settings_1_1RuleActivity.xhtml" title="An AppCompatActivity used to present the rules of the game." alt="" coords="281,165,382,191"/>
+</map>

@@ -1,0 +1,3 @@
+<map id="ChangeFactionDialog.Callback" name="ChangeFactionDialog.Callback">
+<area shape="rect" id="node1" title="An interface used for propagating a selected theme back to the creator of a ChangeFactionDialog." alt="" coords="5,5,224,32"/>
+</map>

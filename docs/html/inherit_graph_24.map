@@ -1,0 +1,8 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" title=" " alt="" coords="5,81,69,108"/>
+<area shape="rect" id="node2" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1OverlayDialog.xhtml" title="A Dialog class which is used for popups that are shown on top of the calling Activity." alt="" coords="117,81,232,108"/>
+<area shape="rect" id="node3" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1ChangeFactionDialog.xhtml" title="An OverlayDialog class used to change the faction design." alt="" coords="280,5,439,32"/>
+<area shape="rect" id="node4" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1CoinFlipDialog.xhtml" title="An OverlayDialog class showing the result of a coin&#45;flip." alt="" coords="301,56,418,83"/>
+<area shape="rect" id="node5" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1AddCardDialog.xhtml" title="An OverlayDialog used to add new UnitEntity objects to a certain row." alt="" coords="300,107,419,133"/>
+<area shape="rect" id="node6" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1cards_1_1ShowUnitsDialog.xhtml" title="An OverlayDialog used to list the units of a certain row and enabling the user to copy,..." alt="" coords="293,157,426,184"/>
+</map>

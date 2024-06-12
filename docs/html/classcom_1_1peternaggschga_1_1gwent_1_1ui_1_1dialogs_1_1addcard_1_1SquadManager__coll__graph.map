@@ -1,0 +1,4 @@
+<map id="SquadManager" name="SquadManager">
+<area shape="rect" id="node1" title="A class used by the CardNumberPickerAdapter to determine the first squad with members or set the defa..." alt="" coords="5,95,124,121"/>
+<area shape="rect" id="node2" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1SquadState.xhtml" title="A data class encapsulating information about the squad defined by squadNumber, i.e...." alt="" coords="17,5,113,32"/>
+</map>

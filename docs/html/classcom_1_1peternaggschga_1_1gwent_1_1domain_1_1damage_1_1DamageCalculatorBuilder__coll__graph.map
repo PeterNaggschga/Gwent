@@ -1,0 +1,4 @@
+<map id="DamageCalculatorBuilder" name="DamageCalculatorBuilder">
+<area shape="rect" id="node1" title="A builder class responsible for creating a decorator structure of DamageCalculator classes with the g..." alt="" coords="5,95,195,121"/>
+<area shape="rect" id="node2" href="$interfacecom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1DamageCalculator.xhtml" title="An interface for a class capable of calculating the (de&#45;)buffed damage of a unit for a given UnitEnti..." alt="" coords="29,5,171,32"/>
+</map>

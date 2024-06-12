@@ -1,0 +1,3 @@
+<map id="Sound" name="Sound">
+<area shape="rect" id="node1" title="A data class encapsulating information on a certain sound effect, e.g., its id in a SoundPool and whe..." alt="" coords="5,5,68,32"/>
+</map>

@@ -1,0 +1,8 @@
+<map id="CardNumberPickerAdapter" name="CardNumberPickerAdapter">
+<area shape="rect" id="node1" title="A helper class responsible for initializing the NumberPicker views of an AddCardDialog (in #CardNumpe..." alt="" coords="152,228,347,255"/>
+<area shape="rect" id="node2" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1DamageValuePicker.xhtml" title="A ValuePicker used for selection of damage values for UnitEntity::damage." alt="" coords="16,117,168,143"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,5,179,32"/>
+<area shape="rect" id="node4" title=" " alt="" coords="193,117,306,143"/>
+<area shape="rect" id="node5" title=" " alt="" coords="331,109,608,151"/>
+<area shape="rect" id="node6" title=" " alt="" coords="447,5,492,32"/>
+</map>

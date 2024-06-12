@@ -1,0 +1,5 @@
+<map id="ShowUnitsDialog" name="ShowUnitsDialog">
+<area shape="rect" id="node1" title="An OverlayDialog used to list the units of a certain row and enabling the user to copy,..." alt="" coords="5,155,139,181"/>
+<area shape="rect" id="node2" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1OverlayDialog.xhtml" title="A Dialog class which is used for popups that are shown on top of the calling Activity." alt="" coords="15,80,129,107"/>
+<area shape="rect" id="node3" title=" " alt="" coords="40,5,104,32"/>
+</map>
