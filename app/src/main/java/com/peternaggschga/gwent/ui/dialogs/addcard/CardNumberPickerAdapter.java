@@ -22,7 +22,7 @@ import java.util.Objects;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Single;
 
 /**
  * A helper class responsible for initializing the NumberPicker views of an AddCardDialog
@@ -160,10 +160,10 @@ class CardNumberPickerAdapter {
     /**
      * Adds new UnitEntity objects the attributes selected by the managed pickers.
      * @param row RowType defining to which row the units are added.
-     * @return A Completable tracking operation status.
+     * @return A Single tracking operation status and containing whether the added unit is epic or not.
      */
     @NonNull
-    Completable addSelectedUnits(@NonNull RowType row) {
+    Single<Boolean> addSelectedUnits(@NonNull RowType row) {
         // handle delayed events due to delayed OnValueChangedListeners
         // delayed changes in damagePicker after hero selection
         int damage;
@@ -187,6 +187,7 @@ class CardNumberPickerAdapter {
                                 abilityPicker.getValue(),
                                 squad,
                                 row,
-                                numberPicker.getValue()));
+                                numberPicker.getValue()))
+                .andThen(Single.just(epicPicker.getValue()));
     }
 }

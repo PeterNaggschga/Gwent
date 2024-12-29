@@ -224,8 +224,8 @@ public class MainActivity extends AppCompatActivity {
                             .map(count -> count == 0)
                             .flatMap((Function<Boolean, Single<? extends OverlayDialog>>) rowEmpty ->
                                     rowEmpty
-                                            ? Single.just(new AddCardDialog(MainActivity.this, row))
-                                            : ShowUnitsDialog.getDialog(MainActivity.this, row))
+                                            ? Single.just(new AddCardDialog(MainActivity.this, row, soundManager))
+                                            : ShowUnitsDialog.getDialog(MainActivity.this, row, soundManager))
                             .subscribe(Dialog::show)
             ));
 
