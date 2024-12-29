@@ -1,6 +1,5 @@
 <map id="SoundManager" name="SoundManager">
-<area shape="rect" id="node1" title="A class responsible for initializing and playing sounds when they are enabled." alt="" coords="158,95,277,121"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,5,149,32"/>
-<area shape="rect" id="node3" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1sounds_1_1Sound.xhtml" title="A data class encapsulating information on a certain sound effect, e.g., its id in a SoundPool and whe..." alt="" coords="186,5,249,32"/>
-<area shape="rect" id="node4" title=" " alt="" coords="273,5,364,32"/>
+<area shape="rect" id="Node000001" title="A class responsible for initializing and playing sounds when they are enabled." alt="" coords="5,93,115,119"/>
+<area shape="rect" id="Node000002" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1sounds_1_1Sound.xhtml" title="A data class encapsulating information on a certain sound effect, e.g., its id in a SoundPool and whe..." alt="" coords="33,5,87,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="63,31,63,76,57,76,57,31"/>
 </map>

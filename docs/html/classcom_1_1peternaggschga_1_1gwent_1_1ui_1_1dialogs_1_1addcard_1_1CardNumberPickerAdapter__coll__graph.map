@@ -1,8 +1,11 @@
 <map id="CardNumberPickerAdapter" name="CardNumberPickerAdapter">
-<area shape="rect" id="node1" title="A helper class responsible for initializing the NumberPicker views of an AddCardDialog (in #CardNumpe..." alt="" coords="152,228,347,255"/>
-<area shape="rect" id="node2" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1DamageValuePicker.xhtml" title="A ValuePicker used for selection of damage values for UnitEntity::damage." alt="" coords="16,117,168,143"/>
-<area shape="rect" id="node3" title=" " alt="" coords="5,5,179,32"/>
-<area shape="rect" id="node4" title=" " alt="" coords="193,117,306,143"/>
-<area shape="rect" id="node5" title=" " alt="" coords="331,109,608,151"/>
-<area shape="rect" id="node6" title=" " alt="" coords="447,5,492,32"/>
+<area shape="rect" id="Node000001" title="A helper class responsible for initializing the NumberPicker views of an AddCardDialog (in #CardNumpe..." alt="" coords="68,181,252,207"/>
+<area shape="rect" id="Node000002" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1DamageValuePicker.xhtml" title="A ValuePicker used for selection of damage values for UnitEntity::damage." alt="" coords="16,93,157,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="90,118,93,137,102,156,119,171,115,175,98,159,88,139,85,119"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,5,168,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="89,45,89,93,84,93,84,45"/>
+<area shape="rect" id="Node000004" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1SquadManager.xhtml" title="A class used by the CardNumberPickerAdapter to determine the first squad with members or set the defa..." alt="" coords="181,93,291,119"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="231,121,203,159,189,173,186,169,199,156,227,118"/>
+<area shape="rect" id="Node000005" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1SquadState.xhtml" title="A data class encapsulating information about the squad defined by #squadNumber, i...." alt="" coords="193,5,279,31"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="239,31,239,76,233,76,233,31"/>
 </map>

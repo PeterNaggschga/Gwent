@@ -25,11 +25,7 @@
 var NAVTREE =
 [
   [ "Gwent", "index.xhtml", [
-    [ "Gwent - A Calculator", "index.xhtml", [
-      [ "Overview", "index.xhtml#autotoc_md3", null ],
-      [ "Printing analog cards", "index.xhtml#autotoc_md5", null ],
-      [ "Documentation", "index.xhtml#autotoc_md7", null ]
-    ] ],
+    [ "Gwent - A Calculator", "index.xhtml", "index" ],
     [ "Classes", "annotated.xhtml", [
       [ "Class List", "annotated.xhtml", "annotated_dup" ],
       [ "Class Index", "classes.xhtml", null ],
@@ -49,8 +45,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "Ability_8java_source.xhtml",
-"classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1DamageValuePicker.xhtml#a9ead4146c22a6722c35ee954bfc2c0ba",
-"dir_9c8241a4c4c37e4674bc910f9cfcde5e.xhtml"
+"classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1DamageValuePicker.xhtml",
+"dir_972217a3b46b6f2973ae10d596a7936e.xhtml"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -1,4 +1,13 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,209,47"/>
-<area shape="rect" id="node2" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1FactionSwitchListener.xhtml" title="A class implementing SharedPreference.OnSharedPreferenceChangeListener for the THEME_PREFERENCE_KEY S..." alt="" coords="257,13,420,39"/>
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,80,69,105"/>
+<area shape="rect" id="Node000001" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1OverlayDialog.xhtml" title="A Dialog class which is used for popups that are shown on top of the calling Activity." alt="" coords="117,80,232,105"/>
+<area shape="poly" id="edge15_Node000000_Node000001" title=" " alt="" coords="83,90,117,90,117,95,83,95"/>
+<area shape="rect" id="Node000002" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1ChangeFactionDialog.xhtml" title="An OverlayDialog class used to change the faction design." alt="" coords="280,5,439,31"/>
+<area shape="poly" id="edge16_Node000001_Node000002" title=" " alt="" coords="211,71,279,40,311,28,313,33,281,44,213,76"/>
+<area shape="rect" id="Node000003" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1CoinFlipDialog.xhtml" title="An OverlayDialog class showing the result of a coin&#45;flip." alt="" coords="301,55,418,80"/>
+<area shape="poly" id="edge17_Node000001_Node000003" title=" " alt="" coords="245,80,300,73,301,78,246,86"/>
+<area shape="rect" id="Node000004" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1AddCardDialog.xhtml" title="An OverlayDialog used to add new UnitEntity objects to a certain #row." alt="" coords="300,104,419,129"/>
+<area shape="poly" id="edge18_Node000001_Node000004" title=" " alt="" coords="246,99,300,106,300,112,245,104"/>
+<area shape="rect" id="Node000005" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1cards_1_1ShowUnitsDialog.xhtml" title="An OverlayDialog used to list the units of a certain row and enabling the user to copy,..." alt="" coords="293,153,426,179"/>
+<area shape="poly" id="edge19_Node000001_Node000005" title=" " alt="" coords="214,109,281,138,316,151,315,156,279,143,212,114"/>
 </map>

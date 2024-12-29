@@ -1,3 +1,3 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classcom_1_1peternaggschga_1_1gwent_1_1data_1_1RowEntity.xhtml" title="A class representing the state of an attack row, i.e., weather and commanders horn." alt="" coords="5,5,93,32"/>
+<area shape="rect" id="Node000000" href="$interfacecom_1_1peternaggschga_1_1gwent_1_1data_1_1RowDao.xhtml" title="An interface defining data access operations related to rows table." alt="" coords="5,5,81,31"/>
 </map>

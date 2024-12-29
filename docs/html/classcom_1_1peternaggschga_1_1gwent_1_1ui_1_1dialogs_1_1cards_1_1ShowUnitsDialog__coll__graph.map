@@ -1,13 +1,11 @@
 <map id="ShowUnitsDialog" name="ShowUnitsDialog">
-<area shape="rect" id="node1" title="An OverlayDialog used to list the units of a certain row and enabling the user to copy,..." alt="" coords="296,303,429,329"/>
-<area shape="rect" id="node2" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1OverlayDialog.xhtml" title="A Dialog class which is used for popups that are shown on top of the calling Activity." alt="" coords="37,213,152,240"/>
-<area shape="rect" id="node3" title=" " alt="" coords="5,102,69,129"/>
-<area shape="rect" id="node4" title=" " alt="" coords="94,102,213,129"/>
-<area shape="rect" id="node5" href="$enumcom_1_1peternaggschga_1_1gwent_1_1data_1_1RowType.xhtml" title="An enum listing the different types of attack rows." alt="" coords="176,213,256,240"/>
-<area shape="rect" id="node6" title=" " alt="" coords="281,213,445,240"/>
-<area shape="rect" id="node7" title=" " alt="" coords="469,213,579,240"/>
-<area shape="rect" id="node8" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1cards_1_1CardListAdapter.xhtml" title="A ListAdapter used to provide CardListAdapter.CardViewHolder objects created from CardUiState objects..." alt="" coords="609,213,735,240"/>
-<area shape="rect" id="node9" title=" " alt="" coords="476,95,729,136"/>
-<area shape="rect" id="node10" title=" " alt="" coords="754,102,918,129"/>
-<area shape="rect" id="node11" title=" " alt="" coords="792,5,880,32"/>
+<area shape="rect" id="Node000001" title="An OverlayDialog used to list the units of a certain row and enabling the user to copy,..." alt="" coords="63,183,185,208"/>
+<area shape="rect" id="Node000002" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1OverlayDialog.xhtml" title="A Dialog class which is used for popups that are shown on top of the calling Activity." alt="" coords="5,95,109,120"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="77,129,117,180,113,184,73,133"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="21,13,75,38"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="54,51,59,94,53,95,48,52"/>
+<area shape="rect" id="Node000004" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1cards_1_1CardListAdapter.xhtml" title="A ListAdapter used to provide CardListAdapter.CardViewHolder objects created from CardUiState objects..." alt="" coords="152,95,269,120"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="201,122,149,173,146,169,197,118"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="99,5,341,45"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="219,59,215,95,209,94,214,59"/>
 </map>

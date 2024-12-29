@@ -1,8 +1,7 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$interfacecom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1DamageCalculator.xhtml" title="An interface for a class capable of calculating the (de&#45;)buffed damage of a unit for a given UnitEnti..." alt="" coords="5,81,148,108"/>
-<area shape="rect" id="node2" href="$classcom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1DamageCalculatorDecorator.xhtml" title="An abstract DamageCalculator that is used as a superclass for the decorator classes implementing the ..." alt="" coords="196,56,403,83"/>
-<area shape="rect" id="node6" href="$classcom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1WeatherDamageCalculator.xhtml" title="A DamageCalculator class responsible for calculating the weather debuff if necessary,..." alt="" coords="201,107,398,133"/>
-<area shape="rect" id="node3" href="$classcom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1BondDamageCalculatorDecorator.xhtml" title="A DamageCalculator class responsible for calculating the tight bond buff if necessary,..." alt="" coords="453,5,693,32"/>
-<area shape="rect" id="node4" href="$classcom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1HornDamageCalculatorDecorator.xhtml" title="A DamageCalculator class responsible for calculating the horn buff if necessary, i...." alt="" coords="453,56,692,83"/>
-<area shape="rect" id="node5" href="$classcom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1MoralDamageCalculatorDecorator.xhtml" title="A DamageCalculator class responsible for calculating the moral buff if necessary, i...." alt="" coords="451,107,695,133"/>
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,31,93,56"/>
+<area shape="rect" id="Node000001" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1MenuUiStateObserver.xhtml" title="An observer class responsible for updating the menu views when notified, i.e., when a new MenuUiState..." alt="" coords="141,5,307,31"/>
+<area shape="poly" id="edge8_Node000000_Node000001" title=" " alt="" coords="107,32,141,27,141,33,107,38"/>
+<area shape="rect" id="Node000002" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1RowUiStateObserver.xhtml" title="An observer class responsible for updating the views of the row defined in #row when notified,..." alt="" coords="145,55,303,80"/>
+<area shape="poly" id="edge9_Node000000_Node000002" title=" " alt="" coords="107,49,145,54,145,59,107,54"/>
 </map>

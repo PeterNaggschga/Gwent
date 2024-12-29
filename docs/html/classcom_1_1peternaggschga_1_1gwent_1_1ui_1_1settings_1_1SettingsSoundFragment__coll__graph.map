@@ -1,4 +1,5 @@
 <map id="SettingsSoundFragment" name="SettingsSoundFragment">
-<area shape="rect" id="node1" title="A PreferenceFragmentCompat class encapsulating the sound preference screen, i.e., the Preferences def..." alt="" coords="19,80,197,107"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,5,211,32"/>
+<area shape="rect" id="Node000001" title="A PreferenceFragmentCompat class encapsulating the sound preference screen, i.e., the Preferences def..." alt="" coords="19,79,187,104"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,5,200,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="105,44,105,79,100,79,100,44"/>
 </map>

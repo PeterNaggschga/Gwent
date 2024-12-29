@@ -1,3 +1,13 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classcom_1_1peternaggschga_1_1gwent_1_1domain_1_1cases_1_1BurnDialogUseCase.xhtml" title="A use case class responsible for dispatching a remove call to RemoveUnitsUseCase." alt="" coords="5,5,156,32"/>
+<area shape="rect" id="Node000000" title=" " alt="" coords="33,76,181,101"/>
+<area shape="rect" id="Node000001" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1introduction_1_1IntroductionActivity.xhtml" title="An AppCompatActivity that gives the user an introduction into the usage of the application." alt="" coords="256,5,407,31"/>
+<area shape="poly" id="edge2_Node000000_Node000001" title=" " alt="" coords="160,69,289,28,291,33,162,74"/>
+<area shape="rect" id="Node000002" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1MainActivity.xhtml" title="An AppCompatActivity that is called on startup and that encapsulates the main view onto the game boar..." alt="" coords="279,55,383,80"/>
+<area shape="poly" id="edge3_Node000000_Node000002" title=" " alt="" coords="194,78,279,70,280,75,194,83"/>
+<area shape="rect" id="Node000003" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1settings_1_1RuleActivity.xhtml" title="An AppCompatActivity used to present the rules of the game." alt="" coords="281,104,382,129"/>
+<area shape="poly" id="edge4_Node000000_Node000003" title=" " alt="" coords="194,97,281,108,280,113,194,102"/>
+<area shape="rect" id="Node000004" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1settings_1_1SettingsActivity.xhtml" title="An AppCompatActivity implementing PreferenceFragmentCompat.OnPreferenceStartFragmentCallback that is ..." alt="" coords="269,153,394,179"/>
+<area shape="poly" id="edge5_Node000000_Node000004" title=" " alt="" coords="156,104,257,139,291,151,289,156,255,145,154,109"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="5,146,208,186"/>
+<area shape="poly" id="edge6_Node000005_Node000004" title=" " alt="" coords="222,163,268,163,268,169,222,169"/>
 </map>

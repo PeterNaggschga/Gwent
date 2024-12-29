@@ -1,7 +1,9 @@
 <map id="ChangeFactionDialog" name="ChangeFactionDialog">
-<area shape="rect" id="node1" title="An OverlayDialog class used to change the faction design." alt="" coords="110,184,269,211"/>
-<area shape="rect" id="node2" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1OverlayDialog.xhtml" title="A Dialog class which is used for popups that are shown on top of the calling Activity." alt="" coords="37,95,152,121"/>
-<area shape="rect" id="node3" title=" " alt="" coords="5,5,69,32"/>
-<area shape="rect" id="node4" title=" " alt="" coords="94,5,213,32"/>
-<area shape="rect" id="node5" href="$interfacecom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1ChangeFactionDialog_1_1Callback.xhtml" title="An interface used for propagating a selected theme back to the creator of a ChangeFactionDialog." alt="" coords="176,95,395,121"/>
+<area shape="rect" id="Node000001" title="An OverlayDialog class used to change the faction design." alt="" coords="117,168,267,193"/>
+<area shape="rect" id="Node000002" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1OverlayDialog.xhtml" title="A Dialog class which is used for popups that are shown on top of the calling Activity." alt="" coords="5,80,109,105"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="89,111,175,165,172,170,86,115"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="31,5,84,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="60,45,60,80,55,80,55,45"/>
+<area shape="rect" id="Node000004" href="$interfacecom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1ChangeFactionDialog_1_1Callback.xhtml" title="An interface used for propagating a selected theme back to the creator of a ChangeFactionDialog." alt="" coords="133,80,341,105"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="234,107,208,154,204,152,229,104"/>
 </map>

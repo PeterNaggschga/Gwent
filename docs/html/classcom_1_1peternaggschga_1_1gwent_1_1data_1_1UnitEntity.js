@@ -20,7 +20,9 @@ var classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity =
     [ "ability", "classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml#a5166d6b9d9497ed5d402127ab50d3fb8", null ],
     [ "damage", "classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml#a9b39867abc3f09243fcdc739bd9e6c90", null ],
     [ "epic", "classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml#ab9b91da433ef42b138de453dd30cfd65", null ],
+    [ "EPIC_DAMAGE_VALUES", "classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml#a9ead4146c22a6722c35ee954bfc2c0ba", null ],
     [ "id", "classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml#a7441ef0865bcb3db9b8064dd7375c1ea", null ],
+    [ "NON_EPIC_DAMAGE_VALUES_UPPER_BOUND", "classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml#a78cdfb96cd5805e91f3eaa5b5028a872", null ],
     [ "row", "classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml#a3c8d8f00a01f8f79a14c7cdf972b518a", null ],
     [ "squad", "classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml#a637c5da5eaf4033fca4c69bc47131db9", null ]
 ];

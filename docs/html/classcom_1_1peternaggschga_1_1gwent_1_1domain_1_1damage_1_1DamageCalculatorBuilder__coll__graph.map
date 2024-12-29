@@ -1,4 +1,5 @@
 <map id="DamageCalculatorBuilder" name="DamageCalculatorBuilder">
-<area shape="rect" id="node1" title="A builder class responsible for creating a decorator structure of DamageCalculator classes with the g..." alt="" coords="5,95,195,121"/>
-<area shape="rect" id="node2" href="$interfacecom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1DamageCalculator.xhtml" title="An interface for a class capable of calculating the (de&#45;)buffed damage of a unit for a given UnitEnti..." alt="" coords="29,5,171,32"/>
+<area shape="rect" id="Node000001" title="A builder class responsible for creating a decorator structure of DamageCalculator classes with the g..." alt="" coords="5,93,184,119"/>
+<area shape="rect" id="Node000002" href="$interfacecom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1DamageCalculator.xhtml" title="An interface for a class capable of calculating the (de&#45;)buffed damage of a unit for a given UnitEnti..." alt="" coords="28,5,161,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="97,31,97,76,92,76,92,31"/>
 </map>

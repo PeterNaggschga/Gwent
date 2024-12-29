@@ -1,3 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$interfacecom_1_1peternaggschga_1_1gwent_1_1data_1_1RowDao.xhtml" title="An interface defining data access operations related to rows table." alt="" coords="5,5,81,32"/>
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,5,128,31"/>
+<area shape="rect" id="Node000001" href="$classcom_1_1peternaggschga_1_1gwent_1_1data_1_1AppDatabase.xhtml" title="An abstract class extending RoomDatabase and representing the SQLite database of the application." alt="" coords="176,5,285,31"/>
+<area shape="poly" id="edge27_Node000000_Node000001" title=" " alt="" coords="141,15,176,15,176,21,141,21"/>
 </map>
