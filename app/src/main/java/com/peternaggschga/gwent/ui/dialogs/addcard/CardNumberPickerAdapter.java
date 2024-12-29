@@ -12,11 +12,13 @@ import com.peternaggschga.gwent.GwentApplication;
 import com.peternaggschga.gwent.R;
 import com.peternaggschga.gwent.data.Ability;
 import com.peternaggschga.gwent.data.RowType;
+import com.peternaggschga.gwent.data.UnitEntity;
 
 import org.jetbrains.annotations.Contract;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
@@ -64,6 +66,12 @@ class CardNumberPickerAdapter {
     private final NumberPicker squadPicker;
 
     /**
+     * SquadManager containing current SquadState used to get squad information.
+     */
+    @NonNull
+    private final SquadManager squadManager;
+
+    /**
      * NumberPicker used to decide the number of UnitEntity objects that are inserted.
      */
     @NonNull
@@ -79,6 +87,8 @@ class CardNumberPickerAdapter {
      * @param squadManager SquadManager containing up-to-date SquadState.
      */
     CardNumberPickerAdapter(@NonNull ViewGroup pickerGroup, @NonNull SquadManager squadManager) {
+        this.squadManager = squadManager;
+
         SortedMap<Boolean, Integer> epicStringResources = new TreeMap<>();
         epicStringResources.put(false, R.string.add_picker_epic_normal);
         epicStringResources.put(true, R.string.add_picker_epic_epic);
@@ -154,12 +164,28 @@ class CardNumberPickerAdapter {
      */
     @NonNull
     Completable addSelectedUnits(@NonNull RowType row) {
+        // handle delayed events due to delayed OnValueChangedListeners
+        // delayed changes in damagePicker after hero selection
+        int damage;
+        if (epicPicker.getValue()) {
+            damage = Arrays.stream(UnitEntity.EPIC_DAMAGE_VALUES).anyMatch(integer -> Objects.equals(integer, damagePicker.getValue())) ? damagePicker.getValue() : UnitEntity.EPIC_DAMAGE_VALUES[3];
+        } else {
+            damage = damagePicker.getValue();
+        }
+
+        // delayed changes in squadPicker after squad selection
+        Integer squad;
+        if (abilityPicker.getValue() == Ability.BINDING) {
+            squad = squadPicker.getVisibility() == View.VISIBLE ? squadPicker.getValue() : squadManager.getFirstSquadWithMembers();
+        } else {
+            squad = null;
+        }
         return GwentApplication.getRepository(numberPicker.getContext())
                 .flatMapCompletable(repository ->
                         repository.insertUnit(epicPicker.getValue(),
-                                damagePicker.getValue(),
+                                damage,
                                 abilityPicker.getValue(),
-                                squadPicker.getVisibility() == View.VISIBLE ? squadPicker.getValue() : null,
+                                squad,
                                 row,
                                 numberPicker.getValue()));
     }
