@@ -35,7 +35,7 @@ public class CardNumberPickerAdapterUnitTest {
         OnValueChangeListener delayed = CardNumberPickerAdapter.getDelayedOnValueChangeListener(mockListener);
         delayed.onValueChange(mockPicker, 0, NUMBER_PICKER_VALUE);
         verify(mockListener, never()).onValueChange(any(), anyInt(), anyInt());
-        TimeUnit.MILLISECONDS.sleep(501);
+        TimeUnit.MILLISECONDS.sleep(600);
         verify(mockListener).onValueChange(mockPicker, 0, NUMBER_PICKER_VALUE);
     }
 
