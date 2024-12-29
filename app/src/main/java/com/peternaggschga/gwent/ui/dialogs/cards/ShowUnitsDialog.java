@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.peternaggschga.gwent.GwentApplication;
 import com.peternaggschga.gwent.R;
 import com.peternaggschga.gwent.data.RowType;
+import com.peternaggschga.gwent.data.UnitEntity;
 import com.peternaggschga.gwent.domain.cases.RemoveUnitsUseCase;
 import com.peternaggschga.gwent.ui.dialogs.OverlayDialog;
 import com.peternaggschga.gwent.ui.dialogs.addcard.AddCardDialog;
@@ -98,14 +99,20 @@ public class ShowUnitsDialog extends OverlayDialog {
                         .map(factory -> {
                             CompositeDisposable initialDisposables = new CompositeDisposable();
                             CardListAdapter adapter = new CardListAdapter(
-                                    id -> initialDisposables.add(repository.copy(id).subscribe()),
+                                    id -> initialDisposables.add(
+                                            repository
+                                                    .copy(id)
+                                                    .andThen(repository.getUnit(id))
+                                                    .map(UnitEntity::isEpic)
+                                                    .subscribe(epic -> soundManager.playCardAddSound(row, epic))
+                                    ),
                                     id -> initialDisposables.add(
                                             RemoveUnitsUseCase.remove(context, repository, id, soundManager)
-                                                    .subscribe(() -> {
-                                                    }, throwable -> Log.e(ShowUnitsDialog.class.getSimpleName(),
-                                                            "There has been an error with the removal of a unit. " +
-                                                                    "A reason might be tapping delete buttons too fast!",
-                                                            throwable))
+                                                    .subscribe(soundManager::playCardRemovedSound,
+                                                            throwable -> Log.e(ShowUnitsDialog.class.getSimpleName(),
+                                                                    "There has been an error with the removal of a unit. " +
+                                                                            "A reason might be tapping delete buttons too fast!",
+                                                                    throwable))
                                     )
                             );
                             initialDisposables.add(
