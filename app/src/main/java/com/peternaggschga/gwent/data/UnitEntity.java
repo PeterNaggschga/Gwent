@@ -210,15 +210,15 @@ public class UnitEntity {
     public String toString(@NonNull Context context) {
         String row;
         switch (getRow()) {
-            case MELEE:
-            default:
-                row = context.getString(R.string.unit_toString_melee);
-                break;
             case RANGE:
                 row = context.getString(R.string.unit_toString_range);
                 break;
             case SIEGE:
                 row = context.getString(R.string.unit_toString_siege);
+                break;
+            case MELEE:
+            default:
+                row = context.getString(R.string.unit_toString_melee);
         }
         String epic = isEpic() ? context.getString(R.string.unit_toString_epic) : context.getString(R.string.unit_toString_unit);
         String ability;
