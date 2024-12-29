@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import com.peternaggschga.gwent.data.Ability;
 import com.peternaggschga.gwent.data.UnitEntity;
 import com.peternaggschga.gwent.data.UnitRepository;
+import com.peternaggschga.gwent.ui.sounds.SoundManager;
 
 import java.util.List;
 import java.util.Optional;
@@ -36,13 +37,14 @@ class ResetRepositoryUseCase {
      * @param context    Context of the shown Dialog.
      * @param repository UnitRepository that is being reset.
      * @param keepUnit   Boolean defining whether a single UnitEntity should be kept.
+     * @param soundManager SoundManager used, if an UnitEntity has the Ability#REVENGE ability.
      * @return A Maybe emitting the kept UnitEntity or nothing if keepUnit is false.
-     * @see #getRevengeDialog(Context, UnitRepository, CompletableEmitter, UnitEntity, int)
+     * @see #getRevengeDialog(Context, UnitRepository, CompletableEmitter, UnitEntity, int, SoundManager)
      * @see UnitRepository#reset(UnitEntity)
      */
     @NonNull
     static Maybe<UnitEntity> reset(@NonNull Context context, @NonNull UnitRepository repository,
-                                   boolean keepUnit) {
+                                   boolean keepUnit, @NonNull SoundManager soundManager) {
         return repository.getUnits()
                 .flatMapMaybe(units -> {
                     Optional<UnitEntity> keptUnit = keepUnit ? getRandomUnit(units) : Optional.empty();
@@ -52,7 +54,7 @@ class ResetRepositoryUseCase {
                     Completable resultAction = (revengeUnits == 0) ?
                             repository.reset(keptUnit.orElse(null)) :
                             Completable.create(emitter ->
-                                    getRevengeDialog(context, repository, emitter, keptUnit.orElse(null), (int) revengeUnits).show()
+                                    getRevengeDialog(context, repository, emitter, keptUnit.orElse(null), (int) revengeUnits, soundManager).show()
                             );
                     return resultAction.andThen(Maybe.fromOptional(keptUnit));
                 });
@@ -83,18 +85,19 @@ class ResetRepositoryUseCase {
      *                     when the user makes a decision.
      * @param keptUnit     UnitEntity that should be kept.
      * @param revengeUnits Long representing the number of revenge units.
+     * @param soundManager SoundManager used, if an Avenger is added.
      * @return A Dialog asking whether the Ability#REVENGE ability should be activated.
-     * @see RevengeAlertDialogBuilderAdapter#insertAvengers(UnitRepository, int)
+     * @see RevengeAlertDialogBuilderAdapter#insertAvengers(UnitRepository, int, SoundManager)
      */
     @NonNull
     private static Dialog getRevengeDialog(@NonNull Context context, @NonNull UnitRepository repository,
                                            @NonNull CompletableEmitter emitter, @Nullable UnitEntity keptUnit,
-                                           @IntRange(from = 1) int revengeUnits) {
+                                           @IntRange(from = 1) int revengeUnits, @NonNull SoundManager soundManager) {
         return new RevengeAlertDialogBuilderAdapter(context)
                 .setPositiveCallback((dialogInterface, which) -> {
                     // noinspection CheckResult, ResultOfMethodCallIgnored
                     repository.reset(keptUnit)
-                            .andThen(RevengeAlertDialogBuilderAdapter.insertAvengers(repository, revengeUnits))
+                            .andThen(RevengeAlertDialogBuilderAdapter.insertAvengers(repository, revengeUnits, soundManager))
                             .subscribe(emitter::onComplete);
                 })
                 .setNegativeCallback(((dialog, which) -> {
@@ -108,15 +111,16 @@ class ResetRepositoryUseCase {
      * Resets the given UnitRepository.
      * If a removed UnitEntity has the Ability#REVENGE ability,
      * a Dialog asking whether the ability should be used is shown.
-     * Wrapper of #reset(Context, UnitRepository, boolean).
+     * Wrapper of #reset(Context, UnitRepository, boolean, SoundManager).
      *
      * @param context    Context of the shown Dialog.
      * @param repository UnitRepository that is being reset.
+     * @param soundManager SoundManager used, if an UnitEntity has the Ability#REVENGE ability.
      * @return A Completable tracking operation status.
-     * @see #reset(Context, UnitRepository, boolean)
+     * @see #reset(Context, UnitRepository, boolean, SoundManager)
      */
     @NonNull
-    public static Completable reset(@NonNull Context context, @NonNull UnitRepository repository) {
-        return Completable.fromMaybe(reset(context, repository, false));
+    public static Completable reset(@NonNull Context context, @NonNull UnitRepository repository, @NonNull SoundManager soundManager) {
+        return Completable.fromMaybe(reset(context, repository, false, soundManager));
     }
 }

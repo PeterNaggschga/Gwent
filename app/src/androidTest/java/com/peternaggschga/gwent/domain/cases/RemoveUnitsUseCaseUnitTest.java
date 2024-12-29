@@ -15,10 +15,12 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import com.peternaggschga.gwent.data.Ability;
 import com.peternaggschga.gwent.data.UnitEntity;
 import com.peternaggschga.gwent.data.UnitRepository;
+import com.peternaggschga.gwent.ui.sounds.SoundManager;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -30,6 +32,8 @@ public class RemoveUnitsUseCaseUnitTest {
     private static final int TESTING_DEPTH = 50;
     private UnitRepository mockRepository;
     private UnitEntity mockEntity;
+    @Mock
+    private SoundManager soundManager;
 
     @Before
     public void initMocks() {
@@ -52,7 +56,7 @@ public class RemoveUnitsUseCaseUnitTest {
             Collection<UnitEntity> units = getUnitMockList(numberOfUnits);
             units.add(null);
             try {
-                RemoveUnitsUseCase.remove(ApplicationProvider.getApplicationContext(), mockRepository, units);
+                RemoveUnitsUseCase.remove(ApplicationProvider.getApplicationContext(), mockRepository, units, soundManager);
                 fail();
             } catch (NullPointerException ignored) {
                 verify(mockRepository, never()).delete(any());
@@ -64,7 +68,7 @@ public class RemoveUnitsUseCaseUnitTest {
     public void removeCollectionCallsDeleteOnRepositoryWithoutRevengeUnits() {
         for (int numberOfUnits = 0; numberOfUnits < TESTING_DEPTH; numberOfUnits++) {
             Collection<UnitEntity> units = getUnitMockList(numberOfUnits);
-            RemoveUnitsUseCase.remove(ApplicationProvider.getApplicationContext(), mockRepository, units);
+            RemoveUnitsUseCase.remove(ApplicationProvider.getApplicationContext(), mockRepository, units, soundManager);
             verify(mockRepository, atLeastOnce()).delete(units);
         }
     }
@@ -74,6 +78,6 @@ public class RemoveUnitsUseCaseUnitTest {
         UnitEntity mockUnit = mock(UnitEntity.class);
         when(mockUnit.getAbility()).thenReturn(Ability.NONE);
         when(mockRepository.getUnit(anyInt())).thenReturn(Single.just(mockUnit));
-        RemoveUnitsUseCase.remove(ApplicationProvider.getApplicationContext(), mockRepository, 0);
+        RemoveUnitsUseCase.remove(ApplicationProvider.getApplicationContext(), mockRepository, 0, soundManager);
     }
 }

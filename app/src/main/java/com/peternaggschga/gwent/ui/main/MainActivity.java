@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
         if (gameBoardViewModel == null) {
             disposables.add(
                     GwentApplication.getRepository(this)
-                            .map(repository -> GameBoardViewModel.getModel(MainActivity.this, repository))
+                            .map(repository -> GameBoardViewModel.getModel(MainActivity.this, repository, soundManager))
                             .subscribe(gameBoardViewModel -> {
                                 this.gameBoardViewModel = gameBoardViewModel;
                                 initializeViewModel();

@@ -17,6 +17,7 @@ import com.peternaggschga.gwent.domain.cases.BurnDialogUseCase;
 import com.peternaggschga.gwent.domain.cases.DamageCalculatorUseCase;
 import com.peternaggschga.gwent.domain.cases.ResetDialogUseCase;
 import com.peternaggschga.gwent.domain.damage.DamageCalculator;
+import com.peternaggschga.gwent.ui.sounds.SoundManager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -79,17 +80,26 @@ public class GameBoardViewModel extends AndroidViewModel {
     private Flowable<MenuUiState> menuUiState = Flowable.empty();
 
     /**
+     * SoundManager used to play Sound effects on click events.
+     *
+     * @todo Move sound effects of button clicks from MainActivity to this class.
+     */
+    private SoundManager soundManager;
+
+    /**
      * Factory method of a GameBoardViewModel.
      * Creates a new GameBoardViewModel for the given owner and initializes #rowUiStates and #menuUiState.
      *
      * @param owner      ViewModelStoreOwner instantiating the GameBoardViewModel.
      * @param repository UnitRepository where Flowables are retrieved.
+     * @param soundManager SoundManager used to play Sound effects on click events.
      * @return A new GameBoardViewModel instance.
      * @see ViewModelProvider#ViewModelProvider(ViewModelStoreOwner, ViewModelProvider.Factory)
      */
     @NonNull
     public static GameBoardViewModel getModel(@NonNull ViewModelStoreOwner owner,
-                                              @NonNull UnitRepository repository) {
+                                              @NonNull UnitRepository repository,
+                                              @NonNull SoundManager soundManager) {
         GameBoardViewModel result = new ViewModelProvider(owner, ViewModelProvider.Factory.from(INITIALIZER))
                 .get(GameBoardViewModel.class);
 
@@ -139,6 +149,7 @@ public class GameBoardViewModel extends AndroidViewModel {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
 
+        result.soundManager = soundManager;
         return result;
     }
 
@@ -240,7 +251,7 @@ public class GameBoardViewModel extends AndroidViewModel {
      */
     @NonNull
     private Single<Boolean> reset(@NonNull Context context, @NonNull ResetDialogUseCase.Trigger trigger) {
-        return ResetDialogUseCase.reset(context, trigger);
+        return ResetDialogUseCase.reset(context, trigger, soundManager);
     }
 
     /**
@@ -261,10 +272,10 @@ public class GameBoardViewModel extends AndroidViewModel {
      * Should only be called by the View.OnClickListener of the burn button.
      * @param context Context
      * @return A Single emitting a Boolean defining whether the units were actually removed.
-     * @see BurnDialogUseCase#burn(Context)
+     * @see BurnDialogUseCase#burn(Context, SoundManager)
      */
     @NonNull
     public Single<Boolean> onBurnButtonPressed(@NonNull Context context) {
-        return BurnDialogUseCase.burn(context);
+        return BurnDialogUseCase.burn(context, soundManager);
     }
 }

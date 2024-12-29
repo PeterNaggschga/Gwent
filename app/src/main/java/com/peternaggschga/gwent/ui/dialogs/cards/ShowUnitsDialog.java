@@ -100,7 +100,7 @@ public class ShowUnitsDialog extends OverlayDialog {
                             CardListAdapter adapter = new CardListAdapter(
                                     id -> initialDisposables.add(repository.copy(id).subscribe()),
                                     id -> initialDisposables.add(
-                                            RemoveUnitsUseCase.remove(context, repository, id)
+                                            RemoveUnitsUseCase.remove(context, repository, id, soundManager)
                                                     .subscribe(() -> {
                                                     }, throwable -> Log.e(ShowUnitsDialog.class.getSimpleName(),
                                                             "There has been an error with the removal of a unit. " +
