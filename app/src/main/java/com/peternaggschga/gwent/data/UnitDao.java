@@ -45,7 +45,7 @@ interface UnitDao {
      * @return A Completable tracking operation status.
      */
     @Query("INSERT INTO units (epic, damage, ability, squad, `row`) VALUES (:epic, :damage, :ability, :squad, :row)")
-    Completable insertUnit(boolean epic, @IntRange(from = 0) int damage, @NonNull Ability ability, @IntRange(from = 0) @Nullable Integer squad, @NonNull RowType row);
+    Completable insertUnit(boolean epic, @IntRange(from = 0, to = UnitEntity.NON_EPIC_DAMAGE_VALUES_UPPER_BOUND) int damage, @NonNull Ability ability, @IntRange(from = 1) @Nullable Integer squad, @NonNull RowType row);
 
     /**
      * Deletes the UnitEntity object with the given id from `units`.
