@@ -92,10 +92,6 @@ public class CardUiStateFactory {
 
         if (unit.isEpic()) {
             switch (damage) {
-                case 0:
-                default:
-                    damageBackgroundId = R.drawable.icon_epic_damage_0;
-                    break;
                 case 7:
                     damageBackgroundId = R.drawable.icon_epic_damage_7;
                     break;
@@ -110,6 +106,10 @@ public class CardUiStateFactory {
                     break;
                 case 15:
                     damageBackgroundId = R.drawable.icon_epic_damage_15;
+                    break;
+                case 0:
+                default:
+                    damageBackgroundId = R.drawable.icon_epic_damage_0;
             }
             damage = CardUiState.UNUSED;
         }
@@ -118,10 +118,6 @@ public class CardUiStateFactory {
 
         int abilityImage;
         switch (unit.getAbility()) {
-            default:
-            case NONE:
-                abilityImage = CardUiState.UNUSED;
-                break;
             case HORN:
                 abilityImage = R.drawable.icon_horn;
                 break;
@@ -133,6 +129,10 @@ public class CardUiStateFactory {
                 break;
             case MORAL_BOOST:
                 abilityImage = R.drawable.icon_moral_boost;
+                break;
+            case NONE:
+            default:
+                abilityImage = CardUiState.UNUSED;
         }
 
         return new CardUiState(unit.getId(), damageBackgroundId, damage, damageColor, abilityImage, unit.getSquad());

@@ -14,10 +14,12 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.peternaggschga.gwent.R;
 import com.peternaggschga.gwent.data.UnitRepository;
+import com.peternaggschga.gwent.ui.sounds.SoundManager;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 
 import java.util.Collections;
 
@@ -27,6 +29,8 @@ import io.reactivex.rxjava3.core.Single;
 @RunWith(AndroidJUnit4.class)
 public class ResetDialogUseCaseUnitTest {
     private UnitRepository repository;
+    @Mock
+    private SoundManager soundManager;
 
     @Before
     public void initMocks() {
@@ -47,7 +51,8 @@ public class ResetDialogUseCaseUnitTest {
                 .apply();
         ResetDialogUseCase.reset(ApplicationProvider.getApplicationContext(),
                         repository,
-                        ResetDialogUseCase.Trigger.BUTTON_CLICK)
+                        ResetDialogUseCase.Trigger.BUTTON_CLICK,
+                        soundManager)
                 .blockingSubscribe();
         verify(repository, atLeastOnce()).reset(null);
     }

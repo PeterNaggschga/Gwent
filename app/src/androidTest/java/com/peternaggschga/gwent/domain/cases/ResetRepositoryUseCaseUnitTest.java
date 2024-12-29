@@ -15,10 +15,12 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import com.peternaggschga.gwent.data.Ability;
 import com.peternaggschga.gwent.data.UnitEntity;
 import com.peternaggschga.gwent.data.UnitRepository;
+import com.peternaggschga.gwent.ui.sounds.SoundManager;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,6 +34,8 @@ public class ResetRepositoryUseCaseUnitTest {
     private static final int TESTING_DEPTH = 50;
     private UnitRepository mockRepository;
     private UnitEntity mockEntity;
+    @Mock
+    private SoundManager soundManager;
 
     @Before
     public void initMocks() {
@@ -52,7 +56,7 @@ public class ResetRepositoryUseCaseUnitTest {
     @Test
     public void resetNoUnitCallsResetNullUnit() {
         when(mockRepository.getUnits()).thenReturn(Single.just(Collections.emptyList()));
-        ResetRepositoryUseCase.reset(ApplicationProvider.getApplicationContext(), mockRepository).blockingAwait();
+        ResetRepositoryUseCase.reset(ApplicationProvider.getApplicationContext(), mockRepository, soundManager).blockingAwait();
         verify(mockRepository, atLeastOnce()).reset(null);
     }
 
@@ -61,7 +65,7 @@ public class ResetRepositoryUseCaseUnitTest {
         Context context = ApplicationProvider.getApplicationContext();
         for (int numberOfUnits = 0; numberOfUnits < TESTING_DEPTH; numberOfUnits++) {
             when(mockRepository.getUnits()).thenReturn(Single.just(getUnitMockList(numberOfUnits)));
-            ResetRepositoryUseCase.reset(context, mockRepository).blockingAwait();
+            ResetRepositoryUseCase.reset(context, mockRepository, soundManager).blockingAwait();
             verify(mockRepository, atLeast(numberOfUnits + 1)).reset(null);
         }
     }

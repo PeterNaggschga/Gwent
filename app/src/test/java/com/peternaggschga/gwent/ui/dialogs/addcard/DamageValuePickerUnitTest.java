@@ -1,8 +1,8 @@
 package com.peternaggschga.gwent.ui.dialogs.addcard;
 
 import static com.google.common.truth.Truth.assertThat;
-import static com.peternaggschga.gwent.ui.dialogs.addcard.DamageValuePicker.EPIC_DAMAGE_VALUES;
-import static com.peternaggschga.gwent.ui.dialogs.addcard.DamageValuePicker.NON_EPIC_DAMAGE_VALUES_UPPER_BOUND;
+import static com.peternaggschga.gwent.data.UnitEntity.EPIC_DAMAGE_VALUES;
+import static com.peternaggschga.gwent.data.UnitEntity.NON_EPIC_DAMAGE_VALUES_UPPER_BOUND;
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.reset;

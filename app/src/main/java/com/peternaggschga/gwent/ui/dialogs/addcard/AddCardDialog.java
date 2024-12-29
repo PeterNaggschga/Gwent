@@ -12,6 +12,7 @@ import com.peternaggschga.gwent.data.RowType;
 import com.peternaggschga.gwent.data.UnitRepository;
 import com.peternaggschga.gwent.ui.dialogs.OverlayDialog;
 import com.peternaggschga.gwent.ui.dialogs.cards.ShowUnitsDialog;
+import com.peternaggschga.gwent.ui.sounds.SoundManager;
 
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 
@@ -26,13 +27,21 @@ public class AddCardDialog extends OverlayDialog {
     private final RowType row;
 
     /**
+     * SoundManager used to play a Sound whenever a card is added.
+     *
+     * @see SoundManager#playCardAddSound(RowType, boolean)
+     */
+    @NonNull
+    private final SoundManager soundManager;
+
+    /**
      * CompositeDisposable keeping track of all subscriptions to observables made by this class.
      * Is being disposed in an android.content.DialogInterface.OnDismissListener that is set in #AddCardDialog(ShowUnitsDialog)
      * and #AddCardDialog(Context, RowType).
      *
      * @see android.content.DialogInterface.OnDismissListener
-     * @see #AddCardDialog(ShowUnitsDialog)
-     * @see #AddCardDialog(Context, RowType)
+     * @see #AddCardDialog(ShowUnitsDialog, SoundManager)
+     * @see #AddCardDialog(Context, RowType, SoundManager)
      */
     @NonNull
     private final CompositeDisposable disposables = new CompositeDisposable();
@@ -48,14 +57,15 @@ public class AddCardDialog extends OverlayDialog {
     private CardNumberPickerAdapter pickerAdapter = null;
 
     /**
-     * Constructor of an AddCardDialog called by the given ShowUnitsDialog.
+     * Constructor of an AddCardDialog called by the given ShowUnitsDialog using the given SoundManager.
      * Sets a Dialog.OnDismissListener disposing #disposables and showing the caller again.
-     * Wrapper of #AddCardDialog(Context, RowType).
-     * @see #AddCardDialog(Context, RowType)
+     * Wrapper of #AddCardDialog(Context, RowType, SoundManager).
+     * @see #AddCardDialog(Context, RowType, SoundManager)
      * @param caller ShowUnitsDialog that called this Dialog.
+     * @param soundManager SoundManager used to play a Sound when cards are added.
      */
-    public AddCardDialog(@NonNull ShowUnitsDialog caller) {
-        this(caller.getContext(), caller.getRow());
+    public AddCardDialog(@NonNull ShowUnitsDialog caller, @NonNull SoundManager soundManager) {
+        this(caller.getContext(), caller.getRow(), soundManager);
 
         setOnDismissListener(dialog -> {
             disposables.dispose();
@@ -69,10 +79,12 @@ public class AddCardDialog extends OverlayDialog {
      *
      * @param context Context this Dialog is shown in.
      * @param row     RowType defining which row the new UnitEntity objects are added to.
+     * @param soundManager SoundManager used to play a Sound when cards are added.
      */
-    public AddCardDialog(@NonNull Context context, @NonNull RowType row) {
+    public AddCardDialog(@NonNull Context context, @NonNull RowType row, @NonNull SoundManager soundManager) {
         super(context, R.layout.popup_add_card, R.id.popup_add_card_cancel_button);
         this.row = row;
+        this.soundManager = soundManager;
 
         setOnDismissListener(dialog -> disposables.dispose());
     }
@@ -103,7 +115,10 @@ public class AddCardDialog extends OverlayDialog {
 
         findViewById(R.id.popup_add_card_save_button).setOnClickListener(v -> {
             if (pickerAdapter != null) {
-                disposables.add(pickerAdapter.addSelectedUnits(row).subscribe(this::dismiss));
+                disposables.add(pickerAdapter.addSelectedUnits(row).subscribe(epic -> {
+                    soundManager.playCardAddSound(row, epic);
+                    dismiss();
+                }));
             }
         });
     }

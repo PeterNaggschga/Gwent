@@ -52,11 +52,6 @@ public class MainActivity extends AppCompatActivity {
     private final CompositeDisposable disposables = new CompositeDisposable();
 
     /**
-     * {@link SoundManager} used for sound effects on certain events.
-     */
-    private SoundManager soundManager;
-
-    /**
      * {@link SharedPreferences.OnSharedPreferenceChangeListener} that is called when faction-layout,
      * i.e., the {@link androidx.preference.Preference} at the key defined by {@link com.peternaggschga.gwent.ui.main.FactionSwitchListener#THEME_PREFERENCE_KEY},
      * is changed.
@@ -71,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
     private GameBoardViewModel gameBoardViewModel;
 
     /**
-     * Sets the theme and layout, initializes {@link #soundManager}, {@link #gameBoardViewModel}, and {@link #factionSwitchListener}
+     * Sets the theme and layout, initializes {@link #gameBoardViewModel} and {@link #factionSwitchListener}
      * and sets listeners for some menu buttons.
      * If the application is started for the first time (as tracked by the preference at key {@link R.string#preference_first_use_key})
      * the {@link IntroductionActivity} is called first.
@@ -97,14 +92,13 @@ public class MainActivity extends AppCompatActivity {
         FactionSwitchListener.setTheme(this);
         setContentView(R.layout.activity_main);
 
-        if (soundManager == null) {
-            soundManager = new SoundManager(this);
-        }
-
         if (gameBoardViewModel == null) {
             disposables.add(
                     GwentApplication.getRepository(this)
-                            .map(repository -> GameBoardViewModel.getModel(MainActivity.this, repository))
+                            .map(repository ->
+                                    GameBoardViewModel.getModel(MainActivity.this,
+                                            repository,
+                                            new SoundManager(this)))
                             .subscribe(gameBoardViewModel -> {
                                 this.gameBoardViewModel = gameBoardViewModel;
                                 initializeViewModel();
@@ -204,28 +198,19 @@ public class MainActivity extends AppCompatActivity {
             ImageView horn = rowLayout.findViewById(R.id.hornView);
             ConstraintLayout cards = rowLayout.findViewById(R.id.cardView);
 
-            weather.setOnClickListener(v -> disposables.add(
-                    gameBoardViewModel.onWeatherViewPressed(row).subscribe(weatherActivated -> {
-                        if (weatherActivated) {
-                            soundManager.playWeatherSound(row);
-                        }
-                    })
-            ));
-            horn.setOnClickListener(v -> disposables.add(
-                    gameBoardViewModel.onHornViewPressed(row).subscribe(hornActivated -> {
-                        if (hornActivated) {
-                            soundManager.playHornSound();
-                        }
-                    })
-            ));
+            weather.setOnClickListener(v ->
+                    disposables.add(gameBoardViewModel.onWeatherViewPressed(row).subscribe()));
+            horn.setOnClickListener(v ->
+                    disposables.add(gameBoardViewModel.onHornViewPressed(row).subscribe()));
+
             cards.setOnClickListener(v -> disposables.add(
                     GwentApplication.getRepository(this)
                             .flatMap(repository -> repository.countUnits(row))
                             .map(count -> count == 0)
                             .flatMap((Function<Boolean, Single<? extends OverlayDialog>>) rowEmpty ->
                                     rowEmpty
-                                            ? Single.just(new AddCardDialog(MainActivity.this, row))
-                                            : ShowUnitsDialog.getDialog(MainActivity.this, row))
+                                            ? Single.just(new AddCardDialog(MainActivity.this, row, gameBoardViewModel.getSoundManager()))
+                                            : ShowUnitsDialog.getDialog(MainActivity.this, row, gameBoardViewModel.getSoundManager()))
                             .subscribe(Dialog::show)
             ));
 
@@ -247,25 +232,12 @@ public class MainActivity extends AppCompatActivity {
                 burn);
         disposables.add(gameBoardViewModel.getMenuUiState().subscribe(observer));
 
-        reset.setOnClickListener(v -> disposables.add(
-                gameBoardViewModel.onResetButtonPressed(this)
-                        .subscribe(playSound -> {
-                            if (playSound) {
-                                soundManager.playResetSound();
-                            }
-                        })
-        ));
-        weather.setOnClickListener(v -> {
-            disposables.add(gameBoardViewModel.onWeatherButtonPressed().subscribe());
-            soundManager.playClearWeatherSound();
-        });
-        burn.setOnClickListener(v -> disposables.add(
-                gameBoardViewModel.onBurnButtonPressed(MainActivity.this).subscribe(aBoolean -> {
-                if (aBoolean) {
-                    soundManager.playBurnSound();
-                }
-                })
-        ));
+        reset.setOnClickListener(v ->
+                disposables.add(gameBoardViewModel.onResetButtonPressed(this).subscribe()));
+        weather.setOnClickListener(v ->
+                disposables.add(gameBoardViewModel.onWeatherButtonPressed().subscribe()));
+        burn.setOnClickListener(v ->
+                disposables.add(gameBoardViewModel.onBurnButtonPressed(MainActivity.this).subscribe()));
     }
 
     /**
@@ -288,13 +260,7 @@ public class MainActivity extends AppCompatActivity {
                     getResources().getBoolean(R.bool.faction_reset_preference_default)
             );
             if (resetOnFactionSwitch) {
-                disposables.add(
-                        gameBoardViewModel.onFactionSwitchReset(this).subscribe(playSound -> {
-                            if (playSound) {
-                                soundManager.playResetSound();
-                            }
-                        })
-                );
+                disposables.add(gameBoardViewModel.onFactionSwitchReset(this).subscribe());
             }
             preferences.edit()
                     .putInt(THEME_PREFERENCE_KEY, theme)
@@ -307,6 +273,6 @@ public class MainActivity extends AppCompatActivity {
      */
     private void inflateCoinFlipPopup() {
         new CoinFlipDialog(this).show();
-        soundManager.playCoinSound();
+        gameBoardViewModel.getSoundManager().playCoinSound();
     }
 }

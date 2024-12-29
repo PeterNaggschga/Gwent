@@ -4,6 +4,7 @@ import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -115,10 +116,13 @@ public class UnitRepository {
      * @throws IllegalArgumentException When damage is less than zero or if ability is Ability#BINDING and squad is null or less than zero or if ability is not Ability#BINDING and squad is not null.
      */
     @NonNull
-    private Completable insertUnit(boolean epic, @IntRange(from = 0) int damage, @NonNull Ability ability,
-                                   @IntRange(from = 0) @Nullable Integer squad, @NonNull RowType row) {
-        if (damage < 0) {
-            throw new IllegalArgumentException("Damage must not be less than zero but is " + damage + ".");
+    private Completable insertUnit(boolean epic, @IntRange(from = 0, to = UnitEntity.NON_EPIC_DAMAGE_VALUES_UPPER_BOUND) int damage, @NonNull Ability ability,
+                                   @IntRange(from = 1) @Nullable Integer squad, @NonNull RowType row) {
+        if (damage < 0 || damage > UnitEntity.NON_EPIC_DAMAGE_VALUES_UPPER_BOUND) {
+            throw new IllegalArgumentException("Damage be between 0 and " + UnitEntity.NON_EPIC_DAMAGE_VALUES_UPPER_BOUND + " but is " + damage + ".");
+        }
+        if (epic && Arrays.stream(UnitEntity.EPIC_DAMAGE_VALUES).noneMatch(integer -> integer == damage)) {
+            throw new IllegalArgumentException("Damage of epic units must be in " + Arrays.toString(UnitEntity.EPIC_DAMAGE_VALUES) + " but is " + damage + ".");
         }
         if (ability != Ability.BINDING && squad != null) {
             throw new IllegalArgumentException("Squad must be null or ability must be BINDING but squad is " + squad + " and ability is " + ability + ".");
@@ -146,8 +150,8 @@ public class UnitRepository {
      * or if ability is not Ability#BINDING and squad is not null.
      */
     @NonNull
-    public Completable insertUnit(boolean epic, @IntRange(from = 0) int damage, @NonNull Ability ability,
-                                  @IntRange(from = 0) @Nullable Integer squad, @NonNull RowType row,
+    public Completable insertUnit(boolean epic, @IntRange(from = 0, to = UnitEntity.NON_EPIC_DAMAGE_VALUES_UPPER_BOUND) int damage, @NonNull Ability ability,
+                                  @IntRange(from = 1) @Nullable Integer squad, @NonNull RowType row,
                                   @IntRange(from = 0) int number) {
         Completable result = Completable.complete();
         for (int i = 0; i < number; i++) {

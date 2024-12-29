@@ -13,8 +13,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.IntStream;
 
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
@@ -138,13 +140,61 @@ public class UnitRepositoryIntegrationTest {
     }
 
     @Test
-    public void insertUnitAllowsZeroDamage() {
+    public void insertUnitAllowsBoundedDamage() {
+        for (int damage = 0; damage <= UnitEntity.NON_EPIC_DAMAGE_VALUES_UPPER_BOUND; damage++) {
+            try {
+                repository.insertUnit(false, damage, Ability.NONE, null, RowType.MELEE, 1)
+                        .andThen(repository.insertUnit(false, damage, Ability.NONE, null, RowType.MELEE, 5))
+                        .blockingAwait();
+            } catch (Exception ignored) {
+                fail();
+            }
+        }
+    }
+
+    @Test
+    public void insertUnitAssertsTooHighDamage() {
         try {
-            repository.insertUnit(false, 0, Ability.NONE, null, RowType.MELEE, 1)
-                    .andThen(repository.insertUnit(false, 0, Ability.NONE, null, RowType.MELEE, 5))
-                    .blockingAwait();
-        } catch (Exception ignored) {
+            repository.insertUnit(false, UnitEntity.NON_EPIC_DAMAGE_VALUES_UPPER_BOUND + 1, Ability.NONE, null, RowType.MELEE, 1).blockingAwait();
             fail();
+        } catch (IllegalArgumentException ignored) {
+        }
+        try {
+            repository.insertUnit(false, UnitEntity.NON_EPIC_DAMAGE_VALUES_UPPER_BOUND + 1, Ability.NONE, null, RowType.MELEE, 5).blockingAwait();
+            fail();
+        } catch (IllegalArgumentException ignored) {
+        }
+    }
+
+    @Test
+    public void insertUnitAssertsNonEpicDamage() {
+        int[] nonEpicDamage = IntStream.range(0, UnitEntity.NON_EPIC_DAMAGE_VALUES_UPPER_BOUND + 1)
+                .filter(damage -> Arrays.stream(UnitEntity.EPIC_DAMAGE_VALUES).noneMatch(integer -> damage == integer))
+                .toArray();
+        for (int damage : nonEpicDamage) {
+            try {
+                repository.insertUnit(true, damage, Ability.NONE, null, RowType.MELEE, 1).blockingAwait();
+                fail();
+            } catch (IllegalArgumentException ignored) {
+            }
+            try {
+                repository.insertUnit(true, damage, Ability.NONE, null, RowType.MELEE, 5).blockingAwait();
+                fail();
+            } catch (IllegalArgumentException ignored) {
+            }
+        }
+    }
+
+    @Test
+    public void insertUnitAllowsEpicDamage() {
+        for (int damage : UnitEntity.EPIC_DAMAGE_VALUES) {
+            try {
+                repository.insertUnit(true, damage, Ability.NONE, null, RowType.MELEE, 1)
+                        .andThen(repository.insertUnit(true, damage, Ability.NONE, null, RowType.MELEE, 5))
+                        .blockingAwait();
+            } catch (Exception ignored) {
+                fail();
+            }
         }
     }
 
@@ -599,8 +649,8 @@ public class UnitRepositoryIntegrationTest {
                 fail();
             }
         }));
-        repository.insertUnit(true, 5, Ability.NONE, null, RowType.MELEE, 1).blockingAwait();
-        repository.insertUnit(true, 5, Ability.NONE, null, RowType.MELEE, 1).blockingAwait();
+        repository.insertUnit(true, 10, Ability.NONE, null, RowType.MELEE, 1).blockingAwait();
+        repository.insertUnit(true, 10, Ability.NONE, null, RowType.MELEE, 1).blockingAwait();
         disposables.dispose();
     }
 }
