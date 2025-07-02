@@ -7,11 +7,11 @@ android {
         applicationId 'com.peternaggschga.gwint'
         minSdk 24
         targetSdkVersion 36
-        versionCode 22
+        versionCode 23
         versionName '2.1'
 
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
-        versionNameSuffix '.0'
+        versionNameSuffix '.1'
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = ["room.schemaLocation":
