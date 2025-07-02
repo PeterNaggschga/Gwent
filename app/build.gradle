@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdk 34
+    compileSdk 36
 
     defaultConfig {
         applicationId 'com.peternaggschga.gwint'
         minSdk 24
-        targetSdkVersion 35
+        targetSdkVersion 36
         versionCode 22
         versionName '2.1'
 
