@@ -1,4 +1,5 @@
 <map id="SquadManager" name="SquadManager">
-<area shape="rect" id="node1" title="A class used by the CardNumberPickerAdapter to determine the first squad with members or set the defa..." alt="" coords="5,95,124,121"/>
-<area shape="rect" id="node2" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1SquadState.xhtml" title="A data class encapsulating information about the squad defined by squadNumber, i.e...." alt="" coords="17,5,113,32"/>
+<area shape="rect" id="Node000001" title="A class used by the CardNumberPickerAdapter to determine the first squad with members or set the defa..." alt="" coords="5,93,115,119"/>
+<area shape="rect" id="Node000002" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1SquadState.xhtml" title="A data class encapsulating information about the squad defined by #squadNumber, i...." alt="" coords="17,5,103,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="63,31,63,76,57,76,57,31"/>
 </map>

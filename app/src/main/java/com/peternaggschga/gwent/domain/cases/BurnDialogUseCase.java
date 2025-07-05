@@ -11,6 +11,7 @@ import com.peternaggschga.gwent.data.RowType;
 import com.peternaggschga.gwent.data.UnitEntity;
 import com.peternaggschga.gwent.data.UnitRepository;
 import com.peternaggschga.gwent.domain.damage.DamageCalculator;
+import com.peternaggschga.gwent.ui.sounds.SoundManager;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -75,13 +76,14 @@ public class BurnDialogUseCase {
      * Wrapper for #burn(Context, UnitRepository).
      *
      * @param context Context where a Dialog can be inflated.
+     * @param soundManager SoundManager used, if an UnitEntity has the Ability#REVENGE ability.
      * @return A Single emitting a Boolean defining whether the units really were burned.
-     * @see #burn(Context, UnitRepository)
-     * @see RemoveUnitsUseCase#remove(Context, UnitRepository, Collection)
+     * @see #burn(Context, UnitRepository, SoundManager)
+     * @see RemoveUnitsUseCase#remove(Context, UnitRepository, Collection, SoundManager)
      */
     @NonNull
-    public static Single<Boolean> burn(@NonNull Context context) {
-        return GwentApplication.getRepository(context).flatMap(repository -> burn(context, repository));
+    public static Single<Boolean> burn(@NonNull Context context, @NonNull SoundManager soundManager) {
+        return GwentApplication.getRepository(context).flatMap(repository -> burn(context, repository, soundManager));
     }
 
     /**
@@ -91,11 +93,12 @@ public class BurnDialogUseCase {
      *
      * @param context    Context where a Dialog can be inflated.
      * @param repository UnitRepository where units are burned.
+     * @param soundManager SoundManager used, if an UnitEntity has the Ability#REVENGE ability.
      * @return A Single emitting a Boolean defining whether the units really were burned.
-     * @see RemoveUnitsUseCase#remove(Context, UnitRepository, Collection)
+     * @see RemoveUnitsUseCase#remove(Context, UnitRepository, Collection, SoundManager)
      */
     @NonNull
-    protected static Single<Boolean> burn(@NonNull Context context, @NonNull UnitRepository repository) {
+    protected static Single<Boolean> burn(@NonNull Context context, @NonNull UnitRepository repository, @NonNull SoundManager soundManager) {
         return getBurnUnits(repository).flatMap(units -> {
             if (units.isEmpty()) {
                 return Single.just(false);
@@ -107,7 +110,7 @@ public class BurnDialogUseCase {
                     .setNegativeButton(R.string.alertDialog_burn_negative, (dialog, which) -> dialog.cancel())
                     .setPositiveButton(R.string.alertDialog_burn_positive, (dialog, which) -> {
                         // noinspection CheckResult, ResultOfMethodCallIgnored
-                        RemoveUnitsUseCase.remove(context, repository, units).subscribe(() -> emitter.onSuccess(true));
+                        RemoveUnitsUseCase.remove(context, repository, units, soundManager).subscribe(() -> emitter.onSuccess(true));
                     })
                     .setCancelable(true)
                     .setOnCancelListener(dialog -> emitter.onSuccess(false))

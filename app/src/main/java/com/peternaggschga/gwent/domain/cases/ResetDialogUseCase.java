@@ -15,6 +15,7 @@ import com.peternaggschga.gwent.GwentApplication;
 import com.peternaggschga.gwent.R;
 import com.peternaggschga.gwent.data.RowType;
 import com.peternaggschga.gwent.data.UnitRepository;
+import com.peternaggschga.gwent.ui.sounds.SoundManager;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -37,15 +38,15 @@ public class ResetDialogUseCase {
      *
      * @param context Context where a Dialog can be inflated.
      * @param trigger {@link Trigger} defining what triggered this reset.
+     * @param soundManager SoundManager used, if an UnitEntity has the Ability#REVENGE ability.
      * @return A Single emitting a Boolean defining whether the reset really took place.
-     * @see #reset(Context, UnitRepository, Trigger)
-     * @see ResetRepositoryUseCase#reset(Context, UnitRepository, boolean)
+     * @see #reset(Context, UnitRepository, Trigger, SoundManager)
+     * @see ResetRepositoryUseCase#reset(Context, UnitRepository, boolean, SoundManager)
      */
     @NonNull
-    public static Single<Boolean> reset(@NonNull Context context,
-                                        @NonNull Trigger trigger) {
+    public static Single<Boolean> reset(@NonNull Context context, @NonNull Trigger trigger, @NonNull SoundManager soundManager) {
         return GwentApplication.getRepository(context)
-                .flatMap(repository -> reset(context, repository, trigger));
+                .flatMap(repository -> reset(context, repository, trigger, soundManager));
     }
 
     /**
@@ -57,15 +58,16 @@ public class ResetDialogUseCase {
      * @param context    Context where a Dialog can be inflated.
      * @param repository UnitRepository that is reset.
      * @param trigger    {@link Trigger} defining what triggered this reset.
+     * @param soundManager SoundManager used, if an UnitEntity has the Ability#REVENGE ability.
      * @return A Single emitting a Boolean defining whether the reset really took place.
-     * @see ResetRepositoryUseCase#reset(Context, UnitRepository, boolean)
+     * @see ResetRepositoryUseCase#reset(Context, UnitRepository, boolean, SoundManager)
      */
     @NonNull
     protected static Single<Boolean> reset(@NonNull Context context, @NonNull UnitRepository repository,
-                                           @NonNull Trigger trigger) {
+                                           @NonNull Trigger trigger, @NonNull SoundManager soundManager) {
         return getDialogType(context, repository, trigger).flatMap(dialogType -> {
             if (dialogType == DialogType.NONE) {
-                return ResetRepositoryUseCase.reset(context, repository).andThen(Single.just(true));
+                return ResetRepositoryUseCase.reset(context, repository, soundManager).andThen(Single.just(true));
             }
             return Single.create(emitter -> new ResetAlertDialogBuilderAdapter(context, (resetDecision, keepUnit) -> {
                 if (!resetDecision) {
@@ -73,7 +75,7 @@ public class ResetDialogUseCase {
                     return;
                 }
                 // noinspection CheckResult, ResultOfMethodCallIgnored
-                ResetRepositoryUseCase.reset(context, repository, keepUnit)
+                ResetRepositoryUseCase.reset(context, repository, keepUnit, soundManager)
                         .doAfterTerminate(() -> emitter.onSuccess(true))
                         .subscribe(unit ->
                                 Toast.makeText(context,

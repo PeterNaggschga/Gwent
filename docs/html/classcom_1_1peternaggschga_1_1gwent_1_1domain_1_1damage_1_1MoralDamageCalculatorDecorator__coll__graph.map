@@ -1,7 +1,8 @@
 <map id="MoralDamageCalculatorDecorator" name="MoralDamageCalculatorDecorator">
-<area shape="rect" id="node1" title="A DamageCalculator class responsible for calculating the moral buff if necessary, i...." alt="" coords="80,184,324,211"/>
-<area shape="rect" id="node2" href="$classcom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1DamageCalculatorDecorator.xhtml" title="An abstract DamageCalculator that is used as a superclass for the decorator classes implementing the ..." alt="" coords="5,95,212,121"/>
-<area shape="rect" id="node3" href="$interfacecom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1DamageCalculator.xhtml" title="An interface for a class capable of calculating the (de&#45;)buffed damage of a unit for a given UnitEnti..." alt="" coords="39,5,181,32"/>
-<area shape="rect" id="node4" title=" " alt="" coords="236,95,357,121"/>
-<area shape="rect" id="node5" title=" " alt="" coords="274,5,319,32"/>
+<area shape="rect" id="Node000001" title="A DamageCalculator class responsible for calculating the moral buff if necessary, i...." alt="" coords="5,168,240,193"/>
+<area shape="rect" id="Node000002" href="$classcom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1DamageCalculatorDecorator.xhtml" title="An abstract DamageCalculator that is used as a superclass for the decorator classes implementing the ..." alt="" coords="24,93,221,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="125,133,125,168,120,168,120,133"/>
+<area shape="rect" id="Node000003" href="$interfacecom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1DamageCalculator.xhtml" title="An interface for a class capable of calculating the (de&#45;)buffed damage of a unit for a given UnitEnti..." alt="" coords="56,5,189,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="123,45,123,55,124,93,119,93,117,55,118,44"/>
+<area shape="poly" id="edge3_Node000002_Node000003" title=" " alt="" coords="125,31,125,76,120,76,120,31"/>
 </map>

@@ -1,6 +1,8 @@
 package com.peternaggschga.gwent.ui.dialogs.addcard;
 
 
+import static com.peternaggschga.gwent.data.UnitEntity.EPIC_DAMAGE_VALUES;
+import static com.peternaggschga.gwent.data.UnitEntity.NON_EPIC_DAMAGE_VALUES_UPPER_BOUND;
 
 import android.widget.NumberPicker;
 
@@ -21,17 +23,6 @@ import java.util.stream.IntStream;
  * Allows for switching between epic and normal damage values using #setEpicValues().
  */
 class DamageValuePicker extends ValuePicker<Integer> {
-    /**
-     * Integer array containing every damage value an epic unit may have.
-     */
-    @NonNull
-    public static final Integer[] EPIC_DAMAGE_VALUES = new Integer[]{0, 7, 8, 10, 11, 15};
-
-    /**
-     * Integer defining what the maximum damage of a non-epic UnitEntity can be.
-     */
-    public static final int NON_EPIC_DAMAGE_VALUES_UPPER_BOUND = 20;
-
     /**
      * Boolean defining whether or not this DamageValuePicker shows epic damage values.
      * @see #setEpicValues(boolean)

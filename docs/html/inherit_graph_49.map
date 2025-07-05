@@ -1,3 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1ValuePicker_3_01T_01extends_01Comparable.xhtml" title="A generic abstract wrapper class around NumberPicker used to select values of arbitrary types extendi..." alt="" coords="5,5,181,47"/>
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,13,103,38"/>
+<area shape="rect" id="Node000001" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1cards_1_1CardListAdapter_1_1CardViewHolder.xhtml" title="A RecyclerView.ViewHolder class managing a card view that shows a representation of the UnitEntity re..." alt="" coords="151,5,341,45"/>
+<area shape="poly" id="edge29_Node000000_Node000001" title=" " alt="" coords="116,23,150,23,150,28,116,28"/>
 </map>

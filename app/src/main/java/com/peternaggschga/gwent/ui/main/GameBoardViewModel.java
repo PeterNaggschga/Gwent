@@ -17,6 +17,7 @@ import com.peternaggschga.gwent.domain.cases.BurnDialogUseCase;
 import com.peternaggschga.gwent.domain.cases.DamageCalculatorUseCase;
 import com.peternaggschga.gwent.domain.cases.ResetDialogUseCase;
 import com.peternaggschga.gwent.domain.damage.DamageCalculator;
+import com.peternaggschga.gwent.ui.sounds.SoundManager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -79,17 +80,24 @@ public class GameBoardViewModel extends AndroidViewModel {
     private Flowable<MenuUiState> menuUiState = Flowable.empty();
 
     /**
+     * SoundManager used to play Sound effects on click events.
+     */
+    private SoundManager soundManager;
+
+    /**
      * Factory method of a GameBoardViewModel.
      * Creates a new GameBoardViewModel for the given owner and initializes #rowUiStates and #menuUiState.
      *
      * @param owner      ViewModelStoreOwner instantiating the GameBoardViewModel.
      * @param repository UnitRepository where Flowables are retrieved.
+     * @param soundManager SoundManager used to play Sound effects on click events.
      * @return A new GameBoardViewModel instance.
      * @see ViewModelProvider#ViewModelProvider(ViewModelStoreOwner, ViewModelProvider.Factory)
      */
     @NonNull
     public static GameBoardViewModel getModel(@NonNull ViewModelStoreOwner owner,
-                                              @NonNull UnitRepository repository) {
+                                              @NonNull UnitRepository repository,
+                                              @NonNull SoundManager soundManager) {
         GameBoardViewModel result = new ViewModelProvider(owner, ViewModelProvider.Factory.from(INITIALIZER))
                 .get(GameBoardViewModel.class);
 
@@ -139,6 +147,7 @@ public class GameBoardViewModel extends AndroidViewModel {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
 
+        result.soundManager = soundManager;
         return result;
     }
 
@@ -178,80 +187,113 @@ public class GameBoardViewModel extends AndroidViewModel {
     }
 
     /**
+     * Returns the SoundManager managed by this GameBoardViewModel.
+     *
+     * @return A SoundManager used by this GameBoardViewModel.
+     */
+    @NonNull
+    public SoundManager getSoundManager() {
+        return soundManager;
+    }
+
+    /**
      * Updates the weather debuff of the given row.
-     * Flips between good and bad weather.
+     * Flips between good and bad weather. Plays a matching sound, if the weather is switched on.
      * @param row RowType defining the affected row.
-     * @return A Single emitting a Boolean defining the weather status of the row after the operation.
+     * @return A Completable tracking operation status.
      * @see UnitRepository#switchWeather(RowType)
      */
     @NonNull
-    public Single<Boolean> onWeatherViewPressed(@NonNull RowType row) {
-        return getRepository().flatMap(repository ->
-                repository.switchWeather(row)
-                        .andThen(repository.isWeather(row)));
+    public Completable onWeatherViewPressed(@NonNull RowType row) {
+        return getRepository()
+                .flatMap(repository -> repository
+                        .switchWeather(row)
+                        .andThen(repository.isWeather(row)))
+                .doOnSuccess(weather -> {
+                    if (weather) {
+                        soundManager.playWeatherSound(row);
+                    }
+                })
+                .ignoreElement();
     }
 
     /**
      * Updates the horn buff of the given row.
-     * Flips between on and off.
+     * Flips between on and off. Plays a matching sound, if the horn is switched on.
      * @param row RowType defining the affected row.
-     * @return A Single emitting a Boolean defining the horn status of the row after the operation.
+     * @return A Completable tracking operation status.
      * @see UnitRepository#switchHorn(RowType)
      */
-    public Single<Boolean> onHornViewPressed(@NonNull RowType row) {
-        return getRepository().flatMap(repository ->
-                repository.switchHorn(row)
-                        .andThen(repository.isHorn(row)));
+    public Completable onHornViewPressed(@NonNull RowType row) {
+        return getRepository()
+                .flatMap(repository -> repository
+                        .switchHorn(row)
+                        .andThen(repository.isHorn(row)))
+                .doOnSuccess(horn -> {
+                    if (horn) {
+                        soundManager.playHornSound();
+                    }
+                })
+                .ignoreElement();
     }
 
     /**
      * Triggers a reset and possibly an alert dialog, depending on preferences.
      * Should only be called by the button's View.OnClickListener.
-     * Wrapper for #reset().
+     * Wrapper for #reset(Context, ResetDialogUseCase.Trigger).
      * @param context Context object used to acquire SharedPreferences and inflate Dialog views.
-     * @return A Single emitting a Boolean defining whether a reset was actually conducted.
+     * @return A Completable tracking operation status.
      * @see #reset(Context, ResetDialogUseCase.Trigger)
      * @see ResetDialogUseCase.Trigger#BUTTON_CLICK
      */
     @NonNull
-    public Single<Boolean> onResetButtonPressed(@NonNull Context context) {
+    public Completable onResetButtonPressed(@NonNull Context context) {
         return reset(context, ResetDialogUseCase.Trigger.BUTTON_CLICK);
     }
 
     /**
      * Triggers a reset and possibly an alert dialog, depending on preferences.
      * Should only be called when the faction has been switched.
-     * Wrapper for #reset().
+     * Wrapper for #reset(Context, ResetDialogUseCase.Trigger).
      * @param context Context object used to acquire SharedPreferences and inflate Dialog views.
-     * @return A Single emitting a Boolean defining whether a reset was actually conducted.
+     * @return A Completable tracking operation status.
      * @see #reset(Context, ResetDialogUseCase.Trigger)
      */
     @NonNull
-    public Single<Boolean> onFactionSwitchReset(@NonNull Context context) {
+    public Completable onFactionSwitchReset(@NonNull Context context) {
         return reset(context, ResetDialogUseCase.Trigger.FACTION_SWITCH);
     }
 
     /**
      * Triggers a reset and possibly an alert dialog, depending on preferences.
+     * Plays a matching sound, if units were removed.
      * @param context Context object used to acquire SharedPreferences and inflate Dialog views.
      * @param trigger {@link com.peternaggschga.gwent.domain.cases.ResetDialogUseCase.Trigger} defining which action triggered the reset.
-     * @return A Single emitting a Boolean defining whether a reset was actually conducted.
+     * @return A Completable tracking operation status.
      * @see #reset(Context, ResetDialogUseCase.Trigger)
      */
     @NonNull
-    private Single<Boolean> reset(@NonNull Context context, @NonNull ResetDialogUseCase.Trigger trigger) {
-        return ResetDialogUseCase.reset(context, trigger);
+    private Completable reset(@NonNull Context context, @NonNull ResetDialogUseCase.Trigger trigger) {
+        return ResetDialogUseCase
+                .reset(context, trigger, soundManager)
+                .doOnSuccess(playSound -> {
+                    if (playSound) {
+                        soundManager.playResetSound();
+                    }
+                })
+                .ignoreElement();
     }
 
     /**
      * Clears all weather effects.
      * Should only be called by the View.OnClickListener of the weather button.
+     * Plays a matching sound on completion.
      * @return A Completable tracking operation status.
      * @see UnitRepository#clearWeather()
      */
     @NonNull
     public Completable onWeatherButtonPressed() {
-        return getRepository().flatMapCompletable(UnitRepository::clearWeather);
+        return getRepository().flatMapCompletable(UnitRepository::clearWeather).doOnComplete(soundManager::playClearWeatherSound);
     }
 
     /**
@@ -259,12 +301,20 @@ public class GameBoardViewModel extends AndroidViewModel {
      * May inflate a warning dialog depending on the user's preferences and a Toast
      * informing the user about the burned units.
      * Should only be called by the View.OnClickListener of the burn button.
+     * Plays a matching sound, if units were removed.
      * @param context Context
-     * @return A Single emitting a Boolean defining whether the units were actually removed.
-     * @see BurnDialogUseCase#burn(Context)
+     * @return A Completable tracking operation status.
+     * @see BurnDialogUseCase#burn(Context, SoundManager)
      */
     @NonNull
-    public Single<Boolean> onBurnButtonPressed(@NonNull Context context) {
-        return BurnDialogUseCase.burn(context);
+    public Completable onBurnButtonPressed(@NonNull Context context) {
+        return BurnDialogUseCase
+                .burn(context, soundManager)
+                .doOnSuccess(playSound -> {
+                    if (playSound) {
+                        soundManager.playBurnSound();
+                    }
+                })
+                .ignoreElement();
     }
 }

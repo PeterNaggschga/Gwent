@@ -55,7 +55,7 @@ public class SquadStateUnitTest {
     public void getStateSetsMemberBaseDamage() {
         UnitEntity mockUnit = mock(UnitEntity.class);
         when(mockUnit.getSquad()).thenReturn(1);
-        for (int damage = 0; damage < DamageValuePicker.NON_EPIC_DAMAGE_VALUES_UPPER_BOUND; damage++) {
+        for (int damage = 0; damage < UnitEntity.NON_EPIC_DAMAGE_VALUES_UPPER_BOUND; damage++) {
             when(mockUnit.getDamage()).thenReturn(damage);
             assertThat(SquadState.getState(1, Collections.singletonList(mockUnit)).getMemberBaseDamage())
                     .isEqualTo(damage);

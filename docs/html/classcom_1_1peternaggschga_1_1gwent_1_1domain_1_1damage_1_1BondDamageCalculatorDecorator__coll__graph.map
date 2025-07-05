@@ -1,7 +1,8 @@
 <map id="BondDamageCalculatorDecorator" name="BondDamageCalculatorDecorator">
-<area shape="rect" id="node1" title="A DamageCalculator class responsible for calculating the tight bond buff if necessary,..." alt="" coords="97,184,337,211"/>
-<area shape="rect" id="node2" href="$classcom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1DamageCalculatorDecorator.xhtml" title="An abstract DamageCalculator that is used as a superclass for the decorator classes implementing the ..." alt="" coords="5,95,212,121"/>
-<area shape="rect" id="node3" href="$interfacecom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1DamageCalculator.xhtml" title="An interface for a class capable of calculating the (de&#45;)buffed damage of a unit for a given UnitEnti..." alt="" coords="39,5,181,32"/>
-<area shape="rect" id="node4" title=" " alt="" coords="236,95,416,121"/>
-<area shape="rect" id="node5" title=" " alt="" coords="301,5,351,32"/>
+<area shape="rect" id="Node000001" title="A DamageCalculator class responsible for calculating the tight bond buff if necessary,..." alt="" coords="5,168,235,193"/>
+<area shape="rect" id="Node000002" href="$classcom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1DamageCalculatorDecorator.xhtml" title="An abstract DamageCalculator that is used as a superclass for the decorator classes implementing the ..." alt="" coords="21,93,219,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="123,133,123,168,117,168,117,133"/>
+<area shape="rect" id="Node000003" href="$interfacecom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1DamageCalculator.xhtml" title="An interface for a class capable of calculating the (de&#45;)buffed damage of a unit for a given UnitEnti..." alt="" coords="53,5,187,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="121,45,120,55,121,93,116,93,115,55,115,44"/>
+<area shape="poly" id="edge3_Node000002_Node000003" title=" " alt="" coords="123,31,123,76,117,76,117,31"/>
 </map>

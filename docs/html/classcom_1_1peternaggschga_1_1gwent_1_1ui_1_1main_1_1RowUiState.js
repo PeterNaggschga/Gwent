@@ -1,7 +1,6 @@
 var classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1RowUiState =
 [
     [ "RowUiState", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1RowUiState.xhtml#a68040603d3e85635cc2d6d680c655caf", null ],
-    [ "equals", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1RowUiState.xhtml#a39e5bc339e3b5924ec96de42fbb8f33f", null ],
     [ "getDamage", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1RowUiState.xhtml#ac10b854131d21646691dcdd7da559a22", null ],
     [ "getUnits", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1RowUiState.xhtml#a829683c5c045ff2712ae2c685f6be11e", null ],
     [ "isHorn", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1RowUiState.xhtml#a6f6feb9a345fb72466978e2c6aa41a86", null ],

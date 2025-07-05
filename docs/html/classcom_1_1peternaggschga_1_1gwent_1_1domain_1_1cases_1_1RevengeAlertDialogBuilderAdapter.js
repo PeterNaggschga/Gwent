@@ -2,7 +2,7 @@ var classcom_1_1peternaggschga_1_1gwent_1_1domain_1_1cases_1_1RevengeAlertDialog
 [
     [ "RevengeAlertDialogBuilderAdapter", "classcom_1_1peternaggschga_1_1gwent_1_1domain_1_1cases_1_1RevengeAlertDialogBuilderAdapter.xhtml#a5be5eb6d723ce3dc0c3e96b7dc6244e1", null ],
     [ "create", "classcom_1_1peternaggschga_1_1gwent_1_1domain_1_1cases_1_1RevengeAlertDialogBuilderAdapter.xhtml#a3552e31ff3973bbb110efae9bc84eb5e", null ],
-    [ "insertAvengers", "classcom_1_1peternaggschga_1_1gwent_1_1domain_1_1cases_1_1RevengeAlertDialogBuilderAdapter.xhtml#a20e452a1569d4210d780f8224755a562", null ],
+    [ "insertAvengers", "classcom_1_1peternaggschga_1_1gwent_1_1domain_1_1cases_1_1RevengeAlertDialogBuilderAdapter.xhtml#a43037c5ae1450319ba858dc0885856c2", null ],
     [ "setNegativeCallback", "classcom_1_1peternaggschga_1_1gwent_1_1domain_1_1cases_1_1RevengeAlertDialogBuilderAdapter.xhtml#a69b33304cafc92dcf3b6deaee87aace9", null ],
     [ "setPositiveCallback", "classcom_1_1peternaggschga_1_1gwent_1_1domain_1_1cases_1_1RevengeAlertDialogBuilderAdapter.xhtml#ada83afb41b0487aafb8c596339b560e4", null ],
     [ "adapteeBuilder", "classcom_1_1peternaggschga_1_1gwent_1_1domain_1_1cases_1_1RevengeAlertDialogBuilderAdapter.xhtml#ae9f6f0d241dfba0f916096ffa9ef81ca", null ],

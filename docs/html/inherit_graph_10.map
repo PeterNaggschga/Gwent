@@ -1,3 +1,13 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$enumcom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1DamageCalculator_1_1Color.xhtml" title="An enum containing values representing whether a unit is buffed, de&#45;buffed or not affected by status ..." alt="" coords="5,5,185,32"/>
+<area shape="rect" id="Node000000" href="$interfacecom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1DamageCalculator.xhtml" title="An interface for a class capable of calculating the (de&#45;)buffed damage of a unit for a given UnitEnti..." alt="" coords="5,80,148,105"/>
+<area shape="rect" id="Node000001" href="$classcom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1DamageCalculatorDecorator.xhtml" title="An abstract DamageCalculator that is used as a superclass for the decorator classes implementing the ..." alt="" coords="196,55,403,80"/>
+<area shape="poly" id="edge10_Node000000_Node000001" title=" " alt="" coords="161,80,196,76,196,82,162,86"/>
+<area shape="rect" id="Node000005" href="$classcom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1WeatherDamageCalculator.xhtml" title="A DamageCalculator class responsible for calculating the weather debuff if necessary,..." alt="" coords="201,104,398,129"/>
+<area shape="poly" id="edge14_Node000000_Node000005" title=" " alt="" coords="162,99,201,103,200,109,161,104"/>
+<area shape="rect" id="Node000002" href="$classcom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1BondDamageCalculatorDecorator.xhtml" title="A DamageCalculator class responsible for calculating the tight bond buff if necessary,..." alt="" coords="453,5,693,31"/>
+<area shape="poly" id="edge11_Node000001_Node000002" title=" " alt="" coords="383,50,501,28,502,33,384,55"/>
+<area shape="rect" id="Node000003" href="$classcom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1HornDamageCalculatorDecorator.xhtml" title="A DamageCalculator class responsible for calculating the horn buff if necessary, i...." alt="" coords="453,55,692,80"/>
+<area shape="poly" id="edge12_Node000001_Node000003" title=" " alt="" coords="417,65,453,65,453,70,417,70"/>
+<area shape="rect" id="Node000004" href="$classcom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1MoralDamageCalculatorDecorator.xhtml" title="A DamageCalculator class responsible for calculating the moral buff if necessary, i...." alt="" coords="451,104,695,129"/>
+<area shape="poly" id="edge13_Node000001_Node000004" title=" " alt="" coords="384,80,502,101,501,107,383,85"/>
 </map>

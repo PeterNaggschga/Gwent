@@ -1,3 +1,3 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classcom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1DamageCalculatorBuildDirector.xhtml" title="A build director responsible for the creation of DamageCalculator instances from sets of units using ..." alt="" coords="5,5,233,32"/>
+<area shape="rect" id="Node000000" href="$enumcom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1DamageCalculator_1_1Color.xhtml" title="An enum containing values representing whether a unit is buffed, de&#45;buffed or not affected by status ..." alt="" coords="5,5,185,31"/>
 </map>

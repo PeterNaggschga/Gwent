@@ -12,9 +12,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.peternaggschga.gwent.GwentApplication;
 import com.peternaggschga.gwent.R;
 import com.peternaggschga.gwent.data.RowType;
+import com.peternaggschga.gwent.data.UnitEntity;
 import com.peternaggschga.gwent.domain.cases.RemoveUnitsUseCase;
 import com.peternaggschga.gwent.ui.dialogs.OverlayDialog;
 import com.peternaggschga.gwent.ui.dialogs.addcard.AddCardDialog;
+import com.peternaggschga.gwent.ui.sounds.SoundManager;
 
 import java.util.Objects;
 
@@ -42,6 +44,15 @@ public class ShowUnitsDialog extends OverlayDialog {
     private final CardListAdapter cardListAdapter;
 
     /**
+     * SoundManager used to play a Sound whenever a card is added or removed.
+     *
+     * @see SoundManager#playCardAddSound(RowType, boolean)
+     * @see SoundManager#playCardRemovedSound()
+     */
+    @NonNull
+    private final SoundManager soundManager;
+
+    /**
      * CompositeDisposable keeping track of all subscriptions to observables made by this class.
      * Is being disposed in an android.content.DialogInterface.OnDismissListener that is set in #onCreate().
      *
@@ -62,22 +73,25 @@ public class ShowUnitsDialog extends OverlayDialog {
      * @param context         Context this Dialog is shown in.
      * @param row             RowType defining which row all shown units belong to.
      * @param cardListAdapter CardListAdapter providing an always up-to-date list of CardUiState objects for a certain row.
+     * @param soundManager SoundManager used to play sounds when cards are added or removed.
      */
     private ShowUnitsDialog(@NonNull Context context, @NonNull RowType row,
-                            @NonNull CardListAdapter cardListAdapter) {
+                            @NonNull CardListAdapter cardListAdapter, @NonNull SoundManager soundManager) {
         super(context, R.layout.popup_cards, R.id.popup_cards_cancel_button);
         this.row = row;
         this.cardListAdapter = cardListAdapter;
+        this.soundManager = soundManager;
     }
 
     /**
      * Creates a new ShowUnitsDialog in the given Context and for the given row.
      * @param context Context the Dialog is shown in.
      * @param row RowType defining the row that is represented by this Dialog.
+     * @param soundManager SoundManager used to play sounds when cards are added or removed.
      * @return A Single emitting the created ShowUnitsDialog.
      */
     @NonNull
-    public static Single<ShowUnitsDialog> getDialog(@NonNull Context context, @NonNull RowType row) {
+    public static Single<ShowUnitsDialog> getDialog(@NonNull Context context, @NonNull RowType row, @NonNull SoundManager soundManager) {
         return GwentApplication.getRepository(context)
                 .flatMap(repository -> repository.isWeather(row)
                         .zipWith(repository.isHorn(row), (weather, horn) ->
@@ -85,14 +99,20 @@ public class ShowUnitsDialog extends OverlayDialog {
                         .map(factory -> {
                             CompositeDisposable initialDisposables = new CompositeDisposable();
                             CardListAdapter adapter = new CardListAdapter(
-                                    id -> initialDisposables.add(repository.copy(id).subscribe()),
                                     id -> initialDisposables.add(
-                                            RemoveUnitsUseCase.remove(context, repository, id)
-                                                    .subscribe(() -> {
-                                                    }, throwable -> Log.e(ShowUnitsDialog.class.getSimpleName(),
-                                                            "There has been an error with the removal of a unit. " +
-                                                                    "A reason might be tapping delete buttons too fast!",
-                                                            throwable))
+                                            repository
+                                                    .copy(id)
+                                                    .andThen(repository.getUnit(id))
+                                                    .map(UnitEntity::isEpic)
+                                                    .subscribe(epic -> soundManager.playCardAddSound(row, epic))
+                                    ),
+                                    id -> initialDisposables.add(
+                                            RemoveUnitsUseCase.remove(context, repository, id, soundManager)
+                                                    .subscribe(soundManager::playCardRemovedSound,
+                                                            throwable -> Log.e(ShowUnitsDialog.class.getSimpleName(),
+                                                                    "There has been an error with the removal of a unit. " +
+                                                                            "A reason might be tapping delete buttons too fast!",
+                                                                    throwable))
                                     )
                             );
                             initialDisposables.add(
@@ -100,7 +120,7 @@ public class ShowUnitsDialog extends OverlayDialog {
                                             .map(factory::createCardUiState)
                                             .subscribe(adapter::submitList)
                             );
-                            ShowUnitsDialog result = new ShowUnitsDialog(context, row, adapter);
+                            ShowUnitsDialog result = new ShowUnitsDialog(context, row, adapter, soundManager);
                             result.disposables.add(initialDisposables);
                             return result;
                         })
@@ -152,7 +172,7 @@ public class ShowUnitsDialog extends OverlayDialog {
 
         findViewById(R.id.popup_cards_add_button).setOnClickListener(v -> {
             hide();
-            new AddCardDialog(ShowUnitsDialog.this).show();
+            new AddCardDialog(ShowUnitsDialog.this, soundManager).show();
         });
 
         setOnDismissListener(dialog -> disposables.dispose());

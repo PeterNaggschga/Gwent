@@ -1,6 +1,6 @@
 var classcom_1_1peternaggschga_1_1gwent_1_1domain_1_1cases_1_1RemoveUnitsUseCase =
 [
-    [ "getRevengeDialog", "classcom_1_1peternaggschga_1_1gwent_1_1domain_1_1cases_1_1RemoveUnitsUseCase.xhtml#add634b82fd07835fbd26e2e0eedcf9e5", null ],
-    [ "remove", "classcom_1_1peternaggschga_1_1gwent_1_1domain_1_1cases_1_1RemoveUnitsUseCase.xhtml#a902fb239f8cdf6c9a5e7f093ddc1ce5a", null ],
-    [ "remove", "classcom_1_1peternaggschga_1_1gwent_1_1domain_1_1cases_1_1RemoveUnitsUseCase.xhtml#a28219d365c909f22766724cd5e9a0b29", null ]
+    [ "getRevengeDialog", "classcom_1_1peternaggschga_1_1gwent_1_1domain_1_1cases_1_1RemoveUnitsUseCase.xhtml#ab67cb6bc057443766ec736306ff0e839", null ],
+    [ "remove", "classcom_1_1peternaggschga_1_1gwent_1_1domain_1_1cases_1_1RemoveUnitsUseCase.xhtml#aaba32da322e3fe050a7f597dc5deed47", null ],
+    [ "remove", "classcom_1_1peternaggschga_1_1gwent_1_1domain_1_1cases_1_1RemoveUnitsUseCase.xhtml#a683b6cf2b037f8497c3efacfa5ab8eb8", null ]
 ];

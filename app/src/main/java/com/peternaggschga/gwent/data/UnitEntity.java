@@ -55,6 +55,17 @@ public class UnitEntity {
     private int damage;
 
     /**
+     * Integer array containing every damage value an epic unit may have.
+     */
+    @NonNull
+    public static final Integer[] EPIC_DAMAGE_VALUES = new Integer[]{0, 7, 8, 10, 11, 15};
+
+    /**
+     * Integer defining what the maximum damage of a non-epic UnitEntity can be.
+     */
+    public static final int NON_EPIC_DAMAGE_VALUES_UPPER_BOUND = 20;
+
+    /**
      * Defines the Ability of the represented card.
      * Is set to Ability#NONE by default.
      * Must not be `null`.
@@ -199,15 +210,15 @@ public class UnitEntity {
     public String toString(@NonNull Context context) {
         String row;
         switch (getRow()) {
-            case MELEE:
-            default:
-                row = context.getString(R.string.unit_toString_melee);
-                break;
             case RANGE:
                 row = context.getString(R.string.unit_toString_range);
                 break;
             case SIEGE:
                 row = context.getString(R.string.unit_toString_siege);
+                break;
+            case MELEE:
+            default:
+                row = context.getString(R.string.unit_toString_melee);
         }
         String epic = isEpic() ? context.getString(R.string.unit_toString_epic) : context.getString(R.string.unit_toString_unit);
         String ability;

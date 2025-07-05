@@ -11,6 +11,7 @@ import com.peternaggschga.gwent.R;
 import com.peternaggschga.gwent.data.Ability;
 import com.peternaggschga.gwent.data.RowType;
 import com.peternaggschga.gwent.data.UnitRepository;
+import com.peternaggschga.gwent.ui.sounds.SoundManager;
 
 import io.reactivex.rxjava3.core.Completable;
 
@@ -92,8 +93,9 @@ class RevengeAlertDialogBuilderAdapter {
      * @return A Completable tracking operation status.
      */
     @NonNull
-    public static Completable insertAvengers(@NonNull UnitRepository repository, @IntRange(from = 0) int numberOfAvengers) {
-        return repository.insertUnit(AVENGER_EPIC, AVENGER_DAMAGE, AVENGER_ABILITY, AVENGER_SQUAD, AVENGER_ROW, numberOfAvengers);
+    public static Completable insertAvengers(@NonNull UnitRepository repository, @IntRange(from = 0) int numberOfAvengers, @NonNull SoundManager soundManager) {
+        return repository.insertUnit(AVENGER_EPIC, AVENGER_DAMAGE, AVENGER_ABILITY, AVENGER_SQUAD, AVENGER_ROW, numberOfAvengers)
+                .doOnComplete(() -> soundManager.playCardAddSound(AVENGER_ROW, AVENGER_EPIC));
     }
 
     /**
@@ -113,7 +115,7 @@ class RevengeAlertDialogBuilderAdapter {
      *
      * @param onPositiveButtonClick DialogInterface.OnClickListener that is called, when the positive button is clicked.
      * @return The RevengeAlertDialogBuilder with the updated positive callback.
-     * @see #insertAvengers(UnitRepository, int)
+     * @see #insertAvengers(UnitRepository, int, SoundManager)
      */
     @NonNull
     RevengeAlertDialogBuilderAdapter setPositiveCallback(@NonNull DialogInterface.OnClickListener onPositiveButtonClick) {

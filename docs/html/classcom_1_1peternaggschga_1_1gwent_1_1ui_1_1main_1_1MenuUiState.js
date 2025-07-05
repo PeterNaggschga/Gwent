@@ -1,7 +1,6 @@
 var classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1MenuUiState =
 [
     [ "MenuUiState", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1MenuUiState.xhtml#ac0318a1281acc563fc4fa3c24b0c8444", null ],
-    [ "equals", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1MenuUiState.xhtml#a39e5bc339e3b5924ec96de42fbb8f33f", null ],
     [ "getDamage", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1MenuUiState.xhtml#ac10b854131d21646691dcdd7da559a22", null ],
     [ "isBurn", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1MenuUiState.xhtml#a49e9a670f6a6404d0aab2d002167ca67", null ],
     [ "isReset", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1MenuUiState.xhtml#a09a65ba8f5f7152d6933a9c29c99fd31", null ],

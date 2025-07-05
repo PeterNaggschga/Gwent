@@ -1,6 +1,6 @@
 package com.peternaggschga.gwent.ui.dialogs.addcard;
 
-import static com.peternaggschga.gwent.ui.dialogs.addcard.DamageValuePicker.NON_EPIC_DAMAGE_VALUES_UPPER_BOUND;
+import static com.peternaggschga.gwent.data.UnitEntity.NON_EPIC_DAMAGE_VALUES_UPPER_BOUND;
 import static com.peternaggschga.gwent.ui.dialogs.addcard.SquadManager.MAX_NR_SQUADS;
 
 import androidx.annotation.IntRange;
