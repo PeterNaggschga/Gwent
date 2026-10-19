@@ -31,21 +31,23 @@ public class RowEntityUnitTest {
     }
 
     @Test
-    public void hornIsFalseByDefault() {
+    public void hornIsFalseByDefault() throws InterruptedException {
         for (RowType row : RowType.values()) {
             database.rows().insertRow(new RowEntity(row))
                     .andThen(database.rows().isHorn(row))
                     .test()
+                    .await()
                     .assertValue(false);
         }
     }
 
     @Test
-    public void weatherIsFalseByDefault() {
+    public void weatherIsFalseByDefault() throws InterruptedException {
         for (RowType row : RowType.values()) {
             database.rows().insertRow(new RowEntity(row))
                     .andThen(database.rows().isWeather(row))
                     .test()
+                    .await()
                     .assertValue(false);
         }
     }

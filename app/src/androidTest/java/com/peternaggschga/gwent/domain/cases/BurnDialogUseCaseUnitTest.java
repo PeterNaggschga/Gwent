@@ -33,10 +33,11 @@ public class BurnDialogUseCaseUnitTest {
     }
 
     @Test
-    public void burnReturnsFalseForEmptyBoard() {
+    public void burnReturnsFalseForEmptyBoard() throws InterruptedException {
         when(repository.getUnits()).thenReturn(Single.just(Collections.emptyList()));
         BurnDialogUseCase.burn(ApplicationProvider.getApplicationContext(), repository, soundManager)
                 .test()
+                .await()
                 .assertValue(false)
                 .dispose();
     }

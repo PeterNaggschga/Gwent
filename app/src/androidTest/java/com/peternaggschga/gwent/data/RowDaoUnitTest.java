@@ -47,41 +47,45 @@ public class RowDaoUnitTest {
     }
 
     @Test
-    public void insertRowIgnoresDoubles() {
+    public void insertRowIgnoresDoubles() throws InterruptedException {
         for (RowType row : RowType.values()) {
             rowDao.insertRow(new RowEntity(row))
                     .andThen(rowDao.updateWeather(row))
                     .andThen(rowDao.insertRow(new RowEntity(row)))
                     .blockingAwait();
-            rowDao.isWeather(row).test().assertValue(true);
+            rowDao.isWeather(row).test().await().assertValue(true);
         }
     }
 
     @Test
-    public void clearRowsClearsRows() {
+    public void clearRowsClearsRows() throws InterruptedException {
         for (RowType row : RowType.values()) {
             rowDao.insertRow(new RowEntity(row))
                     .andThen(rowDao.clearRows())
                     .andThen(rowDao.isWeather(row))
                     .test()
+                    .await()
                     .assertError(EmptyResultSetException.class);
         }
     }
 
     @Test
-    public void updateWeatherUpdatesWeather() {
+    public void updateWeatherUpdatesWeather() throws InterruptedException {
         for (RowType row : RowType.values()) {
             rowDao.insertRow(new RowEntity(row))
                     .andThen(rowDao.isWeather(row))
                     .test()
+                    .await()
                     .assertValue(false);
             rowDao.updateWeather(row)
                     .andThen(rowDao.isWeather(row))
                     .test()
+                    .await()
                     .assertValue(true);
             rowDao.updateWeather(row)
                     .andThen(rowDao.isWeather(row))
                     .test()
+                    .await()
                     .assertValue(false);
         }
     }
@@ -99,7 +103,7 @@ public class RowDaoUnitTest {
     }
 
     @Test
-    public void clearWeatherClearsWeather() {
+    public void clearWeatherClearsWeather() throws InterruptedException {
         for (RowType row : RowType.values()) {
             rowDao.insertRow(new RowEntity(row))
                     .andThen(rowDao.updateWeather(row))
@@ -109,24 +113,28 @@ public class RowDaoUnitTest {
         for (RowType row : RowType.values()) {
             rowDao.isWeather(row)
                     .test()
+                    .await()
                     .assertValue(false);
         }
     }
 
     @Test
-    public void updateHornUpdatesHorn() {
+    public void updateHornUpdatesHorn() throws InterruptedException {
         for (RowType row : RowType.values()) {
             rowDao.insertRow(new RowEntity(row))
                     .andThen(rowDao.isHorn(row))
                     .test()
+                    .await()
                     .assertValue(false);
             rowDao.updateHorn(row)
                     .andThen(rowDao.isHorn(row))
                     .test()
+                    .await()
                     .assertValue(true);
             rowDao.updateHorn(row)
                     .andThen(rowDao.isHorn(row))
                     .test()
+                    .await()
                     .assertValue(false);
         }
     }

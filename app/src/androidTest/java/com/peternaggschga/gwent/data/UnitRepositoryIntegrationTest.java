@@ -66,9 +66,9 @@ public class UnitRepositoryIntegrationTest {
     }
 
     @Test
-    public void getRepositoryInitializesRows() {
+    public void getRepositoryInitializesRows() throws InterruptedException {
         for (RowType row : RowType.values()) {
-            database.rows().isWeather(row).test().assertValue(false);
+            database.rows().isWeather(row).test().await().assertValue(false);
         }
     }
 
@@ -110,14 +110,14 @@ public class UnitRepositoryIntegrationTest {
     }
 
     @Test
-    public void resetRemovesEffects() {
+    public void resetRemovesEffects() throws InterruptedException {
         for (RowType row : RowType.values()) {
             database.rows().updateHorn(row).andThen(database.rows().updateHorn(row)).blockingAwait();
         }
         repository.reset().blockingAwait();
         for (RowType row : RowType.values()) {
-            database.rows().isHorn(row).test().assertValue(false);
-            database.rows().isWeather(row).test().assertValue(false);
+            database.rows().isHorn(row).test().await().assertValue(false);
+            database.rows().isWeather(row).test().await().assertValue(false);
         }
     }
 
@@ -358,13 +358,13 @@ public class UnitRepositoryIntegrationTest {
     }
 
     @Test
-    public void clearWeatherClearsWeather() {
+    public void clearWeatherClearsWeather() throws InterruptedException {
         for (RowType row : RowType.values()) {
             database.rows().updateWeather(row).blockingAwait();
         }
         repository.clearWeather().blockingAwait();
         for (RowType row : RowType.values()) {
-            database.rows().isWeather(row).test().assertValue(false);
+            database.rows().isWeather(row).test().await().assertValue(false);
         }
     }
 

@@ -78,6 +78,7 @@ public class UnitDaoUnitTest {
             unitDao.insertUnit(entity)
                     .andThen(unitDao.countUnits())
                     .test()
+                    .await()
                     .assertValue(1);
         } catch (Exception ignored) {
             fail();
@@ -86,7 +87,7 @@ public class UnitDaoUnitTest {
     }
 
     @Test
-    public void deleteUnitDeletesUnit() {
+    public void deleteUnitDeletesUnit() throws InterruptedException {
         getUnitsReturnsAllUnits();
         List<UnitEntity> units = unitDao.getUnits().blockingGet();
         assertThat(units).hasSize(RowType.values().length * 5);
@@ -95,18 +96,20 @@ public class UnitDaoUnitTest {
             unitDao.deleteUnit(units.get(i).getId())
                     .andThen(unitDao.countUnits())
                     .test()
+                    .await()
                     .assertValue(units.size() - ++i);
         }
     }
 
     @Test
-    public void deleteUnitsDeletesUnits() {
+    public void deleteUnitsDeletesUnits() throws InterruptedException {
         getUnitsReturnsAllUnits();
         List<UnitEntity> units = unitDao.getUnits().blockingGet();
         assertThat(units).hasSize(RowType.values().length * 5);
         unitDao.deleteUnits(units)
                 .andThen(unitDao.countUnits())
                 .test()
+                .await()
                 .assertValue(0);
     }
 
@@ -201,23 +204,27 @@ public class UnitDaoUnitTest {
     }
 
     @Test
-    public void countUnitsCountsCorrectly() {
+    public void countUnitsCountsCorrectly() throws InterruptedException {
         for (int rowTypeNumber = 0; rowTypeNumber < RowType.values().length; rowTypeNumber++) {
             RowType row = RowType.values()[rowTypeNumber];
             unitDao.countUnits(row)
                     .test()
+                    .await()
                     .assertValue(0);
             for (int unitNumber = 0; unitNumber < 5; unitNumber++) {
                 unitDao.countUnits()
                         .test()
+                        .await()
                         .assertValue(rowTypeNumber * 5 + unitNumber);
                 unitDao.insertUnit(false, unitNumber, Ability.values()[unitNumber / 2], null, row)
                         .andThen(unitDao.countUnits(row))
                         .test()
+                        .await()
                         .assertValue(unitNumber + 1);
             }
             unitDao.countUnits()
                     .test()
+                    .await()
                     .assertValue((rowTypeNumber + 1) * 5);
         }
 
