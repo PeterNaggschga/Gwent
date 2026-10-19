@@ -72,14 +72,14 @@ public class CardListAdapterUnitTest {
                 UnitEntity mockUnit = mock(UnitEntity.class);
                 when(mockUnit.calculateDamage(any())).thenReturn(7);
                 switch (ability) {
-                    default:
-                        when(mockUnit.isBuffed(any())).thenReturn(DamageCalculator.Color.DEFAULT);
-                        break;
                     case REVENGE:
                         when(mockUnit.isBuffed(any())).thenReturn(epic ? DamageCalculator.Color.DEFAULT : DamageCalculator.Color.DEBUFFED);
                         break;
                     case BINDING:
                         when(mockUnit.isBuffed(any())).thenReturn(epic ? DamageCalculator.Color.DEFAULT : DamageCalculator.Color.BUFFED);
+                    default:
+                        when(mockUnit.isBuffed(any())).thenReturn(DamageCalculator.Color.DEFAULT);
+                        break;
                 }
                 when(mockUnit.isBuffed(any())).thenReturn(DamageCalculator.Color.DEFAULT);
                 when(mockUnit.isEpic()).thenReturn(epic);
