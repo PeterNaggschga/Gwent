@@ -45,6 +45,9 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:truth:1.7.0'
     testImplementation 'androidx.test.ext:truth:1.7.0'
 
+    // Kotlin coroutine calling from Java
+    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.9.0"
+
     // RxJava
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.2'
     implementation 'io.reactivex.rxjava3:rxjava:3.1.12'
@@ -55,14 +58,14 @@ dependencies {
     androidTestImplementation "org.mockito:mockito-android:$mockito_version"
 
     // Room integration
-    def room_version = "2.8.5"
+    def room_version = "3.0.3"
 
-    implementation "androidx.room:room-runtime:$room_version"
-    ksp "androidx.room:room-compiler:$room_version"
+    implementation "androidx.room3:room3-runtime:$room_version"
+    ksp "androidx.room3:room3-compiler:$room_version"
 
     // RxJava3 support for Room
-    implementation "androidx.room:room-rxjava3:$room_version"
+    implementation "androidx.room3:room3-rxjava3:$room_version"
 
     // Test helpers
-    testImplementation "androidx.room:room-testing:$room_version"
+    testImplementation "androidx.room3:room3-testing:$room_version"
 }
