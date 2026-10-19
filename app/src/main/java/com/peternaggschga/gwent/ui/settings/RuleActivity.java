@@ -1,5 +1,6 @@
 package com.peternaggschga.gwent.ui.settings;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.MenuItem;
@@ -39,7 +40,13 @@ public class RuleActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_rules);
 
-        RuleSection section = Objects.requireNonNull((RuleSection) getIntent().getSerializableExtra(INTENT_EXTRA_TAG));
+        RuleSection section;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            section = Objects.requireNonNull(getIntent().getSerializableExtra(INTENT_EXTRA_TAG, RuleSection.class));
+        } else {
+            //noinspection deprecation
+            section = Objects.requireNonNull((RuleSection) getIntent().getSerializableExtra(INTENT_EXTRA_TAG));
+        }
 
         setSupportActionBar(findViewById(R.id.rulesToolbar));
 
