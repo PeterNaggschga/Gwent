@@ -3,8 +3,8 @@ package com.peternaggschga.gwent.data;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.fail;
 
-import androidx.room.Room;
-import androidx.room.rxjava3.EmptyResultSetException;
+import androidx.room3.Room;
+import androidx.room3.rxjava3.EmptyResultSetException;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -16,6 +16,8 @@ import org.junit.runner.RunWith;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Flowable;
+import kotlinx.coroutines.BuildersKt;
+import kotlinx.coroutines.Dispatchers;
 
 @RunWith(AndroidJUnit4.class)
 public class UnitDaoUnitTest {
@@ -32,8 +34,11 @@ public class UnitDaoUnitTest {
     }
 
     @After
-    public void closeDatabase() {
-        database.clearAllTables();
+    public void closeDatabase() throws InterruptedException {
+        BuildersKt.runBlocking(
+                Dispatchers.getUnconfined(),
+                ((coroutineScope, continuation) -> database.clearAllTables(continuation))
+        );
         database.close();
     }
 

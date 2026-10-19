@@ -4,7 +4,7 @@ import android.app.Application;
 import android.content.Context;
 
 import androidx.annotation.NonNull;
-import androidx.room.Room;
+import androidx.room3.Room;
 
 import com.peternaggschga.gwent.data.AppDatabase;
 import com.peternaggschga.gwent.data.UnitRepository;

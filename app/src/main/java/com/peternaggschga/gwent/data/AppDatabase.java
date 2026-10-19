@@ -1,7 +1,7 @@
 package com.peternaggschga.gwent.data;
 
-import androidx.room.Database;
-import androidx.room.RoomDatabase;
+import androidx.room3.Database;
+import androidx.room3.RoomDatabase;
 
 /**
  * An abstract class extending RoomDatabase and representing the SQLite database of the application.
