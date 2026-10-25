@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Gwent</string>
+    <string name="app_name">Dandelion\'s Calculator</string>
     <string name="app_description">An app enabling you to play the Gwent card game from The Witcher 3 with analog cards.</string>
 
     <string name="faction_monster">Monsters</string>
@@ -209,7 +209,7 @@
     <p>Scorch: <br />Discard after playing. Kills the strongest card(s) on the battlefield.</p>
     ]]></string>
     <string name="introduction_page1"><![CDATA[
-    <p>Thanks for installing \"Gwent - A Calculator\"! Please note that this app is made to support you in playing Gwent using analog cards by calculating your points. This app does not allow you to play Gwent against AI or without analog cards!</p>
+    <p>Thanks for installing Dandelion\'s Calculator! Please note that this app is made to support you in playing Gwent using analog cards by calculating your points. This app does not allow you to play Gwent against AI or without analog cards!</p>
     <p>So if you didn\'t do so yet: Print out a deck of Gwent cards (<a href="https://github.com/PeterNaggschga/Gwent#overview">guidance here</a>) and find an opponent who does the same (both of you need to install this app).</p>
     ]]></string>
     <string name="introduction_page2"><![CDATA[

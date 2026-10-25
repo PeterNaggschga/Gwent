@@ -1,14 +1,14 @@
 Name:
-Gwint - Eine Rechenhilfe
+Rittersporns Rechner
 
 Short Description:
 Eine App, die es erleichtert, Gwint mit analogen Karten zu spielen.
 
 Description:
-Mit Gwint - Eine Rechenhilfe wird es dir ermöglicht, das Kartenspiel Gwint aus dem Hexeruniversum in unserer analogen Welt zu spielen. Einfach Karten ausdrucken (Anleitung unten), App herunterladen und losspielen!
-Da einem Computer, Konsole oder Smartphone normalerweise das Berechnen der Punkte abnehmen, kann es im echten Leben recht ermüdend sein, andauernd die aktuelle Stärke der Einheiten zu ermitteln. Mit dieser Rechenhilfe passiert dies jedoch vollautomatisch! 
+Mit Rittersporns Rechner wird es dir ermöglicht, das Kartenspiel Gwint aus dem Hexeruniversum in unserer analogen Welt zu spielen. Einfach Karten ausdrucken (Anleitung unten), App herunterladen und losspielen!
+Da einem Computer, Konsole oder Smartphone normalerweise das Berechnen der Punkte abnehmen, kann es im echten Leben recht ermüdend sein, andauernd die aktuelle Stärke der Einheiten zu ermitteln. Mit Rittersporns Rechner passiert dies jedoch vollautomatisch!
 Du kannst ganz einfach neue Karten hinzufügen, das Wetter ändern oder ein Horn des Kommandanten aktivieren und deine neue Gesamtstärke berechnen. Auch eine komplette Zusammenfassung der Regeln ist in der App zu finden.
 
 Um Karten auszudrucken, kannst du die Anleitung auf folgender Seite nutzen: https://github.com/PeterNaggschga/Gwent#overview
 
-Vielen Dank an Julius, der mich zum wunderschönen The Witcher 3: Wild Hunt gebracht hat und dem diese App gewidmet ist.
+Inoffizielle App. „Gwint“ und „The Witcher“ sind Marken der CD Projekt Red, die nur zur Identifikation referenziert werden. Diese App steht in keinerlei Verbindung zu CD Projekt Red und wird von ihnen nicht unterstützt.
