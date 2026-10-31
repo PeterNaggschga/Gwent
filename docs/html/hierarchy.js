@@ -1,6 +1,9 @@
 var hierarchy =
 [
     [ "Ability", "enumcom_1_1peternaggschga_1_1gwent_1_1data_1_1Ability.xhtml", null ],
+    [ "AdapterDataObserver", null, [
+      [ "ShowUnitsDialog.ScrollToEndObserver", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1cards_1_1ShowUnitsDialog_1_1ScrollToEndObserver.xhtml", null ]
+    ] ],
     [ "AndroidViewModel", null, [
       [ "GameBoardViewModel", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1GameBoardViewModel.xhtml", null ]
     ] ],
@@ -62,7 +65,7 @@ var hierarchy =
     [ "OnSharedPreferenceChangeListener", null, [
       [ "FactionSwitchListener", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1FactionSwitchListener.xhtml", null ]
     ] ],
-    [ "ValuePicker&lt; T extends Comparable&lt; T &gt; &gt;.OnValueChangeListener&lt; T extends Comparable&lt; T &gt; &gt;", "interfacecom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1ValuePicker_1_1OnValueChangeListener.xhtml", null ],
+    [ "ValuePicker&lt; T extends Comparable &gt;.OnValueChangeListener&lt; T &gt;", "interfacecom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1ValuePicker_1_1OnValueChangeListener.xhtml", null ],
     [ "PreferenceFragmentCompat", null, [
       [ "SettingsHeaderFragment", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1settings_1_1SettingsHeaderFragment.xhtml", null ],
       [ "SettingsRuleFragment", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1settings_1_1SettingsRuleFragment.xhtml", null ],
@@ -89,12 +92,12 @@ var hierarchy =
     [ "UnitDao", "interfacecom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitDao.xhtml", null ],
     [ "UnitEntity", "classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml", null ],
     [ "UnitRepository", "classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitRepository.xhtml", null ],
-    [ "ValuePicker&lt; T extends Comparable&lt; T &gt; &gt;", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1ValuePicker.xhtml", null ],
+    [ "ValuePicker&lt; T extends Comparable &gt;", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1ValuePicker.xhtml", null ],
     [ "ValuePicker&lt; Integer &gt;", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1ValuePicker.xhtml", [
       [ "DamageValuePicker", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1DamageValuePicker.xhtml", null ]
     ] ],
     [ "ValuePicker&lt; T &gt;", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1ValuePicker.xhtml", [
-      [ "StringValuePicker< T extends Comparable< T > >", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1StringValuePicker.xhtml", null ]
+      [ "StringValuePicker< T extends Comparable >", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1StringValuePicker.xhtml", null ]
     ] ],
     [ "ViewHolder", null, [
       [ "CardListAdapter.CardViewHolder", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1cards_1_1CardListAdapter_1_1CardViewHolder.xhtml", null ]

@@ -1,0 +1,4 @@
+var classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1cards_1_1ShowUnitsDialog_1_1ScrollToEndObserver =
+[
+    [ "onItemRangeInserted", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1cards_1_1ShowUnitsDialog_1_1ScrollToEndObserver.xhtml#a2354889ce22dced5c4fcd2e783ebf6ce", null ]
+];

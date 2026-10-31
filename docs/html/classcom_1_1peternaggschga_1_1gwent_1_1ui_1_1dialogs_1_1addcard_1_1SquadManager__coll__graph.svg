@@ -32,7 +32,7 @@
 <!-- Node2 -->
 <g id="Node000002" class="node">
 <title>Node2</title>
-<g id="a_Node000002"><a xlink:href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1SquadState.xhtml" target="_top" xlink:title="A data class encapsulating information about the squad defined by squadNumber, i.e....">
+<g id="a_Node000002"><a xlink:href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1SquadState.xhtml" target="_top" xlink:title="A data class encapsulating information about the squad defined by .squadNumber, i....">
 <polygon fill="white" stroke="none" points="72.12,-96.25 8.62,-96.25 8.62,-75.5 72.12,-75.5 72.12,-96.25"/>
 <text xml:space="preserve" text-anchor="start" x="12.62" y="-82.75" font-family="Helvetica,sans-Serif" font-size="10.00">SquadState</text>
 <polygon fill="none" stroke="#666666" points="8.62,-75.5 8.62,-96.25 72.12,-96.25 72.12,-75.5 8.62,-75.5"/>

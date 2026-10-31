@@ -11,7 +11,7 @@
 <!-- Node1 -->
 <g id="Node000001" class="node">
 <title>Node1</title>
-<g id="a_Node000001"><a xlink:title="An OverlayDialog used to add new UnitEntity objects to a certain row.">
+<g id="a_Node000001"><a xlink:title="An OverlayDialog used to add new UnitEntity objects to a certain .row.">
 <polygon fill="#999999" stroke="none" points="195.25,-20.75 114.5,-20.75 114.5,0 195.25,0 195.25,-20.75"/>
 <text xml:space="preserve" text-anchor="start" x="118.5" y="-7.25" font-family="Helvetica,sans-Serif" font-size="10.00">AddCardDialog</text>
 <polygon fill="none" stroke="#666666" points="114.5,0 114.5,-20.75 195.25,-20.75 195.25,0 114.5,0"/>
@@ -119,7 +119,7 @@
 <!-- Node7 -->
 <g id="Node000007" class="node">
 <title>Node7</title>
-<g id="a_Node000007"><a xlink:href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1CardNumberPickerAdapter.xhtml" target="_top" xlink:title="A helper class responsible for initializing the NumberPicker views of an AddCardDialog (in CardNumper...">
+<g id="a_Node000007"><a xlink:href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1CardNumberPickerAdapter.xhtml" target="_top" xlink:title="A helper class responsible for initializing the NumberPicker views of an AddCardDialog (in ....">
 <polygon fill="white" stroke="none" points="431.38,-96.25 294.38,-96.25 294.38,-75.5 431.38,-75.5 431.38,-96.25"/>
 <text xml:space="preserve" text-anchor="start" x="298.38" y="-82.75" font-family="Helvetica,sans-Serif" font-size="10.00">CardNumberPickerAdapter</text>
 <polygon fill="none" stroke="#666666" points="294.38,-75.5 294.38,-96.25 431.38,-96.25 431.38,-75.5 294.38,-75.5"/>
@@ -162,7 +162,7 @@
 <g id="a_Node000009"><a xlink:href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1ValuePicker.xhtml" target="_top" xlink:title="A generic abstract wrapper class around NumberPicker used to select values of arbitrary types extendi...">
 <polygon fill="white" stroke="none" points="387.62,-367 264.12,-367 264.12,-333.5 387.62,-333.5 387.62,-367"/>
 <text xml:space="preserve" text-anchor="start" x="268.12" y="-353.5" font-family="Helvetica,sans-Serif" font-size="10.00">ValuePicker&lt; T extends</text>
-<text xml:space="preserve" text-anchor="start" x="274.88" y="-340.75" font-family="Helvetica,sans-Serif" font-size="10.00"> Comparable&lt; T &gt; &gt;</text>
+<text xml:space="preserve" text-anchor="start" x="289.12" y="-340.75" font-family="Helvetica,sans-Serif" font-size="10.00"> Comparable &gt;</text>
 <polygon fill="none" stroke="#666666" points="264.12,-333.5 264.12,-367 387.62,-367 387.62,-333.5 264.12,-333.5"/>
 </a>
 </g>
@@ -281,7 +281,7 @@
 <!-- Node14 -->
 <g id="Node000014" class="node">
 <title>Node14</title>
-<g id="a_Node000014"><a xlink:href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1SquadState.xhtml" target="_top" xlink:title="A data class encapsulating information about the squad defined by squadNumber, i.e....">
+<g id="a_Node000014"><a xlink:href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1SquadState.xhtml" target="_top" xlink:title="A data class encapsulating information about the squad defined by .squadNumber, i....">
 <polygon fill="white" stroke="none" points="630.62,-262 567.12,-262 567.12,-241.25 630.62,-241.25 630.62,-262"/>
 <text xml:space="preserve" text-anchor="start" x="571.12" y="-248.5" font-family="Helvetica,sans-Serif" font-size="10.00">SquadState</text>
 <polygon fill="none" stroke="#666666" points="567.12,-241.25 567.12,-262 630.62,-262 630.62,-241.25 567.12,-241.25"/>

@@ -13,5 +13,5 @@ var searchData=
   ['playsound_10',['playSound',['../classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1sounds_1_1SoundManager.xhtml#a48ad0fa1eccc2d96037074856cbe7dc4',1,'com::peternaggschga::gwent::ui::sounds::SoundManager']]],
   ['playweathersound_11',['playWeatherSound',['../classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1sounds_1_1SoundManager.xhtml#af1a497cdbd21db8a08c8fc41c2345728',1,'com::peternaggschga::gwent::ui::sounds::SoundManager']]],
   ['preferencekey_12',['preferenceKey',['../classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1sounds_1_1Sound.xhtml#a4bdd67d6057008f0d1934ab27da12a65',1,'com::peternaggschga::gwent::ui::sounds::Sound']]],
-  ['printing_20analog_20cards_13',['Printing analog cards',['..//home/runner/work/Gwent/Gwent/README.md#autotoc_md5',1,'']]]
+  ['printing_20analog_20cards_13',['Printing analog cards',['../index.xhtml#printing-analog-cards',1,'']]]
 ];

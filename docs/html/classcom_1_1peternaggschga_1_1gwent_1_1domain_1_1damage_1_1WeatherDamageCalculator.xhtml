@@ -94,7 +94,7 @@ $(function(){initNavTree('classcom_1_1peternaggschga_1_1gwent_1_1domain_1_1damag
 </div><!--header-->
 <div class="contents">
 
-<p>A <a class="el" href="interfacecom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1DamageCalculator.xhtml" title="An interface for a class capable of calculating the (de-)buffed damage of a unit for a given UnitEnti...">DamageCalculator</a> class responsible for calculating the weather debuff if necessary, i.e., if <a class="el" href="#aabb356eb26ef5db0446e8f700deb64a7" title="Defines whether the weather debuff should be applied when calling calculateDamage().">weather</a> is true.  
+<p>A <a class="el" href="interfacecom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1DamageCalculator.xhtml" title="An interface for a class capable of calculating the (de-)buffed damage of a unit for a given UnitEnti...">DamageCalculator</a> class responsible for calculating the weather debuff if necessary, i.e., if .weather is true.  
  <a href="#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for WeatherDamageCalculator:</div>
@@ -112,7 +112,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a552fd4619dcdebcbb6f832ce8746bac9" id="r_a552fd4619dcdebcbb6f832ce8746bac9"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a552fd4619dcdebcbb6f832ce8746bac9">calculateDamage</a> (int id, @IntRange(from=0) int damage)</td></tr>
 <tr class="memdesc:a552fd4619dcdebcbb6f832ce8746bac9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the (de-)buffed damage of unit with the given id and the given base-damage.  <br /></td></tr>
 <tr class="memitem:a38b3d761e115a80136b702223b7f91fa" id="r_a38b3d761e115a80136b702223b7f91fa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="enumcom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1DamageCalculator_1_1Color.xhtml">Color</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a38b3d761e115a80136b702223b7f91fa">isBuffed</a> (int id)</td></tr>
-<tr class="memdesc:a38b3d761e115a80136b702223b7f91fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates whether the unit with the given id is shown as Color#BUFFED, Color#DEBUFFED, or Color#DEFAULT.  <br /></td></tr>
+<tr class="memdesc:a38b3d761e115a80136b702223b7f91fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates whether the unit with the given id is shown as Color.BUFFED, Color.DEBUFFED, or Color.DEFAULT.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pac-methods" class="groupheader"><a id="pac-methods" name="pac-methods"></a>
 Package Functions</h2></td></tr>
@@ -122,10 +122,10 @@ Package Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 id="header-pri-attribs" class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr class="memitem:aabb356eb26ef5db0446e8f700deb64a7" id="r_aabb356eb26ef5db0446e8f700deb64a7"><td class="memItemLeft" align="right" valign="top">final boolean&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aabb356eb26ef5db0446e8f700deb64a7">weather</a></td></tr>
-<tr class="memdesc:aabb356eb26ef5db0446e8f700deb64a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines whether the weather debuff should be applied when calling <a class="el" href="#a552fd4619dcdebcbb6f832ce8746bac9" title="Calculates the (de-)buffed damage of unit with the given id and the given base-damage.">calculateDamage()</a>.  <br /></td></tr>
+<tr class="memdesc:aabb356eb26ef5db0446e8f700deb64a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines whether the weather debuff should be applied when calling .<a class="el" href="#a552fd4619dcdebcbb6f832ce8746bac9" title="Calculates the (de-)buffed damage of unit with the given id and the given base-damage.">calculateDamage()</a>.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>A <a class="el" href="interfacecom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1DamageCalculator.xhtml" title="An interface for a class capable of calculating the (de-)buffed damage of a unit for a given UnitEnti...">DamageCalculator</a> class responsible for calculating the weather debuff if necessary, i.e., if <a class="el" href="#aabb356eb26ef5db0446e8f700deb64a7" title="Defines whether the weather debuff should be applied when calling calculateDamage().">weather</a> is true. </p>
+<div class="textblock"><p>A <a class="el" href="interfacecom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1DamageCalculator.xhtml" title="An interface for a class capable of calculating the (de-)buffed damage of a unit for a given UnitEnti...">DamageCalculator</a> class responsible for calculating the weather debuff if necessary, i.e., if .weather is true. </p>
 <p>Acts as the ConcreteComponent in the implemented decorator pattern and is therefore always at the end of the decorator chain. </p>
 
 <p class="definition">Definition at line <a class="el" href="WeatherDamageCalculator_8java_source.xhtml#l00014">14</a> of file <a class="el" href="WeatherDamageCalculator_8java_source.xhtml">WeatherDamageCalculator.java</a>.</p>
@@ -190,7 +190,7 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Calculates the (de-)buffed damage of unit with the given id and the given base-damage. </p>
-<p>Returns the given damage if <a class="el" href="#aabb356eb26ef5db0446e8f700deb64a7" title="Defines whether the weather debuff should be applied when calling calculateDamage().">weather</a> is false or 1.</p>
+<p>Returns the given damage if .weather is false or 1.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">id</td><td>Integer representing the <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml#a7441ef0865bcb3db9b8064dd7375c1ea" title="Defines the primary key of the represented unit.">UnitEntity.id</a> of the unit whose (de-)buff damage is calculated. </td></tr>
@@ -229,8 +229,8 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Calculates whether the unit with the given id is shown as Color#BUFFED, Color#DEBUFFED, or Color#DEFAULT. </p>
-<p>Returns Color#DEBUFFED if <a class="el" href="#aabb356eb26ef5db0446e8f700deb64a7" title="Defines whether the weather debuff should be applied when calling calculateDamage().">weather</a> is true or else Color#DEFAULT.</p>
+<p>Calculates whether the unit with the given id is shown as Color.BUFFED, Color.DEBUFFED, or Color.DEFAULT. </p>
+<p>Returns Color.DEBUFFED if .weather is true or else Color.DEFAULT.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">id</td><td>Integer representing the <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml#a7441ef0865bcb3db9b8064dd7375c1ea" title="Defines the primary key of the represented unit.">UnitEntity.id</a> of the unit buff status is calculated. </td></tr>
@@ -269,7 +269,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Defines whether the weather debuff should be applied when calling <a class="el" href="#a552fd4619dcdebcbb6f832ce8746bac9" title="Calculates the (de-)buffed damage of unit with the given id and the given base-damage.">calculateDamage()</a>. </p>
+<p>Defines whether the weather debuff should be applied when calling .<a class="el" href="#a552fd4619dcdebcbb6f832ce8746bac9" title="Calculates the (de-)buffed damage of unit with the given id and the given base-damage.">calculateDamage()</a>. </p>
 
 <p class="definition">Definition at line <a class="el" href="WeatherDamageCalculator_8java_source.xhtml#l00018">18</a> of file <a class="el" href="WeatherDamageCalculator_8java_source.xhtml">WeatherDamageCalculator.java</a>.</p>
 

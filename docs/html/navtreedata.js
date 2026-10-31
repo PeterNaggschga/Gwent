@@ -25,6 +25,7 @@
 var NAVTREE =
 [
   [ "Gwent", "index.xhtml", [
+    [ "Dandelion's Calculator", "index.xhtml", "index" ],
     [ "Classes", "annotated.xhtml", [
       [ "Class List", "annotated.xhtml", "annotated_dup" ],
       [ "Class Index", "classes.xhtml", null ],
@@ -44,8 +45,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "Ability_8java_source.xhtml",
-"classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1DamageValuePicker.xhtml",
-"classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1sounds_1_1SoundManager.xhtml#af27c0cf7bb01361de1a3c784bff16d79"
+"classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1SquadManager.xhtml#a6022deae36caaf2a1827b7e78b28d961",
+"dir_27598926e7d1ac5513646b5ddc7b1d04.xhtml"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronization';

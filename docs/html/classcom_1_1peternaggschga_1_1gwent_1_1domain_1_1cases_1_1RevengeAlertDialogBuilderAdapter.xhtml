@@ -204,10 +204,11 @@ Static Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Creates an AlertDialog with the arguments supplied to this builder. </p>
-<p>Basically just calls AlertDialog.Builder#create() on <a class="el" href="#ae9f6f0d241dfba0f916096ffa9ef81ca" title="AlertDialog.Builder that is adapted by this class.">adapteeBuilder</a>.</p>
-<dl class="section see"><dt>See also</dt><dd>AlertDialog.Builder#create() </dd></dl>
+<p>Basically just calls AlertDialog.Builder.create() on .adapteeBuilder.</p>
+<dl class="section return"><dt>Returns</dt><dd>The AlertDialog created by this builder. </dd></dl>
+<dl class="section see"><dt>See also</dt><dd>AlertDialog.Builder.create() </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="RevengeAlertDialogBuilderAdapter_8java_source.xhtml#l00108">108</a> of file <a class="el" href="RevengeAlertDialogBuilderAdapter_8java_source.xhtml">RevengeAlertDialogBuilderAdapter.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="RevengeAlertDialogBuilderAdapter_8java_source.xhtml#l00110">110</a> of file <a class="el" href="RevengeAlertDialogBuilderAdapter_8java_source.xhtml">RevengeAlertDialogBuilderAdapter.java</a>.</p>
 
 <p class="reference">References <a class="el" href="#ae9f6f0d241dfba0f916096ffa9ef81ca">adapteeBuilder</a>.</p>
 
@@ -246,17 +247,18 @@ Static Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Inserts numberOfAvengers avenger units into the given <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitRepository.xhtml" title="A facade class managing public access to the data layer.">UnitRepository</a>. </p>
-<p>The inserted <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml" title="A class representing a card on the game board.">UnitEntity</a> objects have the attributes defined in <a class="el" href="#aab40c8a50c7615f6121306a405c74bd8" title="Boolean constant defining whether the default UnitEntity summoned by the Ability.REVENGE ability is e...">AVENGER_EPIC</a>, <a class="el" href="#a9eb6093e8f972702d661059fdb7c4cec" title="Integer constant defining the damage of the default UnitEntity summoned by the Ability....">AVENGER_DAMAGE</a>, <a class="el" href="#a677e901d9e1c24c1f7da2c73cee2b120" title="Ability constant defining the Ability of the default UnitEntity summoned by the Ability....">AVENGER_ABILITY</a>, <a class="el" href="#a6b980b203d627a102b99526c0f52a3e0" title="Integer constant defining the squad of the default UnitEntity summoned by the Ability....">AVENGER_SQUAD</a>, and <a class="el" href="#aae231574149ca764c47cf03be489607b" title="RowType constant defining the row of the default UnitEntity summoned by the Ability....">AVENGER_ROW</a>.</p>
+<p>The inserted <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml" title="A class representing a card on the game board.">UnitEntity</a> objects have the attributes defined in AVENGER_EPIC, AVENGER_DAMAGE, AVENGER_ABILITY, AVENGER_SQUAD, and AVENGER_ROW.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">repository</td><td><a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitRepository.xhtml" title="A facade class managing public access to the data layer.">UnitRepository</a> where avengers are inserted. </td></tr>
     <tr><td class="paramname">numberOfAvengers</td><td>Integer defining how many avengers are inserted. </td></tr>
+    <tr><td class="paramname">soundManager</td><td><a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1sounds_1_1SoundManager.xhtml" title="A class responsible for initializing and playing sounds when they are enabled.">SoundManager</a> used to play the card add sound. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A Completable tracking operation status. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="RevengeAlertDialogBuilderAdapter_8java_source.xhtml#l00096">96</a> of file <a class="el" href="RevengeAlertDialogBuilderAdapter_8java_source.xhtml">RevengeAlertDialogBuilderAdapter.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="RevengeAlertDialogBuilderAdapter_8java_source.xhtml#l00097">97</a> of file <a class="el" href="RevengeAlertDialogBuilderAdapter_8java_source.xhtml">RevengeAlertDialogBuilderAdapter.java</a>.</p>
 
 <p class="reference">References <a class="el" href="#a677e901d9e1c24c1f7da2c73cee2b120">AVENGER_ABILITY</a>, <a class="el" href="#a9eb6093e8f972702d661059fdb7c4cec">AVENGER_DAMAGE</a>, <a class="el" href="#aab40c8a50c7615f6121306a405c74bd8">AVENGER_EPIC</a>, <a class="el" href="#aae231574149ca764c47cf03be489607b">AVENGER_ROW</a>, and <a class="el" href="#a6b980b203d627a102b99526c0f52a3e0">AVENGER_SQUAD</a>.</p>
 
@@ -296,7 +298,7 @@ Static Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The RevengeAlertDialogBuilder with the updated negative callback. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="RevengeAlertDialogBuilderAdapter_8java_source.xhtml#l00133">133</a> of file <a class="el" href="RevengeAlertDialogBuilderAdapter_8java_source.xhtml">RevengeAlertDialogBuilderAdapter.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="RevengeAlertDialogBuilderAdapter_8java_source.xhtml#l00135">135</a> of file <a class="el" href="RevengeAlertDialogBuilderAdapter_8java_source.xhtml">RevengeAlertDialogBuilderAdapter.java</a>.</p>
 
 <p class="reference">References <a class="el" href="#a5be5eb6d723ce3dc0c3e96b7dc6244e1">RevengeAlertDialogBuilderAdapter()</a>, and <a class="el" href="#ae9f6f0d241dfba0f916096ffa9ef81ca">adapteeBuilder</a>.</p>
 
@@ -334,9 +336,9 @@ Static Private Attributes</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The RevengeAlertDialogBuilder with the updated positive callback. </dd></dl>
-<dl class="section see"><dt>See also</dt><dd>#insertAvengers(UnitRepository, int, SoundManager) </dd></dl>
+<dl class="section see"><dt>See also</dt><dd>.insertAvengers(UnitRepository, int, SoundManager) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="RevengeAlertDialogBuilderAdapter_8java_source.xhtml#l00121">121</a> of file <a class="el" href="RevengeAlertDialogBuilderAdapter_8java_source.xhtml">RevengeAlertDialogBuilderAdapter.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="RevengeAlertDialogBuilderAdapter_8java_source.xhtml#l00123">123</a> of file <a class="el" href="RevengeAlertDialogBuilderAdapter_8java_source.xhtml">RevengeAlertDialogBuilderAdapter.java</a>.</p>
 
 <p class="reference">References <a class="el" href="#a5be5eb6d723ce3dc0c3e96b7dc6244e1">RevengeAlertDialogBuilderAdapter()</a>, and <a class="el" href="#ae9f6f0d241dfba0f916096ffa9ef81ca">adapteeBuilder</a>.</p>
 

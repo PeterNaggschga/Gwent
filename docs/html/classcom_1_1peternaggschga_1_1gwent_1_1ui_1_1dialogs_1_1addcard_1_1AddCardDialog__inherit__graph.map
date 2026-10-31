@@ -1,5 +1,5 @@
 <map id="AddCardDialog" name="AddCardDialog">
-<area shape="rect" id="Node000001" title="An OverlayDialog used to add new UnitEntity objects to a certain row." alt="" coords="5,157,113,184"/>
+<area shape="rect" id="Node000001" title="An OverlayDialog used to add new UnitEntity objects to a certain .row." alt="" coords="5,157,113,184"/>
 <area shape="rect" id="Node000002" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1OverlayDialog.xhtml" title="A Dialog class which is used for popups that are shown on top of the calling Activity." alt="" coords="7,81,111,109"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="61,122,62,158,57,156,57,125"/>
 <area shape="rect" id="Node000003" title=" " alt="" coords="33,5,86,33"/>

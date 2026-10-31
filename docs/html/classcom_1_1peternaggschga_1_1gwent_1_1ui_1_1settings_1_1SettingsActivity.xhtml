@@ -94,7 +94,7 @@ $(function(){initNavTree('classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1settings_
 </div><!--header-->
 <div class="contents">
 
-<p>An <code><a class="el" href="">AppCompatActivity</a></code> implementing <code><a class="el" href="">PreferenceFragmentCompat.OnPreferenceStartFragmentCallback</a></code> that is used by the user to manage the <code><a class="el" href="">SharedPreferences</a></code> of the application.  
+<p>An AppCompatActivity implementing PreferenceFragmentCompat.OnPreferenceStartFragmentCallback that is used by the user to manage the SharedPreferences of the application.  
  <a href="#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for SettingsActivity:</div>
@@ -110,24 +110,24 @@ Collaboration diagram for SettingsActivity:</div>
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a05062bf73d252cac3443eb62269da934" id="r_a05062bf73d252cac3443eb62269da934"><td class="memItemLeft" align="right" valign="top">boolean&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a05062bf73d252cac3443eb62269da934">onOptionsItemSelected</a> (@NonNull MenuItem item)</td></tr>
-<tr class="memdesc:a05062bf73d252cac3443eb62269da934"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called whenever a <code><a class="el" href="">MenuItem</a></code> in the options menu is selected.  <br /></td></tr>
+<tr class="memdesc:a05062bf73d252cac3443eb62269da934"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called whenever a MenuItem in the options menu is selected.  <br /></td></tr>
 <tr class="memitem:abb58c15eeb728ab5374d09308c8163d2" id="r_abb58c15eeb728ab5374d09308c8163d2"><td class="memItemLeft" align="right" valign="top">boolean&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abb58c15eeb728ab5374d09308c8163d2">onPreferenceStartFragment</a> (@NonNull PreferenceFragmentCompat caller, @NonNull Preference pref)</td></tr>
-<tr class="memdesc:abb58c15eeb728ab5374d09308c8163d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the user has clicked on a <code><a class="el" href="">Preference</a></code> that has a <code><a class="el" href="">Fragment</a></code> class name associated with it.  <br /></td></tr>
+<tr class="memdesc:abb58c15eeb728ab5374d09308c8163d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the user has clicked on a Preference that has a Fragment class name associated with it.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pro-methods" class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:a2dd6e28ae541fdc679eb17d74847b23e" id="r_a2dd6e28ae541fdc679eb17d74847b23e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2dd6e28ae541fdc679eb17d74847b23e">onCreate</a> (@Nullable Bundle savedInstanceState)</td></tr>
-<tr class="memdesc:a2dd6e28ae541fdc679eb17d74847b23e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes layout and <code><a class="el" href="">ActionBar</a></code> as well as creates and displays a new <code><a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1settings_1_1SettingsHeaderFragment.xhtml">SettingsHeaderFragment</a></code>.  <br /></td></tr>
+<tr class="memdesc:a2dd6e28ae541fdc679eb17d74847b23e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes layout and ActionBar as well as creates and displays a new <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1settings_1_1SettingsHeaderFragment.xhtml" title="A PreferenceFragmentCompat class encapsulating the main preference screen, i.e., the Preferences defi...">SettingsHeaderFragment</a>.  <br /></td></tr>
 <tr class="memitem:a22c44cd93feba9f45d924915e9848842" id="r_a22c44cd93feba9f45d924915e9848842"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a22c44cd93feba9f45d924915e9848842">onSaveInstanceState</a> (@NonNull Bundle outState)</td></tr>
-<tr class="memdesc:a22c44cd93feba9f45d924915e9848842"><td class="mdescLeft">&#160;</td><td class="mdescRight">Saves the currently visible <code><a class="el" href="">Fragment</a></code> into the given <code><a class="el" href="">Bundle</a></code>.  <br /></td></tr>
+<tr class="memdesc:a22c44cd93feba9f45d924915e9848842"><td class="mdescLeft">&#160;</td><td class="mdescRight">Saves the currently visible Fragment into the given Bundle.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pri-static-attribs" class="groupheader"><a id="pri-static-attribs" name="pri-static-attribs"></a>
 Static Private Attributes</h2></td></tr>
 <tr class="memitem:a163665fed94d3d9532b9ed910edce408" id="r_a163665fed94d3d9532b9ed910edce408"><td class="memItemLeft" align="right" valign="top">static final String&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a163665fed94d3d9532b9ed910edce408">CURRENT_FRAGMENT_KEY</a> = &quot;currentFragment&quot;</td></tr>
-<tr class="memdesc:a163665fed94d3d9532b9ed910edce408"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code><a class="el" href="">String</a></code> constant defining the key in savedInstanceState <code><a class="el" href="">Bundle</a></code>s where the last shown <code><a class="el" href="">Fragment</a></code> is saved.  <br /></td></tr>
+<tr class="memdesc:a163665fed94d3d9532b9ed910edce408"><td class="mdescLeft">&#160;</td><td class="mdescRight">String constant defining the key in savedInstanceState Bundles where the last shown Fragment is saved.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>An <code><a class="el" href="">AppCompatActivity</a></code> implementing <code><a class="el" href="">PreferenceFragmentCompat.OnPreferenceStartFragmentCallback</a></code> that is used by the user to manage the <code><a class="el" href="">SharedPreferences</a></code> of the application. </p>
+<div class="textblock"><p>An AppCompatActivity implementing PreferenceFragmentCompat.OnPreferenceStartFragmentCallback that is used by the user to manage the SharedPreferences of the application. </p>
 
 <p class="definition">Definition at line <a class="el" href="SettingsActivity_8java_source.xhtml#l00024">24</a> of file <a class="el" href="SettingsActivity_8java_source.xhtml">SettingsActivity.java</a>.</p>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
@@ -154,10 +154,10 @@ Static Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Initializes layout and <code><a class="el" href="">ActionBar</a></code> as well as creates and displays a new <code><a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1settings_1_1SettingsHeaderFragment.xhtml">SettingsHeaderFragment</a></code>. </p>
+<p>Initializes layout and ActionBar as well as creates and displays a new <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1settings_1_1SettingsHeaderFragment.xhtml" title="A PreferenceFragmentCompat class encapsulating the main preference screen, i.e., the Preferences defi...">SettingsHeaderFragment</a>. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">savedInstanceState</td><td>If the activity is being re-initialized after previously being shut down then this Bundle contains the data it most recently supplied in <code><a class="el" href="#a22c44cd93feba9f45d924915e9848842">onSaveInstanceState</a></code>. <b><em>Note: Otherwise it is null.</em></b> </td></tr>
+    <tr><td class="paramname">savedInstanceState</td><td>If the activity is being re-initialized after previously being shut down then this Bundle contains the data it most recently supplied in onSaveInstanceState. <b><em>Note: Otherwise it is null.</em></b> </td></tr>
   </table>
   </dd>
 </dl>
@@ -183,14 +183,14 @@ Static Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Called whenever a <code><a class="el" href="">MenuItem</a></code> in the options menu is selected. </p>
-<p>Returns to the calling <code><a class="el" href="">android.app.Activity</a></code> when the <code><a class="el" href="">android.R.id#home</a></code> item was selected. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Called whenever a MenuItem in the options menu is selected. </p>
+<p>Returns to the calling android.app.Activity when the android.R.idhome item was selected. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">item</td><td><code><a class="el" href="">MenuItem</a></code> that was selected.</td></tr>
+    <tr><td class="paramname">item</td><td>MenuItem that was selected.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd><code><a class="el" href="">Boolean</a></code> defining whether the call has been handled. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Boolean defining whether the call has been handled. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="SettingsActivity_8java_source.xhtml#l00085">85</a> of file <a class="el" href="SettingsActivity_8java_source.xhtml">SettingsActivity.java</a>.</p>
 
@@ -215,15 +215,15 @@ Static Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Called when the user has clicked on a <code><a class="el" href="">Preference</a></code> that has a <code><a class="el" href="">Fragment</a></code> class name associated with it. </p>
-<p>Switches to an instance of the given <code><a class="el" href="">Fragment</a></code>. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Called when the user has clicked on a Preference that has a Fragment class name associated with it. </p>
+<p>Switches to an instance of the given Fragment. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">caller</td><td><code><a class="el" href="">PreferenceFragmentCompat</a></code> requesting navigation. </td></tr>
-    <tr><td class="paramname">pref</td><td><code><a class="el" href="">Preference</a></code> requesting the <code><a class="el" href="">Fragment</a></code>. </td></tr>
+    <tr><td class="paramname">caller</td><td>PreferenceFragmentCompat requesting navigation. </td></tr>
+    <tr><td class="paramname">pref</td><td>Preference requesting the Fragment. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd><code><a class="el" href="">Boolean</a></code> defining whether the <code><a class="el" href="">Fragment</a></code> creation has been handled. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Boolean defining whether the Fragment creation has been handled. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="SettingsActivity_8java_source.xhtml#l00102">102</a> of file <a class="el" href="SettingsActivity_8java_source.xhtml">SettingsActivity.java</a>.</p>
 
@@ -252,10 +252,10 @@ Static Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Saves the currently visible <code><a class="el" href="">Fragment</a></code> into the given <code><a class="el" href="">Bundle</a></code>. </p>
+<p>Saves the currently visible Fragment into the given Bundle. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">outState</td><td>Bundle in which the currently used <code><a class="el" href="">Fragment</a></code> is saved. </td></tr>
+    <tr><td class="paramname">outState</td><td>Bundle in which the currently used Fragment is saved. </td></tr>
   </table>
   </dd>
 </dl>
@@ -287,7 +287,7 @@ Static Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p><code><a class="el" href="">String</a></code> constant defining the key in savedInstanceState <code><a class="el" href="">Bundle</a></code>s where the last shown <code><a class="el" href="">Fragment</a></code> is saved. </p>
+<p>String constant defining the key in savedInstanceState Bundles where the last shown Fragment is saved. </p>
 
 <p class="definition">Definition at line <a class="el" href="SettingsActivity_8java_source.xhtml#l00029">29</a> of file <a class="el" href="SettingsActivity_8java_source.xhtml">SettingsActivity.java</a>.</p>
 
