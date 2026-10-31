@@ -27,7 +27,7 @@ jobs:
       SHA: ${{ steps.sha.outputs.SHA }}
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v7
 
       - name: Install Doxygen
         run: |
@@ -73,7 +73,7 @@ jobs:
         with:
           name: github-actions
           email: action@github.com
-          message: updated API documentation
+          message: updated reference documentation
           files: docs
           force: true
 
@@ -94,20 +94,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
           sparse-checkout: ./docs/html
           ref: ${{ needs.update-documentation.outputs.SHA }}
 
       - name: Setup Pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
         
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: './docs/html'
           
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
