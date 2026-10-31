@@ -94,7 +94,7 @@ $(function(){initNavTree('classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1R
 </div><!--header-->
 <div class="contents">
 
-<p>An observer class responsible for updating the views of the row defined in #row when notified, i.e., when a new <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1RowUiState.xhtml" title="A data class encapsulating the visible state of a row in the main view of the application.">RowUiState</a> is produced the observed Flowable.  
+<p>An observer class responsible for updating the views of the row defined in .row when notified, i.e., when a new <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1RowUiState.xhtml" title="A data class encapsulating the visible state of a row in the main view of the application.">RowUiState</a> is produced the observed Flowable.  
  <a href="#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for RowUiStateObserver:</div>
@@ -110,17 +110,17 @@ Collaboration diagram for RowUiStateObserver:</div>
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a02ac12494ea91527db5d3fb775979612" id="r_a02ac12494ea91527db5d3fb775979612"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a02ac12494ea91527db5d3fb775979612">accept</a> (@NonNull <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1RowUiState.xhtml">RowUiState</a> rowUiState)</td></tr>
-<tr class="memdesc:a02ac12494ea91527db5d3fb775979612"><td class="mdescLeft">&#160;</td><td class="mdescRight">Changes values in <a class="el" href="#a23adebabf35e4a99c9ce0d9b3f823f16" title="A TextView showing the user the summed-up damage of all units in this row, i.e., RowUiState....">damageView</a> and <a class="el" href="#a5423544287b2a3083bd9a65a9ca567a3" title="A TextView showing the number of units in this row, i.e., RowUiState.units.">unitView</a> as well as the image in <a class="el" href="#aaad5683a790260a9c9e87bc7ec101fcd" title="An ImageView responsible for showing the current state of the weather debuff in this row.">weatherView</a> and <a class="el" href="#a2588e4720eb0cfef4781efb7a3df2cd9" title="An ImageView responsible for showing the current state of the commander&#39;s horn buff in this row.">hornView</a>.  <br /></td></tr>
+<tr class="memdesc:a02ac12494ea91527db5d3fb775979612"><td class="mdescLeft">&#160;</td><td class="mdescRight">Changes values in .damageView and .unitView as well as the image in .weatherView and .hornView.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-static-methods" class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:adfaf1bbbef08c96067b2a6494d6d0552" id="r_adfaf1bbbef08c96067b2a6494d6d0552"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="#af43071482a97fb9c9a11f9054769ae87">RowUiStateObserver</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adfaf1bbbef08c96067b2a6494d6d0552">getObserver</a> (@NonNull <a class="el" href="enumcom_1_1peternaggschga_1_1gwent_1_1data_1_1RowType.xhtml">RowType</a> row, @NonNull TextView <a class="el" href="#a23adebabf35e4a99c9ce0d9b3f823f16">damageView</a>, @NonNull ImageView <a class="el" href="#aaad5683a790260a9c9e87bc7ec101fcd">weatherView</a>, @NonNull ImageView <a class="el" href="#a2588e4720eb0cfef4781efb7a3df2cd9">hornView</a>, @NonNull TextView <a class="el" href="#a5423544287b2a3083bd9a65a9ca567a3">unitView</a>)</td></tr>
-<tr class="memdesc:adfaf1bbbef08c96067b2a6494d6d0552"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a new <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1RowUiStateObserver.xhtml" title="An observer class responsible for updating the views of the row defined in row when notified,...">RowUiStateObserver</a> for the given row updating the given views.  <br /></td></tr>
+<tr class="memdesc:adfaf1bbbef08c96067b2a6494d6d0552"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a new <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1RowUiStateObserver.xhtml" title="An observer class responsible for updating the views of the row defined in .row when notified,...">RowUiStateObserver</a> for the given row updating the given views.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pri-methods" class="groupheader"><a id="pri-methods" name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
 <tr class="memitem:af43071482a97fb9c9a11f9054769ae87" id="r_af43071482a97fb9c9a11f9054769ae87"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af43071482a97fb9c9a11f9054769ae87">RowUiStateObserver</a> (@NonNull TextView <a class="el" href="#a23adebabf35e4a99c9ce0d9b3f823f16">damageView</a>, @NonNull ImageView <a class="el" href="#aaad5683a790260a9c9e87bc7ec101fcd">weatherView</a>, @DrawableRes int <a class="el" href="#aba61f6adf77129906b54963d79b8455b">weatherResource</a>, @NonNull ImageView <a class="el" href="#a2588e4720eb0cfef4781efb7a3df2cd9">hornView</a>, @NonNull TextView <a class="el" href="#a5423544287b2a3083bd9a65a9ca567a3">unitView</a>)</td></tr>
-<tr class="memdesc:af43071482a97fb9c9a11f9054769ae87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor of a <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1RowUiStateObserver.xhtml" title="An observer class responsible for updating the views of the row defined in row when notified,...">RowUiStateObserver</a> updating the given views when #onChanged() is called.  <br /></td></tr>
+<tr class="memdesc:af43071482a97fb9c9a11f9054769ae87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor of a <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1RowUiStateObserver.xhtml" title="An observer class responsible for updating the views of the row defined in .row when notified,...">RowUiStateObserver</a> updating the given views when .onChanged() is called.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pri-attribs" class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
@@ -129,14 +129,14 @@ Private Attributes</h2></td></tr>
 <tr class="memitem:aaad5683a790260a9c9e87bc7ec101fcd" id="r_aaad5683a790260a9c9e87bc7ec101fcd"><td class="memItemLeft" align="right" valign="top">final ImageView&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaad5683a790260a9c9e87bc7ec101fcd">weatherView</a></td></tr>
 <tr class="memdesc:aaad5683a790260a9c9e87bc7ec101fcd"><td class="mdescLeft">&#160;</td><td class="mdescRight">An ImageView responsible for showing the current state of the weather debuff in this row.  <br /></td></tr>
 <tr class="memitem:aba61f6adf77129906b54963d79b8455b" id="r_aba61f6adf77129906b54963d79b8455b"><td class="memItemLeft" align="right" valign="top">final int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aba61f6adf77129906b54963d79b8455b">weatherResource</a></td></tr>
-<tr class="memdesc:aba61f6adf77129906b54963d79b8455b"><td class="mdescLeft">&#160;</td><td class="mdescRight">An Integer representing the drawable resource shown by <a class="el" href="#aaad5683a790260a9c9e87bc7ec101fcd" title="An ImageView responsible for showing the current state of the weather debuff in this row.">weatherView</a> when the weather debuff is active, i.e., when <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1RowUiState.xhtml#aabb356eb26ef5db0446e8f700deb64a7" title="Defines whether the weather debuff is active in this row.">RowUiState.weather</a> is <span class="tt">true</span>.  <br /></td></tr>
+<tr class="memdesc:aba61f6adf77129906b54963d79b8455b"><td class="mdescLeft">&#160;</td><td class="mdescRight">An Integer representing the drawable resource shown by .weatherView when the weather debuff is active, i.e., when <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1RowUiState.xhtml#aabb356eb26ef5db0446e8f700deb64a7" title="Defines whether the weather debuff is active in this row.">RowUiState.weather</a> is <span class="tt">true</span>.  <br /></td></tr>
 <tr class="memitem:a2588e4720eb0cfef4781efb7a3df2cd9" id="r_a2588e4720eb0cfef4781efb7a3df2cd9"><td class="memItemLeft" align="right" valign="top">final ImageView&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2588e4720eb0cfef4781efb7a3df2cd9">hornView</a></td></tr>
 <tr class="memdesc:a2588e4720eb0cfef4781efb7a3df2cd9"><td class="mdescLeft">&#160;</td><td class="mdescRight">An ImageView responsible for showing the current state of the commander's horn buff in this row.  <br /></td></tr>
 <tr class="memitem:a5423544287b2a3083bd9a65a9ca567a3" id="r_a5423544287b2a3083bd9a65a9ca567a3"><td class="memItemLeft" align="right" valign="top">final TextView&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5423544287b2a3083bd9a65a9ca567a3">unitView</a></td></tr>
 <tr class="memdesc:a5423544287b2a3083bd9a65a9ca567a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">A TextView showing the number of units in this row, i.e., <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1RowUiState.xhtml#ad852d5da541daff8a49f376f9a217790" title="Defines the number of units in this row.">RowUiState.units</a>.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>An observer class responsible for updating the views of the row defined in #row when notified, i.e., when a new <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1RowUiState.xhtml" title="A data class encapsulating the visible state of a row in the main view of the application.">RowUiState</a> is produced the observed Flowable. </p>
+<div class="textblock"><p>An observer class responsible for updating the views of the row defined in .row when notified, i.e., when a new <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1RowUiState.xhtml" title="A data class encapsulating the visible state of a row in the main view of the application.">RowUiState</a> is produced the observed Flowable. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1RowUiState.xhtml" title="A data class encapsulating the visible state of a row in the main view of the application.">RowUiState</a> </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="RowUiStateObserver_8java_source.xhtml#l00022">22</a> of file <a class="el" href="RowUiStateObserver_8java_source.xhtml">RowUiStateObserver.java</a>.</p>
@@ -183,8 +183,8 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Constructor of a <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1RowUiStateObserver.xhtml" title="An observer class responsible for updating the views of the row defined in row when notified,...">RowUiStateObserver</a> updating the given views when #onChanged() is called. </p>
-<p>Should only be called by <a class="el" href="#adfaf1bbbef08c96067b2a6494d6d0552" title="Returns a new RowUiStateObserver for the given row updating the given views.">getObserver()</a>.</p>
+<p>Constructor of a <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1RowUiStateObserver.xhtml" title="An observer class responsible for updating the views of the row defined in .row when notified,...">RowUiStateObserver</a> updating the given views when .onChanged() is called. </p>
+<p>Should only be called by .<a class="el" href="#adfaf1bbbef08c96067b2a6494d6d0552" title="Returns a new RowUiStateObserver for the given row updating the given views.">getObserver()</a>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">damageView</td><td>TextView showing the summed-up damage of all units in the observed row. </td></tr>
@@ -195,7 +195,7 @@ Private Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section see"><dt>See also</dt><dd>#getObserver(RowType, TextView, ImageView, ImageView, TextView) </dd></dl>
+<dl class="section see"><dt>See also</dt><dd>.getObserver(RowType, TextView, ImageView, ImageView, TextView) </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="RowUiStateObserver_8java_source.xhtml#l00074">74</a> of file <a class="el" href="RowUiStateObserver_8java_source.xhtml">RowUiStateObserver.java</a>.</p>
 
@@ -221,7 +221,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Changes values in <a class="el" href="#a23adebabf35e4a99c9ce0d9b3f823f16" title="A TextView showing the user the summed-up damage of all units in this row, i.e., RowUiState....">damageView</a> and <a class="el" href="#a5423544287b2a3083bd9a65a9ca567a3" title="A TextView showing the number of units in this row, i.e., RowUiState.units.">unitView</a> as well as the image in <a class="el" href="#aaad5683a790260a9c9e87bc7ec101fcd" title="An ImageView responsible for showing the current state of the weather debuff in this row.">weatherView</a> and <a class="el" href="#a2588e4720eb0cfef4781efb7a3df2cd9" title="An ImageView responsible for showing the current state of the commander&#39;s horn buff in this row.">hornView</a>. </p>
+<p>Changes values in .damageView and .unitView as well as the image in .weatherView and .hornView. </p>
 <p>Image switches are animated using <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1ImageViewSwitchAnimator.xhtml" title="A class providing functionality for changing the resource shown by an ImageView using a fading animat...">ImageViewSwitchAnimator</a>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -279,8 +279,8 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Returns a new <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1RowUiStateObserver.xhtml" title="An observer class responsible for updating the views of the row defined in row when notified,...">RowUiStateObserver</a> for the given row updating the given views. </p>
-<p>Factory method for <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1RowUiStateObserver.xhtml" title="An observer class responsible for updating the views of the row defined in row when notified,...">RowUiStateObserver</a>. <a class="el" href="#aba61f6adf77129906b54963d79b8455b" title="An Integer representing the drawable resource shown by weatherView when the weather debuff is active,...">weatherResource</a> is defined according to the given <a class="el" href="enumcom_1_1peternaggschga_1_1gwent_1_1data_1_1RowType.xhtml" title="An enum listing the different types of attack rows.">RowType</a>.</p>
+<p>Returns a new <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1RowUiStateObserver.xhtml" title="An observer class responsible for updating the views of the row defined in .row when notified,...">RowUiStateObserver</a> for the given row updating the given views. </p>
+<p>Factory method for <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1RowUiStateObserver.xhtml" title="An observer class responsible for updating the views of the row defined in .row when notified,...">RowUiStateObserver</a>. .weatherResource is defined according to the given <a class="el" href="enumcom_1_1peternaggschga_1_1gwent_1_1data_1_1RowType.xhtml" title="An enum listing the different types of attack rows.">RowType</a>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">row</td><td><a class="el" href="enumcom_1_1peternaggschga_1_1gwent_1_1data_1_1RowType.xhtml" title="An enum listing the different types of attack rows.">RowType</a> defining which row is being observed. </td></tr>
@@ -291,8 +291,8 @@ Private Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1RowUiStateObserver.xhtml" title="An observer class responsible for updating the views of the row defined in row when notified,...">RowUiStateObserver</a> updating the given views. </dd></dl>
-<dl class="section see"><dt>See also</dt><dd>#RowUiStateObserver(TextView, ImageView, int, ImageView, TextView) </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1RowUiStateObserver.xhtml" title="An observer class responsible for updating the views of the row defined in .row when notified,...">RowUiStateObserver</a> updating the given views. </dd></dl>
+<dl class="section see"><dt>See also</dt><dd>.RowUiStateObserver(TextView, ImageView, int, ImageView, TextView) </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="RowUiStateObserver_8java_source.xhtml#l00099">99</a> of file <a class="el" href="RowUiStateObserver_8java_source.xhtml">RowUiStateObserver.java</a>.</p>
 
@@ -353,7 +353,7 @@ Private Attributes</h2></td></tr>
 
 <p>An ImageView responsible for showing the current state of the commander's horn buff in this row. </p>
 <p>Is gray when <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1RowUiState.xhtml#a83136309745fb33111a79355a8b82c18" title="Defines whether the commander&#39;s horn buff is active in this row.">RowUiState.horn</a> is <span class="tt">false</span>.</p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="#aba61f6adf77129906b54963d79b8455b" title="An Integer representing the drawable resource shown by weatherView when the weather debuff is active,...">weatherResource</a> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd>.<a class="el" href="#aba61f6adf77129906b54963d79b8455b" title="An Integer representing the drawable resource shown by .weatherView when the weather debuff is active...">weatherResource</a> </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="RowUiStateObserver_8java_source.xhtml#l00055">55</a> of file <a class="el" href="RowUiStateObserver_8java_source.xhtml">RowUiStateObserver.java</a>.</p>
 
@@ -409,8 +409,8 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>An Integer representing the drawable resource shown by <a class="el" href="#aaad5683a790260a9c9e87bc7ec101fcd" title="An ImageView responsible for showing the current state of the weather debuff in this row.">weatherView</a> when the weather debuff is active, i.e., when <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1RowUiState.xhtml#aabb356eb26ef5db0446e8f700deb64a7" title="Defines whether the weather debuff is active in this row.">RowUiState.weather</a> is <span class="tt">true</span>. </p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="#aaad5683a790260a9c9e87bc7ec101fcd" title="An ImageView responsible for showing the current state of the weather debuff in this row.">weatherView</a> </dd></dl>
+<p>An Integer representing the drawable resource shown by .weatherView when the weather debuff is active, i.e., when <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1RowUiState.xhtml#aabb356eb26ef5db0446e8f700deb64a7" title="Defines whether the weather debuff is active in this row.">RowUiState.weather</a> is <span class="tt">true</span>. </p>
+<dl class="section see"><dt>See also</dt><dd>.<a class="el" href="#aaad5683a790260a9c9e87bc7ec101fcd" title="An ImageView responsible for showing the current state of the weather debuff in this row.">weatherView</a> </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="RowUiStateObserver_8java_source.xhtml#l00046">46</a> of file <a class="el" href="RowUiStateObserver_8java_source.xhtml">RowUiStateObserver.java</a>.</p>
 
@@ -439,8 +439,8 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>An ImageView responsible for showing the current state of the weather debuff in this row. </p>
-<p>Displays the resource in <a class="el" href="#aba61f6adf77129906b54963d79b8455b" title="An Integer representing the drawable resource shown by weatherView when the weather debuff is active,...">weatherResource</a> when <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1RowUiState.xhtml#aabb356eb26ef5db0446e8f700deb64a7" title="Defines whether the weather debuff is active in this row.">RowUiState.weather</a> is <span class="tt">true</span>.</p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="#aba61f6adf77129906b54963d79b8455b" title="An Integer representing the drawable resource shown by weatherView when the weather debuff is active,...">weatherResource</a> </dd></dl>
+<p>Displays the resource in .weatherResource when <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1RowUiState.xhtml#aabb356eb26ef5db0446e8f700deb64a7" title="Defines whether the weather debuff is active in this row.">RowUiState.weather</a> is <span class="tt">true</span>.</p>
+<dl class="section see"><dt>See also</dt><dd>.<a class="el" href="#aba61f6adf77129906b54963d79b8455b" title="An Integer representing the drawable resource shown by .weatherView when the weather debuff is active...">weatherResource</a> </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="RowUiStateObserver_8java_source.xhtml#l00037">37</a> of file <a class="el" href="RowUiStateObserver_8java_source.xhtml">RowUiStateObserver.java</a>.</p>
 

@@ -1,0 +1,5 @@
+<map id="ShowUnitsDialog.ScrollToEndObserver" name="ShowUnitsDialog.ScrollToEndObserver">
+<area shape="rect" id="Node000001" title="Smoothly scrolls to the last item in the RecyclerView to show the user that an item has been inserted..." alt="" coords="5,81,181,126"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="17,5,169,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="95,46,96,82,91,80,91,50"/>
+</map>

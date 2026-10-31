@@ -94,7 +94,7 @@ $(function(){initNavTree('classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1settings_
 </div><!--header-->
 <div class="contents">
 
-<p>A <code><a class="el" href="">PreferenceFragmentCompat</a></code> class encapsulating the rule preference screen, i.e., the rule sections defined in <code><a class="el" href="">R.xml#rule_preferences</a></code>.  
+<p>A PreferenceFragmentCompat class encapsulating the rule preference screen, i.e., the rule sections defined in R.xmlrule_preferences.  
  <a href="#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for SettingsRuleFragment:</div>
@@ -110,15 +110,15 @@ Collaboration diagram for SettingsRuleFragment:</div>
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a2ee99fbeb2de09c635041fc2ae39c470" id="r_a2ee99fbeb2de09c635041fc2ae39c470"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2ee99fbeb2de09c635041fc2ae39c470">onCreatePreferences</a> (Bundle savedInstanceState, String rootKey)</td></tr>
-<tr class="memdesc:a2ee99fbeb2de09c635041fc2ae39c470"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called during <code><a class="el" href="">onCreate(Bundle)</a></code> to supply the preferences for this fragment.  <br /></td></tr>
+<tr class="memdesc:a2ee99fbeb2de09c635041fc2ae39c470"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called during onCreate(Bundle) to supply the preferences for this fragment.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pri-methods" class="groupheader"><a id="pri-methods" name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
 <tr class="memitem:a86671e6a2df70df192c40addfa0f779e" id="r_a86671e6a2df70df192c40addfa0f779e"><td class="memItemLeft" align="right" valign="top">Preference.OnPreferenceClickListener&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a86671e6a2df70df192c40addfa0f779e">getSectionClickListener</a> (@NonNull <a class="el" href="enumcom_1_1peternaggschga_1_1gwent_1_1ui_1_1settings_1_1RuleSection.xhtml">RuleSection</a> section)</td></tr>
-<tr class="memdesc:a86671e6a2df70df192c40addfa0f779e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an <code><a class="el" href="">Preference.OnPreferenceClickListener</a></code> that starts a new <code><a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1settings_1_1RuleActivity.xhtml">RuleActivity</a></code> for the given <code><a class="el" href="enumcom_1_1peternaggschga_1_1gwent_1_1ui_1_1settings_1_1RuleSection.xhtml">RuleSection</a></code> using an <code><a class="el" href="">Intent</a></code>.  <br /></td></tr>
+<tr class="memdesc:a86671e6a2df70df192c40addfa0f779e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an Preference.OnPreferenceClickListener that starts a new <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1settings_1_1RuleActivity.xhtml" title="An AppCompatActivity used to present the rules of the game.">RuleActivity</a> for the given <a class="el" href="enumcom_1_1peternaggschga_1_1gwent_1_1ui_1_1settings_1_1RuleSection.xhtml" title="An Enum used to discern the different possible sections shown by RuleActivity.">RuleSection</a> using an Intent.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>A <code><a class="el" href="">PreferenceFragmentCompat</a></code> class encapsulating the rule preference screen, i.e., the rule sections defined in <code><a class="el" href="">R.xml#rule_preferences</a></code>. </p>
+<div class="textblock"><p>A PreferenceFragmentCompat class encapsulating the rule preference screen, i.e., the rule sections defined in R.xmlrule_preferences. </p>
 
 <p class="definition">Definition at line <a class="el" href="SettingsRuleFragment_8java_source.xhtml#l00031">31</a> of file <a class="el" href="SettingsRuleFragment_8java_source.xhtml">SettingsRuleFragment.java</a>.</p>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
@@ -145,15 +145,15 @@ Private Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Creates an <code><a class="el" href="">Preference.OnPreferenceClickListener</a></code> that starts a new <code><a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1settings_1_1RuleActivity.xhtml">RuleActivity</a></code> for the given <code><a class="el" href="enumcom_1_1peternaggschga_1_1gwent_1_1ui_1_1settings_1_1RuleSection.xhtml">RuleSection</a></code> using an <code><a class="el" href="">Intent</a></code>. </p>
-<p>The <code><a class="el" href="">Intent</a></code> provides the requested <code><a class="el" href="enumcom_1_1peternaggschga_1_1gwent_1_1ui_1_1settings_1_1RuleSection.xhtml">RuleSection</a></code> to the <code><a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1settings_1_1RuleActivity.xhtml">RuleActivity</a></code> using <code><a class="el" href="">Intent#putExtra(String, Serializable)</a></code> with <code><a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1settings_1_1RuleActivity.xhtml#ab929abdbec28bc52d581df15762197d7">RuleActivity#INTENT_EXTRA_TAG</a></code> as a tag.</p>
+<p>Creates an Preference.OnPreferenceClickListener that starts a new <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1settings_1_1RuleActivity.xhtml" title="An AppCompatActivity used to present the rules of the game.">RuleActivity</a> for the given <a class="el" href="enumcom_1_1peternaggschga_1_1gwent_1_1ui_1_1settings_1_1RuleSection.xhtml" title="An Enum used to discern the different possible sections shown by RuleActivity.">RuleSection</a> using an Intent. </p>
+<p>The Intent provides the requested <a class="el" href="enumcom_1_1peternaggschga_1_1gwent_1_1ui_1_1settings_1_1RuleSection.xhtml" title="An Enum used to discern the different possible sections shown by RuleActivity.">RuleSection</a> to the <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1settings_1_1RuleActivity.xhtml" title="An AppCompatActivity used to present the rules of the game.">RuleActivity</a> using IntentputExtra(String, with RuleActivityINTENT_EXTRA_TAG as a tag.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">section</td><td><code><a class="el" href="enumcom_1_1peternaggschga_1_1gwent_1_1ui_1_1settings_1_1RuleSection.xhtml">RuleSection</a></code> that is requested. </td></tr>
+    <tr><td class="paramname">section</td><td><a class="el" href="enumcom_1_1peternaggschga_1_1gwent_1_1ui_1_1settings_1_1RuleSection.xhtml" title="An Enum used to discern the different possible sections shown by RuleActivity.">RuleSection</a> that is requested. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>An <code><a class="el" href="">Preference.OnPreferenceClickListener</a></code> calling a <code><a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1settings_1_1RuleActivity.xhtml">RuleActivity</a></code>. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>An Preference.OnPreferenceClickListener calling a <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1settings_1_1RuleActivity.xhtml" title="An AppCompatActivity used to present the rules of the game.">RuleActivity</a>. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="SettingsRuleFragment_8java_source.xhtml#l00043">43</a> of file <a class="el" href="SettingsRuleFragment_8java_source.xhtml">SettingsRuleFragment.java</a>.</p>
 
@@ -182,16 +182,16 @@ Private Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Called during <code><a class="el" href="">onCreate(Bundle)</a></code> to supply the preferences for this fragment. </p>
-<p>Sets shown <code><a class="el" href="">Preference</a></code>s from <code><a class="el" href="">R.xml#rule_preferences</a></code>. Also provides each element with an <code><a class="el" href="">Preference.OnPreferenceClickListener</a></code> that starts a new <code><a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1settings_1_1RuleActivity.xhtml">RuleActivity</a></code> for the respective <code><a class="el" href="enumcom_1_1peternaggschga_1_1gwent_1_1ui_1_1settings_1_1RuleSection.xhtml">RuleSection</a></code>.</p>
+<p>Called during onCreate(Bundle) to supply the preferences for this fragment. </p>
+<p>Sets shown Preferences from R.xmlrule_preferences. Also provides each element with an Preference.OnPreferenceClickListener that starts a new <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1settings_1_1RuleActivity.xhtml" title="An AppCompatActivity used to present the rules of the game.">RuleActivity</a> for the respective <a class="el" href="enumcom_1_1peternaggschga_1_1gwent_1_1ui_1_1settings_1_1RuleSection.xhtml" title="An Enum used to discern the different possible sections shown by RuleActivity.">RuleSection</a>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">savedInstanceState</td><td>If the fragment is being re-created from a previous saved state, this is the state. </td></tr>
-    <tr><td class="paramname">rootKey</td><td>If non-null, this preference fragment should be rooted at the <code><a class="el" href="">androidx.preference.PreferenceScreen</a></code> with this key. </td></tr>
+    <tr><td class="paramname">rootKey</td><td>If non-null, this preference fragment should be rooted at the androidx.preference.PreferenceScreen with this key. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section see"><dt>See also</dt><dd>#getSectionClickListener(RuleSection) </dd></dl>
+<dl class="section see"><dt>See also</dt><dd>.getSectionClickListener(RuleSection) </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="SettingsRuleFragment_8java_source.xhtml#l00066">66</a> of file <a class="el" href="SettingsRuleFragment_8java_source.xhtml">SettingsRuleFragment.java</a>.</p>
 

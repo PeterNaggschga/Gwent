@@ -94,7 +94,7 @@ $(function(){initNavTree('classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1
 </div><!--header-->
 <div class="contents">
 
-<p>A data class encapsulating information about the squad defined by <a class="el" href="#a9930576d5fde8a759dc57ad350c0ea77" title="Integer containing the number of the represented squad.">squadNumber</a>, i.e., how many <a class="el" href="#a3612ba138dbe52ad386f01e12e802ec3" title="Integer representing the number of members in the squad.">squadMembers</a> are there and what is the <a class="el" href="#a575d16400c6ac81dc9e6a2b90c019aed" title="Integer containing the base damage of members of this squad.">memberBaseDamage</a> of units in this squad.  
+<p>A data class encapsulating information about the squad defined by .squadNumber, i.e., how many .squadMembers are there and what is the .memberBaseDamage of units in this squad.  
  <a href="#details">More...</a></p>
 <div class="dynheader">
 Collaboration diagram for SquadState:</div>
@@ -105,7 +105,7 @@ Collaboration diagram for SquadState:</div>
 <tr class="heading"><td colspan="2"><h2 id="header-pac-methods" class="groupheader"><a id="pac-methods" name="pac-methods"></a>
 Package Functions</h2></td></tr>
 <tr class="memitem:ad07b5bd921d2379d79a63285306a148b" id="r_ad07b5bd921d2379d79a63285306a148b"><td class="memItemLeft" align="right" valign="top">boolean&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad07b5bd921d2379d79a63285306a148b">hasMembers</a> ()</td></tr>
-<tr class="memdesc:ad07b5bd921d2379d79a63285306a148b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns whether the represented squad has members, i.e., whether <a class="el" href="#a3612ba138dbe52ad386f01e12e802ec3" title="Integer representing the number of members in the squad.">squadMembers</a> is greater than 0.  <br /></td></tr>
+<tr class="memdesc:ad07b5bd921d2379d79a63285306a148b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns whether the represented squad has members, i.e., whether .squadMembers is greater than 0.  <br /></td></tr>
 <tr class="memitem:aec569476e4a6757a23f0d699384ab28f" id="r_aec569476e4a6757a23f0d699384ab28f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aec569476e4a6757a23f0d699384ab28f">getSquadNumber</a> ()</td></tr>
 <tr class="memdesc:aec569476e4a6757a23f0d699384ab28f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the number of the represented squad.  <br /></td></tr>
 <tr class="memitem:afa880afd36699669aacadfbfd97ccd9e" id="r_afa880afd36699669aacadfbfd97ccd9e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afa880afd36699669aacadfbfd97ccd9e">getSquadMembers</a> ()</td></tr>
@@ -116,12 +116,12 @@ Package Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 id="header-pac-static-methods" class="groupheader"><a id="pac-static-methods" name="pac-static-methods"></a>
 Static Package Functions</h2></td></tr>
 <tr class="memitem:a153f5d007b319c56b1b562e60cdab81a" id="r_a153f5d007b319c56b1b562e60cdab81a"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="#ac8e484d167483eac45b9a410770eb910">SquadState</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a153f5d007b319c56b1b562e60cdab81a">getState</a> (@IntRange(from=1, to=MAX_NR_SQUADS) int <a class="el" href="#a9930576d5fde8a759dc57ad350c0ea77">squadNumber</a>, @NonNull List&lt; <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml">UnitEntity</a> &gt; units)</td></tr>
-<tr class="memdesc:a153f5d007b319c56b1b562e60cdab81a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1SquadState.xhtml" title="A data class encapsulating information about the squad defined by squadNumber, i.e....">SquadState</a> representing the squad with the given <a class="el" href="#a9930576d5fde8a759dc57ad350c0ea77" title="Integer containing the number of the represented squad.">squadNumber</a>.  <br /></td></tr>
+<tr class="memdesc:a153f5d007b319c56b1b562e60cdab81a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1SquadState.xhtml" title="A data class encapsulating information about the squad defined by .squadNumber, i....">SquadState</a> representing the squad with the given .squadNumber.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pri-methods" class="groupheader"><a id="pri-methods" name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
 <tr class="memitem:ac8e484d167483eac45b9a410770eb910" id="r_ac8e484d167483eac45b9a410770eb910"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac8e484d167483eac45b9a410770eb910">SquadState</a> (@IntRange(from=1, to=MAX_NR_SQUADS) int <a class="el" href="#a9930576d5fde8a759dc57ad350c0ea77">squadNumber</a>, @IntRange(from=0) int <a class="el" href="#a3612ba138dbe52ad386f01e12e802ec3">squadMembers</a>, @IntRange(from=0, to=NON_EPIC_DAMAGE_VALUES_UPPER_BOUND) int <a class="el" href="#a575d16400c6ac81dc9e6a2b90c019aed">memberBaseDamage</a>)</td></tr>
-<tr class="memdesc:ac8e484d167483eac45b9a410770eb910"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor of a <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1SquadState.xhtml" title="A data class encapsulating information about the squad defined by squadNumber, i.e....">SquadState</a> with the given <a class="el" href="#a9930576d5fde8a759dc57ad350c0ea77" title="Integer containing the number of the represented squad.">squadNumber</a>, <a class="el" href="#a3612ba138dbe52ad386f01e12e802ec3" title="Integer representing the number of members in the squad.">squadMembers</a>, and <a class="el" href="#a575d16400c6ac81dc9e6a2b90c019aed" title="Integer containing the base damage of members of this squad.">memberBaseDamage</a>.  <br /></td></tr>
+<tr class="memdesc:ac8e484d167483eac45b9a410770eb910"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor of a <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1SquadState.xhtml" title="A data class encapsulating information about the squad defined by .squadNumber, i....">SquadState</a> with the given .squadNumber, .squadMembers, and .memberBaseDamage.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pri-attribs" class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
@@ -133,7 +133,7 @@ Private Attributes</h2></td></tr>
 <tr class="memdesc:a575d16400c6ac81dc9e6a2b90c019aed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Integer containing the base damage of members of this squad.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>A data class encapsulating information about the squad defined by <a class="el" href="#a9930576d5fde8a759dc57ad350c0ea77" title="Integer containing the number of the represented squad.">squadNumber</a>, i.e., how many <a class="el" href="#a3612ba138dbe52ad386f01e12e802ec3" title="Integer representing the number of members in the squad.">squadMembers</a> are there and what is the <a class="el" href="#a575d16400c6ac81dc9e6a2b90c019aed" title="Integer containing the base damage of members of this squad.">memberBaseDamage</a> of units in this squad. </p>
+<div class="textblock"><p>A data class encapsulating information about the squad defined by .squadNumber, i.e., how many .squadMembers are there and what is the .memberBaseDamage of units in this squad. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1SquadManager.xhtml" title="A class used by the CardNumberPickerAdapter to determine the first squad with members or set the defa...">SquadManager</a> </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="SquadState_8java_source.xhtml#l00019">19</a> of file <a class="el" href="SquadState_8java_source.xhtml">SquadState.java</a>.</p>
@@ -170,8 +170,8 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Constructor of a <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1SquadState.xhtml" title="A data class encapsulating information about the squad defined by squadNumber, i.e....">SquadState</a> with the given <a class="el" href="#a9930576d5fde8a759dc57ad350c0ea77" title="Integer containing the number of the represented squad.">squadNumber</a>, <a class="el" href="#a3612ba138dbe52ad386f01e12e802ec3" title="Integer representing the number of members in the squad.">squadMembers</a>, and <a class="el" href="#a575d16400c6ac81dc9e6a2b90c019aed" title="Integer containing the base damage of members of this squad.">memberBaseDamage</a>. </p>
-<p>Should only be used by <a class="el" href="#a153f5d007b319c56b1b562e60cdab81a" title="Creates a new SquadState representing the squad with the given squadNumber.">getState()</a>.</p>
+<p>Constructor of a <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1SquadState.xhtml" title="A data class encapsulating information about the squad defined by .squadNumber, i....">SquadState</a> with the given .squadNumber, .squadMembers, and .memberBaseDamage. </p>
+<p>Should only be used by .<a class="el" href="#a153f5d007b319c56b1b562e60cdab81a" title="Creates a new SquadState representing the squad with the given .squadNumber.">getState()</a>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">squadNumber</td><td>Integer containing the number of the represented squad. </td></tr>
@@ -180,7 +180,7 @@ Private Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section see"><dt>See also</dt><dd>#getState(int, List) </dd></dl>
+<dl class="section see"><dt>See also</dt><dd>.getState(int, List) </dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
     <tr><td class="paramname">IllegalArgumentException</td><td>When one of the parameters doesn't meet its IntRange constraint. </td></tr>
@@ -221,7 +221,7 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Returns the base damage of members in the represented squad. </p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="#a575d16400c6ac81dc9e6a2b90c019aed" title="Integer containing the base damage of members of this squad.">memberBaseDamage</a> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd>.<a class="el" href="#a575d16400c6ac81dc9e6a2b90c019aed" title="Integer containing the base damage of members of this squad.">memberBaseDamage</a> </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>An Integer defining the base damage of units in the represented squad. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="SquadState_8java_source.xhtml#l00127">127</a> of file <a class="el" href="SquadState_8java_source.xhtml">SquadState.java</a>.</p>
@@ -256,7 +256,7 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Returns the number of members in the represented squad. </p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="#a3612ba138dbe52ad386f01e12e802ec3" title="Integer representing the number of members in the squad.">squadMembers</a> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd>.<a class="el" href="#a3612ba138dbe52ad386f01e12e802ec3" title="Integer representing the number of members in the squad.">squadMembers</a> </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>An Integer defining how many members are in the represented squad. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="SquadState_8java_source.xhtml#l00117">117</a> of file <a class="el" href="SquadState_8java_source.xhtml">SquadState.java</a>.</p>
@@ -291,7 +291,7 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Returns the number of the represented squad. </p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="#a9930576d5fde8a759dc57ad350c0ea77" title="Integer containing the number of the represented squad.">squadNumber</a> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd>.<a class="el" href="#a9930576d5fde8a759dc57ad350c0ea77" title="Integer containing the number of the represented squad.">squadNumber</a> </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>An Integer defining which squad is represented. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="SquadState_8java_source.xhtml#l00107">107</a> of file <a class="el" href="SquadState_8java_source.xhtml">SquadState.java</a>.</p>
@@ -329,18 +329,18 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Creates a new <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1SquadState.xhtml" title="A data class encapsulating information about the squad defined by squadNumber, i.e....">SquadState</a> representing the squad with the given <a class="el" href="#a9930576d5fde8a759dc57ad350c0ea77" title="Integer containing the number of the represented squad.">squadNumber</a>. </p>
-<p>Information for <a class="el" href="#a3612ba138dbe52ad386f01e12e802ec3" title="Integer representing the number of members in the squad.">squadMembers</a> and <a class="el" href="#a575d16400c6ac81dc9e6a2b90c019aed" title="Integer containing the base damage of members of this squad.">memberBaseDamage</a> is retrieved from the given List of <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml" title="A class representing a card on the game board.">UnitEntity</a> objects. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Creates a new <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1SquadState.xhtml" title="A data class encapsulating information about the squad defined by .squadNumber, i....">SquadState</a> representing the squad with the given .squadNumber. </p>
+<p>Information for .squadMembers and .memberBaseDamage is retrieved from the given List of <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml" title="A class representing a card on the game board.">UnitEntity</a> objects. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">squadNumber</td><td>Integer containing the number of the represented squad. </td></tr>
     <tr><td class="paramname">units</td><td>List of <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml" title="A class representing a card on the game board.">UnitEntity</a> objects used to count squad-members. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1SquadState.xhtml" title="A data class encapsulating information about the squad defined by squadNumber, i.e....">SquadState</a> object that is newly created from the given List of units. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1SquadState.xhtml" title="A data class encapsulating information about the squad defined by .squadNumber, i....">SquadState</a> object that is newly created from the given List of units. </dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">IllegalArgumentException</td><td>When the given squad number is not between 1 and #MAX_NR_SQUADS. </td></tr>
+    <tr><td class="paramname">IllegalArgumentException</td><td>When the given squad number is not between 1 and .MAX_NR_SQUADS. </td></tr>
   </table>
   </dd>
 </dl>
@@ -376,7 +376,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Returns whether the represented squad has members, i.e., whether <a class="el" href="#a3612ba138dbe52ad386f01e12e802ec3" title="Integer representing the number of members in the squad.">squadMembers</a> is greater than 0. </p>
+<p>Returns whether the represented squad has members, i.e., whether .squadMembers is greater than 0. </p>
 <dl class="section return"><dt>Returns</dt><dd>A Boolean defining whether the represented squad has members or not. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="SquadState_8java_source.xhtml#l00097">97</a> of file <a class="el" href="SquadState_8java_source.xhtml">SquadState.java</a>.</p>
@@ -409,7 +409,7 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Integer containing the base damage of members of this squad. </p>
-<p>If members have different <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml#a9b39867abc3f09243fcdc739bd9e6c90" title="Defines the base-damage of the represented card.">UnitEntity.damage</a> values, it is undefined which of them is picked. If <a class="el" href="#a3612ba138dbe52ad386f01e12e802ec3" title="Integer representing the number of members in the squad.">squadMembers</a> is 0, <a class="el" href="#a575d16400c6ac81dc9e6a2b90c019aed" title="Integer containing the base damage of members of this squad.">memberBaseDamage</a> defaults to 5. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="#a29ca37ed72dce39b9007c8e2f2d0c9a4" title="Returns the base damage of members in the represented squad.">getMemberBaseDamage()</a> </dd></dl>
+<p>If members have different <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml#a9b39867abc3f09243fcdc739bd9e6c90" title="Defines the base-damage of the represented card.">UnitEntity.damage</a> values, it is undefined which of them is picked. If .squadMembers is 0, .memberBaseDamage defaults to 5. </p><dl class="section see"><dt>See also</dt><dd>.<a class="el" href="#a29ca37ed72dce39b9007c8e2f2d0c9a4" title="Returns the base damage of members in the represented squad.">getMemberBaseDamage()</a> </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="SquadState_8java_source.xhtml#l00043">43</a> of file <a class="el" href="SquadState_8java_source.xhtml">SquadState.java</a>.</p>
 
@@ -438,7 +438,7 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Integer representing the number of members in the squad. </p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="#afa880afd36699669aacadfbfd97ccd9e" title="Returns the number of members in the represented squad.">getSquadMembers()</a> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd>.<a class="el" href="#afa880afd36699669aacadfbfd97ccd9e" title="Returns the number of members in the represented squad.">getSquadMembers()</a> </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="SquadState_8java_source.xhtml#l00034">34</a> of file <a class="el" href="SquadState_8java_source.xhtml">SquadState.java</a>.</p>
 
@@ -467,8 +467,8 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Integer containing the number of the represented squad. </p>
-<p>Equivalent to <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml#a637c5da5eaf4033fca4c69bc47131db9" title="Defines the squad the unit belongs to if ability is Ability.BINDING.">UnitEntity.squad</a> of the units in the squad.</p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="#aec569476e4a6757a23f0d699384ab28f" title="Returns the number of the represented squad.">getSquadNumber()</a> </dd></dl>
+<p>Equivalent to <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml#a637c5da5eaf4033fca4c69bc47131db9" title="Defines the squad the unit belongs to if .ability is Ability.BINDING.">UnitEntity.squad</a> of the units in the squad.</p>
+<dl class="section see"><dt>See also</dt><dd>.<a class="el" href="#aec569476e4a6757a23f0d699384ab28f" title="Returns the number of the represented squad.">getSquadNumber()</a> </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="SquadState_8java_source.xhtml#l00027">27</a> of file <a class="el" href="SquadState_8java_source.xhtml">SquadState.java</a>.</p>
 

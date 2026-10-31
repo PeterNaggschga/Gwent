@@ -112,7 +112,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a552fd4619dcdebcbb6f832ce8746bac9" id="r_a552fd4619dcdebcbb6f832ce8746bac9"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a552fd4619dcdebcbb6f832ce8746bac9">calculateDamage</a> (int id, @IntRange(from=0) int damage)</td></tr>
 <tr class="memdesc:a552fd4619dcdebcbb6f832ce8746bac9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the (de-)buffed damage of unit with the given id and the given base-damage.  <br /></td></tr>
 <tr class="memitem:a38b3d761e115a80136b702223b7f91fa" id="r_a38b3d761e115a80136b702223b7f91fa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="enumcom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1DamageCalculator_1_1Color.xhtml">Color</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a38b3d761e115a80136b702223b7f91fa">isBuffed</a> (int id)</td></tr>
-<tr class="memdesc:a38b3d761e115a80136b702223b7f91fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates whether the unit with the given id is shown as Color#BUFFED, Color#DEBUFFED, or Color#DEFAULT.  <br /></td></tr>
+<tr class="memdesc:a38b3d761e115a80136b702223b7f91fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates whether the unit with the given id is shown as Color.BUFFED, Color.DEBUFFED, or Color.DEFAULT.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pac-methods" class="groupheader"><a id="pac-methods" name="pac-methods"></a>
 Package Functions</h2></td></tr>
@@ -249,8 +249,8 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Calculates whether the unit with the given id is shown as Color#BUFFED, Color#DEBUFFED, or Color#DEFAULT. </p>
-<p>Units are shown as Color#BUFFED when they are in a squad of two or more units, otherwise their <a class="el" href="enumcom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1DamageCalculator_1_1Color.xhtml" title="An enum containing values representing whether a unit is buffed, de-buffed or not affected by status ...">Color</a> is defined by <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1DamageCalculatorDecorator.xhtml#a3ed74cad763914fb83046cb6bab60079" title="A DamageCalculator which is decorated by this decorator.">component</a>.</p>
+<p>Calculates whether the unit with the given id is shown as Color.BUFFED, Color.DEBUFFED, or Color.DEFAULT. </p>
+<p>Units are shown as Color.BUFFED when they are in a squad of two or more units, otherwise their <a class="el" href="enumcom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1DamageCalculator_1_1Color.xhtml" title="An enum containing values representing whether a unit is buffed, de-buffed or not affected by status ...">Color</a> is defined by .component.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">id</td><td>Integer representing the <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml#a7441ef0865bcb3db9b8064dd7375c1ea" title="Defines the primary key of the represented unit.">UnitEntity.id</a> of the unit buff status is calculated. </td></tr>

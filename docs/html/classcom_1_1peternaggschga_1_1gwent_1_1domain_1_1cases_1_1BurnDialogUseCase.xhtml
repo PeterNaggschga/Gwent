@@ -150,7 +150,7 @@ Static Private Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Burns the strongest <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml" title="A class representing a card on the game board.">UnitEntity</a> objects in <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitRepository.xhtml" title="A facade class managing public access to the data layer.">UnitRepository</a>. </p>
-<p>Invokes a Dialog asking whether the user really wants to remove those units. <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1domain_1_1cases_1_1ResetRepositoryUseCase.xhtml" title="A use case class responsible for resetting the UnitRepository.">ResetRepositoryUseCase</a> is used for resetting. Wrapper for #burn(Context, UnitRepository).</p>
+<p>Invokes a Dialog asking whether the user really wants to remove those units. <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1domain_1_1cases_1_1ResetRepositoryUseCase.xhtml" title="A use case class responsible for resetting the UnitRepository.">ResetRepositoryUseCase</a> is used for resetting. Wrapper for .burn(Context, UnitRepository).</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">context</td><td>Context where a Dialog can be inflated. </td></tr>
@@ -159,9 +159,9 @@ Static Private Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A Single emitting a Boolean defining whether the units really were burned. </dd></dl>
-<dl class="section see"><dt>See also</dt><dd>#burn(Context, UnitRepository, SoundManager) </dd>
+<dl class="section see"><dt>See also</dt><dd>.burn(Context, UnitRepository, SoundManager) </dd>
 <dd>
-RemoveUnitsUseCase#remove(Context, UnitRepository, Collection, SoundManager) </dd></dl>
+RemoveUnitsUseCase.remove(Context, UnitRepository, Collection, SoundManager) </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="BurnDialogUseCase_8java_source.xhtml#l00085">85</a> of file <a class="el" href="BurnDialogUseCase_8java_source.xhtml">BurnDialogUseCase.java</a>.</p>
 
@@ -214,7 +214,7 @@ RemoveUnitsUseCase#remove(Context, UnitRepository, Collection, SoundManager) </d
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A Single emitting a Boolean defining whether the units really were burned. </dd></dl>
-<dl class="section see"><dt>See also</dt><dd>RemoveUnitsUseCase#remove(Context, UnitRepository, Collection, SoundManager) </dd></dl>
+<dl class="section see"><dt>See also</dt><dd>RemoveUnitsUseCase.remove(Context, UnitRepository, Collection, SoundManager) </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="BurnDialogUseCase_8java_source.xhtml#l00101">101</a> of file <a class="el" href="BurnDialogUseCase_8java_source.xhtml">BurnDialogUseCase.java</a>.</p>
 

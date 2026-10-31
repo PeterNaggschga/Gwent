@@ -107,7 +107,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a7fdb4fad2115123649b55c3712111ee7" id="r_a7fdb4fad2115123649b55c3712111ee7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7fdb4fad2115123649b55c3712111ee7">SoundManager</a> (@NonNull Context context)</td></tr>
 <tr class="memdesc:a7fdb4fad2115123649b55c3712111ee7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor of a <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1sounds_1_1SoundManager.xhtml" title="A class responsible for initializing and playing sounds when they are enabled.">SoundManager</a> in the given Context.  <br /></td></tr>
 <tr class="memitem:a48ad0fa1eccc2d96037074856cbe7dc4" id="r_a48ad0fa1eccc2d96037074856cbe7dc4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a48ad0fa1eccc2d96037074856cbe7dc4">playSound</a> (@IntRange(from=<a class="el" href="#afc1ad2ba6d835bd56c8851a93ddf530d">SOUND_WEATHER_GOOD</a>, to=<a class="el" href="#a6a4c658cd17a8b02bd8edbca76d8ad65">SOUND_COIN</a>) int soundId)</td></tr>
-<tr class="memdesc:a48ad0fa1eccc2d96037074856cbe7dc4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Plays the given <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1sounds_1_1Sound.xhtml" title="A data class encapsulating information on a certain sound effect, e.g., its id in a SoundPool and whe...">Sound</a> if it is #activated.  <br /></td></tr>
+<tr class="memdesc:a48ad0fa1eccc2d96037074856cbe7dc4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Plays the given <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1sounds_1_1Sound.xhtml" title="A data class encapsulating information on a certain sound effect, e.g., its id in a SoundPool and whe...">Sound</a> if it is .activated.  <br /></td></tr>
 <tr class="memitem:af27c0cf7bb01361de1a3c784bff16d79" id="r_af27c0cf7bb01361de1a3c784bff16d79"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af27c0cf7bb01361de1a3c784bff16d79">playClearWeatherSound</a> ()</td></tr>
 <tr class="memdesc:af27c0cf7bb01361de1a3c784bff16d79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Plays the clear weather sound.  <br /></td></tr>
 <tr class="memitem:af1a497cdbd21db8a08c8fc41c2345728" id="r_af1a497cdbd21db8a08c8fc41c2345728"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af1a497cdbd21db8a08c8fc41c2345728">playWeatherSound</a> (@NonNull <a class="el" href="enumcom_1_1peternaggschga_1_1gwent_1_1data_1_1RowType.xhtml">RowType</a> row)</td></tr>
@@ -159,7 +159,7 @@ Private Attributes</h2></td></tr>
 <tr class="memitem:a9b075412fdeaa2db0c0390eae4c52526" id="r_a9b075412fdeaa2db0c0390eae4c52526"><td class="memItemLeft" align="right" valign="top">final SoundPool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9b075412fdeaa2db0c0390eae4c52526">soundPool</a></td></tr>
 <tr class="memdesc:a9b075412fdeaa2db0c0390eae4c52526"><td class="mdescLeft">&#160;</td><td class="mdescRight">SoundPool where sound effects are registered.  <br /></td></tr>
 <tr class="memitem:a21c205de8db6830c3fb0c89369f94a59" id="r_a21c205de8db6830c3fb0c89369f94a59"><td class="memItemLeft" align="right" valign="top">final SharedPreferences.OnSharedPreferenceChangeListener&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a21c205de8db6830c3fb0c89369f94a59">changeListener</a></td></tr>
-<tr class="memdesc:a21c205de8db6830c3fb0c89369f94a59"><td class="mdescLeft">&#160;</td><td class="mdescRight">OnSharedPreferenceChangeListener that is registered for the default SharedPreferences and updates the Sound#active attributes of all <a class="el" href="#abc97b45c527f3968c669c984787e5e2b" title="Array of Sound objects representing the different sound effects.">sounds</a> when a preference change occurs.  <br /></td></tr>
+<tr class="memdesc:a21c205de8db6830c3fb0c89369f94a59"><td class="mdescLeft">&#160;</td><td class="mdescRight">OnSharedPreferenceChangeListener that is registered for the default SharedPreferences and updates the Sound.active attributes of all .sounds when a preference change occurs.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A class responsible for initializing and playing sounds when they are enabled. </p>
@@ -183,14 +183,14 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Constructor of a <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1sounds_1_1SoundManager.xhtml" title="A class responsible for initializing and playing sounds when they are enabled.">SoundManager</a> in the given Context. </p>
-<p>Creates a new <a class="el" href="#a9b075412fdeaa2db0c0390eae4c52526" title="SoundPool where sound effects are registered.">soundPool</a> and registers <a class="el" href="#abc97b45c527f3968c669c984787e5e2b" title="Array of Sound objects representing the different sound effects.">sounds</a> using <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1sounds_1_1Sound.xhtml#aeaf3eb484f75e763cded2c55c45faecc" title="Returns a new Sound object encapsulating data for a newly registered sound effect.">Sound.createSound()</a>. Also registers a new <a class="el" href="#a21c205de8db6830c3fb0c89369f94a59" title="OnSharedPreferenceChangeListener that is registered for the default SharedPreferences and updates the...">changeListener</a> that updates the <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1sounds_1_1Sound.xhtml#ac9adbb85bed6f840b1bad3c05ff7a851" title="Boolean defining whether the sound is muted in the settings.">Sound.activated</a> status when sound settings are updated.</p>
+<p>Creates a new .soundPool and registers .sounds using <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1sounds_1_1Sound.xhtml#aeaf3eb484f75e763cded2c55c45faecc" title="Returns a new Sound object encapsulating data for a newly registered sound effect.">Sound.createSound()</a>. Also registers a new .changeListener that updates the <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1sounds_1_1Sound.xhtml#ac9adbb85bed6f840b1bad3c05ff7a851" title="Boolean defining whether the sound is muted in the settings.">Sound.activated</a> status when sound settings are updated.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">context</td><td>Context, this <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1sounds_1_1SoundManager.xhtml" title="A class responsible for initializing and playing sounds when they are enabled.">SoundManager</a> is used in. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section see"><dt>See also</dt><dd>Sound#createSound(Context, int, SoundPool, int) </dd></dl>
+<dl class="section see"><dt>See also</dt><dd>Sound.createSound(Context, int, SoundPool, int) </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="SoundManager_8java_source.xhtml#l00156">156</a> of file <a class="el" href="SoundManager_8java_source.xhtml">SoundManager.java</a>.</p>
 
@@ -217,8 +217,8 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Plays the burn sound. </p>
-<p>Wrapper for <a class="el" href="#a48ad0fa1eccc2d96037074856cbe7dc4" title="Plays the given Sound if it is activated.">playSound()</a>.</p>
-<dl class="section see"><dt>See also</dt><dd>#playSound(int) </dd></dl>
+<p>Wrapper for .<a class="el" href="#a48ad0fa1eccc2d96037074856cbe7dc4" title="Plays the given Sound if it is .activated.">playSound()</a>.</p>
+<dl class="section see"><dt>See also</dt><dd>.playSound(int) </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="SoundManager_8java_source.xhtml#l00311">311</a> of file <a class="el" href="SoundManager_8java_source.xhtml">SoundManager.java</a>.</p>
 
@@ -246,7 +246,7 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Plays the card add sound for the given row. </p>
-<p>If the unit is epic, the epic sound is played. Wrapper for <a class="el" href="#a48ad0fa1eccc2d96037074856cbe7dc4" title="Plays the given Sound if it is activated.">playSound()</a>.</p>
+<p>If the unit is epic, the epic sound is played. Wrapper for .<a class="el" href="#a48ad0fa1eccc2d96037074856cbe7dc4" title="Plays the given Sound if it is .activated.">playSound()</a>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">row</td><td><a class="el" href="enumcom_1_1peternaggschga_1_1gwent_1_1data_1_1RowType.xhtml" title="An enum listing the different types of attack rows.">RowType</a> referencing the row for which the sound should be played. </td></tr>
@@ -254,7 +254,7 @@ Private Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section see"><dt>See also</dt><dd>#playSound(int) </dd></dl>
+<dl class="section see"><dt>See also</dt><dd>.playSound(int) </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="SoundManager_8java_source.xhtml#l00268">268</a> of file <a class="el" href="SoundManager_8java_source.xhtml">SoundManager.java</a>.</p>
 
@@ -278,8 +278,8 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Plays the reset sound. </p>
-<p>Wrapper for <a class="el" href="#a48ad0fa1eccc2d96037074856cbe7dc4" title="Plays the given Sound if it is activated.">playSound()</a>.</p>
-<dl class="section see"><dt>See also</dt><dd>#playSound(int) </dd></dl>
+<p>Wrapper for .<a class="el" href="#a48ad0fa1eccc2d96037074856cbe7dc4" title="Plays the given Sound if it is .activated.">playSound()</a>.</p>
+<dl class="section see"><dt>See also</dt><dd>.playSound(int) </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="SoundManager_8java_source.xhtml#l00291">291</a> of file <a class="el" href="SoundManager_8java_source.xhtml">SoundManager.java</a>.</p>
 
@@ -303,8 +303,8 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Plays the clear weather sound. </p>
-<p>Wrapper for <a class="el" href="#a48ad0fa1eccc2d96037074856cbe7dc4" title="Plays the given Sound if it is activated.">playSound()</a>.</p>
-<dl class="section see"><dt>See also</dt><dd>#playSound(int) </dd></dl>
+<p>Wrapper for .<a class="el" href="#a48ad0fa1eccc2d96037074856cbe7dc4" title="Plays the given Sound if it is .activated.">playSound()</a>.</p>
+<dl class="section see"><dt>See also</dt><dd>.playSound(int) </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="SoundManager_8java_source.xhtml#l00225">225</a> of file <a class="el" href="SoundManager_8java_source.xhtml">SoundManager.java</a>.</p>
 
@@ -328,7 +328,7 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Plays the coin sound. </p>
-<p>Wrapper for <a class="el" href="#a48ad0fa1eccc2d96037074856cbe7dc4" title="Plays the given Sound if it is activated.">playSound()</a>. </p><dl class="section see"><dt>See also</dt><dd>#playSound(int) </dd></dl>
+<p>Wrapper for .<a class="el" href="#a48ad0fa1eccc2d96037074856cbe7dc4" title="Plays the given Sound if it is .activated.">playSound()</a>. </p><dl class="section see"><dt>See also</dt><dd>.playSound(int) </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="SoundManager_8java_source.xhtml#l00320">320</a> of file <a class="el" href="SoundManager_8java_source.xhtml">SoundManager.java</a>.</p>
 
@@ -352,8 +352,8 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Plays the horn sound. </p>
-<p>Wrapper for <a class="el" href="#a48ad0fa1eccc2d96037074856cbe7dc4" title="Plays the given Sound if it is activated.">playSound()</a>.</p>
-<dl class="section see"><dt>See also</dt><dd>#playSound(int) </dd></dl>
+<p>Wrapper for .<a class="el" href="#a48ad0fa1eccc2d96037074856cbe7dc4" title="Plays the given Sound if it is .activated.">playSound()</a>.</p>
+<dl class="section see"><dt>See also</dt><dd>.playSound(int) </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="SoundManager_8java_source.xhtml#l00255">255</a> of file <a class="el" href="SoundManager_8java_source.xhtml">SoundManager.java</a>.</p>
 
@@ -377,8 +377,8 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Plays the reset sound. </p>
-<p>Wrapper for <a class="el" href="#a48ad0fa1eccc2d96037074856cbe7dc4" title="Plays the given Sound if it is activated.">playSound()</a>.</p>
-<dl class="section see"><dt>See also</dt><dd>#playSound(int) </dd></dl>
+<p>Wrapper for .<a class="el" href="#a48ad0fa1eccc2d96037074856cbe7dc4" title="Plays the given Sound if it is .activated.">playSound()</a>.</p>
+<dl class="section see"><dt>See also</dt><dd>.playSound(int) </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="SoundManager_8java_source.xhtml#l00301">301</a> of file <a class="el" href="SoundManager_8java_source.xhtml">SoundManager.java</a>.</p>
 
@@ -401,8 +401,8 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Plays the given <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1sounds_1_1Sound.xhtml" title="A data class encapsulating information on a certain sound effect, e.g., its id in a SoundPool and whe...">Sound</a> if it is #activated. </p>
-<p>Given soundId must be either <a class="el" href="#afc1ad2ba6d835bd56c8851a93ddf530d" title="Constant Integer representing the clear weather sound.">SOUND_WEATHER_GOOD</a>, <a class="el" href="#a3276115ce0265c27a6edf4f24025f9e7" title="Constant Integer representing the frost weather sound.">SOUND_WEATHER_FROST</a>, <a class="el" href="#a25529999a4017557ddc8a3ff02a46522" title="Constant Integer representing the fog weather sound.">SOUND_WEATHER_FOG</a>, <a class="el" href="#a0f0ec0824356c9536aab3bb72df6f30e" title="Constant Integer representing the rain weather sound.">SOUND_WEATHER_RAIN</a>, <a class="el" href="#a9ff431dfc49678b804492ecce054ec22" title="Constant Integer representing the horn sound.">SOUND_HORN</a>, <a class="el" href="#ae20b2d20021e5b8186ce15ce5d379529" title="Constant Integer representing the epic unit sound.">SOUND_CARDS_EPIC</a>, <a class="el" href="#aa38ab2424781435f2dc1492ec1ac7d44" title="Constant Integer representing the melee unit sound.">SOUND_CARDS_MELEE</a>, <a class="el" href="#aad4007a33c4afa368882d0cd8cdcb447" title="Constant Integer representing the range unit sound.">SOUND_CARDS_RANGE</a>, <a class="el" href="#abb64675dc210b00ea9074561e51ed5ba" title="Constant Integer representing the siege unit sound.">SOUND_CARDS_SIEGE</a>, <a class="el" href="#a87f99c3fb91caabc29a4808374949ce3" title="Constant Integer representing the reset sound.">SOUND_RESET</a>, <a class="el" href="#ac132cbc417a8c271c45e5a4907679273" title="Constant Integer representing the scorch sound.">SOUND_BURN</a>, or <a class="el" href="#a6a4c658cd17a8b02bd8edbca76d8ad65" title="Constant Integer representing the coin-flip sound.">SOUND_COIN</a>, i.e., <picture><source srcset="form_0_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ 0 \leq \mathit{soundId} \leq 11 $" src="form_0.png" width="96" height="13"/></picture> must be true. Alternately, <a class="el" href="#af27c0cf7bb01361de1a3c784bff16d79" title="Plays the clear weather sound.">playClearWeatherSound()</a>, <a class="el" href="#af1a497cdbd21db8a08c8fc41c2345728" title="Plays the weather sound of the given row.">playWeatherSound()</a>, <a class="el" href="#a6a337ff67f274c1041fd64361c551bc0" title="Plays the horn sound.">playHornSound()</a>, <a class="el" href="#a5a89d6ccf07848ca329eb35f6ef76d37" title="Plays the card add sound for the given row.">playCardAddSound()</a>, <a class="el" href="#aaf398a1a617fadb5b02e161b1ab86ae6" title="Plays the reset sound.">playCardRemovedSound()</a>, <a class="el" href="#ae96ab0a84d0b8949bba084c6cbd243c2" title="Plays the reset sound.">playResetSound()</a>, <a class="el" href="#ad1ed5b25069fa302676e53ae0832c4aa" title="Plays the burn sound.">playBurnSound()</a>, or <a class="el" href="#a9bb8f71fcaaed5dd30197ee105fcafb8" title="Plays the coin sound.">playCoinSound()</a> may be used.</p>
+<p>Plays the given <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1sounds_1_1Sound.xhtml" title="A data class encapsulating information on a certain sound effect, e.g., its id in a SoundPool and whe...">Sound</a> if it is .activated. </p>
+<p>Given soundId must be either .SOUND_WEATHER_GOOD, .SOUND_WEATHER_FROST, .SOUND_WEATHER_FOG, .SOUND_WEATHER_RAIN, .SOUND_HORN, .SOUND_CARDS_EPIC, .SOUND_CARDS_MELEE, .SOUND_CARDS_RANGE, .SOUND_CARDS_SIEGE, .SOUND_RESET, .SOUND_BURN, or .SOUND_COIN, i.e., <picture><source srcset="form_0_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ 0 \leq \mathit{soundId} \leq 11 $" src="form_0.png" width="96" height="13"/></picture> must be true. Alternately, .<a class="el" href="#af27c0cf7bb01361de1a3c784bff16d79" title="Plays the clear weather sound.">playClearWeatherSound()</a>, .<a class="el" href="#af1a497cdbd21db8a08c8fc41c2345728" title="Plays the weather sound of the given row.">playWeatherSound()</a>, .<a class="el" href="#a6a337ff67f274c1041fd64361c551bc0" title="Plays the horn sound.">playHornSound()</a>, .<a class="el" href="#a5a89d6ccf07848ca329eb35f6ef76d37" title="Plays the card add sound for the given row.">playCardAddSound()</a>, .<a class="el" href="#aaf398a1a617fadb5b02e161b1ab86ae6" title="Plays the reset sound.">playCardRemovedSound()</a>, .<a class="el" href="#ae96ab0a84d0b8949bba084c6cbd243c2" title="Plays the reset sound.">playResetSound()</a>, .<a class="el" href="#ad1ed5b25069fa302676e53ae0832c4aa" title="Plays the burn sound.">playBurnSound()</a>, or .<a class="el" href="#a9bb8f71fcaaed5dd30197ee105fcafb8" title="Plays the coin sound.">playCoinSound()</a> may be used.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">soundId</td><td>Integer representing the <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1sounds_1_1Sound.xhtml" title="A data class encapsulating information on a certain sound effect, e.g., its id in a SoundPool and whe...">Sound</a> that should be played. </td></tr>
@@ -440,14 +440,14 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Plays the weather sound of the given row. </p>
-<p>Wrapper for <a class="el" href="#a48ad0fa1eccc2d96037074856cbe7dc4" title="Plays the given Sound if it is activated.">playSound()</a>.</p>
+<p>Wrapper for .<a class="el" href="#a48ad0fa1eccc2d96037074856cbe7dc4" title="Plays the given Sound if it is .activated.">playSound()</a>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">row</td><td><a class="el" href="enumcom_1_1peternaggschga_1_1gwent_1_1data_1_1RowType.xhtml" title="An enum listing the different types of attack rows.">RowType</a> referencing the row for which the sound should be played. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section see"><dt>See also</dt><dd>#playSound(int) </dd></dl>
+<dl class="section see"><dt>See also</dt><dd>.playSound(int) </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="SoundManager_8java_source.xhtml#l00236">236</a> of file <a class="el" href="SoundManager_8java_source.xhtml">SoundManager.java</a>.</p>
 
@@ -476,8 +476,8 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>OnSharedPreferenceChangeListener that is registered for the default SharedPreferences and updates the Sound#active attributes of all <a class="el" href="#abc97b45c527f3968c669c984787e5e2b" title="Array of Sound objects representing the different sound effects.">sounds</a> when a preference change occurs. </p>
-<p>Reference must be kept (even if not used) to avoid garbage collection of the registered listener (see <a href="https://developer.android.com/reference/android/content/SharedPreferences.html#registerOnSharedPreferenceChangeListener(android.content.SharedPreferences.OnSharedPreferenceChangeListener)">here</a> for more information). </p>
+<p>OnSharedPreferenceChangeListener that is registered for the default SharedPreferences and updates the Sound.active attributes of all .sounds when a preference change occurs. </p>
+<p>Reference must be kept (even if not used) to avoid garbage collection of the registered listener (see <a href="https://developer.android.com/reference/android/content/SharedPreferences.html.registerOnSharedPreferenceChangeListener(android.content.SharedPreferences.OnSharedPreferenceChangeListener)">here</a> for more information). </p>
 
 <p class="definition">Definition at line <a class="el" href="SoundManager_8java_source.xhtml#l00145">145</a> of file <a class="el" href="SoundManager_8java_source.xhtml">SoundManager.java</a>.</p>
 
@@ -506,8 +506,8 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Constant Integer representing the scorch sound. </p>
-<p>Index of the respective <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1sounds_1_1Sound.xhtml" title="A data class encapsulating information on a certain sound effect, e.g., its id in a SoundPool and whe...">Sound</a> object in <a class="el" href="#abc97b45c527f3968c669c984787e5e2b" title="Array of Sound objects representing the different sound effects.">sounds</a>.</p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="#ad1ed5b25069fa302676e53ae0832c4aa" title="Plays the burn sound.">playBurnSound()</a> </dd></dl>
+<p>Index of the respective <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1sounds_1_1Sound.xhtml" title="A data class encapsulating information on a certain sound effect, e.g., its id in a SoundPool and whe...">Sound</a> object in .sounds.</p>
+<dl class="section see"><dt>See also</dt><dd>.<a class="el" href="#ad1ed5b25069fa302676e53ae0832c4aa" title="Plays the burn sound.">playBurnSound()</a> </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="SoundManager_8java_source.xhtml#l00110">110</a> of file <a class="el" href="SoundManager_8java_source.xhtml">SoundManager.java</a>.</p>
 
@@ -536,8 +536,8 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Constant Integer representing the epic unit sound. </p>
-<p>Index of the respective <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1sounds_1_1Sound.xhtml" title="A data class encapsulating information on a certain sound effect, e.g., its id in a SoundPool and whe...">Sound</a> object in <a class="el" href="#abc97b45c527f3968c669c984787e5e2b" title="Array of Sound objects representing the different sound effects.">sounds</a>.</p>
-<dl class="section see"><dt>See also</dt><dd>#playCardAddSound(RowType, boolean) </dd></dl>
+<p>Index of the respective <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1sounds_1_1Sound.xhtml" title="A data class encapsulating information on a certain sound effect, e.g., its id in a SoundPool and whe...">Sound</a> object in .sounds.</p>
+<dl class="section see"><dt>See also</dt><dd>.playCardAddSound(RowType, boolean) </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="SoundManager_8java_source.xhtml#l00070">70</a> of file <a class="el" href="SoundManager_8java_source.xhtml">SoundManager.java</a>.</p>
 
@@ -566,8 +566,8 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Constant Integer representing the melee unit sound. </p>
-<p>Index of the respective <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1sounds_1_1Sound.xhtml" title="A data class encapsulating information on a certain sound effect, e.g., its id in a SoundPool and whe...">Sound</a> object in <a class="el" href="#abc97b45c527f3968c669c984787e5e2b" title="Array of Sound objects representing the different sound effects.">sounds</a>.</p>
-<dl class="section see"><dt>See also</dt><dd>#playCardAddSound(RowType, boolean) </dd></dl>
+<p>Index of the respective <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1sounds_1_1Sound.xhtml" title="A data class encapsulating information on a certain sound effect, e.g., its id in a SoundPool and whe...">Sound</a> object in .sounds.</p>
+<dl class="section see"><dt>See also</dt><dd>.playCardAddSound(RowType, boolean) </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="SoundManager_8java_source.xhtml#l00078">78</a> of file <a class="el" href="SoundManager_8java_source.xhtml">SoundManager.java</a>.</p>
 
@@ -596,8 +596,8 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Constant Integer representing the range unit sound. </p>
-<p>Index of the respective <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1sounds_1_1Sound.xhtml" title="A data class encapsulating information on a certain sound effect, e.g., its id in a SoundPool and whe...">Sound</a> object in <a class="el" href="#abc97b45c527f3968c669c984787e5e2b" title="Array of Sound objects representing the different sound effects.">sounds</a>.</p>
-<dl class="section see"><dt>See also</dt><dd>#playCardAddSound(RowType, boolean) </dd></dl>
+<p>Index of the respective <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1sounds_1_1Sound.xhtml" title="A data class encapsulating information on a certain sound effect, e.g., its id in a SoundPool and whe...">Sound</a> object in .sounds.</p>
+<dl class="section see"><dt>See also</dt><dd>.playCardAddSound(RowType, boolean) </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="SoundManager_8java_source.xhtml#l00086">86</a> of file <a class="el" href="SoundManager_8java_source.xhtml">SoundManager.java</a>.</p>
 
@@ -626,8 +626,8 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Constant Integer representing the siege unit sound. </p>
-<p>Index of the respective <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1sounds_1_1Sound.xhtml" title="A data class encapsulating information on a certain sound effect, e.g., its id in a SoundPool and whe...">Sound</a> object in <a class="el" href="#abc97b45c527f3968c669c984787e5e2b" title="Array of Sound objects representing the different sound effects.">sounds</a>.</p>
-<dl class="section see"><dt>See also</dt><dd>#playCardAddSound(RowType, boolean) </dd></dl>
+<p>Index of the respective <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1sounds_1_1Sound.xhtml" title="A data class encapsulating information on a certain sound effect, e.g., its id in a SoundPool and whe...">Sound</a> object in .sounds.</p>
+<dl class="section see"><dt>See also</dt><dd>.playCardAddSound(RowType, boolean) </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="SoundManager_8java_source.xhtml#l00094">94</a> of file <a class="el" href="SoundManager_8java_source.xhtml">SoundManager.java</a>.</p>
 
@@ -656,8 +656,8 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Constant Integer representing the coin-flip sound. </p>
-<p>Index of the respective <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1sounds_1_1Sound.xhtml" title="A data class encapsulating information on a certain sound effect, e.g., its id in a SoundPool and whe...">Sound</a> object in <a class="el" href="#abc97b45c527f3968c669c984787e5e2b" title="Array of Sound objects representing the different sound effects.">sounds</a>.</p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="#a9bb8f71fcaaed5dd30197ee105fcafb8" title="Plays the coin sound.">playCoinSound()</a> </dd></dl>
+<p>Index of the respective <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1sounds_1_1Sound.xhtml" title="A data class encapsulating information on a certain sound effect, e.g., its id in a SoundPool and whe...">Sound</a> object in .sounds.</p>
+<dl class="section see"><dt>See also</dt><dd>.<a class="el" href="#a9bb8f71fcaaed5dd30197ee105fcafb8" title="Plays the coin sound.">playCoinSound()</a> </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="SoundManager_8java_source.xhtml#l00118">118</a> of file <a class="el" href="SoundManager_8java_source.xhtml">SoundManager.java</a>.</p>
 
@@ -686,8 +686,8 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Constant Integer representing the horn sound. </p>
-<p>Index of the respective <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1sounds_1_1Sound.xhtml" title="A data class encapsulating information on a certain sound effect, e.g., its id in a SoundPool and whe...">Sound</a> object in <a class="el" href="#abc97b45c527f3968c669c984787e5e2b" title="Array of Sound objects representing the different sound effects.">sounds</a>.</p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="#a6a337ff67f274c1041fd64361c551bc0" title="Plays the horn sound.">playHornSound()</a> </dd></dl>
+<p>Index of the respective <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1sounds_1_1Sound.xhtml" title="A data class encapsulating information on a certain sound effect, e.g., its id in a SoundPool and whe...">Sound</a> object in .sounds.</p>
+<dl class="section see"><dt>See also</dt><dd>.<a class="el" href="#a6a337ff67f274c1041fd64361c551bc0" title="Plays the horn sound.">playHornSound()</a> </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="SoundManager_8java_source.xhtml#l00062">62</a> of file <a class="el" href="SoundManager_8java_source.xhtml">SoundManager.java</a>.</p>
 
@@ -716,8 +716,8 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Constant Integer representing the reset sound. </p>
-<p>Index of the respective <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1sounds_1_1Sound.xhtml" title="A data class encapsulating information on a certain sound effect, e.g., its id in a SoundPool and whe...">Sound</a> object in <a class="el" href="#abc97b45c527f3968c669c984787e5e2b" title="Array of Sound objects representing the different sound effects.">sounds</a>.</p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="#ae96ab0a84d0b8949bba084c6cbd243c2" title="Plays the reset sound.">playResetSound()</a> </dd></dl>
+<p>Index of the respective <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1sounds_1_1Sound.xhtml" title="A data class encapsulating information on a certain sound effect, e.g., its id in a SoundPool and whe...">Sound</a> object in .sounds.</p>
+<dl class="section see"><dt>See also</dt><dd>.<a class="el" href="#ae96ab0a84d0b8949bba084c6cbd243c2" title="Plays the reset sound.">playResetSound()</a> </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="SoundManager_8java_source.xhtml#l00102">102</a> of file <a class="el" href="SoundManager_8java_source.xhtml">SoundManager.java</a>.</p>
 
@@ -746,8 +746,8 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Constant Integer representing the fog weather sound. </p>
-<p>Index of the respective <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1sounds_1_1Sound.xhtml" title="A data class encapsulating information on a certain sound effect, e.g., its id in a SoundPool and whe...">Sound</a> object in <a class="el" href="#abc97b45c527f3968c669c984787e5e2b" title="Array of Sound objects representing the different sound effects.">sounds</a>.</p>
-<dl class="section see"><dt>See also</dt><dd>#playCardAddSound(RowType, boolean) </dd></dl>
+<p>Index of the respective <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1sounds_1_1Sound.xhtml" title="A data class encapsulating information on a certain sound effect, e.g., its id in a SoundPool and whe...">Sound</a> object in .sounds.</p>
+<dl class="section see"><dt>See also</dt><dd>.playCardAddSound(RowType, boolean) </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="SoundManager_8java_source.xhtml#l00046">46</a> of file <a class="el" href="SoundManager_8java_source.xhtml">SoundManager.java</a>.</p>
 
@@ -776,8 +776,8 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Constant Integer representing the frost weather sound. </p>
-<p>Index of the respective <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1sounds_1_1Sound.xhtml" title="A data class encapsulating information on a certain sound effect, e.g., its id in a SoundPool and whe...">Sound</a> object in <a class="el" href="#abc97b45c527f3968c669c984787e5e2b" title="Array of Sound objects representing the different sound effects.">sounds</a>.</p>
-<dl class="section see"><dt>See also</dt><dd>#playCardAddSound(RowType, boolean) </dd></dl>
+<p>Index of the respective <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1sounds_1_1Sound.xhtml" title="A data class encapsulating information on a certain sound effect, e.g., its id in a SoundPool and whe...">Sound</a> object in .sounds.</p>
+<dl class="section see"><dt>See also</dt><dd>.playCardAddSound(RowType, boolean) </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="SoundManager_8java_source.xhtml#l00038">38</a> of file <a class="el" href="SoundManager_8java_source.xhtml">SoundManager.java</a>.</p>
 
@@ -806,8 +806,8 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Constant Integer representing the clear weather sound. </p>
-<p>Index of the respective <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1sounds_1_1Sound.xhtml" title="A data class encapsulating information on a certain sound effect, e.g., its id in a SoundPool and whe...">Sound</a> object in <a class="el" href="#abc97b45c527f3968c669c984787e5e2b" title="Array of Sound objects representing the different sound effects.">sounds</a>.</p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="#af27c0cf7bb01361de1a3c784bff16d79" title="Plays the clear weather sound.">playClearWeatherSound()</a> </dd></dl>
+<p>Index of the respective <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1sounds_1_1Sound.xhtml" title="A data class encapsulating information on a certain sound effect, e.g., its id in a SoundPool and whe...">Sound</a> object in .sounds.</p>
+<dl class="section see"><dt>See also</dt><dd>.<a class="el" href="#af27c0cf7bb01361de1a3c784bff16d79" title="Plays the clear weather sound.">playClearWeatherSound()</a> </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="SoundManager_8java_source.xhtml#l00030">30</a> of file <a class="el" href="SoundManager_8java_source.xhtml">SoundManager.java</a>.</p>
 
@@ -836,8 +836,8 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Constant Integer representing the rain weather sound. </p>
-<p>Index of the respective <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1sounds_1_1Sound.xhtml" title="A data class encapsulating information on a certain sound effect, e.g., its id in a SoundPool and whe...">Sound</a> object in <a class="el" href="#abc97b45c527f3968c669c984787e5e2b" title="Array of Sound objects representing the different sound effects.">sounds</a>.</p>
-<dl class="section see"><dt>See also</dt><dd>#playCardAddSound(RowType, boolean) </dd></dl>
+<p>Index of the respective <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1sounds_1_1Sound.xhtml" title="A data class encapsulating information on a certain sound effect, e.g., its id in a SoundPool and whe...">Sound</a> object in .sounds.</p>
+<dl class="section see"><dt>See also</dt><dd>.playCardAddSound(RowType, boolean) </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="SoundManager_8java_source.xhtml#l00054">54</a> of file <a class="el" href="SoundManager_8java_source.xhtml">SoundManager.java</a>.</p>
 
@@ -894,7 +894,7 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Array of <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1sounds_1_1Sound.xhtml" title="A data class encapsulating information on a certain sound effect, e.g., its id in a SoundPool and whe...">Sound</a> objects representing the different sound effects. </p>
-<p>Indices are the public constants defined here, i.e., <a class="el" href="#afc1ad2ba6d835bd56c8851a93ddf530d" title="Constant Integer representing the clear weather sound.">SOUND_WEATHER_GOOD</a>, <a class="el" href="#a3276115ce0265c27a6edf4f24025f9e7" title="Constant Integer representing the frost weather sound.">SOUND_WEATHER_FROST</a>, <a class="el" href="#a25529999a4017557ddc8a3ff02a46522" title="Constant Integer representing the fog weather sound.">SOUND_WEATHER_FOG</a>, <a class="el" href="#a0f0ec0824356c9536aab3bb72df6f30e" title="Constant Integer representing the rain weather sound.">SOUND_WEATHER_RAIN</a>, <a class="el" href="#a9ff431dfc49678b804492ecce054ec22" title="Constant Integer representing the horn sound.">SOUND_HORN</a>, <a class="el" href="#ae20b2d20021e5b8186ce15ce5d379529" title="Constant Integer representing the epic unit sound.">SOUND_CARDS_EPIC</a>, <a class="el" href="#aa38ab2424781435f2dc1492ec1ac7d44" title="Constant Integer representing the melee unit sound.">SOUND_CARDS_MELEE</a>, <a class="el" href="#aad4007a33c4afa368882d0cd8cdcb447" title="Constant Integer representing the range unit sound.">SOUND_CARDS_RANGE</a>, <a class="el" href="#abb64675dc210b00ea9074561e51ed5ba" title="Constant Integer representing the siege unit sound.">SOUND_CARDS_SIEGE</a>, <a class="el" href="#a87f99c3fb91caabc29a4808374949ce3" title="Constant Integer representing the reset sound.">SOUND_RESET</a>, <a class="el" href="#ac132cbc417a8c271c45e5a4907679273" title="Constant Integer representing the scorch sound.">SOUND_BURN</a>, and <a class="el" href="#a6a4c658cd17a8b02bd8edbca76d8ad65" title="Constant Integer representing the coin-flip sound.">SOUND_COIN</a>. </p>
+<p>Indices are the public constants defined here, i.e., .SOUND_WEATHER_GOOD, .SOUND_WEATHER_FROST, .SOUND_WEATHER_FOG, .SOUND_WEATHER_RAIN, .SOUND_HORN, .SOUND_CARDS_EPIC, .SOUND_CARDS_MELEE, .SOUND_CARDS_RANGE, .SOUND_CARDS_SIEGE, .SOUND_RESET, .SOUND_BURN, and .SOUND_COIN. </p>
 
 <p class="definition">Definition at line <a class="el" href="SoundManager_8java_source.xhtml#l00128">128</a> of file <a class="el" href="SoundManager_8java_source.xhtml">SoundManager.java</a>.</p>
 

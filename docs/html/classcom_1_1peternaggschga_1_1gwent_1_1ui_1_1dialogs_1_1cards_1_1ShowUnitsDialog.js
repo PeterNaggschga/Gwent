@@ -1,5 +1,6 @@
 var classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1cards_1_1ShowUnitsDialog =
 [
+    [ "ScrollToEndObserver", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1cards_1_1ShowUnitsDialog_1_1ScrollToEndObserver.xhtml", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1cards_1_1ShowUnitsDialog_1_1ScrollToEndObserver" ],
     [ "ShowUnitsDialog", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1cards_1_1ShowUnitsDialog.xhtml#af8550246c0ba7f836db900b9d4a0f761", null ],
     [ "getDialog", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1cards_1_1ShowUnitsDialog.xhtml#af09ed2d6cbf65b0ff42b287e24d78479", null ],
     [ "getRow", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1cards_1_1ShowUnitsDialog.xhtml#a7b4c7609164291af622cb5d223f05fc2", null ],

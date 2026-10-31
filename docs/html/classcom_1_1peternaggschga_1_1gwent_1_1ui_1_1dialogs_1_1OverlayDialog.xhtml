@@ -114,12 +114,12 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:a9980fa76fb0fe17fb0d015dffb4dc4eb" id="r_a9980fa76fb0fe17fb0d015dffb4dc4eb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9980fa76fb0fe17fb0d015dffb4dc4eb">OverlayDialog</a> (@NonNull Context context, @LayoutRes int <a class="el" href="#a56d5c05455b1f9d91b871cfc4f702d8e">layout</a>)</td></tr>
 <tr class="memdesc:a9980fa76fb0fe17fb0d015dffb4dc4eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor of an <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1OverlayDialog.xhtml" title="A Dialog class which is used for popups that are shown on top of the calling Activity.">OverlayDialog</a> in the given Context and with the given layout.  <br /></td></tr>
 <tr class="memitem:a85e87cb5ced88dff7c8173ecc4f636d1" id="r_a85e87cb5ced88dff7c8173ecc4f636d1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a85e87cb5ced88dff7c8173ecc4f636d1">onCreate</a> (Bundle savedInstanceState)</td></tr>
-<tr class="memdesc:a85e87cb5ced88dff7c8173ecc4f636d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes <a class="el" href="#a56d5c05455b1f9d91b871cfc4f702d8e" title="Integer referencing the layout shown by the Dialog.">layout</a> using #setContentView(int).  <br /></td></tr>
+<tr class="memdesc:a85e87cb5ced88dff7c8173ecc4f636d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes .layout using .setContentView(int).  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pac-static-attribs" class="groupheader"><a id="pac-static-attribs" name="pac-static-attribs"></a>
 Static Package Attributes</h2></td></tr>
 <tr class="memitem:aab26e1d84eecd56aef2cbf32c9d445da" id="r_aab26e1d84eecd56aef2cbf32c9d445da"><td class="memItemLeft" align="right" valign="top">static final int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aab26e1d84eecd56aef2cbf32c9d445da">NO_DISMISS_VIEW</a> = -1</td></tr>
-<tr class="memdesc:aab26e1d84eecd56aef2cbf32c9d445da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Integer used as <a class="el" href="#aa90f7dab289ed7287b9e2b587142b9f4" title="Integer referencing a view that can be clicked to dismiss the Dialog.">dismissViewId</a>, when the Dialog shouldn't be cancelable by clicking on a View.  <br /></td></tr>
+<tr class="memdesc:aab26e1d84eecd56aef2cbf32c9d445da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Integer used as .dismissViewId, when the Dialog shouldn't be cancelable by clicking on a View.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pri-attribs" class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
@@ -135,7 +135,7 @@ Static Private Attributes</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A Dialog class which is used for popups that are shown on top of the calling Activity. </p>
-<p>The Dialog uses the layout specified in <a class="el" href="#a56d5c05455b1f9d91b871cfc4f702d8e" title="Integer referencing the layout shown by the Dialog.">layout</a> with the <a class="el" href="#a33133d4338ce51a8ed4e520e1e0097df" title="ColorDrawable shown as the background of the Dialog (above the calling Activity).">BACKGROUND</a> color as the background. The view specified by <a class="el" href="#aa90f7dab289ed7287b9e2b587142b9f4" title="Integer referencing a view that can be clicked to dismiss the Dialog.">dismissViewId</a> may be clicked to dismiss the dialog. </p>
+<p>The Dialog uses the layout specified in .layout with the .BACKGROUND color as the background. The view specified by .dismissViewId may be clicked to dismiss the dialog. </p>
 
 <p class="definition">Definition at line <a class="el" href="OverlayDialog_8java_source.xhtml#l00022">22</a> of file <a class="el" href="OverlayDialog_8java_source.xhtml">OverlayDialog.java</a>.</p>
 </div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
@@ -172,11 +172,11 @@ Static Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Constructor of an <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1OverlayDialog.xhtml" title="A Dialog class which is used for popups that are shown on top of the calling Activity.">OverlayDialog</a> in the given Context, with the given layout and dismissViewId. </p>
-<p>When dismissViewId is equal to #NO_CANCEL_VIEW, the Dialog is not cancelable by clicking on a certain view. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>When dismissViewId is equal to .NO_CANCEL_VIEW, the Dialog is not cancelable by clicking on a certain view. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">context</td><td>Context of the created <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1OverlayDialog.xhtml" title="A Dialog class which is used for popups that are shown on top of the calling Activity.">OverlayDialog</a>. </td></tr>
     <tr><td class="paramname">layout</td><td>Integer referencing the layout shown by the created <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1OverlayDialog.xhtml" title="A Dialog class which is used for popups that are shown on top of the calling Activity.">OverlayDialog</a>. </td></tr>
-    <tr><td class="paramname">dismissViewId</td><td>Integer referencing the cancel view or #NO_CANCEL_VIEW. </td></tr>
+    <tr><td class="paramname">dismissViewId</td><td>Integer referencing the cancel view or .NO_CANCEL_VIEW. </td></tr>
   </table>
   </dd>
 </dl>
@@ -217,7 +217,7 @@ Static Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Constructor of an <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1OverlayDialog.xhtml" title="A Dialog class which is used for popups that are shown on top of the calling Activity.">OverlayDialog</a> in the given Context and with the given layout. </p>
-<p>Wrapper of #OverlayDialog(Context, int, int). </p><dl class="section see"><dt>See also</dt><dd>#OverlayDialog(Context, int, int) </dd></dl>
+<p>Wrapper of .OverlayDialog(Context, int, int). </p><dl class="section see"><dt>See also</dt><dd>.OverlayDialog(Context, int, int) </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">context</td><td>Context of the created <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1OverlayDialog.xhtml" title="A Dialog class which is used for popups that are shown on top of the calling Activity.">OverlayDialog</a>. </td></tr>
@@ -256,16 +256,16 @@ Static Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Initializes <a class="el" href="#a56d5c05455b1f9d91b871cfc4f702d8e" title="Integer referencing the layout shown by the Dialog.">layout</a> using #setContentView(int). </p>
-<p>Sets View.OnClickListener canceling the dialog for the View referenced by <a class="el" href="#aa90f7dab289ed7287b9e2b587142b9f4" title="Integer referencing a view that can be clicked to dismiss the Dialog.">dismissViewId</a> if it is set. Switches whether the Dialog is cancelable using #setCancelable(). </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Initializes .layout using .setContentView(int). </p>
+<p>Sets View.OnClickListener canceling the dialog for the View referenced by .dismissViewId if it is set. Switches whether the Dialog is cancelable using .setCancelable(). </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">savedInstanceState</td><td>If this dialog is being reinitialized after the hosting activity was previously shut down, holds the result from the most recent call to <code><a class="el" href="">onSaveInstanceState</a></code>, or null if this is the first time. </td></tr>
+    <tr><td class="paramname">savedInstanceState</td><td>If this dialog is being reinitialized after the hosting activity was previously shut down, holds the result from the most recent call to onSaveInstanceState, or null if this is the first time. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section see"><dt>See also</dt><dd>#setContentView(int) </dd>
+<dl class="section see"><dt>See also</dt><dd>.setContentView(int) </dd>
 <dd>
-#setCancelable(boolean) </dd></dl>
+.setCancelable(boolean) </dd></dl>
 
 <p>Reimplemented in <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1AddCardDialog.xhtml#a85e87cb5ced88dff7c8173ecc4f636d1">AddCardDialog</a>, <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1cards_1_1ShowUnitsDialog.xhtml#a85e87cb5ced88dff7c8173ecc4f636d1">ShowUnitsDialog</a>, <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1ChangeFactionDialog.xhtml#a85e87cb5ced88dff7c8173ecc4f636d1">ChangeFactionDialog</a>, and <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1CoinFlipDialog.xhtml#a85e87cb5ced88dff7c8173ecc4f636d1">CoinFlipDialog</a>.</p>
 
@@ -325,7 +325,7 @@ Static Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Integer referencing a view that can be clicked to dismiss the Dialog. </p>
-<p>Should be equal to #NO_CANCEL_VIEW, when the Dialog is not cancelable. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="#aab26e1d84eecd56aef2cbf32c9d445da" title="Integer used as dismissViewId, when the Dialog shouldn&#39;t be cancelable by clicking on a View.">NO_DISMISS_VIEW</a> </dd></dl>
+<p>Should be equal to .NO_CANCEL_VIEW, when the Dialog is not cancelable. </p><dl class="section see"><dt>See also</dt><dd>.<a class="el" href="#aab26e1d84eecd56aef2cbf32c9d445da" title="Integer used as .dismissViewId, when the Dialog shouldn&#39;t be cancelable by clicking on a View.">NO_DISMISS_VIEW</a> </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="OverlayDialog_8java_source.xhtml#l00045">45</a> of file <a class="el" href="OverlayDialog_8java_source.xhtml">OverlayDialog.java</a>.</p>
 
@@ -381,8 +381,8 @@ Static Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Integer used as <a class="el" href="#aa90f7dab289ed7287b9e2b587142b9f4" title="Integer referencing a view that can be clicked to dismiss the Dialog.">dismissViewId</a>, when the Dialog shouldn't be cancelable by clicking on a View. </p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="#aa90f7dab289ed7287b9e2b587142b9f4" title="Integer referencing a view that can be clicked to dismiss the Dialog.">dismissViewId</a> </dd></dl>
+<p>Integer used as .dismissViewId, when the Dialog shouldn't be cancelable by clicking on a View. </p>
+<dl class="section see"><dt>See also</dt><dd>.<a class="el" href="#aa90f7dab289ed7287b9e2b587142b9f4" title="Integer referencing a view that can be clicked to dismiss the Dialog.">dismissViewId</a> </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="OverlayDialog_8java_source.xhtml#l00028">28</a> of file <a class="el" href="OverlayDialog_8java_source.xhtml">OverlayDialog.java</a>.</p>
 

@@ -218,7 +218,7 @@ Static Private Member Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">context</td><td>Context of the shown Dialog. </td></tr>
     <tr><td class="paramname">repository</td><td><a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitRepository.xhtml" title="A facade class managing public access to the data layer.">UnitRepository</a> where the <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml" title="A class representing a card on the game board.">UnitEntity</a> objects are removed and avengers are inserted. </td></tr>
-    <tr><td class="paramname">emitter</td><td>CompletableEmitter where CompletableEmitter#onComplete must be called, when the user makes a decision. </td></tr>
+    <tr><td class="paramname">emitter</td><td>CompletableEmitter where CompletableEmitter.onComplete must be called, when the user makes a decision. </td></tr>
     <tr><td class="paramname">keptUnit</td><td><a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml" title="A class representing a card on the game board.">UnitEntity</a> that should be kept. </td></tr>
     <tr><td class="paramname">revengeUnits</td><td>Long representing the number of revenge units. </td></tr>
     <tr><td class="paramname">soundManager</td><td><a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1sounds_1_1SoundManager.xhtml" title="A class responsible for initializing and playing sounds when they are enabled.">SoundManager</a> used, if an Avenger is added. </td></tr>
@@ -226,7 +226,7 @@ Static Private Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A Dialog asking whether the <a class="el" href="enumcom_1_1peternaggschga_1_1gwent_1_1data_1_1Ability.xhtml#a7d716422a8b07120de00c0fa8d06d0de" title="Represents a card that has the Summon Avenger ability.">Ability.REVENGE</a> ability should be activated. </dd></dl>
-<dl class="section see"><dt>See also</dt><dd>RevengeAlertDialogBuilderAdapter#insertAvengers(UnitRepository, int, SoundManager) </dd></dl>
+<dl class="section see"><dt>See also</dt><dd>RevengeAlertDialogBuilderAdapter.insertAvengers(UnitRepository, int, SoundManager) </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="ResetRepositoryUseCase_8java_source.xhtml#l00093">93</a> of file <a class="el" href="ResetRepositoryUseCase_8java_source.xhtml">ResetRepositoryUseCase.java</a>.</p>
 
@@ -269,7 +269,7 @@ Static Private Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Resets the given <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitRepository.xhtml" title="A facade class managing public access to the data layer.">UnitRepository</a>. </p>
-<p>If a removed <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml" title="A class representing a card on the game board.">UnitEntity</a> has the <a class="el" href="enumcom_1_1peternaggschga_1_1gwent_1_1data_1_1Ability.xhtml#a7d716422a8b07120de00c0fa8d06d0de" title="Represents a card that has the Summon Avenger ability.">Ability.REVENGE</a> ability, a Dialog asking whether the ability should be used is shown. Wrapper of #reset(Context, UnitRepository, boolean, SoundManager).</p>
+<p>If a removed <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml" title="A class representing a card on the game board.">UnitEntity</a> has the <a class="el" href="enumcom_1_1peternaggschga_1_1gwent_1_1data_1_1Ability.xhtml#a7d716422a8b07120de00c0fa8d06d0de" title="Represents a card that has the Summon Avenger ability.">Ability.REVENGE</a> ability, a Dialog asking whether the ability should be used is shown. Wrapper of .reset(Context, UnitRepository, boolean, SoundManager).</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">context</td><td>Context of the shown Dialog. </td></tr>
@@ -279,7 +279,7 @@ Static Private Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A Completable tracking operation status. </dd></dl>
-<dl class="section see"><dt>See also</dt><dd>#reset(Context, UnitRepository, boolean, SoundManager) </dd></dl>
+<dl class="section see"><dt>See also</dt><dd>.reset(Context, UnitRepository, boolean, SoundManager) </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="ResetRepositoryUseCase_8java_source.xhtml#l00123">123</a> of file <a class="el" href="ResetRepositoryUseCase_8java_source.xhtml">ResetRepositoryUseCase.java</a>.</p>
 
@@ -336,9 +336,9 @@ Static Private Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A Maybe emitting the kept <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml" title="A class representing a card on the game board.">UnitEntity</a> or nothing if keepUnit is false. </dd></dl>
-<dl class="section see"><dt>See also</dt><dd>#getRevengeDialog(Context, UnitRepository, CompletableEmitter, UnitEntity, int, SoundManager) </dd>
+<dl class="section see"><dt>See also</dt><dd>.getRevengeDialog(Context, UnitRepository, CompletableEmitter, UnitEntity, int, SoundManager) </dd>
 <dd>
-UnitRepository#reset(UnitEntity) </dd></dl>
+UnitRepository.reset(UnitEntity) </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="ResetRepositoryUseCase_8java_source.xhtml#l00046">46</a> of file <a class="el" href="ResetRepositoryUseCase_8java_source.xhtml">ResetRepositoryUseCase.java</a>.</p>
 

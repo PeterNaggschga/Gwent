@@ -107,11 +107,11 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a68bad49ce9fc99ca6e402b5dcbc9289c" id="r_a68bad49ce9fc99ca6e402b5dcbc9289c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a68bad49ce9fc99ca6e402b5dcbc9289c">CardUiState</a> (int <a class="el" href="#ad31e379faf2dc6f7099cfa1f29df992a">unitId</a>, @DrawableRes int <a class="el" href="#acf64fb8e2d998f11252bf4ee9e6f3bf6">damageBackgroundImageId</a>, @IntRange(from=<a class="el" href="#ab350a814fcbff33d47716cff4dc4daf8">UNUSED</a>) int damage, @ColorInt int <a class="el" href="#a14774bbba7200691c281f31c86637c85">damageTextColor</a>, @DrawableRes int <a class="el" href="#ac1e991ca60a7a033104417f9a64327f0">abilityImageId</a>, @Nullable @IntRange(from=1) Integer squad)</td></tr>
 <tr class="memdesc:a68bad49ce9fc99ca6e402b5dcbc9289c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor of a <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1cards_1_1CardUiState.xhtml" title="A data class encapsulating the visible state of a card in the card list shown by the ShowUnitsDialog.">CardUiState</a> encapsulating the given data.  <br /></td></tr>
 <tr class="memitem:a61bd16ca83c286680781c86de7ec54b4" id="r_a61bd16ca83c286680781c86de7ec54b4"><td class="memItemLeft" align="right" valign="top">boolean&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a61bd16ca83c286680781c86de7ec54b4">showAbility</a> ()</td></tr>
-<tr class="memdesc:a61bd16ca83c286680781c86de7ec54b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns whether the ability view is shown, i.e., if the unit has an ability other than Ability#NONE.  <br /></td></tr>
+<tr class="memdesc:a61bd16ca83c286680781c86de7ec54b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns whether the ability view is shown, i.e., if the unit has an ability other than Ability.NONE.  <br /></td></tr>
 <tr class="memitem:a2f1151201890fc60e86d76e7742472b4" id="r_a2f1151201890fc60e86d76e7742472b4"><td class="memItemLeft" align="right" valign="top">boolean&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2f1151201890fc60e86d76e7742472b4">showSquad</a> ()</td></tr>
-<tr class="memdesc:a2f1151201890fc60e86d76e7742472b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns whether the squad view is shown, i.e., if the unit has the Ability#BINDING ability.  <br /></td></tr>
+<tr class="memdesc:a2f1151201890fc60e86d76e7742472b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns whether the squad view is shown, i.e., if the unit has the Ability.BINDING ability.  <br /></td></tr>
 <tr class="memitem:a3ca891039702f70f3ff9d8728b87c89f" id="r_a3ca891039702f70f3ff9d8728b87c89f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3ca891039702f70f3ff9d8728b87c89f">getUnitId</a> ()</td></tr>
-<tr class="memdesc:a3ca891039702f70f3ff9d8728b87c89f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the <a class="el" href="#ad31e379faf2dc6f7099cfa1f29df992a" title="Integer referencing the UnitEntity.id of the represented UnitEntity.">unitId</a> of the represented <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml" title="A class representing a card on the game board.">UnitEntity</a>.  <br /></td></tr>
+<tr class="memdesc:a3ca891039702f70f3ff9d8728b87c89f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the .unitId of the represented <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml" title="A class representing a card on the game board.">UnitEntity</a>.  <br /></td></tr>
 <tr class="memitem:a80722c01cbb49ea73d33de30ee4d547a" id="r_a80722c01cbb49ea73d33de30ee4d547a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a80722c01cbb49ea73d33de30ee4d547a">getDamageBackgroundImageId</a> ()</td></tr>
 <tr class="memdesc:a80722c01cbb49ea73d33de30ee4d547a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the drawable resource shown as the background of the damage view.  <br /></td></tr>
 <tr class="memitem:a42d72498bf711a1616bf3c58614a446f" id="r_a42d72498bf711a1616bf3c58614a446f"><td class="memItemLeft" align="right" valign="top">String&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a42d72498bf711a1616bf3c58614a446f">getDamageString</a> ()</td></tr>
@@ -130,7 +130,7 @@ Static Public Attributes</h2></td></tr>
 <tr class="memitem:a1f37aeeba80b097c849f60101d685751" id="r_a1f37aeeba80b097c849f60101d685751"><td class="memItemLeft" align="right" valign="top">static final DiffUtil.ItemCallback&lt; <a class="el" href="#a68bad49ce9fc99ca6e402b5dcbc9289c">CardUiState</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1f37aeeba80b097c849f60101d685751">DIFF_CALLBACK</a></td></tr>
 <tr class="memdesc:a1f37aeeba80b097c849f60101d685751"><td class="mdescLeft">&#160;</td><td class="mdescRight">DiffUtil.ItemCallback used to compare different <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1cards_1_1CardUiState.xhtml" title="A data class encapsulating the visible state of a card in the card list shown by the ShowUnitsDialog.">CardUiState</a> objects in a ListAdapter, e.g., <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1cards_1_1CardListAdapter.xhtml" title="A ListAdapter used to provide CardListAdapter.CardViewHolder objects created from CardUiState objects...">CardListAdapter</a>.  <br /></td></tr>
 <tr class="memitem:ab350a814fcbff33d47716cff4dc4daf8" id="r_ab350a814fcbff33d47716cff4dc4daf8"><td class="memItemLeft" align="right" valign="top">static final int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab350a814fcbff33d47716cff4dc4daf8">UNUSED</a> = -1</td></tr>
-<tr class="memdesc:ab350a814fcbff33d47716cff4dc4daf8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Integer that is used instead of a drawable resource to indicate the absence of a meaningful #abilityImage.  <br /></td></tr>
+<tr class="memdesc:ab350a814fcbff33d47716cff4dc4daf8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Integer that is used instead of a drawable resource to indicate the absence of a meaningful .abilityImage.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pri-attribs" class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
@@ -201,18 +201,18 @@ Private Attributes</h2></td></tr>
     <tr><td class="paramname">damageBackgroundImageId</td><td>Integer referencing the drawable resource shown by the damage view. </td></tr>
     <tr><td class="paramname">damage</td><td>Integer representing the damage of the represented <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml" title="A class representing a card on the game board.">UnitEntity</a>. </td></tr>
     <tr><td class="paramname">damageTextColor</td><td>Integer representing the text color of the damage view. </td></tr>
-    <tr><td class="paramname">abilityImageId</td><td>Integer referencing the drawable resource shown by the ability image view or <a class="el" href="#ab350a814fcbff33d47716cff4dc4daf8" title="Integer that is used instead of a drawable resource to indicate the absence of a meaningful abilityIm...">UNUSED</a>. </td></tr>
-    <tr><td class="paramname">squad</td><td>Integer representing the <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml#a637c5da5eaf4033fca4c69bc47131db9" title="Defines the squad the unit belongs to if ability is Ability.BINDING.">UnitEntity.squad</a> of the represented <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml" title="A class representing a card on the game board.">UnitEntity</a>. </td></tr>
+    <tr><td class="paramname">abilityImageId</td><td>Integer referencing the drawable resource shown by the ability image view or .UNUSED. </td></tr>
+    <tr><td class="paramname">squad</td><td>Integer representing the <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml#a637c5da5eaf4033fca4c69bc47131db9" title="Defines the squad the unit belongs to if .ability is Ability.BINDING.">UnitEntity.squad</a> of the represented <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml" title="A class representing a card on the game board.">UnitEntity</a>. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">IllegalArgumentException</td><td>When damage is less than <a class="el" href="#ab350a814fcbff33d47716cff4dc4daf8" title="Integer that is used instead of a drawable resource to indicate the absence of a meaningful abilityIm...">UNUSED</a> or squad is neither null nor greater than zero. </td></tr>
+    <tr><td class="paramname">IllegalArgumentException</td><td>When damage is less than .UNUSED or squad is neither null nor greater than zero. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section see"><dt>See also</dt><dd>CardUiStateFactory#createCardUiState(UnitEntity, DamageCalculator) </dd></dl>
+<dl class="section see"><dt>See also</dt><dd>CardUiStateFactory.createCardUiState(UnitEntity, DamageCalculator) </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="CardUiState_8java_source.xhtml#l00108">108</a> of file <a class="el" href="CardUiState_8java_source.xhtml">CardUiState.java</a>.</p>
 
@@ -239,7 +239,7 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Checks whether the given Object looks the same as this <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1cards_1_1CardUiState.xhtml" title="A data class encapsulating the visible state of a card in the card list shown by the ShowUnitsDialog.">CardUiState</a>. </p>
-<p>Does not compare <a class="el" href="#ad31e379faf2dc6f7099cfa1f29df992a" title="Integer referencing the UnitEntity.id of the represented UnitEntity.">unitId</a> since that field does not influence the visual representation of <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1cards_1_1CardUiState.xhtml" title="A data class encapsulating the visible state of a card in the card list shown by the ShowUnitsDialog.">CardUiState</a> objects. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Does not compare .unitId since that field does not influence the visual representation of <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1cards_1_1CardUiState.xhtml" title="A data class encapsulating the visible state of a card in the card list shown by the ShowUnitsDialog.">CardUiState</a> objects. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">o</td><td>Object that is being compared with this <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1cards_1_1CardUiState.xhtml" title="A data class encapsulating the visible state of a card in the card list shown by the ShowUnitsDialog.">CardUiState</a>. </td></tr>
   </table>
@@ -270,9 +270,9 @@ Private Attributes</h2></td></tr>
 
 <p>Returns the drawable resource shown in the ability view. </p>
 <dl class="section return"><dt>Returns</dt><dd>An Integer referencing a drawable resource. </dd></dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="#ac1e991ca60a7a033104417f9a64327f0" title="Integer referencing the drawable resource shown in the ability view.">abilityImageId</a> </dd>
+<dl class="section see"><dt>See also</dt><dd>.<a class="el" href="#ac1e991ca60a7a033104417f9a64327f0" title="Integer referencing the drawable resource shown in the ability view.">abilityImageId</a> </dd>
 <dd>
-<a class="el" href="#a61bd16ca83c286680781c86de7ec54b4" title="Returns whether the ability view is shown, i.e., if the unit has an ability other than Ability....">showAbility()</a> </dd></dl>
+.<a class="el" href="#a61bd16ca83c286680781c86de7ec54b4" title="Returns whether the ability view is shown, i.e., if the unit has an ability other than Ability....">showAbility()</a> </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="CardUiState_8java_source.xhtml#l00189">189</a> of file <a class="el" href="CardUiState_8java_source.xhtml">CardUiState.java</a>.</p>
 
@@ -299,7 +299,7 @@ Private Attributes</h2></td></tr>
 
 <p>Returns the drawable resource shown as the background of the damage view. </p>
 <dl class="section return"><dt>Returns</dt><dd>An Integer referencing a drawable resource. </dd></dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="#acf64fb8e2d998f11252bf4ee9e6f3bf6" title="Integer referencing the drawable resource shown as the background of the damage view.">damageBackgroundImageId</a> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd>.<a class="el" href="#acf64fb8e2d998f11252bf4ee9e6f3bf6" title="Integer referencing the drawable resource shown as the background of the damage view.">damageBackgroundImageId</a> </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="CardUiState_8java_source.xhtml#l00158">158</a> of file <a class="el" href="CardUiState_8java_source.xhtml">CardUiState.java</a>.</p>
 
@@ -326,7 +326,7 @@ Private Attributes</h2></td></tr>
 
 <p>Returns the String shown in the damage view. </p>
 <dl class="section return"><dt>Returns</dt><dd>A String containing the damage of the represented <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml" title="A class representing a card on the game board.">UnitEntity</a> or nothing if the unit is empty. </dd></dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="#a60841c923f0bb384c0376204433b6aba" title="String containing the number shown in the damage view or nothing if the represented UnitEntity is epi...">damageString</a> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd>.<a class="el" href="#a60841c923f0bb384c0376204433b6aba" title="String containing the number shown in the damage view or nothing if the represented UnitEntity is epi...">damageString</a> </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="CardUiState_8java_source.xhtml#l00168">168</a> of file <a class="el" href="CardUiState_8java_source.xhtml">CardUiState.java</a>.</p>
 
@@ -353,7 +353,7 @@ Private Attributes</h2></td></tr>
 
 <p>Returns the text color of the damage view. </p>
 <dl class="section return"><dt>Returns</dt><dd>An Integer representing a color. </dd></dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="#a14774bbba7200691c281f31c86637c85" title="Integer representing the text color of the damage view.">damageTextColor</a> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd>.<a class="el" href="#a14774bbba7200691c281f31c86637c85" title="Integer representing the text color of the damage view.">damageTextColor</a> </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="CardUiState_8java_source.xhtml#l00178">178</a> of file <a class="el" href="CardUiState_8java_source.xhtml">CardUiState.java</a>.</p>
 
@@ -380,9 +380,9 @@ Private Attributes</h2></td></tr>
 
 <p>Returns the String shown in the squad view. </p>
 <dl class="section return"><dt>Returns</dt><dd>A String containing the squad of the represented <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml" title="A class representing a card on the game board.">UnitEntity</a> or nothing. </dd></dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="#ad64e63ed55173f5ff409851a0aa714e5" title="String containing the number shown in the squad view.">squadString</a> </dd>
+<dl class="section see"><dt>See also</dt><dd>.<a class="el" href="#ad64e63ed55173f5ff409851a0aa714e5" title="String containing the number shown in the squad view.">squadString</a> </dd>
 <dd>
-<a class="el" href="#a2f1151201890fc60e86d76e7742472b4" title="Returns whether the squad view is shown, i.e., if the unit has the Ability.BINDING ability.">showSquad()</a> </dd></dl>
+.<a class="el" href="#a2f1151201890fc60e86d76e7742472b4" title="Returns whether the squad view is shown, i.e., if the unit has the Ability.BINDING ability.">showSquad()</a> </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="CardUiState_8java_source.xhtml#l00200">200</a> of file <a class="el" href="CardUiState_8java_source.xhtml">CardUiState.java</a>.</p>
 
@@ -407,8 +407,8 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Returns the <a class="el" href="#ad31e379faf2dc6f7099cfa1f29df992a" title="Integer referencing the UnitEntity.id of the represented UnitEntity.">unitId</a> of the represented <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml" title="A class representing a card on the game board.">UnitEntity</a>. </p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="#ad31e379faf2dc6f7099cfa1f29df992a" title="Integer referencing the UnitEntity.id of the represented UnitEntity.">unitId</a> </dd></dl>
+<p>Returns the .unitId of the represented <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml" title="A class representing a card on the game board.">UnitEntity</a>. </p>
+<dl class="section see"><dt>See also</dt><dd>.<a class="el" href="#ad31e379faf2dc6f7099cfa1f29df992a" title="Integer referencing the UnitEntity.id of the represented UnitEntity.">unitId</a> </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>An Integer referencing the <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml#a7441ef0865bcb3db9b8064dd7375c1ea" title="Defines the primary key of the represented unit.">UnitEntity.id</a> of the represented <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml" title="A class representing a card on the game board.">UnitEntity</a>. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="CardUiState_8java_source.xhtml#l00148">148</a> of file <a class="el" href="CardUiState_8java_source.xhtml">CardUiState.java</a>.</p>
@@ -434,7 +434,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Returns whether the ability view is shown, i.e., if the unit has an ability other than Ability#NONE. </p>
+<p>Returns whether the ability view is shown, i.e., if the unit has an ability other than Ability.NONE. </p>
 <dl class="section return"><dt>Returns</dt><dd>A Boolean defining whether the ability view is shown. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="CardUiState_8java_source.xhtml#l00130">130</a> of file <a class="el" href="CardUiState_8java_source.xhtml">CardUiState.java</a>.</p>
@@ -460,7 +460,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Returns whether the squad view is shown, i.e., if the unit has the Ability#BINDING ability. </p>
+<p>Returns whether the squad view is shown, i.e., if the unit has the Ability.BINDING ability. </p>
 <dl class="section return"><dt>Returns</dt><dd>A Boolean defining whether the squad view is shown. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="CardUiState_8java_source.xhtml#l00139">139</a> of file <a class="el" href="CardUiState_8java_source.xhtml">CardUiState.java</a>.</p>
@@ -493,9 +493,9 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Integer referencing the drawable resource shown in the ability view. </p>
-<p>May be <a class="el" href="#ab350a814fcbff33d47716cff4dc4daf8" title="Integer that is used instead of a drawable resource to indicate the absence of a meaningful abilityIm...">UNUSED</a> if the view is not visible. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="#ab350a814fcbff33d47716cff4dc4daf8" title="Integer that is used instead of a drawable resource to indicate the absence of a meaningful abilityIm...">UNUSED</a> </dd>
+<p>May be .UNUSED if the view is not visible. </p><dl class="section see"><dt>See also</dt><dd>.<a class="el" href="#ab350a814fcbff33d47716cff4dc4daf8" title="Integer that is used instead of a drawable resource to indicate the absence of a meaningful ....">UNUSED</a> </dd>
 <dd>
-<a class="el" href="#a197ab57925224346e444230617226aa0" title="Returns the drawable resource shown in the ability view.">getAbilityImageId()</a> </dd></dl>
+.<a class="el" href="#a197ab57925224346e444230617226aa0" title="Returns the drawable resource shown in the ability view.">getAbilityImageId()</a> </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="CardUiState_8java_source.xhtml#l00088">88</a> of file <a class="el" href="CardUiState_8java_source.xhtml">CardUiState.java</a>.</p>
 
@@ -524,7 +524,7 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Integer referencing the drawable resource shown as the background of the damage view. </p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="#a80722c01cbb49ea73d33de30ee4d547a" title="Returns the drawable resource shown as the background of the damage view.">getDamageBackgroundImageId()</a> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd>.<a class="el" href="#a80722c01cbb49ea73d33de30ee4d547a" title="Returns the drawable resource shown as the background of the damage view.">getDamageBackgroundImageId()</a> </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="CardUiState_8java_source.xhtml#l00064">64</a> of file <a class="el" href="CardUiState_8java_source.xhtml">CardUiState.java</a>.</p>
 
@@ -553,7 +553,7 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>String containing the number shown in the damage view or nothing if the represented <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml" title="A class representing a card on the game board.">UnitEntity</a> is epic. </p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="#a42d72498bf711a1616bf3c58614a446f" title="Returns the String shown in the damage view.">getDamageString()</a> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd>.<a class="el" href="#a42d72498bf711a1616bf3c58614a446f" title="Returns the String shown in the damage view.">getDamageString()</a> </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="CardUiState_8java_source.xhtml#l00072">72</a> of file <a class="el" href="CardUiState_8java_source.xhtml">CardUiState.java</a>.</p>
 
@@ -582,7 +582,7 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Integer representing the text color of the damage view. </p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="#aee0972c7126ee2429d9427461fbb7a07" title="Returns the text color of the damage view.">getDamageTextColor()</a> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd>.<a class="el" href="#aee0972c7126ee2429d9427461fbb7a07" title="Returns the text color of the damage view.">getDamageTextColor()</a> </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="CardUiState_8java_source.xhtml#l00079">79</a> of file <a class="el" href="CardUiState_8java_source.xhtml">CardUiState.java</a>.</p>
 
@@ -623,9 +623,9 @@ Private Attributes</h2></td></tr>
 <div class="ttc" id="aclasscom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1cards_1_1CardUiState_xhtml_a68bad49ce9fc99ca6e402b5dcbc9289c"><div class="ttname"><a href="#a68bad49ce9fc99ca6e402b5dcbc9289c">com.peternaggschga.gwent.ui.dialogs.cards.CardUiState.CardUiState</a></div><div class="ttdeci">CardUiState(int unitId, @DrawableRes int damageBackgroundImageId, @IntRange(from=UNUSED) int damage, @ColorInt int damageTextColor, @DrawableRes int abilityImageId, @Nullable @IntRange(from=1) Integer squad)</div><div class="ttdoc">Constructor of a CardUiState encapsulating the given data.</div><div class="ttdef"><b>Definition</b> <a href="CardUiState_8java_source.xhtml#l00108">CardUiState.java:108</a></div></div>
 </div><!-- fragment -->
 <p>DiffUtil.ItemCallback used to compare different <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1cards_1_1CardUiState.xhtml" title="A data class encapsulating the visible state of a card in the card list shown by the ShowUnitsDialog.">CardUiState</a> objects in a ListAdapter, e.g., <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1cards_1_1CardListAdapter.xhtml" title="A ListAdapter used to provide CardListAdapter.CardViewHolder objects created from CardUiState objects...">CardListAdapter</a>. </p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="#ad31e379faf2dc6f7099cfa1f29df992a" title="Integer referencing the UnitEntity.id of the represented UnitEntity.">unitId</a> </dd>
+<dl class="section see"><dt>See also</dt><dd>.<a class="el" href="#ad31e379faf2dc6f7099cfa1f29df992a" title="Integer referencing the UnitEntity.id of the represented UnitEntity.">unitId</a> </dd>
 <dd>
-<a class="el" href="#a39e5bc339e3b5924ec96de42fbb8f33f" title="Checks whether the given Object looks the same as this CardUiState.">equals(Object)</a> </dd></dl>
+.<a class="el" href="#a39e5bc339e3b5924ec96de42fbb8f33f" title="Checks whether the given Object looks the same as this CardUiState.">equals(Object)</a> </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="CardUiState_8java_source.xhtml#l00033">33</a> of file <a class="el" href="CardUiState_8java_source.xhtml">CardUiState.java</a>.</p>
 
@@ -654,7 +654,7 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>String containing the number shown in the squad view. </p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="#afa26abb3d4485cc7203e1bffa5c3722d" title="Returns the String shown in the squad view.">getSquadString()</a> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd>.<a class="el" href="#afa26abb3d4485cc7203e1bffa5c3722d" title="Returns the String shown in the squad view.">getSquadString()</a> </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="CardUiState_8java_source.xhtml#l00095">95</a> of file <a class="el" href="CardUiState_8java_source.xhtml">CardUiState.java</a>.</p>
 
@@ -683,7 +683,7 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Integer referencing the <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml#a7441ef0865bcb3db9b8064dd7375c1ea" title="Defines the primary key of the represented unit.">UnitEntity.id</a> of the represented <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml" title="A class representing a card on the game board.">UnitEntity</a>. </p>
-<p>The only member that is not shown in the UI. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="#a3ca891039702f70f3ff9d8728b87c89f" title="Returns the unitId of the represented UnitEntity.">getUnitId()</a> </dd></dl>
+<p>The only member that is not shown in the UI. </p><dl class="section see"><dt>See also</dt><dd>.<a class="el" href="#a3ca891039702f70f3ff9d8728b87c89f" title="Returns the .unitId of the represented UnitEntity.">getUnitId()</a> </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="CardUiState_8java_source.xhtml#l00057">57</a> of file <a class="el" href="CardUiState_8java_source.xhtml">CardUiState.java</a>.</p>
 
@@ -711,8 +711,8 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Integer that is used instead of a drawable resource to indicate the absence of a meaningful #abilityImage. </p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="#ac1e991ca60a7a033104417f9a64327f0" title="Integer referencing the drawable resource shown in the ability view.">abilityImageId</a> </dd></dl>
+<p>Integer that is used instead of a drawable resource to indicate the absence of a meaningful .abilityImage. </p>
+<dl class="section see"><dt>See also</dt><dd>.<a class="el" href="#ac1e991ca60a7a033104417f9a64327f0" title="Integer referencing the drawable resource shown in the ability view.">abilityImageId</a> </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="CardUiState_8java_source.xhtml#l00050">50</a> of file <a class="el" href="CardUiState_8java_source.xhtml">CardUiState.java</a>.</p>
 

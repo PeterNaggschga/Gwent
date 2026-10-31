@@ -151,7 +151,7 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Constructor of a <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1cards_1_1CardUiStateFactory.xhtml" title="A factory class responsible for creating CardUiState objects from UnitEntity objects.">CardUiStateFactory</a> for a row with the given weather and horn (de-)buff values. </p>
-<p>The Context parameter is used to retrieve the color values saved in <a class="el" href="#aaae012734c708d29bcde090a835d5669" title="Map containing a color integer for each Color value possible, i.e., Color.DEFAULT,...">damageTextColors</a>.</p>
+<p>The Context parameter is used to retrieve the color values saved in .damageTextColors.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">context</td><td>Context object used to get colors. </td></tr>
@@ -160,7 +160,7 @@ Private Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section see"><dt>See also</dt><dd>Context#getColor(int) </dd></dl>
+<dl class="section see"><dt>See also</dt><dd>Context.getColor(int) </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="CardUiStateFactory_8java_source.xhtml#l00058">58</a> of file <a class="el" href="CardUiStateFactory_8java_source.xhtml">CardUiStateFactory.java</a>.</p>
 
@@ -185,7 +185,7 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Creates a List of <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1cards_1_1CardUiState.xhtml" title="A data class encapsulating the visible state of a card in the card list shown by the ShowUnitsDialog.">CardUiState</a> objects from the given List of <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml" title="A class representing a card on the game board.">UnitEntity</a> objects. </p>
-<p>Basically calls #createCardUiState(UnitEntity, DamageCalculator) for each given <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml" title="A class representing a card on the game board.">UnitEntity</a>. </p><dl class="section see"><dt>See also</dt><dd>#createCardUiState(UnitEntity, DamageCalculator) </dd></dl>
+<p>Basically calls .createCardUiState(UnitEntity, DamageCalculator) for each given <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml" title="A class representing a card on the game board.">UnitEntity</a>. </p><dl class="section see"><dt>See also</dt><dd>.createCardUiState(UnitEntity, DamageCalculator) </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">units</td><td>List of <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml" title="A class representing a card on the game board.">UnitEntity</a> objects that are converted to <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1cards_1_1CardUiState.xhtml" title="A data class encapsulating the visible state of a card in the card list shown by the ShowUnitsDialog.">CardUiState</a> objects. </td></tr>
@@ -222,7 +222,7 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Creates a <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1cards_1_1CardUiState.xhtml" title="A data class encapsulating the visible state of a card in the card list shown by the ShowUnitsDialog.">CardUiState</a> from the given <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml" title="A class representing a card on the game board.">UnitEntity</a>. </p>
-<dl class="section see"><dt>See also</dt><dd>#createCardUiState(Collection) </dd></dl>
+<dl class="section see"><dt>See also</dt><dd>.createCardUiState(Collection) </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">unit</td><td><a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml" title="A class representing a card on the game board.">UnitEntity</a> that is converted to a <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1cards_1_1CardUiState.xhtml" title="A data class encapsulating the visible state of a card in the card list shown by the ShowUnitsDialog.">CardUiState</a>. </td></tr>

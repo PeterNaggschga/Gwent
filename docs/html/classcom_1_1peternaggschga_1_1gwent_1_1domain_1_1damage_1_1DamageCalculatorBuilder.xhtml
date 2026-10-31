@@ -122,7 +122,7 @@ Private Attributes</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A builder class responsible for creating a decorator structure of <a class="el" href="interfacecom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1DamageCalculator.xhtml" title="An interface for a class capable of calculating the (de-)buffed damage of a unit for a given UnitEnti...">DamageCalculator</a> classes with the given parameters. </p>
-<p>Should only be used by <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1DamageCalculatorBuildDirector.xhtml" title="A build director responsible for the creation of DamageCalculator instances from sets of units using ...">DamageCalculatorBuildDirector</a>. Calls to <a class="el" href="#a9215f1695fbe5db5aca533f25c0e70d8" title="Sets the weather debuff for the calculation.">setWeather()</a>, <a class="el" href="#ad9b778b7697e0fd0d9532b5eb6ebdfee" title="Sets the tight bond buff for the calculation.">setBond()</a>, <a class="el" href="#a9d2a59273c337c4ce3d3bd5f3caacd69" title="Sets the moral boost buff for the calculation.">setMoral()</a> or <a class="el" href="#ab580a8b19369b4bdeb4e34d5c6c3f0a9" title="Sets the commander&#39;s horn buff for the calculation.">setHorn()</a> should be in that exact order to create a correct <a class="el" href="interfacecom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1DamageCalculator.xhtml" title="An interface for a class capable of calculating the (de-)buffed damage of a unit for a given UnitEnti...">DamageCalculator</a>. Every function call is optional, i.e. every function should be called once or not at all.</p>
+<p>Should only be used by <a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1DamageCalculatorBuildDirector.xhtml" title="A build director responsible for the creation of DamageCalculator instances from sets of units using ...">DamageCalculatorBuildDirector</a>. Calls to .<a class="el" href="#a9215f1695fbe5db5aca533f25c0e70d8" title="Sets the weather debuff for the calculation.">setWeather()</a>, .<a class="el" href="#ad9b778b7697e0fd0d9532b5eb6ebdfee" title="Sets the tight bond buff for the calculation.">setBond()</a>, .<a class="el" href="#a9d2a59273c337c4ce3d3bd5f3caacd69" title="Sets the moral boost buff for the calculation.">setMoral()</a> or .<a class="el" href="#ab580a8b19369b4bdeb4e34d5c6c3f0a9" title="Sets the commander&#39;s horn buff for the calculation.">setHorn()</a> should be in that exact order to create a correct <a class="el" href="interfacecom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1DamageCalculator.xhtml" title="An interface for a class capable of calculating the (de-)buffed damage of a unit for a given UnitEnti...">DamageCalculator</a>. Every function call is optional, i.e. every function should be called once or not at all.</p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="classcom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1DamageCalculatorBuildDirector.xhtml" title="A build director responsible for the creation of DamageCalculator instances from sets of units using ...">DamageCalculatorBuildDirector</a> </dd>
 <dd>
 <a class="el" href="interfacecom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1DamageCalculator.xhtml" title="An interface for a class capable of calculating the (de-)buffed damage of a unit for a given UnitEnti...">DamageCalculator</a> </dd>
@@ -155,7 +155,7 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Returns the current state of the built <a class="el" href="interfacecom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1DamageCalculator.xhtml" title="An interface for a class capable of calculating the (de-)buffed damage of a unit for a given UnitEnti...">DamageCalculator</a>, i.e. </p>
-<p><a class="el" href="#aa139b6e6aefb9ba74e56c8425c0d4933" title="The DamageCalculator instance that is being built by this DamageCalculatorBuilder.">calculator</a>.</p>
+<p>.calculator.</p>
 <dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="interfacecom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1DamageCalculator.xhtml" title="An interface for a class capable of calculating the (de-)buffed damage of a unit for a given UnitEnti...">DamageCalculator</a> that has been built by this builder. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="DamageCalculatorBuilder_8java_source.xhtml#l00072">72</a> of file <a class="el" href="DamageCalculatorBuilder_8java_source.xhtml">DamageCalculatorBuilder.java</a>.</p>
@@ -190,7 +190,7 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Sets the tight bond buff for the calculation. </p>
-<p>Should be called after <a class="el" href="#a9215f1695fbe5db5aca533f25c0e70d8" title="Sets the weather debuff for the calculation.">setWeather()</a> or never.</p>
+<p>Should be called after .<a class="el" href="#a9215f1695fbe5db5aca533f25c0e70d8" title="Sets the weather debuff for the calculation.">setWeather()</a> or never.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">idToSquad</td><td>Map mapping the ids of all units with the <a class="el" href="enumcom_1_1peternaggschga_1_1gwent_1_1data_1_1Ability.xhtml#a77b03b1381e92c96d2d82170ca29402d" title="Represents a card that has the Tight Bond ability.">com.peternaggschga.gwent.data.Ability.BINDING</a> ability to the respective squad size. </td></tr>
@@ -228,7 +228,7 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Sets the commander's horn buff for the calculation. </p>
-<p>Should be called after <a class="el" href="#a9d2a59273c337c4ce3d3bd5f3caacd69" title="Sets the moral boost buff for the calculation.">setMoral()</a> or never.</p>
+<p>Should be called after .<a class="el" href="#a9d2a59273c337c4ce3d3bd5f3caacd69" title="Sets the moral boost buff for the calculation.">setMoral()</a> or never.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">unitIds</td><td>List of Integers representing ids of units with the <a class="el" href="enumcom_1_1peternaggschga_1_1gwent_1_1data_1_1Ability.xhtml#a2a563a2d065bd74186b075e192470035" title="Represents a card that has the Commanders Horn ability, e.g.">com.peternaggschga.gwent.data.Ability.HORN</a> ability. </td></tr>
@@ -266,7 +266,7 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Sets the moral boost buff for the calculation. </p>
-<p>Should be called after <a class="el" href="#ad9b778b7697e0fd0d9532b5eb6ebdfee" title="Sets the tight bond buff for the calculation.">setBond()</a> or never.</p>
+<p>Should be called after .<a class="el" href="#ad9b778b7697e0fd0d9532b5eb6ebdfee" title="Sets the tight bond buff for the calculation.">setBond()</a> or never.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">unitIds</td><td>List of Integers representing ids of units with the <a class="el" href="enumcom_1_1peternaggschga_1_1gwent_1_1data_1_1Ability.xhtml#a3cef9e5a0e100df2948d59158cf90a65" title="Represents a card that has the Morale Boost ability.">com.peternaggschga.gwent.data.Ability.MORAL_BOOST</a> ability. </td></tr>
