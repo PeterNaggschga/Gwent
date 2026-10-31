@@ -1,0 +1,4 @@
+var interfacecom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1ValuePicker_1_1OnValueChangeListener =
+[
+    [ "onValueChange", "interfacecom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1ValuePicker_1_1OnValueChangeListener.xhtml#ab81c33b50c699da521794e11ce78db30", null ]
+];

@@ -1,7 +1,7 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" title=" " alt="" coords="5,31,93,56"/>
-<area shape="rect" id="Node000001" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1MenuUiStateObserver.xhtml" title="An observer class responsible for updating the menu views when notified, i.e., when a new MenuUiState..." alt="" coords="141,5,307,31"/>
-<area shape="poly" id="edge8_Node000000_Node000001" title=" " alt="" coords="107,32,141,27,141,33,107,38"/>
-<area shape="rect" id="Node000002" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1RowUiStateObserver.xhtml" title="An observer class responsible for updating the views of the row defined in #row when notified,..." alt="" coords="145,55,303,80"/>
-<area shape="poly" id="edge9_Node000000_Node000002" title=" " alt="" coords="107,49,145,54,145,59,107,54"/>
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,32,93,60"/>
+<area shape="rect" id="Node000001" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1MenuUiStateObserver.xhtml" title="An observer class responsible for updating the menu views when notified, i.e., when a new MenuUiState..." alt="" coords="141,5,305,33"/>
+<area shape="poly" id="edge8_Node000000_Node000001" title=" " alt="" coords="108,34,143,31,138,33,109,39"/>
+<area shape="rect" id="Node000002" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1RowUiStateObserver.xhtml" title="An observer class responsible for updating the views of the row defined in row when notified,..." alt="" coords="145,57,301,85"/>
+<area shape="poly" id="edge9_Node000000_Node000002" title=" " alt="" coords="108,52,147,59,142,60,108,57"/>
 </map>

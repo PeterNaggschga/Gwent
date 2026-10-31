@@ -1,11 +1,17 @@
 <map id="ShowUnitsDialog" name="ShowUnitsDialog">
-<area shape="rect" id="Node000001" title="An OverlayDialog used to list the units of a certain row and enabling the user to copy,..." alt="" coords="63,183,185,208"/>
-<area shape="rect" id="Node000002" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1OverlayDialog.xhtml" title="A Dialog class which is used for popups that are shown on top of the calling Activity." alt="" coords="5,95,109,120"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="77,129,117,180,113,184,73,133"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="21,13,75,38"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="54,51,59,94,53,95,48,52"/>
-<area shape="rect" id="Node000004" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1cards_1_1CardListAdapter.xhtml" title="A ListAdapter used to provide CardListAdapter.CardViewHolder objects created from CardUiState objects..." alt="" coords="152,95,269,120"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="201,122,149,173,146,169,197,118"/>
-<area shape="rect" id="Node000005" title=" " alt="" coords="99,5,341,45"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="219,59,215,95,209,94,214,59"/>
+<area shape="rect" id="Node000001" title="An OverlayDialog used to list the units of a certain row and enabling the user to copy,..." alt="" coords="152,224,274,251"/>
+<area shape="rect" id="Node000002" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1OverlayDialog.xhtml" title="A Dialog class which is used for popups that are shown on top of the calling Activity." alt="" coords="5,123,109,151"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="91,156,196,222,191,225,89,161"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="31,14,84,42"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="58,53,60,124,55,123,56,58"/>
+<area shape="rect" id="Node000004" href="$enumcom_1_1peternaggschga_1_1gwent_1_1data_1_1RowType.xhtml" title="An enum listing the different types of attack rows." alt="" coords="134,123,202,151"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="174,148,196,199,200,210,196,208,191,201,171,153"/>
+<area shape="rect" id="Node000005" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1cards_1_1CardListAdapter.xhtml" title="A ListAdapter used to provide CardListAdapter.CardViewHolder objects created from CardUiState objects..." alt="" coords="226,123,341,151"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="277,149,234,212,230,208,272,152"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="154,5,395,50"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="279,62,285,124,280,122,276,67"/>
+<area shape="rect" id="Node000007" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1sounds_1_1SoundManager.xhtml" title="A class responsible for initializing and playing sounds when they are enabled." alt="" coords="382,123,490,151"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="430,149,408,178,379,202,336,220,291,231,290,226,334,215,376,197,405,174,425,152"/>
+<area shape="rect" id="Node000008" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1sounds_1_1Sound.xhtml" title="A data class encapsulating information on a certain sound effect, e.g., its id in a SoundPool and whe..." alt="" coords="420,14,470,42"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="446,39,441,108,436,105,442,43"/>
 </map>

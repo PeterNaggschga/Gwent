@@ -1,11 +1,19 @@
 <map id="CardNumberPickerAdapter" name="CardNumberPickerAdapter">
-<area shape="rect" id="Node000001" title="A helper class responsible for initializing the NumberPicker views of an AddCardDialog (in #CardNumpe..." alt="" coords="68,181,252,207"/>
-<area shape="rect" id="Node000002" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1DamageValuePicker.xhtml" title="A ValuePicker used for selection of damage values for UnitEntity::damage." alt="" coords="16,93,157,119"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="90,118,93,137,102,156,119,171,115,175,98,159,88,139,85,119"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="5,5,168,31"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="89,45,89,93,84,93,84,45"/>
-<area shape="rect" id="Node000004" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1SquadManager.xhtml" title="A class used by the CardNumberPickerAdapter to determine the first squad with members or set the defa..." alt="" coords="181,93,291,119"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="231,121,203,159,189,173,186,169,199,156,227,118"/>
-<area shape="rect" id="Node000005" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1SquadState.xhtml" title="A data class encapsulating information about the squad defined by #squadNumber, i...." alt="" coords="193,5,279,31"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="239,31,239,76,233,76,233,31"/>
+<area shape="rect" id="Node000001" title="A helper class responsible for initializing the NumberPicker views of an AddCardDialog (in CardNumper..." alt="" coords="234,366,417,394"/>
+<area shape="rect" id="Node000002" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1ValuePicker.xhtml" title=" " alt="" coords="5,206,174,233"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="89,230,92,262,96,278,103,292,128,315,156,334,188,349,222,362,216,362,186,354,154,339,124,320,99,295,91,280,86,263,87,235"/>
+<area shape="rect" id="Node000003" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1ValuePicker.xhtml" title="A generic abstract wrapper class around NumberPicker used to select values of arbitrary types extendi..." alt="" coords="129,5,293,50"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="130,60,117,76,100,109,92,145,90,179,91,206,86,205,84,179,86,144,95,107,113,72,133,56"/>
+<area shape="rect" id="Node000005" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1ValuePicker.xhtml" title=" " alt="" coords="130,145,292,173"/>
+<area shape="poly" id="edge5_Node000005_Node000003" title=" " alt="" coords="212,62,214,146,208,145,210,67"/>
+<area shape="rect" id="Node000006" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1ValuePicker.xhtml" title=" " alt="" coords="230,197,547,242"/>
+<area shape="poly" id="edge7_Node000006_Node000003" title=" " alt="" coords="277,55,302,72,330,103,352,136,383,198,378,197,348,139,325,106,299,76,278,60"/>
+<area shape="rect" id="Node000004" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1DamageValuePicker.xhtml" title="A ValuePicker used for selection of damage values for UnitEntity.damage." alt="" coords="193,266,333,293"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="262,291,261,317,267,341,280,358,275,356,262,344,255,317,258,295"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="214,185,221,214,231,240,250,266,245,266,226,243,216,215,212,190"/>
+<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="391,240,389,290,383,318,372,344,361,358,358,353,367,341,378,316,384,289,388,243"/>
+<area shape="rect" id="Node000007" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1SquadManager.xhtml" title="A class used by the CardNumberPickerAdapter to determine the first squad with members or set the defa..." alt="" coords="514,266,622,293"/>
+<area shape="poly" id="edge8_Node000001_Node000007" title=" " alt="" coords="540,293,373,362,372,357,535,294"/>
+<area shape="rect" id="Node000008" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1SquadState.xhtml" title="A data class encapsulating information about the squad defined by squadNumber, i.e...." alt="" coords="535,145,620,173"/>
+<area shape="poly" id="edge9_Node000007_Node000008" title=" " alt="" coords="579,171,573,250,568,247,575,175"/>
 </map>

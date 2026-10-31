@@ -1,5 +1,9 @@
 <map id="GameBoardViewModel" name="GameBoardViewModel">
-<area shape="rect" id="Node000001" title="An AndroidViewModel class responsible for encapsulating and offering state of views in activity_main...." alt="" coords="5,79,165,104"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="19,5,152,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="88,44,88,79,83,79,83,44"/>
+<area shape="rect" id="Node000001" title="An AndroidViewModel class responsible for encapsulating and offering state of views in activity_main...." alt="" coords="38,207,198,234"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,106,138,134"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="86,145,115,207,110,207,82,149"/>
+<area shape="rect" id="Node000003" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1sounds_1_1SoundManager.xhtml" title="A class responsible for initializing and playing sounds when they are enabled." alt="" coords="162,106,270,134"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="206,133,144,197,141,193,201,134"/>
+<area shape="rect" id="Node000004" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1sounds_1_1Sound.xhtml" title="A data class encapsulating information on a certain sound effect, e.g., its id in a SoundPool and whe..." alt="" coords="190,5,241,33"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="217,31,218,90,213,88,214,35"/>
 </map>

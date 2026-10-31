@@ -62,7 +62,7 @@ var hierarchy =
     [ "OnSharedPreferenceChangeListener", null, [
       [ "FactionSwitchListener", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1FactionSwitchListener.xhtml", null ]
     ] ],
-    [ "OnValueChangeListener< T extends Comparable", "interfacecom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1ValuePicker_1_1OnValueCha8c86acb296a3806ca4f71493da258dd8.xhtml", null ],
+    [ "ValuePicker&lt; T extends Comparable&lt; T &gt; &gt;.OnValueChangeListener&lt; T extends Comparable&lt; T &gt; &gt;", "interfacecom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1ValuePicker_1_1OnValueChangeListener.xhtml", null ],
     [ "PreferenceFragmentCompat", null, [
       [ "SettingsHeaderFragment", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1settings_1_1SettingsHeaderFragment.xhtml", null ],
       [ "SettingsRuleFragment", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1settings_1_1SettingsRuleFragment.xhtml", null ],
@@ -85,15 +85,17 @@ var hierarchy =
     [ "SoundManager", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1sounds_1_1SoundManager.xhtml", null ],
     [ "SquadManager", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1SquadManager.xhtml", null ],
     [ "SquadState", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1SquadState.xhtml", null ],
-    [ "StringValuePicker< T extends Comparable", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1StringValuePicker_3_01T_01extends_01Comparable.xhtml", null ],
     [ "ResetDialogUseCase.Trigger", "enumcom_1_1peternaggschga_1_1gwent_1_1domain_1_1cases_1_1ResetDialogUseCase_1_1Trigger.xhtml", null ],
     [ "UnitDao", "interfacecom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitDao.xhtml", null ],
     [ "UnitEntity", "classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitEntity.xhtml", null ],
     [ "UnitRepository", "classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitRepository.xhtml", null ],
-    [ "ValuePicker", null, [
+    [ "ValuePicker&lt; T extends Comparable&lt; T &gt; &gt;", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1ValuePicker.xhtml", null ],
+    [ "ValuePicker&lt; Integer &gt;", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1ValuePicker.xhtml", [
       [ "DamageValuePicker", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1DamageValuePicker.xhtml", null ]
     ] ],
-    [ "ValuePicker< T extends Comparable", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1ValuePicker_3_01T_01extends_01Comparable.xhtml", null ],
+    [ "ValuePicker&lt; T &gt;", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1ValuePicker.xhtml", [
+      [ "StringValuePicker< T extends Comparable< T > >", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1StringValuePicker.xhtml", null ]
+    ] ],
     [ "ViewHolder", null, [
       [ "CardListAdapter.CardViewHolder", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1cards_1_1CardListAdapter_1_1CardViewHolder.xhtml", null ]
     ] ]

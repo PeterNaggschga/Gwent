@@ -1,5 +1,5 @@
 <map id="MenuUiStateObserver" name="MenuUiStateObserver">
-<area shape="rect" id="Node000001" title="An observer class responsible for updating the menu views when notified, i.e., when a new MenuUiState..." alt="" coords="24,79,179,104"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="5,5,197,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="104,44,104,79,99,79,99,44"/>
+<area shape="rect" id="Node000001" title="An observer class responsible for updating the menu views when notified, i.e., when a new MenuUiState..." alt="" coords="24,81,178,109"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,5,196,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="103,46,103,82,98,80,99,50"/>
 </map>

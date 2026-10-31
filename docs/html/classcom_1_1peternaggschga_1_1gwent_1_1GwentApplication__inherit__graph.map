@@ -1,5 +1,5 @@
 <map id="GwentApplication" name="GwentApplication">
-<area shape="rect" id="Node000001" title="An Application encapsulating the Gwent app." alt="" coords="5,79,133,104"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="27,5,112,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="72,44,72,79,67,79,67,44"/>
+<area shape="rect" id="Node000001" title="An Application encapsulating the Gwent app." alt="" coords="5,81,131,109"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="26,5,110,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="70,46,71,82,66,80,66,50"/>
 </map>

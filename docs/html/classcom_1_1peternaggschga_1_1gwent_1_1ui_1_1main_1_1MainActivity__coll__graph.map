@@ -1,9 +1,13 @@
 <map id="MainActivity" name="MainActivity">
-<area shape="rect" id="Node000001" title="An AppCompatActivity that is called on startup and that encapsulates the main view onto the game boar..." alt="" coords="81,168,175,193"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="5,80,144,105"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="91,116,123,166,118,169,87,119"/>
-<area shape="rect" id="Node000003" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1GameBoardViewModel.xhtml" title="An AndroidViewModel class responsible for encapsulating and offering state of views in activity_main...." alt="" coords="168,80,328,105"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="233,108,159,160,156,156,230,103"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="181,5,315,31"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="251,45,251,80,245,80,245,45"/>
+<area shape="rect" id="Node000001" title="An AppCompatActivity that is called on startup and that encapsulates the main view onto the game boar..." alt="" coords="81,307,173,335"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,207,142,234"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="89,245,123,308,118,308,86,250"/>
+<area shape="rect" id="Node000003" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1GameBoardViewModel.xhtml" title="An AndroidViewModel class responsible for encapsulating and offering state of views in activity_main...." alt="" coords="166,207,326,234"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="233,234,157,299,154,294,228,235"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="133,106,265,134"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="212,145,243,207,237,207,210,149"/>
+<area shape="rect" id="Node000005" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1sounds_1_1SoundManager.xhtml" title="A class responsible for initializing and playing sounds when they are enabled." alt="" coords="289,106,397,134"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="333,132,271,197,268,193,328,135"/>
+<area shape="rect" id="Node000006" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1sounds_1_1Sound.xhtml" title="A data class encapsulating information on a certain sound effect, e.g., its id in a SoundPool and whe..." alt="" coords="318,5,368,33"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="344,31,345,90,341,88,342,35"/>
 </map>

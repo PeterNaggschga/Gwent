@@ -1,5 +1,5 @@
 <map id="IntroductionFragment" name="IntroductionFragment">
-<area shape="rect" id="Node000001" title="A Fragment containing an ImageView and a TextView conveying introductory information." alt="" coords="5,79,157,104"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="44,5,119,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="84,44,84,79,79,79,79,44"/>
+<area shape="rect" id="Node000001" title="A Fragment containing an ImageView and a TextView conveying introductory information." alt="" coords="5,81,156,109"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="44,5,117,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="83,46,83,82,78,80,79,50"/>
 </map>

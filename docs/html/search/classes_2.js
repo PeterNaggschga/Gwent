@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['callback_0',['callback',['../interfacecom_1_1peternaggschga_1_1gwent_1_1domain_1_1cases_1_1ResetAlertDialogBuilderAdapter_1_1Callback.xhtml',1,'ResetAlertDialogBuilderAdapter.Callback'],['../interfacecom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1ChangeFactionDialog_1_1Callback.xhtml',1,'ChangeFactionDialog.Callback']]],
+  ['callback_0',['Callback',['../interfacecom_1_1peternaggschga_1_1gwent_1_1domain_1_1cases_1_1ResetAlertDialogBuilderAdapter_1_1Callback.xhtml',1,'ResetAlertDialogBuilderAdapter.Callback'],['../interfacecom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1ChangeFactionDialog_1_1Callback.xhtml',1,'ChangeFactionDialog.Callback']]],
   ['cardlistadapter_1',['CardListAdapter',['../classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1cards_1_1CardListAdapter.xhtml',1,'com::peternaggschga::gwent::ui::dialogs::cards']]],
   ['cardnumberpickeradapter_2',['CardNumberPickerAdapter',['../classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1CardNumberPickerAdapter.xhtml',1,'com::peternaggschga::gwent::ui::dialogs::addcard']]],
   ['carduistate_3',['CardUiState',['../classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1cards_1_1CardUiState.xhtml',1,'com::peternaggschga::gwent::ui::dialogs::cards']]],

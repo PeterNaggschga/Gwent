@@ -1,5 +1,5 @@
 <map id="MainActivity" name="MainActivity">
-<area shape="rect" id="Node000001" title="An AppCompatActivity that is called on startup and that encapsulates the main view onto the game boar..." alt="" coords="28,79,121,104"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="5,5,144,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="77,44,77,79,72,79,72,44"/>
+<area shape="rect" id="Node000001" title="An AppCompatActivity that is called on startup and that encapsulates the main view onto the game boar..." alt="" coords="27,81,120,109"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,5,142,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="76,46,76,82,71,80,72,50"/>
 </map>

@@ -1,7 +1,7 @@
 <map id="IntroductionActivity" name="IntroductionActivity">
-<area shape="rect" id="Node000001" title="An AppCompatActivity that gives the user an introduction into the usage of the application." alt="" coords="81,93,223,119"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="5,5,144,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="96,39,143,91,139,95,92,43"/>
-<area shape="rect" id="Node000003" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1introduction_1_1IndicatorManager.xhtml" title="A class managing the indicator views shown in the bottom bar of the IntroductionActivity." alt="" coords="168,5,293,31"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="222,33,176,83,172,79,218,29"/>
+<area shape="rect" id="Node000001" title="An AppCompatActivity that gives the user an introduction into the usage of the application." alt="" coords="82,106,220,134"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,5,142,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="94,42,144,106,139,107,91,47"/>
+<area shape="rect" id="Node000003" href="$classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1introduction_1_1IndicatorManager.xhtml" title="A class managing the indicator views shown in the bottom bar of the IntroductionActivity." alt="" coords="166,5,291,33"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="221,32,173,95,169,91,216,34"/>
 </map>

@@ -1,3 +1,7 @@
 <map id="RevengeAlertDialogBuilderAdapter" name="RevengeAlertDialogBuilderAdapter">
-<area shape="rect" id="Node000001" title="An adapter class adapting AlertDialog.Builder to provide an interface for creating an AlertDialog ask..." alt="" coords="5,5,195,45"/>
+<area shape="rect" id="Node000001" title="An adapter class adapting AlertDialog.Builder to provide an interface for creating an AlertDialog ask..." alt="" coords="18,106,205,151"/>
+<area shape="rect" id="Node000002" href="$enumcom_1_1peternaggschga_1_1gwent_1_1data_1_1Ability.xhtml" title="An enum listing the different card abilities possible." alt="" coords="5,5,58,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="29,30,29,56,35,81,46,95,41,96,30,83,24,57,28,35"/>
+<area shape="rect" id="Node000003" href="$enumcom_1_1peternaggschga_1_1gwent_1_1data_1_1RowType.xhtml" title="An enum listing the different types of attack rows." alt="" coords="159,5,227,33"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="191,31,181,58,166,84,154,96,151,92,162,80,177,55,187,35"/>
 </map>

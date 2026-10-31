@@ -1,5 +1,5 @@
 <map id="CardListAdapter.CardViewHolder" name="CardListAdapter.CardViewHolder">
-<area shape="rect" id="Node000001" title="A RecyclerView.ViewHolder class managing a card view that shows a representation of the UnitEntity re..." alt="" coords="5,79,187,119"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="52,5,140,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="99,44,99,79,93,79,93,44"/>
+<area shape="rect" id="Node000001" title="A RecyclerView.ViewHolder class managing a card view that shows a representation of the UnitEntity re..." alt="" coords="5,81,185,126"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="52,5,138,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="97,46,98,82,93,80,93,50"/>
 </map>

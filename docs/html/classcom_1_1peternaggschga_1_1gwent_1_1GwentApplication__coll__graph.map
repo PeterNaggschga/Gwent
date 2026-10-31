@@ -1,5 +1,12 @@
 <map id="GwentApplication" name="GwentApplication">
-<area shape="rect" id="Node000001" title="An Application encapsulating the Gwent app." alt="" coords="5,79,133,104"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="27,5,112,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="72,44,72,79,67,79,67,44"/>
+<area shape="rect" id="Node000001" title="An Application encapsulating the Gwent app." alt="" coords="74,284,199,311"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,183,89,211"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="70,219,128,283,123,285,67,224"/>
+<area shape="rect" id="Node000003" href="$classcom_1_1peternaggschga_1_1gwent_1_1data_1_1UnitRepository.xhtml" title="A facade class managing public access to the data layer." alt="" coords="233,183,341,211"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="271,210,171,277,169,272,265,211"/>
+<area shape="rect" id="Node000004" href="$classcom_1_1peternaggschga_1_1gwent_1_1data_1_1AppDatabase.xhtml" title="An abstract class extending RoomDatabase and representing the SQLite database of the application." alt="" coords="109,82,207,110"/>
+<area shape="poly" id="edge5_Node000001_Node000004" title=" " alt="" coords="159,109,142,268,137,266,154,111"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="175,107,260,172,255,174,174,113"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="102,5,213,33"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="159,45,160,83,155,82,157,50"/>
 </map>

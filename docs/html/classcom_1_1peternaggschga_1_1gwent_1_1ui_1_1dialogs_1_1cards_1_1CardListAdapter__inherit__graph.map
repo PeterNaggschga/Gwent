@@ -1,5 +1,5 @@
 <map id="CardListAdapter" name="CardListAdapter">
-<area shape="rect" id="Node000001" title="A ListAdapter used to provide CardListAdapter.CardViewHolder objects created from CardUiState objects..." alt="" coords="68,93,185,119"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="5,5,248,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="129,59,129,93,124,93,124,59"/>
+<area shape="rect" id="Node000001" title="A ListAdapter used to provide CardListAdapter.CardViewHolder objects created from CardUiState objects..." alt="" coords="69,98,184,126"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,5,247,50"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="128,63,129,99,124,97,124,67"/>
 </map>

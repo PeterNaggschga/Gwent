@@ -37,16 +37,13 @@ var annotated_dup =
           [ "ui", null, [
             [ "dialogs", null, [
               [ "addcard", null, [
-                [ "ValuePicker", null, [
-                  [ "OnValueChangeListener< T extends Comparable", "interfacecom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1ValuePicker_1_1OnValueCha8c86acb296a3806ca4f71493da258dd8.xhtml", null ]
-                ] ],
                 [ "AddCardDialog", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1AddCardDialog.xhtml", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1AddCardDialog" ],
                 [ "CardNumberPickerAdapter", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1CardNumberPickerAdapter.xhtml", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1CardNumberPickerAdapter" ],
                 [ "DamageValuePicker", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1DamageValuePicker.xhtml", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1DamageValuePicker" ],
                 [ "SquadManager", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1SquadManager.xhtml", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1SquadManager" ],
                 [ "SquadState", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1SquadState.xhtml", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1SquadState" ],
-                [ "StringValuePicker< T extends Comparable", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1StringValuePicker_3_01T_01extends_01Comparable.xhtml", null ],
-                [ "ValuePicker< T extends Comparable", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1ValuePicker_3_01T_01extends_01Comparable.xhtml", null ]
+                [ "StringValuePicker", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1StringValuePicker.xhtml", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1StringValuePicker" ],
+                [ "ValuePicker", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1ValuePicker.xhtml", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1ValuePicker" ]
               ] ],
               [ "cards", null, [
                 [ "CardListAdapter", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1cards_1_1CardListAdapter.xhtml", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1cards_1_1CardListAdapter" ],

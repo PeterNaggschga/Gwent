@@ -1,7 +1,7 @@
 <map id="SettingsActivity" name="SettingsActivity">
-<area shape="rect" id="Node000001" title="An AppCompatActivity implementing PreferenceFragmentCompat.OnPreferenceStartFragmentCallback that is ..." alt="" coords="112,93,227,119"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="5,13,144,38"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="101,45,157,91,154,95,98,49"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="168,5,360,45"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="232,56,185,95,182,91,229,52"/>
+<area shape="rect" id="Node000001" title="An AppCompatActivity implementing PreferenceFragmentCompat.OnPreferenceStartFragmentCallback that is ..." alt="" coords="110,98,224,126"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,14,142,42"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="100,49,155,97,150,99,98,54"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="166,5,358,50"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="228,59,183,100,180,96,223,61"/>
 </map>

@@ -10,5 +10,5 @@ var searchData=
   ['soundmanager_7',['SoundManager',['../classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1sounds_1_1SoundManager.xhtml',1,'com::peternaggschga::gwent::ui::sounds']]],
   ['squadmanager_8',['SquadManager',['../classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1SquadManager.xhtml',1,'com::peternaggschga::gwent::ui::dialogs::addcard']]],
   ['squadstate_9',['SquadState',['../classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1SquadState.xhtml',1,'com::peternaggschga::gwent::ui::dialogs::addcard']]],
-  ['stringvaluepicker_3c_20t_20extends_20comparable_10',['StringValuePicker&lt; T extends Comparable',['../classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1StringValuePicker_3_01T_01extends_01Comparable.xhtml',1,'com::peternaggschga::gwent::ui::dialogs::addcard']]]
+  ['stringvaluepicker_10',['StringValuePicker',['../classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1StringValuePicker.xhtml',1,'com::peternaggschga::gwent::ui::dialogs::addcard']]]
 ];

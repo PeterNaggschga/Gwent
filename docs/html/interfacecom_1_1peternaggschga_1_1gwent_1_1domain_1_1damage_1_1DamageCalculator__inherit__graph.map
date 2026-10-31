@@ -1,13 +1,13 @@
 <map id="DamageCalculator" name="DamageCalculator">
-<area shape="rect" id="Node000001" title="An interface for a class capable of calculating the (de&#45;)buffed damage of a unit for a given UnitEnti..." alt="" coords="415,5,548,31"/>
-<area shape="rect" id="Node000002" href="$classcom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1DamageCalculatorDecorator.xhtml" title="An abstract DamageCalculator that is used as a superclass for the decorator classes implementing the ..." alt="" coords="275,79,472,104"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="454,40,392,81,390,76,451,36"/>
-<area shape="rect" id="Node000006" href="$classcom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1WeatherDamageCalculator.xhtml" title="A DamageCalculator class responsible for calculating the weather debuff if necessary,..." alt="" coords="496,79,683,104"/>
-<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="511,36,573,76,570,81,509,40"/>
-<area shape="rect" id="Node000003" href="$classcom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1BondDamageCalculatorDecorator.xhtml" title="A DamageCalculator class responsible for calculating the tight bond buff if necessary,..." alt="" coords="5,152,235,177"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="320,110,162,154,160,149,319,105"/>
-<area shape="rect" id="Node000004" href="$classcom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1HornDamageCalculatorDecorator.xhtml" title="A DamageCalculator class responsible for calculating the horn buff if necessary, i...." alt="" coords="259,152,488,177"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="376,118,376,152,371,152,371,118"/>
-<area shape="rect" id="Node000005" href="$classcom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1MoralDamageCalculatorDecorator.xhtml" title="A DamageCalculator class responsible for calculating the moral buff if necessary, i...." alt="" coords="512,152,747,177"/>
-<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="428,105,589,149,587,154,427,110"/>
+<area shape="rect" id="Node000001" title="An interface for a class capable of calculating the (de&#45;)buffed damage of a unit for a given UnitEnti..." alt="" coords="412,5,544,33"/>
+<area shape="rect" id="Node000002" href="$classcom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1DamageCalculatorDecorator.xhtml" title="An abstract DamageCalculator that is used as a superclass for the decorator classes implementing the ..." alt="" coords="274,81,470,109"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="450,41,391,83,389,79,445,43"/>
+<area shape="rect" id="Node000006" href="$classcom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1WeatherDamageCalculator.xhtml" title="A DamageCalculator class responsible for calculating the weather debuff if necessary,..." alt="" coords="494,81,679,109"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="510,39,571,81,565,81,508,44"/>
+<area shape="rect" id="Node000003" href="$classcom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1BondDamageCalculatorDecorator.xhtml" title="A DamageCalculator class responsible for calculating the tight bond buff if necessary,..." alt="" coords="5,157,234,184"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="317,114,163,159,162,154,312,111"/>
+<area shape="rect" id="Node000004" href="$classcom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1HornDamageCalculatorDecorator.xhtml" title="A DamageCalculator class responsible for calculating the horn buff if necessary, i...." alt="" coords="258,157,485,184"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="374,122,374,158,370,155,370,125"/>
+<area shape="rect" id="Node000005" href="$classcom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1MoralDamageCalculatorDecorator.xhtml" title="A DamageCalculator class responsible for calculating the moral buff if necessary, i...." alt="" coords="509,157,741,184"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="429,110,584,157,579,157,429,115"/>
 </map>

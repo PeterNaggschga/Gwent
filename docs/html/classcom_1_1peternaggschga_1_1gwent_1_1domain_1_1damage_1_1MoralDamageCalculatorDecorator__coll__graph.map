@@ -1,8 +1,8 @@
 <map id="MoralDamageCalculatorDecorator" name="MoralDamageCalculatorDecorator">
-<area shape="rect" id="Node000001" title="A DamageCalculator class responsible for calculating the moral buff if necessary, i...." alt="" coords="5,168,240,193"/>
-<area shape="rect" id="Node000002" href="$classcom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1DamageCalculatorDecorator.xhtml" title="An abstract DamageCalculator that is used as a superclass for the decorator classes implementing the ..." alt="" coords="24,93,221,119"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="125,133,125,168,120,168,120,133"/>
-<area shape="rect" id="Node000003" href="$interfacecom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1DamageCalculator.xhtml" title="An interface for a class capable of calculating the (de&#45;)buffed damage of a unit for a given UnitEnti..." alt="" coords="56,5,189,31"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="123,45,123,55,124,93,119,93,117,55,118,44"/>
-<area shape="poly" id="edge3_Node000002_Node000003" title=" " alt="" coords="125,31,125,76,120,76,120,31"/>
+<area shape="rect" id="Node000001" title="A DamageCalculator class responsible for calculating the moral buff if necessary, i...." alt="" coords="5,183,238,211"/>
+<area shape="rect" id="Node000002" href="$classcom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1DamageCalculatorDecorator.xhtml" title="An abstract DamageCalculator that is used as a superclass for the decorator classes implementing the ..." alt="" coords="24,106,220,134"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="124,147,124,185,119,182,120,150"/>
+<area shape="rect" id="Node000003" href="$interfacecom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1DamageCalculator.xhtml" title="An interface for a class capable of calculating the (de&#45;)buffed damage of a unit for a given UnitEnti..." alt="" coords="56,5,188,33"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="120,46,122,57,122,82,123,107,118,105,116,82,116,57,119,51"/>
+<area shape="poly" id="edge3_Node000002_Node000003" title=" " alt="" coords="123,31,124,90,119,89,120,35"/>
 </map>
