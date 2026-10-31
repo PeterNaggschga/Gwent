@@ -86,6 +86,26 @@ jobs:
       
       - run: echo ${{ steps.sha.outputs.SHA }}
       
+  rebase-dev:
+    needs: update-documentation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout dev
+        uses: actions/checkout@v7
+        with:
+          ref: dev
+          fetch-depth: 0
+
+      - name: Rebase dev onto documentation commit and push
+        env:
+          DOCUMENTATION_SHA: ${{ needs.update-documentation.outputs.SHA }}
+        run: |
+          git config user.name github-actions
+          git config user.email action@github.com
+          dev_sha=$(git rev-parse refs/remotes/origin/dev)
+          git rebase "$DOCUMENTATION_SHA"
+          git push --force-with-lease="refs/heads/dev:$dev_sha" origin HEAD:refs/heads/dev
+
   deploy:
     needs: update-documentation
     environment:
