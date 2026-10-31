@@ -1,2 +1,2 @@
-Font: Algerian
+Font: Constantia
 Color: #3B2D10

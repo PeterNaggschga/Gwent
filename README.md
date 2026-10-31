@@ -1,4 +1,4 @@
-# Gwent - A Calculator
+# Dandelion's Calculator
 
 ---
 
@@ -10,7 +10,8 @@
 
 ## Overview
 
-*Gwent - A Calculator* is an Android app ([available in Play Store](https://play.google.com/store/apps/details?id=com.peternaggschga.gwint)) 
+*Dandelion's Calculator* is an Android app
+([available in Play Store](https://play.google.com/store/apps/details?id=com.peternaggschga.gwint))
 that enables the user to play the Gwent card game from The Witcher 3: Wild Hunt with analog cards.
 This is accomplished by providing an easy-to-use interface which allows adding cards with certain
 attributes that correspond to the cards played analogously. 
@@ -21,7 +22,8 @@ To see what this looks like, please visit the [Play Store entry](https://play.go
 
 ## Printing analog cards
 
-To actually play Gwent using *Gwent - A Calculator*, you need to print out analog Gwent cards. The card images can be downloaded from the following links:
+To actually play Gwent using *Dandelion's Calculator*, you need to print out analog Gwent cards. The
+card images can be downloaded from the following links:
 
 | Language |                                                   `zip`                                                   |                                                      `tar`                                                      |
 |:--------:|:---------------------------------------------------------------------------------------------------------:|:---------------------------------------------------------------------------------------------------------------:|

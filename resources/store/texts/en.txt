@@ -1,12 +1,14 @@
 Name:
-Gwent - A Calculator
+Dandelion's Calculator
 
 Short Description:
 An app that simplifies playing Gwent using analog cards.
 
 Description:
-With Gwent - A Calculator you are able to play the card game Gwent from The Witcher 3: Wild Hunt using analog cards. Print out some cards (guide below), download this app and start playing!
-Usually a computer, console or smartphone calculates your points, but with a real life opponent this calculation can get very complicated. Gwent - A Calculator is solving this problem!
+With Dandelion's Calculator you are able to play the card game Gwent from The Witcher 3: Wild Hunt using analog cards. Print out some cards (guide below), download this app and start playing!
+Usually a computer, console or smartphone calculates your points, but with a real life opponent this calculation can get very complicated. Dandelion's Calculator is solving this problem!
 Simply add some cards to your combat row, change the weather or activate a Commander's Horn, and the app determines your points. Additionally, an extensive rulebook can be found in the app.
 
 To print the cards, you can follow the instructions given here: https://github.com/PeterNaggschga/Gwent#overview
+
+Unofficial app. "Gwent" and "The Witcher" are trademarks of CD Projekt Red, referenced for identification only. This app is not affiliated with or endorsed by CD Projekt Red.

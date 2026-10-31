@@ -1,9 +1,9 @@
 package com.peternaggschga.gwent.data;
 
 import androidx.annotation.NonNull;
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
+import androidx.room3.ColumnInfo;
+import androidx.room3.Entity;
+import androidx.room3.PrimaryKey;
 
 /**
  * A class representing the state of an attack row, i.e., weather and commanders horn.
@@ -11,7 +11,7 @@ import androidx.room.PrimaryKey;
  */
 @Entity(tableName = "rows")
 @SuppressWarnings("unused")
-class RowEntity {
+public class RowEntity {
     /**
      * Defines the type of the row as one of the values in RowType,
      * thereby limiting the number of different rows to three.
@@ -44,7 +44,7 @@ class RowEntity {
      *
      * @param id RowType of the represented row.
      */
-    RowEntity(@NonNull RowType id) {
+    protected RowEntity(@NonNull RowType id) {
         this.id = id;
     }
 
@@ -55,7 +55,7 @@ class RowEntity {
      * @return RowType of the represented row.
      */
     @NonNull
-    RowType getId() {
+    protected RowType getId() {
         return id;
     }
 
@@ -65,7 +65,7 @@ class RowEntity {
      *
      * @return Boolean representing the current status of the weather debuff.
      */
-    boolean isWeather() {
+    protected boolean isWeather() {
         return weather;
     }
 
@@ -75,7 +75,7 @@ class RowEntity {
      *
      * @param weather Boolean representing the new status of the weather debuff.
      */
-    void setWeather(boolean weather) {
+    protected void setWeather(boolean weather) {
         this.weather = weather;
     }
 
@@ -85,7 +85,7 @@ class RowEntity {
      *
      * @return Boolean representing the current status of the horn buff.
      */
-    boolean isHorn() {
+    protected boolean isHorn() {
         return horn;
     }
 
@@ -95,7 +95,7 @@ class RowEntity {
      *
      * @param horn Boolean representing the new status of the horn buff.
      */
-    void setHorn(boolean horn) {
+    protected void setHorn(boolean horn) {
         this.horn = horn;
     }
 }

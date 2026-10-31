@@ -1,23 +1,18 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.devtools.ksp'
 
 android {
-    compileSdk 36
+    compileSdk 37
 
     defaultConfig {
         applicationId 'com.peternaggschga.gwint'
         minSdk 24
-        targetSdkVersion 36
-        versionCode 23
+        targetSdk 37
+        versionCode 24
         versionName '2.1'
 
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
-        versionNameSuffix '.1'
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments = ["room.schemaLocation":
-                                     "$projectDir/schemas".toString()]
-            }
-        }
+        versionNameSuffix '.2'
     }
 
     buildTypes {
@@ -27,42 +22,54 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    packagingOptions {
+        jniLibs {
+            useLegacyPackaging true
+        }
+    }
+
     namespace 'com.peternaggschga.gwent'
+    compileSdkMinor 2
+}
+
+ksp {
+    arg("room.schemaLocation", "$projectDir/schemas")
 }
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation 'androidx.appcompat:appcompat:1.7.1'
-    implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
+    implementation 'androidx.appcompat:appcompat:1.8.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.2.2'
     implementation 'androidx.preference:preference:1.2.1'
-    implementation 'com.google.android.material:material:1.12.0'
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.9.1'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.9.1'
+    implementation 'com.google.android.material:material:1.14.0'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.11.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.11.0'
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.2.1'
-    testImplementation 'androidx.test.ext:junit:1.2.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
-    androidTestImplementation 'androidx.test.ext:truth:1.6.0'
-    testImplementation 'androidx.test.ext:truth:1.6.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.3.0'
+    testImplementation 'androidx.test.ext:junit:1.3.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.7.0'
+    androidTestImplementation 'androidx.test.ext:truth:1.7.0'
+    testImplementation 'androidx.test.ext:truth:1.7.0'
 
     // RxJava
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.2'
-    implementation 'io.reactivex.rxjava3:rxjava:3.1.10'
+    implementation 'io.reactivex.rxjava3:rxjava:3.1.12'
 
     // Mockito testing
-    def mockito_version = '5.18.0'
+    def mockito_version = '5.24.0'
     testImplementation "org.mockito:mockito-core:$mockito_version"
     androidTestImplementation "org.mockito:mockito-android:$mockito_version"
 
     // Room integration
-    def room_version = "2.7.2"
+    def room_version = "3.0.3"
 
-    implementation "androidx.room:room-runtime:$room_version"
-    annotationProcessor "androidx.room:room-compiler:$room_version"
+    implementation "androidx.room3:room3-runtime:$room_version"
+    ksp "androidx.room3:room3-compiler:$room_version"
 
     // RxJava3 support for Room
-    implementation "androidx.room:room-rxjava3:$room_version"
+    implementation "androidx.room3:room3-rxjava3:$room_version"
 
     // Test helpers
-    testImplementation "androidx.room:room-testing:$room_version"
+    testImplementation "androidx.room3:room3-testing:$room_version"
 }

@@ -3,8 +3,8 @@ package com.peternaggschga.gwent.data;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.fail;
 
-import androidx.room.Room;
-import androidx.room.rxjava3.EmptyResultSetException;
+import androidx.room3.Room;
+import androidx.room3.rxjava3.EmptyResultSetException;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -12,6 +12,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import kotlinx.coroutines.BuildersKt;
+import kotlinx.coroutines.Dispatchers;
 
 @RunWith(AndroidJUnit4.class)
 public class RowDaoUnitTest {
@@ -25,8 +28,11 @@ public class RowDaoUnitTest {
     }
 
     @After
-    public void closeDatabase() {
-        database.clearAllTables();
+    public void closeDatabase() throws InterruptedException {
+        BuildersKt.runBlocking(
+                Dispatchers.getUnconfined(),
+                ((coroutineScope, continuation) -> database.clearAllTables(continuation))
+        );
         database.close();
     }
 
@@ -41,41 +47,45 @@ public class RowDaoUnitTest {
     }
 
     @Test
-    public void insertRowIgnoresDoubles() {
+    public void insertRowIgnoresDoubles() throws InterruptedException {
         for (RowType row : RowType.values()) {
             rowDao.insertRow(new RowEntity(row))
                     .andThen(rowDao.updateWeather(row))
                     .andThen(rowDao.insertRow(new RowEntity(row)))
                     .blockingAwait();
-            rowDao.isWeather(row).test().assertValue(true);
+            rowDao.isWeather(row).test().await().assertValue(true);
         }
     }
 
     @Test
-    public void clearRowsClearsRows() {
+    public void clearRowsClearsRows() throws InterruptedException {
         for (RowType row : RowType.values()) {
             rowDao.insertRow(new RowEntity(row))
                     .andThen(rowDao.clearRows())
                     .andThen(rowDao.isWeather(row))
                     .test()
+                    .await()
                     .assertError(EmptyResultSetException.class);
         }
     }
 
     @Test
-    public void updateWeatherUpdatesWeather() {
+    public void updateWeatherUpdatesWeather() throws InterruptedException {
         for (RowType row : RowType.values()) {
             rowDao.insertRow(new RowEntity(row))
                     .andThen(rowDao.isWeather(row))
                     .test()
+                    .await()
                     .assertValue(false);
             rowDao.updateWeather(row)
                     .andThen(rowDao.isWeather(row))
                     .test()
+                    .await()
                     .assertValue(true);
             rowDao.updateWeather(row)
                     .andThen(rowDao.isWeather(row))
                     .test()
+                    .await()
                     .assertValue(false);
         }
     }
@@ -93,7 +103,7 @@ public class RowDaoUnitTest {
     }
 
     @Test
-    public void clearWeatherClearsWeather() {
+    public void clearWeatherClearsWeather() throws InterruptedException {
         for (RowType row : RowType.values()) {
             rowDao.insertRow(new RowEntity(row))
                     .andThen(rowDao.updateWeather(row))
@@ -103,24 +113,28 @@ public class RowDaoUnitTest {
         for (RowType row : RowType.values()) {
             rowDao.isWeather(row)
                     .test()
+                    .await()
                     .assertValue(false);
         }
     }
 
     @Test
-    public void updateHornUpdatesHorn() {
+    public void updateHornUpdatesHorn() throws InterruptedException {
         for (RowType row : RowType.values()) {
             rowDao.insertRow(new RowEntity(row))
                     .andThen(rowDao.isHorn(row))
                     .test()
+                    .await()
                     .assertValue(false);
             rowDao.updateHorn(row)
                     .andThen(rowDao.isHorn(row))
                     .test()
+                    .await()
                     .assertValue(true);
             rowDao.updateHorn(row)
                     .andThen(rowDao.isHorn(row))
                     .test()
+                    .await()
                     .assertValue(false);
         }
     }

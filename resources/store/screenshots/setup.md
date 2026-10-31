@@ -29,14 +29,14 @@
 ## Shots
 
 * Overall
-  * Background: Ciri
+  * Background: Default
   * Faction: Nilfgaard
-* Card List (Melee)
-  * Background: Geralt
+* Card List (Mêlée)
+  * Background: Default
   * Faction: Scoia'tael
 * Card Add
   * Background: Default
   * Faction: Northern Kingdoms
 * Coin-flip (opponent)
-  * Background: Dandelion
+  * Background: Default
   * Faction: Monsters

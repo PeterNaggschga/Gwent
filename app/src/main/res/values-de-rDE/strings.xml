@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Gwint</string>
+    <string name="app_name">Rittersporns Rechner</string>
     <string name="app_description">Eine App, die es ermöglicht, das Kartenspiel Gwint aus The Witcher 3 mit analogen Karten zu spielen.</string>
     <string name="settings_title">Einstellungen</string>
 
@@ -176,7 +176,7 @@
     <p>Verbrennen: <br />Entferne die stärkste(n) Karte(n) beider Spieler auf dem Schlachtfeld und lege sie mit dieser Karte auf den Ablagestapel.</p>
     ]]></string>
     <string name="introduction_page1"><![CDATA[
-    <p>Danke, dass du „Gwint - Eine Rechenhilfe“ installiert hast! Bitte beachte, dass diese App nur dazu da ist, dich bei einem Spiel mit analogen Gwintkarten zu unterstützen, indem sie deinen Punktestand errechnet. Du kannst in dieser App nicht gegen KI-Gegner oder ohne analoge Gwintkarten spielen!</p>
+    <p>Danke, dass du Rittersporns Rechner installiert hast! Bitte beachte, dass diese App nur dazu da ist, dich bei einem Spiel mit analogen Gwintkarten zu unterstützen, indem sie deinen Punktestand errechnet. Du kannst in dieser App nicht gegen KI-Gegner oder ohne analoge Gwintkarten spielen!</p>
     <p>Also falls du es noch nicht getan hast: Drucke dir einen Satz Gwintkarten aus (<a href="https://github.com/PeterNaggschga/Gwent#overview">Anleitung hier</a>) und suche dir einen Gegner, der dasselbe tut (ihr braucht beide diese App)!</p>
     ]]></string>
     <string name="introduction_page2"><![CDATA[
