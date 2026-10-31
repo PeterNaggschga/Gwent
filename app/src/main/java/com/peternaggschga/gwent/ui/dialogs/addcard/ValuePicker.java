@@ -208,7 +208,7 @@ abstract class ValuePicker<T extends Comparable> {
     /**
      * An interface defining a callback for changes of the current value.
      */
-    interface OnValueChangeListener<T> {
+    interface OnValueChangeListener<T extends Comparable> {
         /**
          * Called upon a change of the current value.
          *
