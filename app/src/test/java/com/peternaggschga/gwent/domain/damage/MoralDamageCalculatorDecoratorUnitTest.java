@@ -58,8 +58,7 @@ public class MoralDamageCalculatorDecoratorUnitTest {
 
     @Test
     public void calculateDamageAddsSizeOfListToDamage() {
-        // noinspection unchecked cast
-        List<Integer> list = (List<Integer>) Mockito.mock(List.class);
+        List<Integer> list = Mockito.mock();
         MoralDamageCalculatorDecorator decorator = new MoralDamageCalculatorDecorator(component, list);
         for (int moralUnitNumber = 1; moralUnitNumber <= TESTING_DEPTH; moralUnitNumber++) {
             when(list.size()).thenReturn(moralUnitNumber);
@@ -69,8 +68,7 @@ public class MoralDamageCalculatorDecoratorUnitTest {
 
     @Test
     public void calculateDamageDoesNotAddUnitItself() {
-        // noinspection unchecked cast
-        List<Integer> list = (List<Integer>) Mockito.mock(List.class);
+        List<Integer> list = Mockito.mock();
         when(list.contains(anyInt())).thenReturn(true);
         when(list.size()).thenReturn(TESTING_DEPTH);
         MoralDamageCalculatorDecorator decorator = new MoralDamageCalculatorDecorator(component, list);
@@ -88,8 +86,7 @@ public class MoralDamageCalculatorDecoratorUnitTest {
 
     @Test
     public void isBuffedReturnsBuffedWhenUnitIsBuffed() {
-        // noinspection unchecked cast
-        List<Integer> list = (List<Integer>) Mockito.mock(List.class);
+        List<Integer> list = Mockito.mock();
         when(list.contains(anyInt())).thenReturn(true);
         when(list.size()).thenReturn(TESTING_DEPTH);
         MoralDamageCalculatorDecorator decorator = new MoralDamageCalculatorDecorator(component, list);

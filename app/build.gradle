@@ -31,6 +31,13 @@ android {
 
     namespace = 'com.peternaggschga.gwent'
     compileSdkMinor = 2
+
+    testOptions {
+        unitTests.all {
+            // Mockito inline mocks append to the bootstrap classpath, which prevents CDS.
+            jvmArgs '-Xshare:off'
+        }
+    }
 }
 
 ksp {
