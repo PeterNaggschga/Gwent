@@ -31,6 +31,12 @@
 * Overall
   * Background: Default
   * Faction: Nilfgaard
+* Card List (Mêlée)
+  * Background: Default
+  * Faction: Scoia'tael
 * Card Add
   * Background: Default
   * Faction: Northern Kingdoms
+* Coin-flip (opponent)
+  * Background: Default
+  * Faction: Monsters
