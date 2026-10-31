@@ -17,47 +17,47 @@ import io.reactivex.rxjava3.core.Completable;
 
 /**
  * An adapter class adapting AlertDialog.Builder to provide an interface
- * for creating an AlertDialog asking the user whether they want to invoke the Ability#REVENGE ability.
+ * for creating an AlertDialog asking the user whether they want to invoke the Ability.REVENGE ability.
  *
  */
 class RevengeAlertDialogBuilderAdapter {
     /**
      * Boolean constant defining
-     * whether the default UnitEntity summoned by the Ability#REVENGE ability is epic.
+     * whether the default UnitEntity summoned by the Ability.REVENGE ability is epic.
      *
-     * @see Ability#REVENGE
+     * @see Ability.REVENGE
      */
     private static final boolean AVENGER_EPIC = false;
 
     /**
      * Ability constant defining the Ability of the default UnitEntity
-     * summoned by the Ability#REVENGE ability.
+     * summoned by the Ability.REVENGE ability.
      *
-     * @see Ability#REVENGE
+     * @see Ability.REVENGE
      */
     private static final Ability AVENGER_ABILITY = Ability.NONE;
 
     /**
      * Integer constant defining the damage of the default UnitEntity
-     * summoned by the Ability#REVENGE ability.
+     * summoned by the Ability.REVENGE ability.
      *
-     * @see Ability#REVENGE
+     * @see Ability.REVENGE
      */
     private static final int AVENGER_DAMAGE = 8;
 
     /**
      * Integer constant defining the squad of the default UnitEntity
-     * summoned by the Ability#REVENGE ability.
+     * summoned by the Ability.REVENGE ability.
      *
-     * @see Ability#REVENGE
+     * @see Ability.REVENGE
      */
     private static final Integer AVENGER_SQUAD = null;
 
     /**
      * RowType constant defining the row of the default UnitEntity
-     * summoned by the Ability#REVENGE ability.
+     * summoned by the Ability.REVENGE ability.
      *
-     * @see Ability#REVENGE
+     * @see Ability.REVENGE
      */
     private static final RowType AVENGER_ROW = RowType.MELEE;
 
@@ -85,11 +85,12 @@ class RevengeAlertDialogBuilderAdapter {
 
     /**
      * Inserts numberOfAvengers avenger units into the given UnitRepository.
-     * The inserted UnitEntity objects have the attributes defined in #AVENGER_EPIC,
-     * #AVENGER_DAMAGE, #AVENGER_ABILITY, #AVENGER_SQUAD, and #AVENGER_ROW.
+     * The inserted UnitEntity objects have the attributes defined in AVENGER_EPIC,
+     * AVENGER_DAMAGE, AVENGER_ABILITY, AVENGER_SQUAD, and AVENGER_ROW.
      *
      * @param repository       UnitRepository where avengers are inserted.
      * @param numberOfAvengers Integer defining how many avengers are inserted.
+     * @param soundManager     SoundManager used to play the card add sound.
      * @return A Completable tracking operation status.
      */
     @NonNull
@@ -100,9 +101,10 @@ class RevengeAlertDialogBuilderAdapter {
 
     /**
      * Creates an AlertDialog with the arguments supplied to this builder.
-     * Basically just calls AlertDialog.Builder#create() on #adapteeBuilder.
+     * Basically just calls AlertDialog.Builder.create() on .adapteeBuilder.
      *
-     * @see AlertDialog.Builder#create()
+     * @return The AlertDialog created by this builder.
+     * @see AlertDialog.Builder.create()
      */
     @NonNull
     AlertDialog create() {
@@ -115,7 +117,7 @@ class RevengeAlertDialogBuilderAdapter {
      *
      * @param onPositiveButtonClick DialogInterface.OnClickListener that is called, when the positive button is clicked.
      * @return The RevengeAlertDialogBuilder with the updated positive callback.
-     * @see #insertAvengers(UnitRepository, int, SoundManager)
+     * @see .insertAvengers(UnitRepository, int, SoundManager)
      */
     @NonNull
     RevengeAlertDialogBuilderAdapter setPositiveCallback(@NonNull DialogInterface.OnClickListener onPositiveButtonClick) {

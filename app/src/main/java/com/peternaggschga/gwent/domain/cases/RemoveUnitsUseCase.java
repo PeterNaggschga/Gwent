@@ -19,7 +19,7 @@ import io.reactivex.rxjava3.core.CompletableEmitter;
 
 /**
  * A use case class responsible for removing units from a UnitRepository.
- * Capable of invoking a Dialog if a UnitEntity with the Ability#REVENGE ability is removed.
+ * Capable of invoking a Dialog if a UnitEntity with the Ability.REVENGE ability is removed.
  * Should not be used directly by the UI layer.
  *
  * @see BurnDialogUseCase
@@ -27,17 +27,17 @@ import io.reactivex.rxjava3.core.CompletableEmitter;
 public class RemoveUnitsUseCase {
     /**
      * Removes the given UnitEntity objects from the given UnitRepository.
-     * If a UnitEntity has the Ability#REVENGE ability,
+     * If a UnitEntity has the Ability.REVENGE ability,
      * a Dialog asking whether the ability should be used is shown.
      *
      * @param context    Context of the shown Dialog.
      * @param repository UnitRepository where the UnitEntity objects are removed.
      * @param units      Collection of UnitEntity objects that are removed.
-     * @param soundManager SoundManager used, if an UnitEntity has the Ability#REVENGE ability.
+     * @param soundManager SoundManager used, if an UnitEntity has the Ability.REVENGE ability.
      * @return A Completable tracking operation status.
      * @throws NullPointerException When units contains a null value.
-     * @see #getRevengeDialog(Context, UnitRepository, CompletableEmitter, Collection, int, SoundManager)
-     * @see UnitRepository#delete(Collection)
+     * @see .getRevengeDialog(Context, UnitRepository, CompletableEmitter, Collection, int, SoundManager)
+     * @see UnitRepository.delete(Collection)
      */
     @NonNull
     public static Completable remove(@NonNull Context context, @NonNull UnitRepository repository,
@@ -55,15 +55,16 @@ public class RemoveUnitsUseCase {
 
     /**
      * Removes the unit with the given id from the given UnitRepository.
-     * If the unit has the Ability#REVENGE ability,
+     * If the unit has the Ability.REVENGE ability,
      * a Dialog asking whether the ability should be used is shown.
-     * Wrapper of #remove(Context, UnitRepository, Collection).
+     * Wrapper of .remove(Context, UnitRepository, Collection).
      *
      * @param context    Context of the shown Dialog.
      * @param repository UnitRepository where the UnitEntity objects are removed.
      * @param id         Integer
+     * @param soundManager SoundManager used, if an UnitEntity has the Ability.REVENGE ability.
      * @return A Completable tracking operation status.
-     * @see #remove(Context, UnitRepository, Collection, SoundManager)
+     * @see .remove(Context, UnitRepository, Collection, SoundManager)
      */
     public static Completable remove(@NonNull Context context, @NonNull UnitRepository repository, int id, @NonNull SoundManager soundManager) {
         return repository.getUnit(id)
@@ -72,18 +73,18 @@ public class RemoveUnitsUseCase {
     }
 
     /**
-     * Creates a Dialog asking whether the Ability#REVENGE ability should be activated.
+     * Creates a Dialog asking whether the Ability.REVENGE ability should be activated.
      * The Dialog is created using an RevengeAlertDialogBuilderAdapter.
      *
      * @param context      Context of the shown Dialog.
      * @param repository   UnitRepository where the UnitEntity objects are removed and avengers are inserted.
-     * @param emitter      CompletableEmitter where CompletableEmitter#onComplete must be called,
+     * @param emitter      CompletableEmitter where CompletableEmitter.onComplete must be called,
      *                     when the user makes a decision.
      * @param units        Collection of UnitEntity objects that are removed.
      * @param revengeUnits Long representing the number of revenge units.
      * @param soundManager SoundManager used when an Avenger is added.
-     * @return A Dialog asking whether the Ability#REVENGE ability should be activated.
-     * @see RevengeAlertDialogBuilderAdapter#insertAvengers(UnitRepository, int, SoundManager)
+     * @return A Dialog asking whether the Ability.REVENGE ability should be activated.
+     * @see RevengeAlertDialogBuilderAdapter.insertAvengers(UnitRepository, int, SoundManager)
      */
     @NonNull
     private static Dialog getRevengeDialog(@NonNull Context context, @NonNull UnitRepository repository,

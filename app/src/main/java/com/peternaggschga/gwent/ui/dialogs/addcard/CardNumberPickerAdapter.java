@@ -26,8 +26,8 @@ import io.reactivex.rxjava3.core.Single;
 
 /**
  * A helper class responsible for initializing the NumberPicker views of an AddCardDialog
- * (in #CardNumperPickerAdapter())
- * and adding UnitEntity objects with the selected attributes when #addSelectedUnits() is called.
+ * (in .CardNumperPickerAdapter())
+ * and adding UnitEntity objects with the selected attributes when .addSelectedUnits() is called.
  * @see AddCardDialog
  */
 class CardNumberPickerAdapter {
@@ -38,29 +38,29 @@ class CardNumberPickerAdapter {
     private static final List<Ability> EPIC_UNIT_ABILITIES = Arrays.asList(Ability.NONE, Ability.HORN, Ability.MORAL_BOOST);
 
     /**
-     * ValuePicker used to decide the value of UnitEntity#epic.
+     * ValuePicker used to decide the value of UnitEntity.epic.
      */
     @NonNull
     private final ValuePicker<Boolean> epicPicker;
 
     /**
-     * DamageValuePicker used to decide the value of UnitEntity#damage.
+     * DamageValuePicker used to decide the value of UnitEntity.damage.
      */
     @NonNull
     private final DamageValuePicker damagePicker;
 
     /**
-     * ValuePicker used to decide the value of UnitEntity#ability.
+     * ValuePicker used to decide the value of UnitEntity.ability.
      *
-     * @see #squadPicker
+     * @see .squadPicker
      */
     @NonNull
     private final ValuePicker<Ability> abilityPicker;
 
     /**
-     * NumberPicker used to decide the value of UnitEntity#squad.
-     * Only visible if the value of #abilityPicker is set to Ability#BINDING.
-     * @see #abilityPicker
+     * NumberPicker used to decide the value of UnitEntity.squad.
+     * Only visible if the value of .abilityPicker is set to Ability.BINDING.
+     * @see .abilityPicker
      */
     @NonNull
     private final NumberPicker squadPicker;
@@ -81,8 +81,8 @@ class CardNumberPickerAdapter {
      * Constructor of a CardNumberPickerAdapter
      * managing the NumberPicker views in the given ViewGroup using the given SquadManager.
      * Sets value bounds and NumberPicker.OnValueChangedListener for the pickers in the ViewGroup.
-     * The ViewGroup must be the ConstraintLayout with the id R.id#card_layout from popup_add_card.xml.
-     * @see R.id#card_layout
+     * The ViewGroup must be the ConstraintLayout with the id R.id.card_layout from popup_add_card.xml.
+     * @see R.id.card_layout
      * @param pickerGroup ViewGroup containing the managed NumberPicker views.
      * @param squadManager SquadManager containing up-to-date SquadState.
      */

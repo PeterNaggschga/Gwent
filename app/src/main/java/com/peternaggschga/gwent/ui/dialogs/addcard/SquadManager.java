@@ -49,7 +49,7 @@ class SquadManager {
 
     /**
      * Returns the lowest squad number referring to a squad that has members.
-     * If no squad has members, i.e., there are no units with the Ability#BINDING ability, 1 is returned.
+     * If no squad has members, i.e., there are no units with the Ability.BINDING ability, 1 is returned.
      * @return An Integer referencing to the first squad with members.
      */
     int getFirstSquadWithMembers() {
@@ -62,12 +62,12 @@ class SquadManager {
 
     /**
      * Shows a Toast with information about the selected squad
-     * and sets the given picker to the SquadState#memberBaseDamage of said squad.
+     * and sets the given picker to the SquadState.memberBaseDamage of said squad.
      *
      * @param newVal Integer representing the newly selected squad.
      * @param picker DamageValuePicker that is updated.
-     * @throws IllegalArgumentException When newVal is not between 1 and #MAX_NR_SQUADS.
-     * @see SquadState#getMemberBaseDamage()
+     * @throws IllegalArgumentException When newVal is not between 1 and .MAX_NR_SQUADS.
+     * @see SquadState.getMemberBaseDamage()
      */
     void onSquadChanged(@IntRange(from = 1, to = MAX_NR_SQUADS) int newVal, @NonNull DamageValuePicker picker) {
         if (newVal < 1 || newVal > MAX_NR_SQUADS) {

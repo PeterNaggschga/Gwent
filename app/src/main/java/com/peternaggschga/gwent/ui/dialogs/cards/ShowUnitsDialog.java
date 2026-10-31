@@ -32,7 +32,7 @@ public class ShowUnitsDialog extends OverlayDialog {
     /**
      * RowType defining which row is represented by this Dialog.
      *
-     * @see #getRow()
+     * @see .getRow()
      */
     @NonNull
     private final RowType row;
@@ -46,24 +46,24 @@ public class ShowUnitsDialog extends OverlayDialog {
     /**
      * SoundManager used to play a Sound whenever a card is added or removed.
      *
-     * @see SoundManager#playCardAddSound(RowType, boolean)
-     * @see SoundManager#playCardRemovedSound()
+     * @see SoundManager.playCardAddSound(RowType, boolean)
+     * @see SoundManager.playCardRemovedSound()
      */
     @NonNull
     private final SoundManager soundManager;
 
     /**
      * CompositeDisposable keeping track of all subscriptions to observables made by this class.
-     * Is being disposed in an android.content.DialogInterface.OnDismissListener that is set in #onCreate().
+     * Is being disposed in an android.content.DialogInterface.OnDismissListener that is set in .onCreate().
      *
      * @see android.content.DialogInterface.OnDismissListener
-     * @see #onCreate(Bundle)
+     * @see .onCreate(Bundle)
      */
     @NonNull
     private final CompositeDisposable disposables = new CompositeDisposable();
 
     /**
-     * {@link RecyclerView} presenting the units provided by the {@link #cardListAdapter}.
+     * RecyclerView presenting the units provided by the cardListAdapter.
      */
     private RecyclerView unitRecyclerView;
 
@@ -128,14 +128,14 @@ public class ShowUnitsDialog extends OverlayDialog {
     }
 
     /**
-     * Initializes the RecyclerView by connecting it to the #cardListAdapter
+     * Initializes the RecyclerView by connecting it to the .cardListAdapter
      * and sets View.OnClickListener for each button.
      * Also registers a RecyclerView.AdapterDataObserver responsible for scrolling to the end of the RecyclerView
      * whenever an item is being inserted.
-     * @see CardListAdapter#registerAdapterDataObserver(RecyclerView.AdapterDataObserver)
+     * @see CardListAdapter.registerAdapterDataObserver(RecyclerView.AdapterDataObserver)
      * @param savedInstanceState If this dialog is being reinitialized after
      *                           the hosting activity was previously shut down, holds the result from
-     *                           the most recent call to {@link #onSaveInstanceState}, or null if this
+     *                           the most recent call to onSaveInstanceState, or null if this
      *                           is the first time.
      */
     @Override
@@ -150,24 +150,7 @@ public class ShowUnitsDialog extends OverlayDialog {
             unitRecyclerView.setLayoutManager(llm);
             unitRecyclerView.setAdapter(cardListAdapter);
 
-            cardListAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
-                /**
-                 * Smoothly scrolls to the last item in the RecyclerView
-                 * to show the user that an item has been inserted.
-                 *
-                 * @param positionStart Integer defining the first position from where new items are inserted.
-                 * @param itemCount     Integer defining how many items have been inserted.
-                 * @see RecyclerView#smoothScrollToPosition(int)
-                 */
-                @Override
-                public void onItemRangeInserted(int positionStart, int itemCount) {
-                    super.onItemRangeInserted(positionStart, itemCount);
-                    int scrollPosition = positionStart + itemCount - 1;
-                    if (scrollPosition >= 0) {
-                        unitRecyclerView.smoothScrollToPosition(scrollPosition);
-                    }
-                }
-            });
+            cardListAdapter.registerAdapterDataObserver(new ScrollToEndObserver());
         }
 
         findViewById(R.id.popup_cards_add_button).setOnClickListener(v -> {
@@ -179,10 +162,30 @@ public class ShowUnitsDialog extends OverlayDialog {
     }
 
     /**
+     * Smoothly scrolls to the last item in the RecyclerView
+     * to show the user that an item has been inserted.
+     */
+    private class ScrollToEndObserver extends RecyclerView.AdapterDataObserver {
+        /**
+         * @param positionStart Integer defining the first position from where new items are inserted.
+         * @param itemCount     Integer defining how many items have been inserted.
+         * @see RecyclerView.smoothScrollToPosition(int)
+         */
+        @Override
+        public void onItemRangeInserted(int positionStart, int itemCount) {
+            super.onItemRangeInserted(positionStart, itemCount);
+            int scrollPosition = positionStart + itemCount - 1;
+            if (scrollPosition >= 0) {
+                unitRecyclerView.smoothScrollToPosition(scrollPosition);
+            }
+        }
+    }
+
+    /**
      * Returns the row this ShowUnitsDialog is representing.
      *
      * @return A RowType defining the represented row.
-     * @see #row
+     * @see .row
      */
     @NonNull
     public RowType getRow() {

@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A class implementing SharedPreference.OnSharedPreferenceChangeListener for the #THEME_PREFERENCE_KEY SharedPreference.
+ * A class implementing SharedPreference.OnSharedPreferenceChangeListener for the .THEME_PREFERENCE_KEY SharedPreference.
  * When this Preference is updated,
  * the theme is switched in an animated way using ImageViewSwitchAnimator.
  *
@@ -57,49 +57,49 @@ public class FactionSwitchListener implements SharedPreferences.OnSharedPreferen
 
     /**
      * List of ImageView objects that show a colored ball.
-     * @see R.drawable#ball_red
-     * @see R.drawable#ball_grey
-     * @see R.drawable#ball_blue
-     * @see R.drawable#ball_green
+     * @see R.drawable.ball_red
+     * @see R.drawable.ball_grey
+     * @see R.drawable.ball_blue
+     * @see R.drawable.ball_green
      */
     @NonNull
     private final List<ImageView> ballViews;
 
     /**
      * List of ImageView objects that show a card back.
-     * @see R.drawable#card_monster_landscape_free
-     * @see R.drawable#card_nilfgaard_landscape_free
-     * @see R.drawable#card_northern_kingdoms_landscape_free
-     * @see R.drawable#card_scoiatael_landscape_free
+     * @see R.drawable.card_monster_landscape_free
+     * @see R.drawable.card_nilfgaard_landscape_free
+     * @see R.drawable.card_northern_kingdoms_landscape_free
+     * @see R.drawable.card_scoiatael_landscape_free
      */
     @NonNull
     private final List<ImageView> cardViews;
 
     /**
      * List of TextView objects that show the number of units in a certain color.
-     * @see R.color#color_text_monster
-     * @see R.color#color_text_nilfgaard
-     * @see R.color#color_text_northern_kingdoms
-     * @see R.color#color_text_scoiatael
+     * @see R.color.color_text_monster
+     * @see R.color.color_text_nilfgaard
+     * @see R.color.color_text_northern_kingdoms
+     * @see R.color.color_text_scoiatael
      */
     @NonNull
     private final List<TextView> unitViews;
 
     /**
      * ImageButton showing the logo of the current faction.
-     * @see R.drawable#icon_round_monster
-     * @see R.drawable#icon_round_nilfgaard
-     * @see R.drawable#icon_round_northern_kingdoms
-     * @see R.drawable#icon_round_scoiatael
+     * @see R.drawable.icon_round_monster
+     * @see R.drawable.icon_round_nilfgaard
+     * @see R.drawable.icon_round_northern_kingdoms
+     * @see R.drawable.icon_round_scoiatael
      */
     @NonNull
     private final ImageButton factionButton;
 
     /**
      * Constructor of a FactionSwitchListener
-     * updating the given View objects when #onSharedPreferenceChanged() is called.
-     * Should only be used by factory method #getListener().
-     * @see #getListener(Window)
+     * updating the given View objects when .onSharedPreferenceChanged() is called.
+     * Should only be used by factory method .getListener().
+     * @see .getListener(Window)
      * @param ballViews List of ImageView objects showing a colored ball.
      * @param cardViews List of ImageView objects showing the backside of a card.
      * @param unitViews List of TextView objects showing the number of units.
@@ -140,10 +140,10 @@ public class FactionSwitchListener implements SharedPreferences.OnSharedPreferen
     }
 
     /**
-     * Changes the theme of the content referenced by the given {@link Context} depending on the
-     * preferences obtainable by said {@link Context}.
+     * Changes the theme of the content referenced by the given Context depending on the
+     * preferences obtainable by said Context.
      *
-     * @param context {@link Context} that is used to query the current theme preference and that gets it theme updated accordingly.
+     * @param context Context that is used to query the current theme preference and that gets it theme updated accordingly.
      */
     public static void setTheme(@NonNull Context context) {
         switch (PreferenceManager.getDefaultSharedPreferences(context)
@@ -165,9 +165,9 @@ public class FactionSwitchListener implements SharedPreferences.OnSharedPreferen
 
     /**
      * Called when a shared preference is changed, added, or removed.
-     * Only handles changes when the given key is equal to #THEME_PREFERENCE_KEY.
-     * Updates the View objects in #ballViews,
-     * #cardViews, #unitViews, and #factionButton using ImageViewSwitchAnimator.
+     * Only handles changes when the given key is equal to .THEME_PREFERENCE_KEY.
+     * Updates the View objects in .ballViews,
+     * .cardViews, .unitViews, and .factionButton using ImageViewSwitchAnimator.
      * @see ImageViewSwitchAnimator
      * @param sharedPreferences SharedPreferences that received the change.
      * @param key               String representing the key of the preference that was changed, added, or removed.

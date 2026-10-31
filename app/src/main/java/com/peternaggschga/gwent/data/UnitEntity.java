@@ -67,7 +67,7 @@ public class UnitEntity {
 
     /**
      * Defines the Ability of the represented card.
-     * Is set to Ability#NONE by default.
+     * Is set to Ability.NONE by default.
      * Must not be `null`.
      */
     @ColumnInfo(defaultValue = "NONE")
@@ -75,8 +75,8 @@ public class UnitEntity {
     private Ability ability;
 
     /**
-     * Defines the squad the unit belongs to if #ability is Ability#BINDING.
-     * If #ability is anything else, this value is `null`.
+     * Defines the squad the unit belongs to if .ability is Ability.BINDING.
+     * If .ability is anything else, this value is `null`.
      */
     @ColumnInfo(defaultValue = "NULL")
     @IntRange(from = 1)
@@ -93,14 +93,14 @@ public class UnitEntity {
 
     /**
      * Constructor of a UnitEntity.
-     * #id may not be set here since the value is generated automatically.
+     * .id may not be set here since the value is generated automatically.
      *
-     * @param epic    Boolean representing whether card is #epic.
-     * @param damage  Non-negative value representing the #damage of the card.
-     * @param ability Ability representing the #ability of the card.
-     * @param squad   Integer representing the #squad of a card that has the Ability#BINDING #ability.
+     * @param epic    Boolean representing whether card is .epic.
+     * @param damage  Non-negative value representing the .damage of the card.
+     * @param ability Ability representing the .ability of the card.
+     * @param squad   Integer representing the .squad of a card that has the Ability.BINDING .ability.
      * @param row     RowType representing the combat type of the card.
-     * @throws IllegalArgumentException When damage is less than zero or if ability is Ability#BINDING and squad is null or less than one or if ability is not Ability#BINDING and squad is not null.
+     * @throws IllegalArgumentException When damage is less than zero or if ability is Ability.BINDING and squad is null or less than one or if ability is not Ability.BINDING and squad is not null.
      */
     UnitEntity(boolean epic, @IntRange(from = 0) int damage, @NonNull Ability ability, @IntRange(from = 1) @Nullable Integer squad, @NonNull RowType row) {
         if (damage < 0) {
@@ -121,13 +121,13 @@ public class UnitEntity {
 
     /**
      * Calculates the damage of this unit when (de-)buffed.
-     * Returns #damage if #epic is true.
+     * Returns .damage if .epic is true.
      * Otherwise, the damage is calculated through the given DamageCalculator,
      * which follows the visitor pattern.
      *
      * @param calculator DamageCalculator visitor used for damage calculation.
      * @return An Integer representing the units (de-)buffed damage.
-     * @see #getDamage()
+     * @see .getDamage()
      */
     public int calculateDamage(@NonNull DamageCalculator calculator) {
         return epic ? damage : calculator.calculateDamage(id, damage);
@@ -135,13 +135,13 @@ public class UnitEntity {
 
     /**
      * Returns whether this unit is (de-)buffed.
-     * Returns Color#DEFAULT if #epic is true.
+     * Returns Color.DEFAULT if .epic is true.
      * Otherwise, whether the unit is (de-)buffed is calculated through the given DamageCalculator,
      * which follows the visitor pattern.
      *
      * @param calculator DamageCalculator visitor used for damage calculation.
      * @return A Color representing the units (de-)buffed damage.
-     * @see #getDamage()
+     * @see .getDamage()
      */
     @NonNull
     public Color isBuffed(@NonNull DamageCalculator calculator) {
@@ -153,14 +153,14 @@ public class UnitEntity {
      * separated by commas.
      * If n units have the same description, instead of printing the same description n times,
      * "n×" is printed in front of the description.
-     * Unit descriptions are created using #toString(Context).
+     * Unit descriptions are created using .toString(Context).
      * Ordering of units in the given Collection is not guaranteed to be kept.
      *
      * @param context Context used to acquire String resources.
      * @param units   Collection of UnitEntity objects that should be in the created String.
      * @return A String containing the description of all units.
      * @throws IllegalArgumentException When units collection is empty.
-     * @see #toString(Context)
+     * @see .toString(Context)
      */
     @NonNull
     public static String collectionToString(@NonNull Context context, @NonNull Collection<UnitEntity> units) {
@@ -201,7 +201,7 @@ public class UnitEntity {
     /**
      * Returns a string representation of this unit.
      * The representation contains information on each field of this class,
-     * i.e., #row, #epic, #damage, #ability, and #squad.
+     * i.e., .row, .epic, .damage, .ability, and .squad.
      *
      * @param context Context used to acquire String resources.
      * @return A string representing the unit.
@@ -245,7 +245,7 @@ public class UnitEntity {
     }
 
     /**
-     * Getter for #id.
+     * Getter for .id.
      *
      * @return Integer representing the units' id.
      */
@@ -254,7 +254,7 @@ public class UnitEntity {
     }
 
     /**
-     * Setter for #id.
+     * Setter for .id.
      * Only used by Room extension.
      *
      * @param id Integer representing the units' id.
@@ -264,7 +264,7 @@ public class UnitEntity {
     }
 
     /**
-     * Getter for #epic.
+     * Getter for .epic.
      *
      * @return Boolean representing whether the card is epic.
      */
@@ -273,7 +273,7 @@ public class UnitEntity {
     }
 
     /**
-     * Setter for #epic.
+     * Setter for .epic.
      * Only used by Room extension.
      *
      * @param epic Boolean representing whether the card is epic.
@@ -283,17 +283,17 @@ public class UnitEntity {
     }
 
     /**
-     * Getter for #damage.
+     * Getter for .damage.
      *
      * @return Integer representing the card's base-damage.
-     * @see #calculateDamage(DamageCalculator)
+     * @see .calculateDamage(DamageCalculator)
      */
     public int getDamage() {
         return damage;
     }
 
     /**
-     * Setter for #damage.
+     * Setter for .damage.
      * Only used by Room extension.
      *
      * @param damage Integer representing the card's base-damage.
@@ -307,7 +307,7 @@ public class UnitEntity {
     }
 
     /**
-     * Getter for #ability.
+     * Getter for .ability.
      *
      * @return Ability representing the units' ability.
      */
@@ -317,7 +317,7 @@ public class UnitEntity {
     }
 
     /**
-     * Setter for #ability.
+     * Setter for .ability.
      * Only used by Room extension.
      *
      * @param ability Ability representing the units' ability.
@@ -327,9 +327,9 @@ public class UnitEntity {
     }
 
     /**
-     * Getter for #squad.
+     * Getter for .squad.
      *
-     * @return Integer representing the units' squad if #ability is Ability#BINDING or `null`.
+     * @return Integer representing the units' squad if .ability is Ability.BINDING or `null`.
      */
     @Nullable
     public Integer getSquad() {
@@ -337,11 +337,11 @@ public class UnitEntity {
     }
 
     /**
-     * Setter for #squad.
+     * Setter for .squad.
      * Only used by Room extension.
      *
-     * @param squad Integer representing the units' squad if #ability is Ability#BINDING or `null`.
-     * @throws IllegalArgumentException When #ability is Ability#BINDING and squad is null or less than 1 or if #ability is not Ability#BINDING and squad is not null.
+     * @param squad Integer representing the units' squad if .ability is Ability.BINDING or `null`.
+     * @throws IllegalArgumentException When .ability is Ability.BINDING and squad is null or less than 1 or if .ability is not Ability.BINDING and squad is not null.
      */
     void setSquad(@IntRange(from = 1) @Nullable Integer squad) {
         if (ability != Ability.BINDING && squad != null) {
@@ -354,7 +354,7 @@ public class UnitEntity {
     }
 
     /**
-     * Getter for #row.
+     * Getter for .row.
      *
      * @return RowType representing the units combat row.
      */
@@ -364,7 +364,7 @@ public class UnitEntity {
     }
 
     /**
-     * Setter for #row.
+     * Setter for .row.
      * Only used by Room extension.
      *
      * @param row RowType representing the units combat row.

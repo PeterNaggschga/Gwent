@@ -13,25 +13,25 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.peternaggschga.gwent.R;
 
 /**
- * An {@link AppCompatActivity} that gives the user an introduction into the usage of the application.
+ * An AppCompatActivity that gives the user an introduction into the usage of the application.
  * Is called when the app is first started 
- * (as tracked by the {@link androidx.preference.Preference} at key {@link R.string#preference_first_use_key}.
+ * (as tracked by the androidx.preference.Preference at key R.stringpreference_first_use_key.
  */
 public class IntroductionActivity extends AppCompatActivity {
     /**
-     * {@link IndicatorManager} used to update the progress indicators according to the currently shown page.
-     * Is initialized in {@link #onCreate(Bundle)}.
+     * IndicatorManager used to update the progress indicators according to the currently shown page.
+     * Is initialized in onCreate(Bundle).
      */
     private IndicatorManager indicatorManager;
 
     /**
-     * Sets layout to {@link R.layout#activity_introduction}, initializes {@link #indicatorManager},
-     * sets listeners on the buttons, and creates a new {@link OnBackPressedCallback} that switches to the
+     * Sets layout to R.layoutactivity_introduction, initializes indicatorManager,
+     * sets listeners on the buttons, and creates a new OnBackPressedCallback that switches to the
      * previous page, if it is not the first one.
      *
      * @param savedInstanceState If the activity is being re-initialized after
      *                           previously being shut down then this Bundle contains the data it most
-     *                           recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *                           recently supplied in onSaveInstanceState.  <b><i>Note: Otherwise it is null.</i></b>
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +47,7 @@ public class IntroductionActivity extends AppCompatActivity {
         OnBackPressedCallback callback = new OnBackPressedCallback(false) {
             /**
              * Called when enabled and the user clicks on the back-button.
-             * Switches the {@link ViewPager2} containing the {@link IntroductionFragment}s to the last position.
+             * Switches the ViewPager2 containing the IntroductionFragments to the last position.
              */
             @Override
             public void handleOnBackPressed() {
@@ -76,10 +76,9 @@ public class IntroductionActivity extends AppCompatActivity {
         viewPager.setAdapter(new SectionsPagerAdapter(this));
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             /**
-             * Updates the {@link IntroductionActivity#indicatorManager}, changes button-visibility
+             * Updates the IntroductionActivityindicatorManager, changes button-visibility
              * and whether the callback for onBackPressed is active.
-             * @see IndicatorManager#updateIndicators(int)
-             * @param position Position index of the new selected page.
+             * @see IndicatorManager.updateIndicators(int)
              */
             @Override
             public void onPageSelected(int position) {

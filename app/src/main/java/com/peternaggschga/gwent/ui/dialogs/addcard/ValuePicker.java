@@ -20,46 +20,46 @@ import java.util.SortedMap;
  * A generic abstract wrapper class around NumberPicker
  * used to select values of arbitrary types extending Comparable.
  * <p>
- * Must be subclassed to provide the displayed String values using #getDisplayString().
+ * Must be subclassed to provide the displayed String values using getDisplayString().
  * The default case, which is implemented in StringValuePicker,
- * is that #displayIntegers maps the #selectableValues to a String resource id.
+ * is that displayIntegers maps the selectableValues to a String resource id.
  * @see NumberPicker
  * @see StringValuePicker
  */
-abstract class ValuePicker<T extends Comparable<T>> {
+abstract class ValuePicker<T extends Comparable> {
     /**
      * NumberPicker that is wrapped by this class, used to select the values.
      *
-     * @see #getValue()
-     * @see #setValue(Comparable)
-     * @see #getPicker()
+     * @see getValue()
+     * @see setValue(Comparable)
+     * @see getPicker()
      */
     @NonNull
     private final NumberPicker picker;
 
     /**
-     * Map mapping each of the #selectableValues to an Integer that may be used
-     * to select the displayed value Strings in implementations of #getDisplayString().
-     * @see #getDisplayIntegers()
+     * Map mapping each of the selectableValues to an Integer that may be used
+     * to select the displayed value Strings in implementations of getDisplayString().
+     * @see getDisplayIntegers()
      */
     @NonNull
     private final Map<T, Integer> displayIntegers;
 
     /**
      * List of values that are selectable using this ValuePicker.
-     * @see #setSelectableValues(Collection)
-     * @see #setSelectableValues(Collection, Comparable)
-     * @see #getSelectableValues()
+     * @see setSelectableValues(Collection)
+     * @see setSelectableValues(Collection, Comparable)
+     * @see getSelectableValues()
      */
     @NonNull
     private final List<T> selectableValues;
 
     /**
      * Constructor of a ValuePicker wrapping the given NumberPicker and offering the given values.
-     * Wrapper around #ValuePicker(NumberPicker, SortedMap, Comparable) with null as defaultValue.
-     * @see #ValuePicker(NumberPicker, SortedMap, Comparable)
+     * Wrapper around ValuePicker(NumberPicker, SortedMap, Comparable) with null as defaultValue.
+     * @see ValuePicker(NumberPicker, SortedMap, Comparable)
      * @param picker NumberPicker wrapped by the created ValuePicker.
-     * @param valueToStringRes SortedMap with all #selectableValues as keys and the respective #displayIntegers as value.
+     * @param valueToStringRes SortedMap with all selectableValues as keys and the respective displayIntegers as value.
      * @throws IllegalArgumentException When valueToStringRes is empty.
      */
     ValuePicker(@NonNull NumberPicker picker, @NonNull SortedMap<T, Integer> valueToStringRes) {
@@ -70,9 +70,9 @@ abstract class ValuePicker<T extends Comparable<T>> {
      * Constructor of a ValuePicker wrapping the given NumberPicker,
      * offering the given values and showing the given defaultValue.
      *
-     * @see #ValuePicker(NumberPicker, SortedMap)
+     * @see ValuePicker(NumberPicker, SortedMap)
      * @param picker NumberPicker wrapped by the created ValuePicker.
-     * @param valueToStringRes SortedMap with all #selectableValues as keys and the respective #displayIntegers as value.
+     * @param valueToStringRes SortedMap with all selectableValues as keys and the respective displayIntegers as value.
      * @param defaultValue Value that is shown in the beginning.
      *                     If null, then the first value defined by the Comparable interface is used.
      * @throws IllegalArgumentException When valueToStringRes is empty.
@@ -95,14 +95,14 @@ abstract class ValuePicker<T extends Comparable<T>> {
     }
 
     /**
-     * Sets #selectableValues to the given values and show the given defaultValue.
-     * Every given value must be in the key-set of #displayIntegers.
-     * @see #setSelectableValues(Collection)
+     * Sets selectableValues to the given values and show the given defaultValue.
+     * Every given value must be in the key-set of displayIntegers.
+     * @see setSelectableValues(Collection)
      * @param values Collection of the new selectable values.
      * @param defaultValue Value that is shown in the beginning.
      *                     If null, then the first value defined by the Comparable interface is used.
-     * @throws IllegalArgumentException When values is empty or #displayIntegers does not contain defaultValue when defaultValue is not null.
-     * @throws IllegalStateException When values contains a value not present in the key-set of #displayIntegers.
+     * @throws IllegalArgumentException When values is empty or displayIntegers does not contain defaultValue when defaultValue is not null.
+     * @throws IllegalStateException When values contains a value not present in the key-set of displayIntegers.
      */
     void setSelectableValues(@NonNull Collection<T> values, @Nullable T defaultValue) {
         if (values.isEmpty()) {
@@ -137,7 +137,7 @@ abstract class ValuePicker<T extends Comparable<T>> {
      * Returns the NumberPicker wrapped by this ValuePicker.
      *
      * @return A NumberPicker wrapped in this ValuePicker.
-     * @see #picker
+     * @see .picker
      */
     @NonNull
     protected NumberPicker getPicker() {
@@ -146,12 +146,12 @@ abstract class ValuePicker<T extends Comparable<T>> {
 
     /**
      * Sets an OnValueChangeListener
-     * that is called when the value of the wrapped #picker has changed
+     * that is called when the value of the wrapped .picker has changed
      * and stayed the same for 500 ms.
      * The delayed NumberPicker.OnValueChangeListener
-     * that is generated from the given OnValueChangeListener using CardNumberPickerAdapter#getDelayedOnValueChangeListener().
+     * that is generated from the given OnValueChangeListener using CardNumberPickerAdapter.getDelayedOnValueChangeListener().
      * @see OnValueChangeListener
-     * @see CardNumberPickerAdapter#getDelayedOnValueChangeListener(NumberPicker.OnValueChangeListener)
+     * @see CardNumberPickerAdapter.getDelayedOnValueChangeListener(NumberPicker.OnValueChangeListener)
      * @param onValueChangedListener OnValueChangedListener that is to be executed when the value changes.
      */
     void setOnValueChangedListener(@NonNull OnValueChangeListener<T> onValueChangedListener) {
@@ -165,7 +165,7 @@ abstract class ValuePicker<T extends Comparable<T>> {
 
     /**
      * Returns the currently selected value.
-     * @return A value that is selected in #picker.
+     * @return A value that is selected in .picker.
      */
     @NonNull
     T getValue() {
@@ -175,7 +175,7 @@ abstract class ValuePicker<T extends Comparable<T>> {
     /**
      * Sets the picker to the given value.
      * @param value Value that the picker is set to.
-     * @throws IllegalStateException When #selectableValues does not contain the given value.
+     * @throws IllegalStateException When selectableValues does not contain the given value.
      */
     void setValue(@NonNull T value) {
         int position;
@@ -195,10 +195,10 @@ abstract class ValuePicker<T extends Comparable<T>> {
     protected abstract String getDisplayString(@NonNull T value);
 
     /**
-     * Returns the context the #picker is running in, through which it can
+     * Returns the context the .picker is running in, through which it can
      * access the current theme, resources, etc.
      *
-     * @return A Context object of the wrapped #picker.
+     * @return A Context object of the wrapped .picker.
      */
     @UiContext
     public Context getContext() {
@@ -208,7 +208,7 @@ abstract class ValuePicker<T extends Comparable<T>> {
     /**
      * An interface defining a callback for changes of the current value.
      */
-    interface OnValueChangeListener<T extends Comparable<T>> {
+    interface OnValueChangeListener<T> {
         /**
          * Called upon a change of the current value.
          *
@@ -220,10 +220,10 @@ abstract class ValuePicker<T extends Comparable<T>> {
     }
 
     /**
-     * Returns the #displayIntegers map.
+     * Returns the displayIntegers map.
      *
      * @return A Map from values to Integer objects representing information on their String representation.
-     * @see #displayIntegers
+     * @see displayIntegers
      */
     @NonNull
     protected Map<T, Integer> getDisplayIntegers() {
@@ -234,7 +234,7 @@ abstract class ValuePicker<T extends Comparable<T>> {
      * Returns a List of values that can be selected by this picker.
      *
      * @return A List of values that are selectable.
-     * @see #selectableValues
+     * @see selectableValues
      */
     @NonNull
     protected List<T> getSelectableValues() {
@@ -242,14 +242,14 @@ abstract class ValuePicker<T extends Comparable<T>> {
     }
 
     /**
-     * Sets #selectableValues to the given values.
-     * Every given value must be in the key-set of #displayIntegers.
-     * Wrapper of #setSelectableValues(Collection, Comparable).
+     * Sets selectableValues to the given values.
+     * Every given value must be in the key-set of displayIntegers.
+     * Wrapper of setSelectableValues(Collection, Comparable).
      *
      * @param values Collection of the new selectable values.
      * @throws IllegalArgumentException When values is empty.
-     * @throws IllegalStateException When values contains a value not present in the key-set of #displayIntegers.
-     * @see #setSelectableValues(Collection, Comparable)
+     * @throws IllegalStateException When values contains a value not present in the key-set of displayIntegers.
+     * @see setSelectableValues(Collection, Comparable)
      */
     void setSelectableValues(@NonNull Collection<T> values) {
         setSelectableValues(values, null);

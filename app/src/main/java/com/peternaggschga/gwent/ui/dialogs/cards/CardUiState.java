@@ -26,8 +26,8 @@ public class CardUiState {
      * DiffUtil.ItemCallback used to compare different CardUiState objects in a ListAdapter,
      * e.g., CardListAdapter.
      *
-     * @see #unitId
-     * @see #equals(Object)
+     * @see .unitId
+     * @see .equals(Object)
      */
     @NonNull
     public static final DiffUtil.ItemCallback<CardUiState> DIFF_CALLBACK = new DiffUtil.ItemCallback<CardUiState>() {
@@ -44,21 +44,21 @@ public class CardUiState {
 
     /**
      * Integer that is used instead of a drawable resource
-     * to indicate the absence of a meaningful #abilityImage.
-     * @see #abilityImageId
+     * to indicate the absence of a meaningful .abilityImage.
+     * @see .abilityImageId
      */
     public static final int UNUSED = -1;
 
     /**
-     * Integer referencing the UnitEntity#id of the represented UnitEntity.
+     * Integer referencing the UnitEntity.id of the represented UnitEntity.
      * The only member that is not shown in the UI.
-     * @see #getUnitId()
+     * @see .getUnitId()
      */
     private final int unitId;
 
     /**
      * Integer referencing the drawable resource shown as the background of the damage view.
-     * @see #getDamageBackgroundImageId()
+     * @see .getDamageBackgroundImageId()
      */
     @DrawableRes
     private final int damageBackgroundImageId;
@@ -66,44 +66,44 @@ public class CardUiState {
     /**
      * String containing the number
      * shown in the damage view or nothing if the represented UnitEntity is epic.
-     * @see #getDamageString()
+     * @see .getDamageString()
      */
     @NonNull
     private final String damageString;
 
     /**
      * Integer representing the text color of the damage view.
-     * @see #getDamageTextColor()
+     * @see .getDamageTextColor()
      */
     @ColorInt
     private final int damageTextColor;
 
     /**
      * Integer referencing the drawable resource shown in the ability view.
-     * May be #UNUSED if the view is not visible.
-     * @see #UNUSED
-     * @see #getAbilityImageId()
+     * May be .UNUSED if the view is not visible.
+     * @see .UNUSED
+     * @see .getAbilityImageId()
      */
     @DrawableRes
     private final int abilityImageId;
 
     /**
      * String containing the number shown in the squad view.
-     * @see #getSquadString()
+     * @see .getSquadString()
      */
     @NonNull
     private final String squadString;
 
     /**
      * Constructor of a CardUiState encapsulating the given data.
-     * @param unitId Integer representing the UnitEntity#id of the represented UnitEntity.
+     * @param unitId Integer representing the UnitEntity.id of the represented UnitEntity.
      * @param damageBackgroundImageId Integer referencing the drawable resource shown by the damage view.
      * @param damage Integer representing the damage of the represented UnitEntity.
      * @param damageTextColor Integer representing the text color of the damage view.
-     * @param abilityImageId Integer referencing the drawable resource shown by the ability image view or #UNUSED.
-     * @param squad Integer representing the UnitEntity#squad of the represented UnitEntity.
-     * @throws IllegalArgumentException When damage is less than #UNUSED or squad is neither null nor greater than zero.
-     * @see CardUiStateFactory#createCardUiState(UnitEntity, DamageCalculator)
+     * @param abilityImageId Integer referencing the drawable resource shown by the ability image view or .UNUSED.
+     * @param squad Integer representing the UnitEntity.squad of the represented UnitEntity.
+     * @throws IllegalArgumentException When damage is less than .UNUSED or squad is neither null nor greater than zero.
+     * @see CardUiStateFactory.createCardUiState(UnitEntity, DamageCalculator)
      */
     public CardUiState(int unitId, @DrawableRes int damageBackgroundImageId, @IntRange(from = UNUSED) int damage,
                        @ColorInt int damageTextColor, @DrawableRes int abilityImageId,
@@ -124,7 +124,7 @@ public class CardUiState {
 
     /**
      * Returns whether the ability view is shown, i.e.,
-     * if the unit has an ability other than Ability#NONE.
+     * if the unit has an ability other than Ability.NONE.
      * @return A Boolean defining whether the ability view is shown.
      */
     public boolean showAbility() {
@@ -133,7 +133,7 @@ public class CardUiState {
 
     /**
      * Returns whether the squad view is shown, i.e.,
-     * if the unit has the Ability#BINDING ability.
+     * if the unit has the Ability.BINDING ability.
      * @return A Boolean defining whether the squad view is shown.
      */
     public boolean showSquad() {
@@ -141,9 +141,9 @@ public class CardUiState {
     }
 
     /**
-     * Returns the #unitId of the represented UnitEntity.
-     * @see #unitId
-     * @return An Integer referencing the UnitEntity#id of the represented UnitEntity.
+     * Returns the .unitId of the represented UnitEntity.
+     * @see .unitId
+     * @return An Integer referencing the UnitEntity.id of the represented UnitEntity.
      */
     public int getUnitId() {
         return unitId;
@@ -152,7 +152,7 @@ public class CardUiState {
     /**
      * Returns the drawable resource shown as the background of the damage view.
      * @return An Integer referencing a drawable resource.
-     * @see #damageBackgroundImageId
+     * @see .damageBackgroundImageId
      */
     @DrawableRes
     public int getDamageBackgroundImageId() {
@@ -162,7 +162,7 @@ public class CardUiState {
     /**
      * Returns the String shown in the damage view.
      * @return A String containing the damage of the represented UnitEntity or nothing if the unit is empty.
-     * @see #damageString
+     * @see .damageString
      */
     @NonNull
     public String getDamageString() {
@@ -172,7 +172,7 @@ public class CardUiState {
     /**
      * Returns the text color of the damage view.
      * @return An Integer representing a color.
-     * @see #damageTextColor
+     * @see .damageTextColor
      */
     @ColorInt
     public int getDamageTextColor() {
@@ -182,8 +182,8 @@ public class CardUiState {
     /**
      * Returns the drawable resource shown in the ability view.
      * @return An Integer referencing a drawable resource.
-     * @see #abilityImageId
-     * @see #showAbility()
+     * @see .abilityImageId
+     * @see .showAbility()
      */
     @DrawableRes
     public int getAbilityImageId() {
@@ -193,8 +193,8 @@ public class CardUiState {
     /**
      * Returns the String shown in the squad view.
      * @return A String containing the squad of the represented UnitEntity or nothing.
-     * @see #squadString
-     * @see #showSquad()
+     * @see .squadString
+     * @see .showSquad()
      */
     @NonNull
     public String getSquadString() {
@@ -203,7 +203,7 @@ public class CardUiState {
 
     /**
      * Checks whether the given Object looks the same as this CardUiState.
-     * Does not compare #unitId
+     * Does not compare .unitId
      * since that field does not influence the visual representation of CardUiState objects.
      * @param o Object that is being compared with this CardUiState.
      * @return A Boolean defining whether the objects look the same.

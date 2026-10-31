@@ -12,44 +12,44 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * A data class encapsulating information about the squad defined by #squadNumber, i.e.,
- * how many #squadMembers are there and what is the #memberBaseDamage of units in this squad.
+ * A data class encapsulating information about the squad defined by .squadNumber, i.e.,
+ * how many .squadMembers are there and what is the .memberBaseDamage of units in this squad.
  * @see SquadManager
  */
 class SquadState {
     /**
      * Integer containing the number of the represented squad.
-     * Equivalent to UnitEntity#squad of the units in the squad.
+     * Equivalent to UnitEntity.squad of the units in the squad.
      *
-     * @see #getSquadNumber()
+     * @see .getSquadNumber()
      */
     @IntRange(from = 1, to = MAX_NR_SQUADS)
     private final int squadNumber;
 
     /**
      * Integer representing the number of members in the squad.
-     * @see #getSquadMembers()
+     * @see .getSquadMembers()
      */
     @IntRange(from = 0)
     private final int squadMembers;
 
     /**
      * Integer containing the base damage of members of this squad.
-     * If members have different UnitEntity#damage values, it is undefined which of them is picked.
-     * If #squadMembers is 0, #memberBaseDamage defaults to 5.
-     * @see #getMemberBaseDamage()
+     * If members have different UnitEntity.damage values, it is undefined which of them is picked.
+     * If .squadMembers is 0, .memberBaseDamage defaults to 5.
+     * @see .getMemberBaseDamage()
      */
     @IntRange(from = 0, to = NON_EPIC_DAMAGE_VALUES_UPPER_BOUND)
     private final int memberBaseDamage;
 
     /**
-     * Constructor of a SquadState with the given #squadNumber, #squadMembers, and #memberBaseDamage.
-     * Should only be used by #getState().
+     * Constructor of a SquadState with the given .squadNumber, .squadMembers, and .memberBaseDamage.
+     * Should only be used by .getState().
      *
      * @param squadNumber      Integer containing the number of the represented squad.
      * @param squadMembers     Integer representing the number of members in the squad.
      * @param memberBaseDamage Integer containing the base damage of members of this squad.
-     * @see #getState(int, List)
+     * @see .getState(int, List)
      * @throws IllegalArgumentException When one of the parameters doesn't meet its IntRange constraint.
      */
     private SquadState(@IntRange(from = 1, to = MAX_NR_SQUADS) int squadNumber, @IntRange(from = 0) int squadMembers,
@@ -69,12 +69,12 @@ class SquadState {
     }
 
     /**
-     * Creates a new SquadState representing the squad with the given #squadNumber.
-     * Information for #squadMembers and #memberBaseDamage is retrieved from the given List of UnitEntity objects.
+     * Creates a new SquadState representing the squad with the given .squadNumber.
+     * Information for .squadMembers and .memberBaseDamage is retrieved from the given List of UnitEntity objects.
      * @param squadNumber Integer containing the number of the represented squad.
      * @param units List of UnitEntity objects used to count squad-members.
      * @return A SquadState object that is newly created from the given List of units.
-     * @throws IllegalArgumentException When the given squad number is not between 1 and #MAX_NR_SQUADS.
+     * @throws IllegalArgumentException When the given squad number is not between 1 and .MAX_NR_SQUADS.
      */
     @NonNull
     static SquadState getState(@IntRange(from = 1, to = MAX_NR_SQUADS) int squadNumber,
@@ -91,7 +91,7 @@ class SquadState {
     }
 
     /**
-     * Returns whether the represented squad has members, i.e., whether #squadMembers is greater than 0.
+     * Returns whether the represented squad has members, i.e., whether .squadMembers is greater than 0.
      * @return A Boolean defining whether the represented squad has members or not.
      */
     boolean hasMembers() {
@@ -100,7 +100,7 @@ class SquadState {
 
     /**
      * Returns the number of the represented squad.
-     * @see #squadNumber
+     * @see .squadNumber
      * @return An Integer defining which squad is represented.
      */
     @IntRange(from = 1, to = MAX_NR_SQUADS)
@@ -110,7 +110,7 @@ class SquadState {
 
     /**
      * Returns the number of members in the represented squad.
-     * @see #squadMembers
+     * @see .squadMembers
      * @return An Integer defining how many members are in the represented squad.
      */
     @IntRange(from = 0)
@@ -120,7 +120,7 @@ class SquadState {
 
     /**
      * Returns the base damage of members in the represented squad.
-     * @see #memberBaseDamage
+     * @see .memberBaseDamage
      * @return An Integer defining the base damage of units in the represented squad.
      */
     @IntRange(from = 0, to = NON_EPIC_DAMAGE_VALUES_UPPER_BOUND)

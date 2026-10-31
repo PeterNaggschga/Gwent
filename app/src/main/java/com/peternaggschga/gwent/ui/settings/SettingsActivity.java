@@ -18,21 +18,21 @@ import com.peternaggschga.gwent.ui.main.FactionSwitchListener;
 import java.util.Objects;
 
 /**
- * An {@link AppCompatActivity} implementing {@link PreferenceFragmentCompat.OnPreferenceStartFragmentCallback}
- * that is used by the user to manage the {@link SharedPreferences} of the application.
+ * An AppCompatActivity implementing PreferenceFragmentCompat.OnPreferenceStartFragmentCallback
+ * that is used by the user to manage the SharedPreferences of the application.
  */
 public class SettingsActivity extends AppCompatActivity implements PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
     /**
-     * {@link String} constant defining the key in savedInstanceState {@link Bundle}s
-     * where the last shown {@link Fragment} is saved.
+     * String constant defining the key in savedInstanceState Bundles
+     * where the last shown Fragment is saved.
      */
     private static final String CURRENT_FRAGMENT_KEY = "currentFragment";
 
     /**
-     * Initializes layout and {@link ActionBar} as well as creates and displays a new {@link SettingsHeaderFragment}.
+     * Initializes layout and ActionBar as well as creates and displays a new SettingsHeaderFragment.
      * @param savedInstanceState If the activity is being re-initialized after
      *                           previously being shut down then this Bundle contains the data it most
-     *                           recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *                           recently supplied in onSaveInstanceState.  <b><i>Note: Otherwise it is null.</i></b>
      */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,8 +58,8 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     }
 
     /**
-     * Saves the currently visible {@link Fragment} into the given {@link Bundle}.
-     * @param outState Bundle in which the currently used {@link Fragment} is saved.
+     * Saves the currently visible Fragment into the given Bundle.
+     * @param outState Bundle in which the currently used Fragment is saved.
      *
      */
     @Override
@@ -75,11 +75,11 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     }
 
     /**
-     * Called whenever a {@link MenuItem} in the options menu is selected.
-     * Returns to the calling {@link android.app.Activity} when the {@link android.R.id#home} item was selected.
-     * @param item {@link MenuItem} that was selected.
+     * Called whenever a MenuItem in the options menu is selected.
+     * Returns to the calling android.app.Activity when the android.R.idhome item was selected.
+     * @param item MenuItem that was selected.
      *
-     * @return {@link Boolean} defining whether the call has been handled.
+     * @return Boolean defining whether the call has been handled.
      */
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -91,12 +91,12 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     }
 
     /**
-     * Called when the user has clicked on a {@link Preference} that has a {@link Fragment} class name
+     * Called when the user has clicked on a Preference that has a Fragment class name
      * associated with it.
-     * Switches to an instance of the given {@link Fragment}.
-     * @param caller {@link PreferenceFragmentCompat} requesting navigation.
-     * @param pref   {@link Preference} requesting the {@link Fragment}.
-     * @return {@link Boolean} defining whether the {@link Fragment} creation has been handled.
+     * Switches to an instance of the given Fragment.
+     * @param caller PreferenceFragmentCompat requesting navigation.
+     * @param pref   Preference requesting the Fragment.
+     * @return Boolean defining whether the Fragment creation has been handled.
      */
     @Override
     public boolean onPreferenceStartFragment(@NonNull PreferenceFragmentCompat caller, @NonNull Preference pref) {

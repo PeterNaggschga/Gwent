@@ -39,7 +39,7 @@ public class RowEntity {
 
     /**
      * Constructor of a RowEntity.
-     * #weather and #horn cannot be set here
+     * .weather and .horn cannot be set here
      * since a new row must start with the respective default values.
      *
      * @param id RowType of the represented row.
@@ -49,7 +49,7 @@ public class RowEntity {
     }
 
     /**
-     * Getter for #id.
+     * Getter for .id.
      * Only used by Room extension.
      *
      * @return RowType of the represented row.
@@ -60,7 +60,7 @@ public class RowEntity {
     }
 
     /**
-     * Getter for #weather.
+     * Getter for .weather.
      * Only used by Room extension.
      *
      * @return Boolean representing the current status of the weather debuff.
@@ -70,7 +70,7 @@ public class RowEntity {
     }
 
     /**
-     * Setter for #weather.
+     * Setter for .weather.
      * Only used by Room extension.
      *
      * @param weather Boolean representing the new status of the weather debuff.
@@ -80,7 +80,7 @@ public class RowEntity {
     }
 
     /**
-     * Getter for #horn.
+     * Getter for .horn.
      * Only used by Room extension.
      *
      * @return Boolean representing the current status of the horn buff.
@@ -90,7 +90,7 @@ public class RowEntity {
     }
 
     /**
-     * Setter for #horn.
+     * Setter for .horn.
      * Only used by Room extension.
      *
      * @param horn Boolean representing the new status of the horn buff.

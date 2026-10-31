@@ -24,19 +24,19 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * A {@link PreferenceFragmentCompat} class encapsulating the rule preference screen,
- * i.e., the rule sections defined in {@link R.xml#rule_preferences}.
+ * A PreferenceFragmentCompat class encapsulating the rule preference screen,
+ * i.e., the rule sections defined in R.xmlrule_preferences.
  */
 @Keep
 public class SettingsRuleFragment extends PreferenceFragmentCompat {
     /**
-     * Creates an {@link Preference.OnPreferenceClickListener} that starts a new {@link RuleActivity}
-     * for the given {@link RuleSection} using an {@link Intent}.
-     * The {@link Intent} provides the requested {@link RuleSection} to the {@link RuleActivity}
-     * using {@link Intent#putExtra(String, Serializable)} with {@link RuleActivity#INTENT_EXTRA_TAG} as a tag.
+     * Creates an Preference.OnPreferenceClickListener that starts a new RuleActivity
+     * for the given RuleSection using an Intent.
+     * The Intent provides the requested RuleSection to the RuleActivity
+     * using IntentputExtra(String, with RuleActivityINTENT_EXTRA_TAG as a tag.
      *
-     * @param section {@link RuleSection} that is requested.
-     * @return An {@link Preference.OnPreferenceClickListener} calling a {@link RuleActivity}.
+     * @param section RuleSection that is requested.
+     * @return An Preference.OnPreferenceClickListener calling a RuleActivity.
      */
     @NonNull
     @Contract(pure = true)
@@ -51,16 +51,16 @@ public class SettingsRuleFragment extends PreferenceFragmentCompat {
     }
 
     /**
-     * Called during {@link #onCreate(Bundle)} to supply the preferences for this fragment.
-     * Sets shown {@link Preference}s from {@link R.xml#rule_preferences}.
-     * Also provides each element with an {@link Preference.OnPreferenceClickListener}
-     * that starts a new {@link RuleActivity} for the respective {@link RuleSection}.
+     * Called during onCreate(Bundle) to supply the preferences for this fragment.
+     * Sets shown Preferences from R.xmlrule_preferences.
+     * Also provides each element with an Preference.OnPreferenceClickListener
+     * that starts a new RuleActivity for the respective RuleSection.
      *
      * @param savedInstanceState If the fragment is being re-created from a previous saved state,
      *                           this is the state.
      * @param rootKey            If non-null, this preference fragment should be rooted at the
-     *                           {@link androidx.preference.PreferenceScreen} with this key.
-     * @see #getSectionClickListener(RuleSection)
+     *                           androidx.preference.PreferenceScreen with this key.
+     * @see .getSectionClickListener(RuleSection)
      */
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {

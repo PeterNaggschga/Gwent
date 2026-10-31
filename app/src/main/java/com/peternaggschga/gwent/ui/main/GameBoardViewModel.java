@@ -39,7 +39,7 @@ public class GameBoardViewModel extends AndroidViewModel {
     /**
      * ViewModelInitializer used by androidx.lifecycle.ViewModelProvider.Factory to instantiate the class.
      *
-     * @see androidx.lifecycle.ViewModelProvider.Factory#from(ViewModelInitializer[])
+     * @see androidx.lifecycle.ViewModelProvider.Factory.from(ViewModelInitializer[])
      */
     @NonNull
     private static final ViewModelInitializer<GameBoardViewModel> INITIALIZER = new ViewModelInitializer<>(
@@ -52,10 +52,10 @@ public class GameBoardViewModel extends AndroidViewModel {
 
     /**
      * Constructor of a GameBoardViewModel object.
-     * Should only be called in #initializer.
+     * Should only be called in .initializer.
      *
      * @param application GwentApplication that uses this AndroidViewModel.
-     * @see #INITIALIZER
+     * @see .INITIALIZER
      */
     private GameBoardViewModel(@NonNull GwentApplication application) {
         super(application);
@@ -63,8 +63,8 @@ public class GameBoardViewModel extends AndroidViewModel {
 
     /**
      * A map structure containing the Flowable objects emitting the RowUiState for each row.
-     * Initialized in #getModel().
-     * @see #getRowUiState(RowType)
+     * Initialized in .getModel().
+     * @see .getRowUiState(RowType)
      * @see RowUiState
      */
     @NonNull
@@ -72,8 +72,8 @@ public class GameBoardViewModel extends AndroidViewModel {
 
     /**
      * Flowable emitting the MenuUiState for the right-hand side menu.
-     * Initialized in #getModel().
-     * @see #getMenuUiState()
+     * Initialized in .getModel().
+     * @see .getMenuUiState()
      * @see MenuUiState
      */
     @NonNull
@@ -86,13 +86,13 @@ public class GameBoardViewModel extends AndroidViewModel {
 
     /**
      * Factory method of a GameBoardViewModel.
-     * Creates a new GameBoardViewModel for the given owner and initializes #rowUiStates and #menuUiState.
+     * Creates a new GameBoardViewModel for the given owner and initializes .rowUiStates and .menuUiState.
      *
      * @param owner      ViewModelStoreOwner instantiating the GameBoardViewModel.
      * @param repository UnitRepository where Flowables are retrieved.
      * @param soundManager SoundManager used to play Sound effects on click events.
      * @return A new GameBoardViewModel instance.
-     * @see ViewModelProvider#ViewModelProvider(ViewModelStoreOwner, ViewModelProvider.Factory)
+     * @see ViewModelProvider.ViewModelProvider(ViewModelStoreOwner, ViewModelProvider.Factory)
      */
     @NonNull
     public static GameBoardViewModel getModel(@NonNull ViewModelStoreOwner owner,
@@ -153,10 +153,10 @@ public class GameBoardViewModel extends AndroidViewModel {
 
     /**
      * Returns the UnitRepository used by the parent GwentApplication.
-     * Basically a wrapper for GwentApplication#getRepository(Context).
+     * Basically a wrapper for GwentApplication.getRepository(Context).
      *
      * @return A Single emitting the UnitRepository instance.
-     * @see GwentApplication#getRepository(Context)
+     * @see GwentApplication.getRepository(Context)
      */
     private Single<UnitRepository> getRepository() {
         return GwentApplication.getRepository(getApplication());
@@ -167,7 +167,7 @@ public class GameBoardViewModel extends AndroidViewModel {
      * @param row RowType defining the row for which the state is queried.
      * @return A Flowable object for the state of the given row.
      * @see RowUiState
-     * @see #rowUiStates
+     * @see .rowUiStates
      */
     @NonNull
     public Flowable<RowUiState> getRowUiState(@NonNull RowType row) {
@@ -179,7 +179,7 @@ public class GameBoardViewModel extends AndroidViewModel {
      *
      * @return A Flowable object for the state of the menu.
      * @see MenuUiState
-     * @see #menuUiState
+     * @see .menuUiState
      */
     @NonNull
     public Flowable<MenuUiState> getMenuUiState() {
@@ -201,7 +201,7 @@ public class GameBoardViewModel extends AndroidViewModel {
      * Flips between good and bad weather. Plays a matching sound, if the weather is switched on.
      * @param row RowType defining the affected row.
      * @return A Completable tracking operation status.
-     * @see UnitRepository#switchWeather(RowType)
+     * @see UnitRepository.switchWeather(RowType)
      */
     @NonNull
     public Completable onWeatherViewPressed(@NonNull RowType row) {
@@ -222,7 +222,7 @@ public class GameBoardViewModel extends AndroidViewModel {
      * Flips between on and off. Plays a matching sound, if the horn is switched on.
      * @param row RowType defining the affected row.
      * @return A Completable tracking operation status.
-     * @see UnitRepository#switchHorn(RowType)
+     * @see UnitRepository.switchHorn(RowType)
      */
     public Completable onHornViewPressed(@NonNull RowType row) {
         return getRepository()
@@ -240,11 +240,11 @@ public class GameBoardViewModel extends AndroidViewModel {
     /**
      * Triggers a reset and possibly an alert dialog, depending on preferences.
      * Should only be called by the button's View.OnClickListener.
-     * Wrapper for #reset(Context, ResetDialogUseCase.Trigger).
+     * Wrapper for .reset(Context, ResetDialogUseCase.Trigger).
      * @param context Context object used to acquire SharedPreferences and inflate Dialog views.
      * @return A Completable tracking operation status.
-     * @see #reset(Context, ResetDialogUseCase.Trigger)
-     * @see ResetDialogUseCase.Trigger#BUTTON_CLICK
+     * @see .reset(Context, ResetDialogUseCase.Trigger)
+     * @see ResetDialogUseCase.Trigger.BUTTON_CLICK
      */
     @NonNull
     public Completable onResetButtonPressed(@NonNull Context context) {
@@ -254,10 +254,10 @@ public class GameBoardViewModel extends AndroidViewModel {
     /**
      * Triggers a reset and possibly an alert dialog, depending on preferences.
      * Should only be called when the faction has been switched.
-     * Wrapper for #reset(Context, ResetDialogUseCase.Trigger).
+     * Wrapper for .reset(Context, ResetDialogUseCase.Trigger).
      * @param context Context object used to acquire SharedPreferences and inflate Dialog views.
      * @return A Completable tracking operation status.
-     * @see #reset(Context, ResetDialogUseCase.Trigger)
+     * @see .reset(Context, ResetDialogUseCase.Trigger)
      */
     @NonNull
     public Completable onFactionSwitchReset(@NonNull Context context) {
@@ -268,9 +268,9 @@ public class GameBoardViewModel extends AndroidViewModel {
      * Triggers a reset and possibly an alert dialog, depending on preferences.
      * Plays a matching sound, if units were removed.
      * @param context Context object used to acquire SharedPreferences and inflate Dialog views.
-     * @param trigger {@link com.peternaggschga.gwent.domain.cases.ResetDialogUseCase.Trigger} defining which action triggered the reset.
+     * @param trigger com.peternaggschga.gwent.domain.cases.ResetDialogUseCase.Trigger defining which action triggered the reset.
      * @return A Completable tracking operation status.
-     * @see #reset(Context, ResetDialogUseCase.Trigger)
+     * @see .reset(Context, ResetDialogUseCase.Trigger)
      */
     @NonNull
     private Completable reset(@NonNull Context context, @NonNull ResetDialogUseCase.Trigger trigger) {
@@ -289,7 +289,7 @@ public class GameBoardViewModel extends AndroidViewModel {
      * Should only be called by the View.OnClickListener of the weather button.
      * Plays a matching sound on completion.
      * @return A Completable tracking operation status.
-     * @see UnitRepository#clearWeather()
+     * @see UnitRepository.clearWeather()
      */
     @NonNull
     public Completable onWeatherButtonPressed() {
@@ -304,7 +304,7 @@ public class GameBoardViewModel extends AndroidViewModel {
      * Plays a matching sound, if units were removed.
      * @param context Context
      * @return A Completable tracking operation status.
-     * @see BurnDialogUseCase#burn(Context, SoundManager)
+     * @see BurnDialogUseCase.burn(Context, SoundManager)
      */
     @NonNull
     public Completable onBurnButtonPressed(@NonNull Context context) {

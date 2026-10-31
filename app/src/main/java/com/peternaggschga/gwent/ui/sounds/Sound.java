@@ -38,12 +38,12 @@ class Sound {
 
     /**
      * Constructor of a Sound encapsulating the given values.
-     * Should only be called by factory method #createSound()
+     * Should only be called by factory method .createSound()
      *
      * @param preferenceKey String representing the key where the activated status is defined in SharedPreferences.
      * @param soundId       Integer representing the id of the registered sound at a SoundPool.
      * @param activated     Boolean defining whether the sound is activated in the settings.
-     * @see #createSound(Context, int, SoundPool, int)
+     * @see .createSound(Context, int, SoundPool, int)
      */
     private Sound(@NonNull String preferenceKey, int soundId, boolean activated) {
         this.preferenceKey = preferenceKey;
@@ -54,9 +54,9 @@ class Sound {
     /**
      * Returns a new Sound object encapsulating data for a newly registered sound effect.
      * Factory method for the Sound class.
-     * Gets #preferenceKey from the given Context.
+     * Gets .preferenceKey from the given Context.
      * Registers the sound with the given resId at the given SoundPool.
-     * Decides the value of #activated from SharedPreferences obtained using the given Context.
+     * Decides the value of .activated from SharedPreferences obtained using the given Context.
      *
      * @param context       Context of the application where this Sound is used.
      * @param preferenceRes Integer referencing the String resource of the preference key for this Sound.
@@ -106,18 +106,18 @@ class Sound {
     }
 
     /**
-     * Changes the value of #activated to the given Boolean.
+     * Changes the value of .activated to the given Boolean.
      *
      * @param activated Boolean defining whether the Sound is activated.
-     * @see #setActivated(SharedPreferences)
+     * @see .setActivated(SharedPreferences)
      */
     void setActivated(boolean activated) {
         this.activated = activated;
     }
 
     /**
-     * Changes the value of #activated based on the given SharedPreferences.
-     * Only queries the boolean at key #preferenceKey, not whether all sounds are deactivated!
+     * Changes the value of .activated based on the given SharedPreferences.
+     * Only queries the boolean at key .preferenceKey, not whether all sounds are deactivated!
      *
      * @param sharedPreferences SharedPreferences containing information on the activated sounds.
      */

@@ -44,9 +44,10 @@ class ResetAlertDialogBuilderAdapter {
 
     /**
      * Creates an AlertDialog with the arguments supplied to this builder.
-     * Basically just calls AlertDialog.Builder#create() on #adapteeBuilder.
+     * Basically just calls AlertDialog.Builder.create() on .adapteeBuilder.
      *
-     * @see AlertDialog.Builder#create()
+     * @return The AlertDialog created by the adaptee builder.
+     * @see AlertDialog.Builder.create()
      */
     @NonNull
     AlertDialog create() {
@@ -57,7 +58,7 @@ class ResetAlertDialogBuilderAdapter {
      * Changes the shown message of the AlertDialog
      * and whether it is cancelable depending on the trigger of the dialog.
      *
-     * @param trigger {@link ResetDialogUseCase.Trigger} defining what triggered the reset.
+     * @param trigger ResetDialogUseCase.Trigger defining what triggered the reset.
      * @return The ResetAlertDialogBuilderAdapter with the changed trigger.
      */
     @NonNull
@@ -98,21 +99,21 @@ class ResetAlertDialogBuilderAdapter {
     interface Callback {
         /**
          * Called when the user makes a decision.
-         * When the AlertDialog is a monster dialog, #reset(boolean) can be used.
+         * When the AlertDialog is a monster dialog, .reset(boolean) can be used.
          *
          * @param resetDecision Boolean defining whether the user has confirmed the reset.
          * @param keepUnit      Boolean defining whether a random unit should be kept when resetting.
-         * @see #reset(boolean)
+         * @see .reset(boolean)
          */
         void reset(boolean resetDecision, boolean keepUnit);
 
         /**
-         * Wrapper for #reset(boolean, boolean).
+         * Wrapper for .reset(boolean, boolean).
          * Can be used when the AlertDialog is not a monster dialog
-         * since it calls #reset(boolean, boolean) without keeping a unit.
+         * since it calls .reset(boolean, boolean) without keeping a unit.
          *
          * @param resetDecision Boolean defining whether the user has confirmed the reset.
-         * @see #reset(boolean, boolean)
+         * @see .reset(boolean, boolean)
          */
         default void reset(boolean resetDecision) {
             reset(resetDecision, false);

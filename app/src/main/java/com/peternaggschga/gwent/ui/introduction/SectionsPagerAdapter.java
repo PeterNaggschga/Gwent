@@ -6,14 +6,14 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 /**
- * A {@link FragmentStateAdapter} that returns an {@link IntroductionFragment} corresponding to
+ * A FragmentStateAdapter that returns an IntroductionFragment corresponding to
  * one of the sections/tabs/pages.
  */
 public class SectionsPagerAdapter extends FragmentStateAdapter {
     /**
-     * Constructor of a SectionsPagerAdapter for the given {@link FragmentActivity}.
+     * Constructor of a SectionsPagerAdapter for the given FragmentActivity.
      *
-     * @param fragmentActivity {@link FragmentActivity} that uses this adapter.
+     * @param fragmentActivity FragmentActivity that uses this adapter.
      */
     public SectionsPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
@@ -21,8 +21,8 @@ public class SectionsPagerAdapter extends FragmentStateAdapter {
 
     /**
      * Returns the total number of items in the data set held by the adapter.
-     * Essentially queries {@link IntroductionFragment#PAGES_COUNT}.
-     * @return An {@link Integer} defining the number of pages.
+     * Essentially queries IntroductionFragmentPAGES_COUNT.
+     * @return An Integer defining the number of pages.
      */
     @Override
     public int getItemCount() {
@@ -30,9 +30,9 @@ public class SectionsPagerAdapter extends FragmentStateAdapter {
     }
 
     /**
-     * Provides a new {@link IntroductionFragment} associated with the specified position.
-     * @param position {@link Integer} defining the page that is queried.
-     * @return A {@link Fragment} that will be shown at the specified position.
+     * Provides a new IntroductionFragment associated with the specified position.
+     * @param position Integer defining the page that is queried.
+     * @return A Fragment that will be shown at the specified position.
      */
     @NonNull
     @Override

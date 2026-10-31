@@ -23,106 +23,106 @@ import java.util.Arrays;
 public class SoundManager {
     /**
      * Constant Integer representing the clear weather sound.
-     * Index of the respective Sound object in #sounds.
+     * Index of the respective Sound object in .sounds.
      *
-     * @see #playClearWeatherSound()
+     * @see .playClearWeatherSound()
      */
     public static final int SOUND_WEATHER_GOOD = 0;
 
     /**
      * Constant Integer representing the frost weather sound.
-     * Index of the respective Sound object in #sounds.
+     * Index of the respective Sound object in .sounds.
      *
-     * @see #playCardAddSound(RowType, boolean)
+     * @see .playCardAddSound(RowType, boolean)
      */
     public static final int SOUND_WEATHER_FROST = 1;
 
     /**
      * Constant Integer representing the fog weather sound.
-     * Index of the respective Sound object in #sounds.
+     * Index of the respective Sound object in .sounds.
      *
-     * @see #playCardAddSound(RowType, boolean)
+     * @see .playCardAddSound(RowType, boolean)
      */
     public static final int SOUND_WEATHER_FOG = 2;
 
     /**
      * Constant Integer representing the rain weather sound.
-     * Index of the respective Sound object in #sounds.
+     * Index of the respective Sound object in .sounds.
      *
-     * @see #playCardAddSound(RowType, boolean)
+     * @see .playCardAddSound(RowType, boolean)
      */
     public static final int SOUND_WEATHER_RAIN = 3;
 
     /**
      * Constant Integer representing the horn sound.
-     * Index of the respective Sound object in #sounds.
+     * Index of the respective Sound object in .sounds.
      *
-     * @see #playHornSound()
+     * @see .playHornSound()
      */
     public static final int SOUND_HORN = 4;
 
     /**
      * Constant Integer representing the epic unit sound.
-     * Index of the respective Sound object in #sounds.
+     * Index of the respective Sound object in .sounds.
      *
-     * @see #playCardAddSound(RowType, boolean)
+     * @see .playCardAddSound(RowType, boolean)
      */
     public static final int SOUND_CARDS_EPIC = 5;
 
     /**
      * Constant Integer representing the melee unit sound.
-     * Index of the respective Sound object in #sounds.
+     * Index of the respective Sound object in .sounds.
      *
-     * @see #playCardAddSound(RowType, boolean)
+     * @see .playCardAddSound(RowType, boolean)
      */
     public static final int SOUND_CARDS_MELEE = 6;
 
     /**
      * Constant Integer representing the range unit sound.
-     * Index of the respective Sound object in #sounds.
+     * Index of the respective Sound object in .sounds.
      *
-     * @see #playCardAddSound(RowType, boolean)
+     * @see .playCardAddSound(RowType, boolean)
      */
     public static final int SOUND_CARDS_RANGE = 7;
 
     /**
      * Constant Integer representing the siege unit sound.
-     * Index of the respective Sound object in #sounds.
+     * Index of the respective Sound object in .sounds.
      *
-     * @see #playCardAddSound(RowType, boolean)
+     * @see .playCardAddSound(RowType, boolean)
      */
     public static final int SOUND_CARDS_SIEGE = 8;
 
     /**
      * Constant Integer representing the reset sound.
-     * Index of the respective Sound object in #sounds.
+     * Index of the respective Sound object in .sounds.
      *
-     * @see #playResetSound()
+     * @see .playResetSound()
      */
     public static final int SOUND_RESET = 9;
 
     /**
      * Constant Integer representing the scorch sound.
-     * Index of the respective Sound object in #sounds.
+     * Index of the respective Sound object in .sounds.
      *
-     * @see #playBurnSound()
+     * @see .playBurnSound()
      */
     public static final int SOUND_BURN = 10;
 
     /**
      * Constant Integer representing the coin-flip sound.
-     * Index of the respective Sound object in #sounds.
+     * Index of the respective Sound object in .sounds.
      *
-     * @see #playCoinSound()
+     * @see .playCoinSound()
      */
     public static final int SOUND_COIN = 11;
 
     /**
      * Array of Sound objects representing the different sound effects.
      * Indices are the public constants defined here,
-     * i.e., #SOUND_WEATHER_GOOD, #SOUND_WEATHER_FROST, #SOUND_WEATHER_FOG,
-     * #SOUND_WEATHER_RAIN, #SOUND_HORN, #SOUND_CARDS_EPIC, #SOUND_CARDS_MELEE,
-     * #SOUND_CARDS_RANGE, #SOUND_CARDS_SIEGE, #SOUND_RESET, #SOUND_BURN, and #SOUND_COIN.
+     * i.e., .SOUND_WEATHER_GOOD, .SOUND_WEATHER_FROST, .SOUND_WEATHER_FOG,
+     * .SOUND_WEATHER_RAIN, .SOUND_HORN, .SOUND_CARDS_EPIC, .SOUND_CARDS_MELEE,
+     * .SOUND_CARDS_RANGE, .SOUND_CARDS_SIEGE, .SOUND_RESET, .SOUND_BURN, and .SOUND_COIN.
      */
     @NonNull
     private final Sound[] sounds = new Sound[SOUND_COIN + 1];
@@ -135,10 +135,10 @@ public class SoundManager {
 
     /**
      * OnSharedPreferenceChangeListener that is registered for the default SharedPreferences
-     * and updates the Sound#active attributes of all #sounds when a preference change occurs.
+     * and updates the Sound.active attributes of all .sounds when a preference change occurs.
      * Reference must be kept (even if not used)
      * to avoid garbage collection of the registered listener
-     * (see <a href="https://developer.android.com/reference/android/content/SharedPreferences.html#registerOnSharedPreferenceChangeListener(android.content.SharedPreferences.OnSharedPreferenceChangeListener)">here</a> for more information).
+     * (see <a href="https://developer.android.com/reference/android/content/SharedPreferences.html.registerOnSharedPreferenceChangeListener(android.content.SharedPreferences.OnSharedPreferenceChangeListener)">here</a> for more information).
      */
     @NonNull
     @SuppressWarnings("FieldCanBeLocal")
@@ -146,12 +146,12 @@ public class SoundManager {
 
     /**
      * Constructor of a SoundManager in the given Context.
-     * Creates a new #soundPool and registers #sounds using Sound#createSound().
-     * Also registers a new #changeListener
-     * that updates the Sound#activated status when sound settings are updated.
+     * Creates a new .soundPool and registers .sounds using Sound.createSound().
+     * Also registers a new .changeListener
+     * that updates the Sound.activated status when sound settings are updated.
      *
      * @param context Context, this SoundManager is used in.
-     * @see Sound#createSound(Context, int, SoundPool, int)
+     * @see Sound.createSound(Context, int, SoundPool, int)
      */
     public SoundManager(@NonNull Context context) {
         AudioAttributes attributes = new AudioAttributes.Builder()
@@ -198,14 +198,14 @@ public class SoundManager {
     }
 
     /**
-     * Plays the given Sound if it is #activated.
-     * Given soundId must be either #SOUND_WEATHER_GOOD, #SOUND_WEATHER_FROST, #SOUND_WEATHER_FOG,
-     * #SOUND_WEATHER_RAIN, #SOUND_HORN, #SOUND_CARDS_EPIC, #SOUND_CARDS_MELEE,
-     * #SOUND_CARDS_RANGE, #SOUND_CARDS_SIEGE, #SOUND_RESET, #SOUND_BURN, or #SOUND_COIN,
+     * Plays the given Sound if it is .activated.
+     * Given soundId must be either .SOUND_WEATHER_GOOD, .SOUND_WEATHER_FROST, .SOUND_WEATHER_FOG,
+     * .SOUND_WEATHER_RAIN, .SOUND_HORN, .SOUND_CARDS_EPIC, .SOUND_CARDS_MELEE,
+     * .SOUND_CARDS_RANGE, .SOUND_CARDS_SIEGE, .SOUND_RESET, .SOUND_BURN, or .SOUND_COIN,
      * i.e., \f$ 0 \leq \mathit{soundId} \leq 11 \f$ must be true.
-     * Alternately, #playClearWeatherSound(), #playWeatherSound(), #playHornSound(),
-     * #playCardAddSound(), #playCardRemovedSound(), #playResetSound(), #playBurnSound(),
-     * or #playCoinSound() may be used.
+     * Alternately, .playClearWeatherSound(), .playWeatherSound(), .playHornSound(),
+     * .playCardAddSound(), .playCardRemovedSound(), .playResetSound(), .playBurnSound(),
+     * or .playCoinSound() may be used.
      *
      * @param soundId Integer representing the Sound that should be played.
      * @throws IndexOutOfBoundsException When \f$ 0 \leq \mathit{soundId} \leq 11 \f$ is not true.
@@ -218,9 +218,9 @@ public class SoundManager {
 
     /**
      * Plays the clear weather sound.
-     * Wrapper for #playSound().
+     * Wrapper for .playSound().
      *
-     * @see #playSound(int)
+     * @see .playSound(int)
      */
     public void playClearWeatherSound() {
         playSound(SOUND_WEATHER_GOOD);
@@ -228,10 +228,10 @@ public class SoundManager {
 
     /**
      * Plays the weather sound of the given row.
-     * Wrapper for #playSound().
+     * Wrapper for .playSound().
      *
      * @param row RowType referencing the row for which the sound should be played.
-     * @see #playSound(int)
+     * @see .playSound(int)
      */
     public void playWeatherSound(@NonNull RowType row) {
         switch (row) {
@@ -248,9 +248,9 @@ public class SoundManager {
 
     /**
      * Plays the horn sound.
-     * Wrapper for #playSound().
+     * Wrapper for .playSound().
      *
-     * @see #playSound(int)
+     * @see .playSound(int)
      */
     public void playHornSound() {
         playSound(SOUND_HORN);
@@ -259,11 +259,11 @@ public class SoundManager {
     /**
      * Plays the card add sound for the given row.
      * If the unit is epic, the epic sound is played.
-     * Wrapper for #playSound().
+     * Wrapper for .playSound().
      *
      * @param row  RowType referencing the row for which the sound should be played.
      * @param epic Boolean defining whether the added unit is epic.
-     * @see #playSound(int)
+     * @see .playSound(int)
      */
     public void playCardAddSound(@NonNull RowType row, boolean epic) {
         if (epic) {
@@ -284,9 +284,9 @@ public class SoundManager {
 
     /**
      * Plays the reset sound.
-     * Wrapper for #playSound().
+     * Wrapper for .playSound().
      *
-     * @see #playSound(int)
+     * @see .playSound(int)
      */
     public void playCardRemovedSound() {
         playSound(SOUND_RESET);
@@ -294,9 +294,9 @@ public class SoundManager {
 
     /**
      * Plays the reset sound.
-     * Wrapper for #playSound().
+     * Wrapper for .playSound().
      *
-     * @see #playSound(int)
+     * @see .playSound(int)
      */
     public void playResetSound() {
         playSound(SOUND_RESET);
@@ -304,9 +304,9 @@ public class SoundManager {
 
     /**
      * Plays the burn sound.
-     * Wrapper for #playSound().
+     * Wrapper for .playSound().
      *
-     * @see #playSound(int)
+     * @see .playSound(int)
      */
     public void playBurnSound() {
         playSound(SOUND_BURN);
@@ -314,8 +314,8 @@ public class SoundManager {
 
     /**
      * Plays the coin sound.
-     * Wrapper for #playSound().
-     * @see #playSound(int)
+     * Wrapper for .playSound().
+     * @see .playSound(int)
      */
     public void playCoinSound() {
         playSound(SOUND_COIN);

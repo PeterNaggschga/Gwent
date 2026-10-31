@@ -27,7 +27,7 @@ import io.reactivex.rxjava3.core.Single;
 public interface UnitDao {
     /**
      * Inserts the given UnitEntity into `units`.
-     * If the same UnitEntity#id is already in the table, the new insert is ignored.
+     * If the same UnitEntity.id is already in the table, the new insert is ignored.
      *
      * @param unit UnitEntity that is being inserted.
      * @return A Completable tracking operation status.
@@ -42,8 +42,8 @@ public interface UnitDao {
      * @param damage  Non-Negative value defining the base-damage of the unit.
      * @param ability Ability defining the ability of the unit.
      * @param squad   Non-Negative value defining the squad of units,
-     *                if UnitEntity#ability is Ability#BINDING, or `null`.
-     * @param row     RowType defining the UnitEntity#row foreign key.
+     *                if UnitEntity.ability is Ability.BINDING, or `null`.
+     * @param row     RowType defining the UnitEntity.row foreign key.
      * @return A Completable tracking operation status.
      */
     @Query("INSERT INTO units (epic, damage, ability, squad, `row`) VALUES (:epic, :damage, :ability, :squad, :row)")
@@ -51,7 +51,7 @@ public interface UnitDao {
 
     /**
      * Deletes the UnitEntity object with the given id from `units`.
-     * @param id Integer representing the UnitEntity#id of the deleted UnitEntity.
+     * @param id Integer representing the UnitEntity.id of the deleted UnitEntity.
      * @return A Completable tracking operation status.
      */
     @Query("DELETE FROM units WHERE `id` = :id")
@@ -68,7 +68,7 @@ public interface UnitDao {
 
     /**
      * Fetches the UnitEntity object with the given id from `units`.
-     * @param id Integer representing the UnitEntity#id of the requested UnitEntity.
+     * @param id Integer representing the UnitEntity.id of the requested UnitEntity.
      * @return A Single tracking operation status and returning the value.
      */
     @Query("SELECT * FROM units WHERE `id` = :id")
@@ -76,8 +76,8 @@ public interface UnitDao {
 
     /**
      * Fetches all UnitEntity objects from `units` in the given row.
-     * @see #getUnitsFlowable(RowType)
-     * @param row RowType defining the UnitEntity#row foreign key.
+     * @see .getUnitsFlowable(RowType)
+     * @param row RowType defining the UnitEntity.row foreign key.
      * @return A Single tracking operation status and returning the value.
      */
     @Query("SELECT * FROM units WHERE `row` = :row")
@@ -87,9 +87,9 @@ public interface UnitDao {
     /**
      * Fetches a Flowable for all UnitEntity objects from `units` in the given row.
      *
-     * @param row RowType defining the UnitEntity#row foreign key.
+     * @param row RowType defining the UnitEntity.row foreign key.
      * @return A Flowable emitting the values.
-     * @see #getUnits(RowType)
+     * @see .getUnits(RowType)
      */
     @Query("SELECT * FROM units WHERE `row` = :row")
     @NonNull
@@ -105,7 +105,7 @@ public interface UnitDao {
 
     /**
      * Counts UnitEntity objects in `units` in the given row.
-     * @param row RowType defining the UnitEntity#row foreign key.
+     * @param row RowType defining the UnitEntity.row foreign key.
      * @return A Single tracking operation status and returning the value.
      */
     @Query("SELECT COUNT(*) FROM units WHERE `row` = :row")

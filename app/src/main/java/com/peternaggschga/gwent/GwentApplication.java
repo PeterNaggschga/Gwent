@@ -12,31 +12,31 @@ import com.peternaggschga.gwent.data.UnitRepository;
 import io.reactivex.rxjava3.core.Single;
 
 /**
- * An {@link Application} encapsulating the Gwent app.
- * This class is responsible for maintaining a Singleton {@link UnitRepository} connected to the {@link AppDatabase} of this app.
+ * An Application encapsulating the Gwent app.
+ * This class is responsible for maintaining a Singleton com.peternaggschga.gwent.data.UnitRepository connected to the com.peternaggschga.gwent.data.AppDatabase of this app.
  */
 public class GwentApplication extends Application {
     /**
-     * {@link UnitRepository} used for communication to {@link #database}.
-     * Is lazily initialized in {@link #getRepository()} and provided as a Singleton.
-     * @see #getRepository()
-     * @see #getRepository(Context)
+     * UnitRepository used for communication to database.
+     * Is lazily initialized in getRepository() and provided as a Singleton.
+     * @see .getRepository()
+     * @see .getRepository(Context)
      */
     private static UnitRepository repository = null;
     /**
-     * {@link AppDatabase} used by this app.
-     * Is initialized in {@link #onCreate()}.
+     * AppDatabase used by this app.
+     * Is initialized in onCreate().
      *
-     * @see #onCreate()
+     * @see .onCreate()
      */
     private AppDatabase database;
 
     /**
-     * Returns a {@link UnitRepository} used by the {@link GwentApplication} referenced by the given {@link Context}.
-     * Wrapper of {@link #getRepository()}.
-     * @see #getRepository()
-     * @param context {@link Context} of a {@link GwentApplication}.
-     * @return A {@link UnitRepository} used by the given {@link GwentApplication} to access game state.
+     * Returns a UnitRepository used by the GwentApplication referenced by the given Context.
+     * Wrapper of getRepository().
+     * @see .getRepository()
+     * @param context Context of a GwentApplication.
+     * @return A UnitRepository used by the given GwentApplication to access game state.
      */
     public static Single<UnitRepository> getRepository(@NonNull Context context) {
         return ((GwentApplication) context.getApplicationContext()).getRepository();
@@ -45,7 +45,7 @@ public class GwentApplication extends Application {
     /**
      * Called when the application is starting, before any activity, service,
      * or receiver objects (excluding content providers) have been created.
-     * Initializes {@link #database}.
+     * Initializes database.
      */
     @Override
     public void onCreate() {
@@ -54,10 +54,10 @@ public class GwentApplication extends Application {
     }
 
     /**
-     * Returns the {@link #repository} used to create, read, update and delete game state.
-     * Lazily initializes {@link #repository}, if not yet done so.
-     * @see #getRepository(Context)
-     * @return A {@link UnitRepository} used to access game state.
+     * Returns the repository used to create, read, update and delete game state.
+     * Lazily initializes repository, if not yet done so.
+     * @see .getRepository(Context)
+     * @return A UnitRepository used to access game state.
      */
     public Single<UnitRepository> getRepository() {
         if (repository != null) {

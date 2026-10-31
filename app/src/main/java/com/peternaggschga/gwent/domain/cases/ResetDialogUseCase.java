@@ -34,14 +34,14 @@ public class ResetDialogUseCase {
      * May invoke a Dialog asking whether the user really wants
      * to reset depending on the given trigger and warning settings.
      * ResetRepositoryUseCase is used for resetting.
-     * Wrapper for #reset(Context, UnitRepository, Trigger).
+     * Wrapper for .reset(Context, UnitRepository, Trigger).
      *
      * @param context Context where a Dialog can be inflated.
-     * @param trigger {@link Trigger} defining what triggered this reset.
-     * @param soundManager SoundManager used, if an UnitEntity has the Ability#REVENGE ability.
+     * @param trigger Trigger defining what triggered this reset.
+     * @param soundManager SoundManager used, if an UnitEntity has the Ability.REVENGE ability.
      * @return A Single emitting a Boolean defining whether the reset really took place.
-     * @see #reset(Context, UnitRepository, Trigger, SoundManager)
-     * @see ResetRepositoryUseCase#reset(Context, UnitRepository, boolean, SoundManager)
+     * @see .reset(Context, UnitRepository, Trigger, SoundManager)
+     * @see ResetRepositoryUseCase.reset(Context, UnitRepository, boolean, SoundManager)
      */
     @NonNull
     public static Single<Boolean> reset(@NonNull Context context, @NonNull Trigger trigger, @NonNull SoundManager soundManager) {
@@ -57,10 +57,10 @@ public class ResetDialogUseCase {
      *
      * @param context    Context where a Dialog can be inflated.
      * @param repository UnitRepository that is reset.
-     * @param trigger    {@link Trigger} defining what triggered this reset.
-     * @param soundManager SoundManager used, if an UnitEntity has the Ability#REVENGE ability.
+     * @param trigger    Trigger defining what triggered this reset.
+     * @param soundManager SoundManager used, if an UnitEntity has the Ability.REVENGE ability.
      * @return A Single emitting a Boolean defining whether the reset really took place.
-     * @see ResetRepositoryUseCase#reset(Context, UnitRepository, boolean, SoundManager)
+     * @see ResetRepositoryUseCase.reset(Context, UnitRepository, boolean, SoundManager)
      */
     @NonNull
     protected static Single<Boolean> reset(@NonNull Context context, @NonNull UnitRepository repository,
@@ -94,7 +94,7 @@ public class ResetDialogUseCase {
      *
      * @param context    Context used for retrieval of SharedPreferences.
      * @param repository UnitRepository used to check if a certain DialogType is even necessary.
-     * @param trigger    {@link Trigger} defining what triggered the reset.
+     * @param trigger    Trigger defining what triggered the reset.
      * @return A DialogType defining the kind of Dialog.
      * @see DialogType
      */
@@ -125,7 +125,7 @@ public class ResetDialogUseCase {
     }
 
     /**
-     * An {@link Enum} listing the possible triggers of a reset.
+     * An Enum listing the possible triggers of a reset.
      */
     public enum Trigger {
         /**
@@ -135,15 +135,15 @@ public class ResetDialogUseCase {
         /**
          * Represents that a reset was triggered by a faction switch.
          * Only relevant if faction reset is activated, i.e.,
-         * the preference at the key referenced by {@link  R.string#preference_key_faction_reset} is true.
+         * the preference at the key referenced by R.stringpreference_key_faction_reset is true.
          */
         FACTION_SWITCH
     }
 
     /**
-     * An {@link Enum} defining which form of Dialog should be shown.
+     * An Enum defining which form of Dialog should be shown.
      *
-     * @see #getDialogType(Context, UnitRepository, Trigger)
+     * @see .getDialogType(Context, UnitRepository, Trigger)
      */
     private enum DialogType {
         /**

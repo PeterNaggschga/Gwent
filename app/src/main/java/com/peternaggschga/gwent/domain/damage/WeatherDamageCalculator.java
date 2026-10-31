@@ -7,13 +7,13 @@ import androidx.annotation.IntRange;
 
 /**
  * A DamageCalculator class responsible for calculating the weather debuff if necessary,
- * i.e., if #weather is true.
+ * i.e., if .weather is true.
  * Acts as the ConcreteComponent in the implemented decorator pattern
  * and is therefore always at the end of the decorator chain.
  */
 class WeatherDamageCalculator implements DamageCalculator {
     /**
-     * Defines whether the weather debuff should be applied when calling #calculateDamage().
+     * Defines whether the weather debuff should be applied when calling .calculateDamage().
      */
     private final boolean weather;
 
@@ -30,9 +30,9 @@ class WeatherDamageCalculator implements DamageCalculator {
 
     /**
      * Calculates the (de-)buffed damage of unit with the given id and the given base-damage.
-     * Returns the given damage if #weather is false or 1.
+     * Returns the given damage if .weather is false or 1.
      *
-     * @param id     Integer representing the UnitEntity#id of the unit whose (de-)buff damage is calculated.
+     * @param id     Integer representing the UnitEntity.id of the unit whose (de-)buff damage is calculated.
      * @param damage Integer representing the base-damage of the unit whose (de-)buff damage is calculated.
      * @return Integer representing the (de-)buffed damage of the unit.
      * @throws IllegalArgumentException When damage is negative.
@@ -49,11 +49,11 @@ class WeatherDamageCalculator implements DamageCalculator {
     }
 
     /**
-     * Calculates whether the unit with the given id is shown as Color#BUFFED,
-     * Color#DEBUFFED, or Color#DEFAULT.
-     * Returns Color#DEBUFFED if #weather is true or else Color#DEFAULT.
+     * Calculates whether the unit with the given id is shown as Color.BUFFED,
+     * Color.DEBUFFED, or Color.DEFAULT.
+     * Returns Color.DEBUFFED if .weather is true or else Color.DEFAULT.
      *
-     * @param id Integer representing the UnitEntity#id of the unit buff status is calculated.
+     * @param id Integer representing the UnitEntity.id of the unit buff status is calculated.
      * @return Color representing whether the unit is buffed, de-buffed or not affected.
      * @see Color
      */

@@ -16,10 +16,10 @@ import java.util.Random;
  * Shows heads or tails with 48.5% probability respectively.
  * The remaining 3% are divided equally between three tie situations.
  *
- * @see R.layout#popup_coin_normal
- * @see R.layout#popup_coin_stewie
- * @see R.layout#popup_coin_terry
- * @see R.layout#popup_coin_vin
+ * @see R.layout.popup_coin_normal
+ * @see R.layout.popup_coin_stewie
+ * @see R.layout.popup_coin_terry
+ * @see R.layout.popup_coin_vin
  */
 public class CoinFlipDialog extends OverlayDialog {
     /**
@@ -41,7 +41,7 @@ public class CoinFlipDialog extends OverlayDialog {
      *
      * @param savedInstanceState If this dialog is being reinitialized after
      *                           the hosting activity was previously shut down, holds the result from
-     *                           the most recent call to {@link #onSaveInstanceState}, or null if this
+     *                           the most recent call to onSaveInstanceState, or null if this
      *                           is the first time.
      */
     @Override

@@ -14,7 +14,7 @@ import org.jetbrains.annotations.Contract;
 import io.reactivex.rxjava3.functions.Consumer;
 
 /**
- * An observer class responsible for updating the views of the row defined in #row when notified,
+ * An observer class responsible for updating the views of the row defined in .row when notified,
  * i.e., when a new RowUiState is produced the observed Flowable.
  *
  * @see RowUiState
@@ -22,54 +22,54 @@ import io.reactivex.rxjava3.functions.Consumer;
 public class RowUiStateObserver implements Consumer<RowUiState> {
     /**
      * A TextView showing the user the summed-up damage of all units in this row,
-     * i.e., RowUiState#damage.
+     * i.e., RowUiState.damage.
      */
     @NonNull
     private final TextView damageView;
 
     /**
      * An ImageView responsible for showing the current state of the weather debuff in this row.
-     * Displays the resource in #weatherResource when RowUiState#weather is ``true``.
+     * Displays the resource in .weatherResource when RowUiState.weather is ``true``.
      *
-     * @see #weatherResource
+     * @see .weatherResource
      */
     @NonNull
     private final ImageView weatherView;
 
     /**
-     * An Integer representing the drawable resource shown by #weatherView
-     * when the weather debuff is active, i.e., when RowUiState#weather is ``true``.
+     * An Integer representing the drawable resource shown by .weatherView
+     * when the weather debuff is active, i.e., when RowUiState.weather is ``true``.
      *
-     * @see #weatherView
+     * @see .weatherView
      */
     @DrawableRes
     private final int weatherResource;
 
     /**
      * An ImageView responsible for showing the current state of the commander's horn buff in this row.
-     * Is gray when RowUiState#horn is ``false``.
+     * Is gray when RowUiState.horn is ``false``.
      *
-     * @see #weatherResource
+     * @see .weatherResource
      */
     @NonNull
     private final ImageView hornView;
 
     /**
-     * A TextView showing the number of units in this row, i.e., RowUiState#units.
+     * A TextView showing the number of units in this row, i.e., RowUiState.units.
      */
     @NonNull
     private final TextView unitView;
 
     /**
-     * Constructor of a RowUiStateObserver updating the given views when #onChanged() is called.
-     * Should only be called by #getObserver().
+     * Constructor of a RowUiStateObserver updating the given views when .onChanged() is called.
+     * Should only be called by .getObserver().
      *
      * @param damageView      TextView showing the summed-up damage of all units in the observed row.
      * @param weatherView     ImageView showing the current state of the weather debuff of the observed row.
      * @param weatherResource Integer representing the drawable resource shown when the weather debuff is active.
      * @param hornView        ImageView showing the current state of the commander's horn buff of the observed row.
      * @param unitView        TextView showing the number of units in the observed row.
-     * @see #getObserver(RowType, TextView, ImageView, ImageView, TextView)
+     * @see .getObserver(RowType, TextView, ImageView, ImageView, TextView)
      */
     private RowUiStateObserver(@NonNull TextView damageView, @NonNull ImageView weatherView,
                                @DrawableRes int weatherResource, @NonNull ImageView hornView,
@@ -84,7 +84,7 @@ public class RowUiStateObserver implements Consumer<RowUiState> {
     /**
      * Returns a new RowUiStateObserver for the given row updating the given views.
      * Factory method for RowUiStateObserver.
-     * #weatherResource is defined according to the given RowType.
+     * .weatherResource is defined according to the given RowType.
      *
      * @param row         RowType defining which row is being observed.
      * @param damageView  TextView showing the summed-up damage of all units in the observed row.
@@ -92,7 +92,7 @@ public class RowUiStateObserver implements Consumer<RowUiState> {
      * @param hornView    ImageView showing the current state of the commander's horn buff of the observed row.
      * @param unitView    TextView showing the number of units in the observed row.
      * @return A RowUiStateObserver updating the given views.
-     * @see #RowUiStateObserver(TextView, ImageView, int, ImageView, TextView)
+     * @see .RowUiStateObserver(TextView, ImageView, int, ImageView, TextView)
      */
     @NonNull
     @Contract("_, _, _, _, _ -> new")
@@ -117,7 +117,7 @@ public class RowUiStateObserver implements Consumer<RowUiState> {
     }
 
     /**
-     * Changes values in #damageView and #unitView as well as the image in #weatherView and #hornView.
+     * Changes values in .damageView and .unitView as well as the image in .weatherView and .hornView.
      * Image switches are animated using ImageViewSwitchAnimator.
      *
      * @param rowUiState RowUiState representing the updated state of the row.

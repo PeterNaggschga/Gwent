@@ -15,15 +15,15 @@ import com.peternaggschga.gwent.R;
 import java.util.Objects;
 
 /**
- * An {@link AppCompatActivity} used to present the rules of the game.
- * Can be accessed from the {@link SettingsActivity}.
- * When called, a selected {@link RuleSection} must always be given through the calling {@link android.content.Intent}
- * at the key defined in {@link #INTENT_EXTRA_TAG}.
+ * An AppCompatActivity used to present the rules of the game.
+ * Can be accessed from the SettingsActivity.
+ * When called, a selected RuleSection must always be given through the calling android.content.Intent
+ * at the key defined in INTENT_EXTRA_TAG.
  */
 public class RuleActivity extends AppCompatActivity {
     /**
-     * {@link String} constant defining the identifier where the requested {@link RuleSection} is provided
-     * in the calling {@link android.content.Intent}.
+     * String constant defining the identifier where the requested RuleSection is provided
+     * in the calling android.content.Intent.
      */
     public static final String INTENT_EXTRA_TAG = "rule_section";
 
@@ -32,7 +32,7 @@ public class RuleActivity extends AppCompatActivity {
      *
      * @param savedInstanceState If the activity is being re-initialized after
      *                           previously being shut down then this Bundle contains the data it most
-     *                           recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *                           recently supplied in onSaveInstanceState.  <b><i>Note: Otherwise it is null.</i></b>
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -94,11 +94,11 @@ public class RuleActivity extends AppCompatActivity {
     }
 
     /**
-     * Called whenever a {@link MenuItem} in the options menu is selected.
-     * Returns to the calling {@link android.app.Activity} when the {@link android.R.id#home} item was selected.
-     * @param item {@link MenuItem} that was selected.
+     * Called whenever a MenuItem in the options menu is selected.
+     * Returns to the calling android.app.Activity when the android.R.idhome item was selected.
+     * @param item MenuItem that was selected.
      *
-     * @return {@link Boolean} defining whether the call has been handled.
+     * @return Boolean defining whether the call has been handled.
      */
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

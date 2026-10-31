@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * A DamageCalculator class responsible for calculating the horn buff if necessary,
- * i.e., if there are units with the com.peternaggschga.gwent.data.Ability#HORN ability
+ * i.e., if there are units with the com.peternaggschga.gwent.data.Ability.HORN ability
  * that are not the unit the damage is calculated for
  * or if there is a commander's horn in this row.
  * Acts as a ConcreteDecorator in the implemented decorator pattern and should decorate a
@@ -18,8 +18,8 @@ import java.util.List;
 class HornDamageCalculatorDecorator extends DamageCalculatorDecorator {
     /**
      * A List of Integers
-     * containing the ids of all units with the com.peternaggschga.gwent.data.Ability#HORN ability.
-     * If a commander's horn is in the respective row, #unitIds contains ``null``.
+     * containing the ids of all units with the com.peternaggschga.gwent.data.Ability.HORN ability.
+     * If a commander's horn is in the respective row, .unitIds contains ``null``.
      */
     private final List<Integer> unitIds;
 
@@ -32,7 +32,7 @@ class HornDamageCalculatorDecorator extends DamageCalculatorDecorator {
      *
      * @param component DamageCalculator that is being decorated by this decorator.
      * @param unitIds   List of Integers
-     *                  representing ids of units with the com.peternaggschga.gwent.data.Ability#HORN ability.
+     *                  representing ids of units with the com.peternaggschga.gwent.data.Ability.HORN ability.
      * @see DamageCalculatorBuilder
      */
     HornDamageCalculatorDecorator(@NonNull DamageCalculator component, @NonNull List<Integer> unitIds) {
@@ -43,7 +43,7 @@ class HornDamageCalculatorDecorator extends DamageCalculatorDecorator {
     /**
      * Decides whether the unit with the given id is affected by the horn buff.
      *
-     * @param id Integer representing the UnitEntity#id of the unit that is being evaluated.
+     * @param id Integer representing the UnitEntity.id of the unit that is being evaluated.
      * @return A Boolean value defining whether the horn buff affects the given unit.
      */
     private boolean doubleDamage(int id) {
@@ -53,8 +53,8 @@ class HornDamageCalculatorDecorator extends DamageCalculatorDecorator {
     /**
      * Calculates the (de-)buffed damage of unit with the given id and the given base-damage.
      * Returns given damage times two if the unit is buffed by a commander's horn.
-     * @see #doubleDamage(int)
-     * @param id     Integer representing the UnitEntity#id of the unit whose (de-)buff damage is calculated.
+     * @see .doubleDamage(int)
+     * @param id     Integer representing the UnitEntity.id of the unit whose (de-)buff damage is calculated.
      * @param damage Integer representing the base-damage of the unit whose (de-)buff damage is calculated.
      * @return Integer representing the (de-)buffed damage of the unit.
      * @throws IllegalArgumentException When damage is negative.
@@ -68,15 +68,15 @@ class HornDamageCalculatorDecorator extends DamageCalculatorDecorator {
     }
 
     /**
-     * Calculates whether the unit with the given id is shown as Color#BUFFED,
-     * Color#DEBUFFED, or Color#DEFAULT.
-     * Units are shown as Color#BUFFED when they are affected by a horn buff,
-     * otherwise their Color is defined by #component.
+     * Calculates whether the unit with the given id is shown as Color.BUFFED,
+     * Color.DEBUFFED, or Color.DEFAULT.
+     * Units are shown as Color.BUFFED when they are affected by a horn buff,
+     * otherwise their Color is defined by .component.
      *
-     * @param id Integer representing the UnitEntity#id of the unit buff status is calculated.
+     * @param id Integer representing the UnitEntity.id of the unit buff status is calculated.
      * @return Color representing whether the unit is buffed, de-buffed or not affected.
      * @see Color
-     * @see #doubleDamage(int)
+     * @see .doubleDamage(int)
      */
     @Override
     public Color isBuffed(int id) {

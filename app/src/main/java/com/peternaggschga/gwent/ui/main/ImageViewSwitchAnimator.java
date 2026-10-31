@@ -15,7 +15,7 @@ import io.reactivex.rxjava3.core.Completable;
  * A class providing functionality for changing
  * the resource shown by an ImageView using a fading animation.
  *
- * @see #animatedSwitch(ImageView, int)
+ * @see .animatedSwitch(ImageView, int)
  */
 public class ImageViewSwitchAnimator {
     /**
@@ -44,7 +44,7 @@ public class ImageViewSwitchAnimator {
      * Animation is realized by creating a new ImageView on top of the given ImageView
      * which is then faded out using the ``fade_out`` animation provided by Android.
      * The operation is complete when the animation ends.
-     * @see android.R.anim#fade_out
+     * @see android.R.anim.fade_out
      * @param view ImageView, whose resource is to be changed.
      * @param resId Integer representing the drawable resource that the given view should show.
      * @return A Completable tracking operation status.

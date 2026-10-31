@@ -40,7 +40,7 @@ public class CardUiStateFactory {
 
     /**
      * Map containing a color integer for each Color value possible,
-     * i.e., Color#DEFAULT, Color#BUFFED, and Color#DEBUFFED.
+     * i.e., Color.DEFAULT, Color.BUFFED, and Color.DEBUFFED.
      */
     @NonNull
     private final Map<Color, Integer> damageTextColors = new HashMap<>(Color.values().length);
@@ -48,12 +48,12 @@ public class CardUiStateFactory {
     /**
      * Constructor of a CardUiStateFactory for a row with the given weather and horn
      * (de-)buff values.
-     * The Context parameter is used to retrieve the color values saved in #damageTextColors.
+     * The Context parameter is used to retrieve the color values saved in .damageTextColors.
      *
      * @param context Context object used to get colors.
      * @param weather Boolean defining whether the weather debuff is active.
      * @param horn    Boolean defining whether the horn buff is active.
-     * @see Context#getColor(int)
+     * @see Context.getColor(int)
      */
     public CardUiStateFactory(@NonNull Context context, boolean weather, boolean horn) {
         this.weather = weather;
@@ -65,8 +65,8 @@ public class CardUiStateFactory {
 
     /**
      * Creates a List of CardUiState objects from the given List of UnitEntity objects.
-     * Basically calls #createCardUiState(UnitEntity, DamageCalculator) for each given UnitEntity.
-     * @see #createCardUiState(UnitEntity, DamageCalculator)
+     * Basically calls .createCardUiState(UnitEntity, DamageCalculator) for each given UnitEntity.
+     * @see .createCardUiState(UnitEntity, DamageCalculator)
      * @param units List of UnitEntity objects that are converted to CardUiState objects.
      * @return A List of CardUiState objects from the given UnitEntity objects.
      */
@@ -80,7 +80,7 @@ public class CardUiStateFactory {
 
     /**
      * Creates a CardUiState from the given UnitEntity.
-     * @see #createCardUiState(Collection)
+     * @see .createCardUiState(Collection)
      * @param unit UnitEntity that is converted to a CardUiState.
      * @param calculator DamageCalculator used to calculate damage and Color of the given UnitEntity.
      * @return A CardUiState obtained from the given UnitEntity.

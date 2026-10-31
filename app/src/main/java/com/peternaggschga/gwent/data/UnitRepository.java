@@ -20,12 +20,12 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
  * A facade class managing public access to the data layer.
  * The contained functions mostly redirect requests to package-private DAO methods in RowDao and UnitDao.
  * Some functions implement slightly more complex behavior by chaining multiple DAO calls,
- * e.g., #reset().
+ * e.g., .reset().
  */
 public class UnitRepository {
     /**
      * Defines the AppDatabase that is used as a data source by this repository.
-     * Is provided by dependency injection in #UnitRepository().
+     * Is provided by dependency injection in .UnitRepository().
      */
     @NonNull
     private final AppDatabase database;
@@ -33,10 +33,10 @@ public class UnitRepository {
     /**
      * Constructor of a UnitRepository.
      * Depends on the given AppDatabase as a data source.
-     * Should only be called by #getRepository().
+     * Should only be called by .getRepository().
      *
      * @param database AppDatabase that is injected for the repository.
-     * @see #getRepository(AppDatabase)
+     * @see .getRepository(AppDatabase)
      */
     private UnitRepository(@NonNull AppDatabase database) {
         this.database = database;
@@ -45,8 +45,8 @@ public class UnitRepository {
     /**
      * Factory method for the UnitRepository class.
      * Creates a new UnitRepository managing the given AppDatabase.
-     * Also initializes one RowEntity per RowType using #initializeRows().
-     * @see #initializeRows()
+     * Also initializes one RowEntity per RowType using .initializeRows().
+     * @see .initializeRows()
      * @param database AppDatabase managed and initialized by the returned UnitRepository.
      * @return A Single emitting the created UnitRepository when initialization is finished.
      */
@@ -76,11 +76,11 @@ public class UnitRepository {
 
     /**
      * Resets the board by removing all units and resetting row status.
-     * Resetting row status is equivalent to removing the old rows and calling #initializeRows().
-     * Method is a wrapper for #reset(UnitEntity).
+     * Resetting row status is equivalent to removing the old rows and calling .initializeRows().
+     * Method is a wrapper for .reset(UnitEntity).
      *
      * @return A Completable tracking operation status.
-     * @see #reset(UnitEntity)
+     * @see .reset(UnitEntity)
      */
     @NonNull
     public Completable reset() {
@@ -89,11 +89,11 @@ public class UnitRepository {
 
     /**
      * Resets the board by removing all units but the given one and resetting row status.
-     * Resetting row status is equivalent to removing the old rows and calling #initializeRows().
+     * Resetting row status is equivalent to removing the old rows and calling .initializeRows().
      *
      * @param keptUnit UnitEntity that should be kept.
      * @return A Completable tracking operation status.
-     * @see #initializeRows()
+     * @see .initializeRows()
      */
     @NonNull
     public Completable reset(@Nullable UnitEntity keptUnit) {
@@ -107,13 +107,13 @@ public class UnitRepository {
     /**
      * Adds a unit with the given stats to the given row.
      *
-     * @param epic    Boolean representing whether card is #epic.
-     * @param damage  Non-negative value representing the #damage of the card.
-     * @param ability Ability representing the #ability of the card.
-     * @param squad   Integer representing the #squad of a card that has the Ability#BINDING #ability.
+     * @param epic    Boolean representing whether card is .epic.
+     * @param damage  Non-negative value representing the .damage of the card.
+     * @param ability Ability representing the .ability of the card.
+     * @param squad   Integer representing the .squad of a card that has the Ability.BINDING .ability.
      * @param row     RowType representing the combat type of the card.
      * @return A Completable tracking operation status.
-     * @throws IllegalArgumentException When damage is less than zero or if ability is Ability#BINDING and squad is null or less than zero or if ability is not Ability#BINDING and squad is not null.
+     * @throws IllegalArgumentException When damage is less than zero or if ability is Ability.BINDING and squad is null or less than zero or if ability is not Ability.BINDING and squad is not null.
      */
     @NonNull
     private Completable insertUnit(boolean epic, @IntRange(from = 0, to = UnitEntity.NON_EPIC_DAMAGE_VALUES_UPPER_BOUND) int damage, @NonNull Ability ability,
@@ -137,17 +137,17 @@ public class UnitRepository {
 
     /**
      * Adds a number of units with the given stats to the given row.
-     * Essentially calls #insertUnit(boolean, int, Ability, Integer, RowType) multiple times.
-     * @param epic    Boolean representing whether card is #epic.
-     * @param damage  Non-negative value representing the #damage of the card.
-     * @param ability Ability representing the #ability of the card.
-     * @param squad   Integer representing the #squad of a card that has the Ability#BINDING #ability.
+     * Essentially calls .insertUnit(boolean, int, Ability, Integer, RowType) multiple times.
+     * @param epic    Boolean representing whether card is .epic.
+     * @param damage  Non-negative value representing the .damage of the card.
+     * @param ability Ability representing the .ability of the card.
+     * @param squad   Integer representing the .squad of a card that has the Ability.BINDING .ability.
      * @param row     RowType representing the combat type of the card.
      * @param number  Integer representing the number of units to be added.
      * @return A Completable tracking operation status.
-     * @see #insertUnit(boolean, int, Ability, Integer, RowType)
-     * @throws IllegalArgumentException When damage is less than zero or if ability is Ability#BINDING and squad is null or less than zero
-     * or if ability is not Ability#BINDING and squad is not null.
+     * @see .insertUnit(boolean, int, Ability, Integer, RowType)
+     * @throws IllegalArgumentException When damage is less than zero or if ability is Ability.BINDING and squad is null or less than zero
+     * or if ability is not Ability.BINDING and squad is not null.
      */
     @NonNull
     public Completable insertUnit(boolean epic, @IntRange(from = 0, to = UnitEntity.NON_EPIC_DAMAGE_VALUES_UPPER_BOUND) int damage, @NonNull Ability ability,
@@ -161,9 +161,9 @@ public class UnitRepository {
     }
 
     /**
-     * Flips RowEntity#weather of the given attack row.
+     * Flips RowEntity.weather of the given attack row.
      *
-     * @param row RowEntity#id where the weather should be updated.
+     * @param row RowEntity.id where the weather should be updated.
      * @return A Completable tracking operation status.
      */
     @NonNull
@@ -172,9 +172,9 @@ public class UnitRepository {
     }
 
     /**
-     * Returns the value of RowEntity#weather for the given attack row.
-     * @see #isWeatherFlowable(RowType)
-     * @param row RowEntity#id where the weather is queried.
+     * Returns the value of RowEntity.weather for the given attack row.
+     * @see .isWeatherFlowable(RowType)
+     * @param row RowEntity.id where the weather is queried.
      * @return A Single tracking operation status and returning the value.
      */
     @NonNull
@@ -183,11 +183,11 @@ public class UnitRepository {
     }
 
     /**
-     * Returns a Flowable emitting the latest value of RowEntity#weather for the given attack row.
+     * Returns a Flowable emitting the latest value of RowEntity.weather for the given attack row.
      *
-     * @param row RowEntity#id where the weather is queried.
+     * @param row RowEntity.id where the weather is queried.
      * @return A Flowable emitting the values.
-     * @see #isWeather(RowType)
+     * @see .isWeather(RowType)
      */
     @NonNull
     public Flowable<Boolean> isWeatherFlowable(@NonNull RowType row) {
@@ -200,7 +200,7 @@ public class UnitRepository {
     }
 
     /**
-     * Sets RowEntity#weather to `false` for all attack rows.
+     * Sets RowEntity.weather to `false` for all attack rows.
      *
      * @return A Completable tracking operation status.
      */
@@ -210,8 +210,8 @@ public class UnitRepository {
     }
 
     /**
-     * Flips RowEntity#horn of the given attack row.
-     * @param row RowEntity#id where the horn status should be updated.
+     * Flips RowEntity.horn of the given attack row.
+     * @param row RowEntity.id where the horn status should be updated.
      * @return A Completable tracking operation status.
      */
     @NonNull
@@ -220,9 +220,9 @@ public class UnitRepository {
     }
 
     /**
-     * Returns the value of RowEntity#horn for the given attack row.
-     * @see #isHornFlowable(RowType)
-     * @param row RowEntity#id where the horn status is queried.
+     * Returns the value of RowEntity.horn for the given attack row.
+     * @see .isHornFlowable(RowType)
+     * @param row RowEntity.id where the horn status is queried.
      * @return A Single tracking operation status and returning the value.
      */
     @NonNull
@@ -231,11 +231,11 @@ public class UnitRepository {
     }
 
     /**
-     * Returns a Flowable emitting the values of RowEntity#horn for the given attack row.
+     * Returns a Flowable emitting the values of RowEntity.horn for the given attack row.
      *
-     * @param row RowEntity#id where the horn status is queried.
+     * @param row RowEntity.id where the horn status is queried.
      * @return A Flowable emitting the values.
-     * @see #isHorn(RowType)
+     * @see .isHorn(RowType)
      */
     @NonNull
     public Flowable<Boolean> isHornFlowable(@NonNull RowType row) {
@@ -283,9 +283,9 @@ public class UnitRepository {
 
     /**
      * Counts the units in the given attack row.
-     * @param row RowEntity#id where the units are counted.
+     * @param row RowEntity.id where the units are counted.
      * @return A Single tracking operation status and returning the value.
-     * @see #countUnits()
+     * @see .countUnits()
      */
     @NonNull
     public Single<Integer> countUnits(@NonNull RowType row) {
@@ -296,7 +296,7 @@ public class UnitRepository {
      * Counts the units in all attack rows.
      *
      * @return A Single tracking operation status and returning the value.
-     * @see #countUnits(RowType)
+     * @see .countUnits(RowType)
      */
     @NonNull
     public Single<Integer> countUnits() {
@@ -316,10 +316,10 @@ public class UnitRepository {
 
     /**
      * Returns the units in the given attack row.
-     * @see #getUnitsFlowable(RowType)
-     * @param row RowEntity#id where the units have been placed.
+     * @see .getUnitsFlowable(RowType)
+     * @param row RowEntity.id where the units have been placed.
      * @return A Single tracking operation status and returning the value.
-     * @see #getUnits()
+     * @see .getUnits()
      */
     @NonNull
     public Single<List<UnitEntity>> getUnits(@NonNull RowType row) {
@@ -329,10 +329,10 @@ public class UnitRepository {
     /**
      * Returns a Flowable emitting the units in the given attack row.
      *
-     * @param row RowEntity#id where the units have been placed.
+     * @param row RowEntity.id where the units have been placed.
      * @return A Flowable emitting the values.
-     * @see #getUnits(RowType)
-     * @see #getUnits()
+     * @see .getUnits(RowType)
+     * @see .getUnits()
      */
     @NonNull
     public Flowable<List<UnitEntity>> getUnitsFlowable(@NonNull RowType row) {
@@ -355,7 +355,7 @@ public class UnitRepository {
      * Returns the units in the given attack row.
      *
      * @return A Single tracking operation status and returning the value.
-     * @see #getUnits(RowType)
+     * @see .getUnits(RowType)
      */
     @NonNull
     public Single<List<UnitEntity>> getUnits() {

@@ -41,43 +41,43 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.functions.Function;
 
 /**
- * An {@link AppCompatActivity} that is called on startup and that encapsulates the main view onto the game board.
+ * An AppCompatActivity that is called on startup and that encapsulates the main view onto the game board.
  */
 public class MainActivity extends AppCompatActivity {
     /**
-     * {@link CompositeDisposable} used to store all {@link io.reactivex.rxjava3.disposables.Disposable}s,
-     * this activity might create to allow for their disposal in {@link #onDestroy()}.
+     * CompositeDisposable used to store all io.reactivex.rxjava3.disposables.Disposables,
+     * this activity might create to allow for their disposal in onDestroy().
      */
     @NonNull
     private final CompositeDisposable disposables = new CompositeDisposable();
 
     /**
-     * {@link SharedPreferences.OnSharedPreferenceChangeListener} that is called when faction-layout,
-     * i.e., the {@link androidx.preference.Preference} at the key defined by {@link com.peternaggschga.gwent.ui.main.FactionSwitchListener#THEME_PREFERENCE_KEY},
+     * SharedPreferences.OnSharedPreferenceChangeListener that is called when faction-layout,
+     * i.e., the androidx.preference.Preference at the key defined by com.peternaggschga.gwent.ui.main.FactionSwitchListenerTHEME_PREFERENCE_KEY,
      * is changed.
      * Reference must be kept (even if not used) to avoid garbage collection of the registered listener
-     * (see <a href="https://developer.android.com/reference/android/content/SharedPreferences.html#registerOnSharedPreferenceChangeListener(android.content.SharedPreferences.OnSharedPreferenceChangeListener)">here</a> for more information).
+     * (see <a href="https://developer.android.com/reference/android/content/SharedPreferences.html.registerOnSharedPreferenceChangeListener(android.content.SharedPreferences.OnSharedPreferenceChangeListener)">here</a> for more information).
      */
     private SharedPreferences.OnSharedPreferenceChangeListener factionSwitchListener;
 
     /**
-     * {@link GameBoardViewModel} holding the ui state of this activity.
+     * GameBoardViewModel holding the ui state of this activity.
      */
     private GameBoardViewModel gameBoardViewModel;
 
     /**
-     * Sets the theme and layout, initializes {@link #gameBoardViewModel} and {@link #factionSwitchListener}
+     * Sets the theme and layout, initializes gameBoardViewModel and factionSwitchListener
      * and sets listeners for some menu buttons.
-     * If the application is started for the first time (as tracked by the preference at key {@link R.string#preference_first_use_key})
-     * the {@link IntroductionActivity} is called first.
-     * The theme is set according to the preference at the key specified by {@link FactionSwitchListener#THEME_PREFERENCE_KEY}.
-     * The layout is set to {@link R.layout#activity_main}.
-     * {@link android.widget.Button.OnClickListener}s are set for the buttons referenced by
-     * {@link R.id#factionButton}, {@link R.id#coinButton}, and {@link R.id#settingsButton}.
+     * If the application is started for the first time (as tracked by the preference at key R.stringpreference_first_use_key)
+     * the IntroductionActivity is called first.
+     * The theme is set according to the preference at the key specified by FactionSwitchListenerTHEME_PREFERENCE_KEY.
+     * The layout is set to R.layoutactivity_main.
+     * android.widget.Button.OnClickListeners are set for the buttons referenced by
+     * R.idfactionButton, R.idcoinButton, and R.idsettingsButton.
      *
      * @param savedInstanceState If the activity is being re-initialized after
      *                           previously being shut down then this Bundle contains the data it most
-     *                           recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *                           recently supplied in onSaveInstanceState.  <b><i>Note: Otherwise it is null.</i></b>
      */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Called when the application is resumed after a pause or on startup.
-     * Sets the background image according to the preference at the key referenced by {@link R.string#preference_key_design}.
+     * Sets the background image according to the preference at the key referenced by R.stringpreference_key_design.
      */
     @Override
     protected void onResume() {
@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Called when the focus of this activities {@link android.view.Window} changes.
+     * Called when the focus of this activities android.view.Window changes.
      * Hides system ui and sets flags to keep the screen on when the window is in focus for more than 250 ms.
      * @param hasFocus Whether the window of this activity has focus.
      *
@@ -174,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Called when the activity is destroyed.
-     * Disposes and clears all {@link io.reactivex.rxjava3.disposables.Disposable}s in {@link #disposables}.
+     * Disposes and clears all io.reactivex.rxjava3.disposables.Disposables in disposables.
      */
     @Override
     protected void onDestroy() {
@@ -184,8 +184,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Initializes the {@link View}s in this activity to communicate with the {@link #gameBoardViewModel}.
-     * Sets {@link android.widget.Button.OnClickListener} for the weather-, horn-, and card-views of each row
+     * Initializes the Views in this activity to communicate with the gameBoardViewModel.
+     * Sets android.widget.Button.OnClickListener for the weather-, horn-, and card-views of each row
      * as well as listeners for the reset-, weather- and burn-buttons.
      */
     private void initializeViewModel() {
@@ -241,11 +241,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Shows a new {@link ChangeFactionDialog} enabling the user to choose the preferred theme.
-     * The decision is saved in the preference at the key {@link FactionSwitchListener#THEME_PREFERENCE_KEY}
+     * Shows a new ChangeFactionDialog enabling the user to choose the preferred theme.
+     * The decision is saved in the preference at the key FactionSwitchListenerTHEME_PREFERENCE_KEY
      * and if the user opted to reset on faction switch
-     * (i.e., the preference at {@link R.string#preference_key_faction_reset} is true),
-     * {@link GameBoardViewModel#onFactionSwitchReset(Context)} is called.
+     * (i.e., the preference at R.stringpreference_key_faction_reset is true),
+     * GameBoardViewModelonFactionSwitchReset(Context) is called.
      */
     private void inflateFactionPopup() {
         new ChangeFactionDialog(this, theme -> {
@@ -269,7 +269,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Shows a new {@link CoinFlipDialog} and plays a coin-flip sound using {@link SoundManager#playCoinSound()}.
+     * Shows a new CoinFlipDialog and plays a coin-flip sound using SoundManagerplayCoinSound().
      */
     private void inflateCoinFlipPopup() {
         new CoinFlipDialog(this).show();

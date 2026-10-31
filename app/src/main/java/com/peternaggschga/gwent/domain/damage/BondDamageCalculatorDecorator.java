@@ -10,14 +10,14 @@ import java.util.Objects;
 
 /**
  * A DamageCalculator class responsible for calculating the tight bond buff if necessary,
- * i.e., if there are units with the com.peternaggschga.gwent.data.Ability#BINDING ability.
+ * i.e., if there are units with the com.peternaggschga.gwent.data.Ability.BINDING ability.
  * Acts as a ConcreteDecorator in the implemented decorator pattern
  * and should decorate a WeatherDamageCalculator for correct calculation.
  */
 class BondDamageCalculatorDecorator extends DamageCalculatorDecorator {
     /**
      * A Map
-     * mapping the ids of all units with the com.peternaggschga.gwent.data.Ability#BINDING ability to the respective squad size.
+     * mapping the ids of all units with the com.peternaggschga.gwent.data.Ability.BINDING ability to the respective squad size.
      */
     private final Map<Integer, Integer> idToSquadSize;
 
@@ -28,7 +28,7 @@ class BondDamageCalculatorDecorator extends DamageCalculatorDecorator {
      * The values of the given Map must contain non-``null`` or positive Integers.
      *
      * @param component     DamageCalculator that is being decorated by this decorator.
-     * @param idToSquadSize Map mapping the ids of all units with the com.peternaggschga.gwent.data.Ability#BINDING ability to the respective squad size.
+     * @param idToSquadSize Map mapping the ids of all units with the com.peternaggschga.gwent.data.Ability.BINDING ability to the respective squad size.
      * @throws IllegalArgumentException When idToSquadSize contains non-positive or null values.
      * @see DamageCalculatorBuilder
      */
@@ -43,9 +43,9 @@ class BondDamageCalculatorDecorator extends DamageCalculatorDecorator {
     /**
      * Calculates the (de-)buffed damage of unit with the given id and the given base-damage.
      * Returns the given damage times the number of units with the same squad
-     * if the unit has the com.peternaggschga.gwent.data.Ability#BINDING ability.
+     * if the unit has the com.peternaggschga.gwent.data.Ability.BINDING ability.
      *
-     * @param id     Integer representing the UnitEntity#id of the unit whose (de-)buff damage is calculated.
+     * @param id     Integer representing the UnitEntity.id of the unit whose (de-)buff damage is calculated.
      * @param damage Integer representing the base-damage of the unit whose (de-)buff damage is calculated.
      * @return Integer representing the (de-)buffed damage of the unit.
      * @throws IllegalArgumentException When damage is negative.
@@ -59,12 +59,12 @@ class BondDamageCalculatorDecorator extends DamageCalculatorDecorator {
     }
 
     /**
-     * Calculates whether the unit with the given id is shown as Color#BUFFED,
-     * Color#DEBUFFED, or Color#DEFAULT.
-     * Units are shown as Color#BUFFED when they are in a squad of two or more units,
-     * otherwise their Color is defined by #component.
+     * Calculates whether the unit with the given id is shown as Color.BUFFED,
+     * Color.DEBUFFED, or Color.DEFAULT.
+     * Units are shown as Color.BUFFED when they are in a squad of two or more units,
+     * otherwise their Color is defined by .component.
      *
-     * @param id Integer representing the UnitEntity#id of the unit buff status is calculated.
+     * @param id Integer representing the UnitEntity.id of the unit buff status is calculated.
      * @return Color representing whether the unit is buffed, de-buffed or not affected.
      * @see Color
      */

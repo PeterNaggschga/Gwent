@@ -73,13 +73,13 @@ public class BurnDialogUseCase {
      * Burns the strongest UnitEntity objects in UnitRepository.
      * Invokes a Dialog asking whether the user really wants to remove those units.
      * ResetRepositoryUseCase is used for resetting.
-     * Wrapper for #burn(Context, UnitRepository).
+     * Wrapper for .burn(Context, UnitRepository).
      *
      * @param context Context where a Dialog can be inflated.
-     * @param soundManager SoundManager used, if an UnitEntity has the Ability#REVENGE ability.
+     * @param soundManager SoundManager used, if an UnitEntity has the Ability.REVENGE ability.
      * @return A Single emitting a Boolean defining whether the units really were burned.
-     * @see #burn(Context, UnitRepository, SoundManager)
-     * @see RemoveUnitsUseCase#remove(Context, UnitRepository, Collection, SoundManager)
+     * @see .burn(Context, UnitRepository, SoundManager)
+     * @see RemoveUnitsUseCase.remove(Context, UnitRepository, Collection, SoundManager)
      */
     @NonNull
     public static Single<Boolean> burn(@NonNull Context context, @NonNull SoundManager soundManager) {
@@ -93,9 +93,9 @@ public class BurnDialogUseCase {
      *
      * @param context    Context where a Dialog can be inflated.
      * @param repository UnitRepository where units are burned.
-     * @param soundManager SoundManager used, if an UnitEntity has the Ability#REVENGE ability.
+     * @param soundManager SoundManager used, if an UnitEntity has the Ability.REVENGE ability.
      * @return A Single emitting a Boolean defining whether the units really were burned.
-     * @see RemoveUnitsUseCase#remove(Context, UnitRepository, Collection, SoundManager)
+     * @see RemoveUnitsUseCase.remove(Context, UnitRepository, Collection, SoundManager)
      */
     @NonNull
     protected static Single<Boolean> burn(@NonNull Context context, @NonNull UnitRepository repository, @NonNull SoundManager soundManager) {

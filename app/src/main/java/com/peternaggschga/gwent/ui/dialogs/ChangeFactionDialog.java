@@ -40,7 +40,7 @@ public class ChangeFactionDialog extends OverlayDialog {
      *
      * @param savedInstanceState If this dialog is being reinitialized after
      *                           the hosting activity was previously shut down, holds the result from
-     *                           the most recent call to {@link #onSaveInstanceState}, or null if this
+     *                           the most recent call to onSaveInstanceState, or null if this
      *                           is the first time.
      */
     @Override
@@ -61,13 +61,13 @@ public class ChangeFactionDialog extends OverlayDialog {
     }
 
     /**
-     * Returns a View.OnclickListener instance that calls #cancel()
-     * and uses #callback to propagate the selected theme.
+     * Returns a View.OnclickListener instance that calls .cancel()
+     * and uses .callback to propagate the selected theme.
      *
      * @param theme Integer representing the selected theme.
      * @return A View.OnClickListener handling theme input.
-     * @see #cancel()
-     * @see Callback#onThemeSelect(int)
+     * @see .cancel()
+     * @see Callback.onThemeSelect(int)
      */
     @NonNull
     private View.OnClickListener getOnThemeClickListener(@IntRange(from = THEME_MONSTER, to = THEME_SCOIATAEL) int theme) {

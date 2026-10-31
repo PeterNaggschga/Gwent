@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * A DamageCalculator class responsible for calculating the moral buff if necessary,
- * i.e., if there are units with the com.peternaggschga.gwent.data.Ability#MORAL_BOOST ability
+ * i.e., if there are units with the com.peternaggschga.gwent.data.Ability.MORAL_BOOST ability
  * that are not the unit the damage is calculated for.
  * Acts as a ConcreteDecorator in the implemented decorator pattern and should decorate a
  * WeatherDamageCalculator or a BondDamageCalculatorDecorator for correct damage calculation.
@@ -17,7 +17,7 @@ import java.util.List;
 class MoralDamageCalculatorDecorator extends DamageCalculatorDecorator {
     /**
      * A List of Integers
-     * containing the ids of all units with the com.peternaggschga.gwent.data.Ability#MORAL_BOOST ability.
+     * containing the ids of all units with the com.peternaggschga.gwent.data.Ability.MORAL_BOOST ability.
      */
     private final List<Integer> unitIds;
 
@@ -29,7 +29,7 @@ class MoralDamageCalculatorDecorator extends DamageCalculatorDecorator {
      *
      * @param component DamageCalculator that is being decorated by this decorator.
      * @param unitIds   List of Integers
-     *                  representing ids of units with the com.peternaggschga.gwent.data.Ability#MORAL_BOOST ability.
+     *                  representing ids of units with the com.peternaggschga.gwent.data.Ability.MORAL_BOOST ability.
      * @throws IllegalArgumentException When unitIds contains null values.
      * @see DamageCalculatorBuilder
      */
@@ -44,10 +44,10 @@ class MoralDamageCalculatorDecorator extends DamageCalculatorDecorator {
     /**
      * Calculates the (de-)buffed damage of unit with the given id and the given base-damage.
      * Returns the given damage plus the number of moral boosts.
-     * If the unit itself has the com.peternaggschga.gwent.data.Ability#MORAL_BOOST ability,
+     * If the unit itself has the com.peternaggschga.gwent.data.Ability.MORAL_BOOST ability,
      * it is boosted one time less.
      *
-     * @param id     Integer representing the UnitEntity#id of the unit whose (de-)buff damage is calculated.
+     * @param id     Integer representing the UnitEntity.id of the unit whose (de-)buff damage is calculated.
      * @param damage Integer representing the base-damage of the unit whose (de-)buff damage is calculated.
      * @return Integer representing the (de-)buffed damage of the unit.
      * @throws IllegalArgumentException When damage is negative.
@@ -62,12 +62,12 @@ class MoralDamageCalculatorDecorator extends DamageCalculatorDecorator {
     }
 
     /**
-     * Calculates whether the unit with the given id is shown as Color#BUFFED,
-     * Color#DEBUFFED, or Color#DEFAULT.
-     * Units are shown as Color#BUFFED when they are affected by a moral boost buff,
-     * otherwise their Color is defined by #component.
+     * Calculates whether the unit with the given id is shown as Color.BUFFED,
+     * Color.DEBUFFED, or Color.DEFAULT.
+     * Units are shown as Color.BUFFED when they are affected by a moral boost buff,
+     * otherwise their Color is defined by .component.
      *
-     * @param id Integer representing the UnitEntity#id of the unit buff status is calculated.
+     * @param id Integer representing the UnitEntity.id of the unit buff status is calculated.
      * @return Color representing whether the unit is buffed, de-buffed or not affected.
      * @see Color
      */

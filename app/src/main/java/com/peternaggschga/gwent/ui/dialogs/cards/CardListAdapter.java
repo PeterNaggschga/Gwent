@@ -27,39 +27,39 @@ import com.peternaggschga.gwent.R;
  */
 class CardListAdapter extends ListAdapter<CardUiState, CardListAdapter.CardViewHolder> {
     /**
-     * Consumer that is used in #onCreateViewHolder(ViewGroup, int)
-     * as CardListAdapter.CardViewHolder#onCopy.
+     * Consumer that is used in .onCreateViewHolder(ViewGroup, int)
+     * as CardListAdapter.CardViewHolder.onCopy.
      * Is called
-     * when the user clicks on the copy-button of an element with the UnitEntity#id of the represented UnitEntity.
+     * when the user clicks on the copy-button of an element with the UnitEntity.id of the represented UnitEntity.
      *
-     * @see #onCreateViewHolder(ViewGroup, int)
-     * @see CardListAdapter.CardViewHolder#onCopy
+     * @see .onCreateViewHolder(ViewGroup, int)
+     * @see CardListAdapter.CardViewHolder.onCopy
      */
     @NonNull
     private final Consumer<Integer> onCopy;
 
     /**
-     * Consumer that is used in #onCreateViewHolder(ViewGroup, int)
-     * as CardListAdapter.CardViewHolder#onRemove.
+     * Consumer that is used in .onCreateViewHolder(ViewGroup, int)
+     * as CardListAdapter.CardViewHolder.onRemove.
      * Is called
-     * when the user clicks on the delete-button of an element with the UnitEntity#id of the represented UnitEntity.
-     * @see #onCreateViewHolder(ViewGroup, int)
-     * @see CardListAdapter.CardViewHolder#onRemove
+     * when the user clicks on the delete-button of an element with the UnitEntity.id of the represented UnitEntity.
+     * @see .onCreateViewHolder(ViewGroup, int)
+     * @see CardListAdapter.CardViewHolder.onRemove
      */
     @NonNull
     private final Consumer<Integer> onRemove;
 
     /**
-     * Constructor of a CardListAdapter with the given #onCopy and #onRemove callbacks.
-     * Calls super-constructor ListAdapter#ListAdapter(DiffUtil.ItemCallback)
-     * with CardUiState#DIFF_CALLBACK.
-     * Also calls #setHasStableIds() since #getItemId() returns the stable UnitEntity#id.
-     * @see ListAdapter#ListAdapter(DiffUtil.ItemCallback)
-     * @see CardUiState#DIFF_CALLBACK
-     * @see #setHasStableIds(boolean)
-     * @param onCopy Consumer that is called with the UnitEntity#id,
+     * Constructor of a CardListAdapter with the given .onCopy and .onRemove callbacks.
+     * Calls super-constructor ListAdapter.ListAdapter(DiffUtil.ItemCallback)
+     * with CardUiState.DIFF_CALLBACK.
+     * Also calls .setHasStableIds() since .getItemId() returns the stable UnitEntity.id.
+     * @see ListAdapter.ListAdapter(DiffUtil.ItemCallback)
+     * @see CardUiState.DIFF_CALLBACK
+     * @see .setHasStableIds(boolean)
+     * @param onCopy Consumer that is called with the UnitEntity.id,
      *               when the copy-button of the representing card is clicked.
-     * @param onRemove Consumer that is called with the UnitEntity#id,
+     * @param onRemove Consumer that is called with the UnitEntity.id,
      *                 when the delete-button of the representing card is clicked.
      */
     CardListAdapter(@NonNull Consumer<Integer> onCopy, @NonNull Consumer<Integer> onRemove) {
@@ -74,7 +74,7 @@ class CardListAdapter extends ListAdapter<CardUiState, CardListAdapter.CardViewH
      * @param parent The ViewGroup into which the new View will be added after it is bound to
      *               an adapter position.
      * @param viewType The view type of the new View.
-     * @return A CardViewHolder object for a new card layout and with #onCopy and #onRemove callbacks.
+     * @return A CardViewHolder object for a new card layout and with .onCopy and .onRemove callbacks.
      */
     @NonNull
     @Override
@@ -114,9 +114,9 @@ class CardListAdapter extends ListAdapter<CardUiState, CardListAdapter.CardViewH
     }
 
     /**
-     * Returns the UnitEntity#id of the UnitEntity represented at the given position.
+     * Returns the UnitEntity.id of the UnitEntity represented at the given position.
      * @param position Adapter position to query.
-     * @return A Long referencing the UnitEntity#id of the UnitEntity represented at the given position.
+     * @return A Long referencing the UnitEntity.id of the UnitEntity represented at the given position.
      */
     @Override
     public long getItemId(@IntRange(from = 0) int position) {
@@ -125,50 +125,50 @@ class CardListAdapter extends ListAdapter<CardUiState, CardListAdapter.CardViewH
 
     /**
      * A RecyclerView.ViewHolder class managing a card view
-     * that shows a representation of the UnitEntity referenced by #itemId.
+     * that shows a representation of the UnitEntity referenced by .itemId.
      * @see RecyclerView.ViewHolder
      */
     static class CardViewHolder extends RecyclerView.ViewHolder {
         /**
          * TextView showing the (de-)buffed damage of the represented UnitEntity.
-         * @see #getDamageView()
+         * @see .getDamageView()
          */
         @NonNull
         private final TextView damageView;
         /**
-         * ImageView showing an image of the UnitEntity#ability of the represented UnitEntity.
-         * If UnitEntity#ability is Ability#NONE, this view's visibility should be View#GONE.
-         * @see #getAbilityView()
+         * ImageView showing an image of the UnitEntity.ability of the represented UnitEntity.
+         * If UnitEntity.ability is Ability.NONE, this view's visibility should be View.GONE.
+         * @see .getAbilityView()
          */
         @NonNull
         private final ImageView abilityView;
         /**
-         * TextView showing the UnitEntity#squad
-         * of the represented UnitEntity if UnitEntity#squad is Ability#BINDING.
-         * If UnitEntity#ability is not Ability#BINDING, this view's visibility should be View#GONE.
-         * @see #getBindingView()
+         * TextView showing the UnitEntity.squad
+         * of the represented UnitEntity if UnitEntity.squad is Ability.BINDING.
+         * If UnitEntity.ability is not Ability.BINDING, this view's visibility should be View.GONE.
+         * @see .getBindingView()
          */
         @NonNull
         private final TextView bindingView;
         /**
-         * Integer referencing the UnitEntity#id of the represented UnitEntity.
-         * Is initialized with #NO_ID and therefore must be set using #setItemId()
-         * in #onBindViewHolder(CardViewHolder, int).
+         * Integer referencing the UnitEntity.id of the represented UnitEntity.
+         * Is initialized with .NO_ID and therefore must be set using .setItemId()
+         * in .onBindViewHolder(CardViewHolder, int).
          *
-         * @see #setItemId(int)
-         * @see #onBindViewHolder(CardViewHolder, int)
+         * @see .setItemId(int)
+         * @see .onBindViewHolder(CardViewHolder, int)
          */
         private int itemId = (int) NO_ID;
 
         /**
-         * Constructor of a CardViewHolder for the given View initializing #damageView,
-         * #abilityView, and #bindingView.
+         * Constructor of a CardViewHolder for the given View initializing .damageView,
+         * .abilityView, and .bindingView.
          * Sets View.OnClickListener on copy-button and delete-button
-         * calling the given onCopy and onRemove callbacks with #unitId.
+         * calling the given onCopy and onRemove callbacks with .unitId.
          *
          * @param itemView View with the card layout.
-         * @param onCopy   Consumer that is called with #unitId, when the copy-button of the given View is clicked.
-         * @param onRemove Consumer that is called with #unitId, when the delete-button of the given View is clicked.
+         * @param onCopy   Consumer that is called with .unitId, when the copy-button of the given View is clicked.
+         * @param onRemove Consumer that is called with .unitId, when the delete-button of the given View is clicked.
          */
         CardViewHolder(@NonNull View itemView,
                        @NonNull Consumer<Integer> onCopy, @NonNull Consumer<Integer> onRemove) {
@@ -193,9 +193,9 @@ class CardListAdapter extends ListAdapter<CardUiState, CardListAdapter.CardViewH
         }
 
         /**
-         * Returns the #damageView of the managed View.
+         * Returns the .damageView of the managed View.
          * @return A TextView showing the damage of the represented UnitEntity.
-         * @see #damageView
+         * @see .damageView
          */
         @NonNull
         TextView getDamageView() {
@@ -203,9 +203,9 @@ class CardListAdapter extends ListAdapter<CardUiState, CardListAdapter.CardViewH
         }
 
         /**
-         * Returns the #abilityView of the managed View.
-         * @return An ImageView showing the UnitEntity#ability of the represented UnitEntity.
-         * @see #abilityView
+         * Returns the .abilityView of the managed View.
+         * @return An ImageView showing the UnitEntity.ability of the represented UnitEntity.
+         * @see .abilityView
          */
         @NonNull
         ImageView getAbilityView() {
@@ -213,9 +213,9 @@ class CardListAdapter extends ListAdapter<CardUiState, CardListAdapter.CardViewH
         }
 
         /**
-         * Returns the #bindingView of the managed View.
-         * @return A TextView showing the UnitEntity#squad of the represented UnitEntity.
-         * @see #bindingView
+         * Returns the .bindingView of the managed View.
+         * @return A TextView showing the UnitEntity.squad of the represented UnitEntity.
+         * @see .bindingView
          */
         @NonNull
         TextView getBindingView() {
@@ -223,11 +223,11 @@ class CardListAdapter extends ListAdapter<CardUiState, CardListAdapter.CardViewH
         }
 
         /**
-         * Sets the #unitId of this ViewHolder.
+         * Sets the .unitId of this ViewHolder.
          *
-         * @param itemId Integer referencing the UnitEntity#id of the represented UnitEntity.
+         * @param itemId Integer referencing the UnitEntity.id of the represented UnitEntity.
          * @throws IllegalArgumentException When itemId is negative.
-         * @see #itemId
+         * @see .itemId
          */
         void setItemId(int itemId) {
             if (itemId <= NO_ID) {

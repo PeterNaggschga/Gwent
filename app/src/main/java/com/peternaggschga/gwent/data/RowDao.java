@@ -38,7 +38,7 @@ public interface RowDao {
     Completable clearRows();
 
     /**
-     * Flips RowEntity#weather for the given RowType in `rows`.
+     * Flips RowEntity.weather for the given RowType in `rows`.
      *
      * @param row RowType of the updated RowEntity.
      * @return A Completable tracking operation status.
@@ -47,7 +47,7 @@ public interface RowDao {
     Completable updateWeather(@NonNull RowType row);
 
     /**
-     * Sets RowEntity#weather to `false` for all RowEntity elements in `rows`.
+     * Sets RowEntity.weather to `false` for all RowEntity elements in `rows`.
      *
      * @return A Completable tracking operation status.
      */
@@ -55,7 +55,7 @@ public interface RowDao {
     Completable clearWeather();
 
     /**
-     * Flips RowEntity#horn for the given RowType in `rows`.
+     * Flips RowEntity.horn for the given RowType in `rows`.
      *
      * @param row RowType of the updated RowEntity.
      * @return A Completable tracking operation status.
@@ -64,8 +64,8 @@ public interface RowDao {
     Completable updateHorn(@NonNull RowType row);
 
     /**
-     * Fetches RowEntity#weather for the given RowType in `rows`.
-     * @see #isWeatherFlowable(RowType)
+     * Fetches RowEntity.weather for the given RowType in `rows`.
+     * @see .isWeatherFlowable(RowType)
      * @param row RowType of the queried RowEntity.
      * @return A Single tracking operation status and returning the value.
      */
@@ -73,18 +73,18 @@ public interface RowDao {
     Single<Boolean> isWeather(@NonNull RowType row);
 
     /**
-     * Fetches a Flowable of RowEntity#weather for the given RowType in `rows`.
+     * Fetches a Flowable of RowEntity.weather for the given RowType in `rows`.
      *
      * @param row RowType of the queried RowEntity.
      * @return A Flowable emitting the values.
-     * @see #isWeather(RowType)
+     * @see .isWeather(RowType)
      */
     @Query("SELECT weather FROM rows WHERE id = :row")
     Flowable<Boolean> isWeatherFlowable(@NonNull RowType row);
 
     /**
-     * Fetches RowEntity#horn for the given RowType in `rows`.
-     * @see #isHornFlowable(RowType)
+     * Fetches RowEntity.horn for the given RowType in `rows`.
+     * @see .isHornFlowable(RowType)
      * @param row RowType of the queried RowEntity.
      * @return A Single tracking operation status and returning the value.
      */
@@ -92,11 +92,11 @@ public interface RowDao {
     Single<Boolean> isHorn(@NonNull RowType row);
 
     /**
-     * Fetches a Flowable of RowEntity#horn for the given RowType in `rows`.
+     * Fetches a Flowable of RowEntity.horn for the given RowType in `rows`.
      *
      * @param row RowType of the queried RowEntity.
      * @return A Flowable emitting the values.
-     * @see #isHorn(RowType)
+     * @see .isHorn(RowType)
      */
     @Query("SELECT horn FROM rows WHERE id = :row")
     Flowable<Boolean> isHornFlowable(@NonNull RowType row);

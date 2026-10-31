@@ -9,36 +9,36 @@ import androidx.annotation.NonNull;
 import com.peternaggschga.gwent.R;
 
 /**
- * A class managing the indicator views shown in the bottom bar of the {@link IntroductionActivity}.
+ * A class managing the indicator views shown in the bottom bar of the IntroductionActivity.
  * The managed views show the user how many pages there are and which one they are on.
  */
 class IndicatorManager {
     /**
-     * Array of {@link ImageView}s that contains the indicator views.
+     * Array of ImageViews that contains the indicator views.
      */
     @NonNull
     private final ImageView[] indicators = new ImageView[5];
 
     /**
-     * {@link Integer} referencing the position, i.e. the index in {@link #indicators},
+     * Integer referencing the position, i.e. the index in indicators,
      * of the view that is currently shown as selected.
-     * Is set in {@link #updateIndicators(int)}.
+     * Is set in updateIndicators(int).
      *
-     * @see #updateIndicators(int)
+     * @see .updateIndicators(int)
      */
     @IntRange(from = 0, to = 4)
     private int currentView = 0;
 
     /**
-     * Constructor of an {@link IndicatorManager} for the given {@link Window}.
-     * Initializes values in {@link #indicators}.
-     * @param window {@link Window} containing the indicator views.
-     * @see Window#findViewById(int)
-     * @see R.id#introduction_indicator_0
-     * @see R.id#introduction_indicator_1
-     * @see R.id#introduction_indicator_2
-     * @see R.id#introduction_indicator_3
-     * @see R.id#introduction_indicator_4
+     * Constructor of an IndicatorManager for the given Window.
+     * Initializes values in indicators.
+     * @param window Window containing the indicator views.
+     * @see Window.findViewById(int)
+     * @see R.id.introduction_indicator_0
+     * @see R.id.introduction_indicator_1
+     * @see R.id.introduction_indicator_2
+     * @see R.id.introduction_indicator_3
+     * @see R.id.introduction_indicator_4
      */
     IndicatorManager(@NonNull Window window) {
         indicators[0] = window.findViewById(R.id.introduction_indicator_0);
@@ -50,10 +50,10 @@ class IndicatorManager {
 
     /**
      * Updates the indicator views according to the given new position.
-     * Sets the {@link #currentView} to {@link R.drawable#indicator_unselected}
-     * and the view at the new position to {@link R.drawable#indicator_selected}.
-     * Saves the given position in {@link #currentView}.
-     * @param position {@link Integer} referencing the page represented by the managed indicators.
+     * Sets the currentView to R.drawableindicator_unselected
+     * and the view at the new position to R.drawableindicator_selected.
+     * Saves the given position in currentView.
+     * @param position Integer referencing the page represented by the managed indicators.
      * @throws ArrayIndexOutOfBoundsException When position is not in [0, 4].
      */
     void updateIndicators(@IntRange(from = 0, to = 4) int position) {

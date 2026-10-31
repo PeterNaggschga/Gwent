@@ -17,7 +17,7 @@ import io.reactivex.rxjava3.functions.Consumer;
  */
 public class MenuUiStateObserver implements Consumer<MenuUiState> {
     /**
-     * A TextView showing the user the summed-up damage of all units, i.e., MenuUiState#damage.
+     * A TextView showing the user the summed-up damage of all units, i.e., MenuUiState.damage.
      */
     @NonNull
     private final TextView damageView;
@@ -25,27 +25,27 @@ public class MenuUiStateObserver implements Consumer<MenuUiState> {
     /**
      * An ImageButton responsible for resetting the whole board,
      * i.e., clearing weather and commander's horn and deleting all units.
-     * Is not clickable and gray when MenuUiState#reset is ``false``.
+     * Is not clickable and gray when MenuUiState.reset is ``false``.
      */
     @NonNull
     private final ImageButton resetButton;
 
     /**
      * An ImageButton responsible for clearing all weather effects.
-     * Is not clickable and gray when MenuUiState#weather is ``false``.
+     * Is not clickable and gray when MenuUiState.weather is ``false``.
      */
     @NonNull
     private final ImageButton weatherButton;
 
     /**
      * An ImageButton responsible for deleting the units with the highest damage.
-     * Is not clickable and gray when MenuUiState#burn is ``false``.
+     * Is not clickable and gray when MenuUiState.burn is ``false``.
      */
     @NonNull
     private final ImageButton burnButton;
 
     /**
-     * Constructor of a MenuUiStateObserver updating the given views when #onChanged() is called.
+     * Constructor of a MenuUiStateObserver updating the given views when .accept() is called.
      *
      * @param damageView    TextView showing the summed-up damage of all units.
      * @param resetButton   ImageButton used to reset the whole game board.
@@ -61,8 +61,8 @@ public class MenuUiStateObserver implements Consumer<MenuUiState> {
     }
 
     /**
-     * Changes value in #damageView as well as appearance and clickable status of #resetButton,
-     * #weatherButton, and #burnButton.
+     * Changes value in damageView as well as appearance and clickable status of resetButton,
+     * weatherButton, and burnButton.
      * Appearance changes are animated using ImageViewSwitchAnimator.
      *
      * @param menuUiState MenuUiState representing the updated state of the menu.
