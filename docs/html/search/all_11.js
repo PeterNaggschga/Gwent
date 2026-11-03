@@ -10,7 +10,8 @@ var searchData=
   ['unitview_7',['unitView',['../classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1RowUiStateObserver.xhtml#a5423544287b2a3083bd9a65a9ca567a3',1,'com::peternaggschga::gwent::ui::main::RowUiStateObserver']]],
   ['unitviews_8',['unitViews',['../classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1FactionSwitchListener.xhtml#a5365a998ee15db132a4cc897bcfdeaff',1,'com::peternaggschga::gwent::ui::main::FactionSwitchListener']]],
   ['unused_9',['UNUSED',['../classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1cards_1_1CardUiState.xhtml#ab350a814fcbff33d47716cff4dc4daf8',1,'com::peternaggschga::gwent::ui::dialogs::cards::CardUiState']]],
-  ['updatehorn_10',['updateHorn',['../interfacecom_1_1peternaggschga_1_1gwent_1_1data_1_1RowDao.xhtml#a8275d12540d80e92ee0d416fe97427e3',1,'com::peternaggschga::gwent::data::RowDao']]],
-  ['updateindicators_11',['updateIndicators',['../classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1introduction_1_1IndicatorManager.xhtml#ad3ff0653df4c683b877cff4ff55a9456',1,'com::peternaggschga::gwent::ui::introduction::IndicatorManager']]],
-  ['updateweather_12',['updateWeather',['../interfacecom_1_1peternaggschga_1_1gwent_1_1data_1_1RowDao.xhtml#a2254d896dcb2af86a174303d5d7cf7cb',1,'com::peternaggschga::gwent::data::RowDao']]]
+  ['updatebottombar_10',['updateBottomBar',['../classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1introduction_1_1IntroductionActivity.xhtml#a6308acb8fd10754b88c01631f99fac42',1,'com::peternaggschga::gwent::ui::introduction::IntroductionActivity']]],
+  ['updatehorn_11',['updateHorn',['../interfacecom_1_1peternaggschga_1_1gwent_1_1data_1_1RowDao.xhtml#a8275d12540d80e92ee0d416fe97427e3',1,'com::peternaggschga::gwent::data::RowDao']]],
+  ['updateindicators_12',['updateIndicators',['../classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1introduction_1_1IndicatorManager.xhtml#ad3ff0653df4c683b877cff4ff55a9456',1,'com::peternaggschga::gwent::ui::introduction::IndicatorManager']]],
+  ['updateweather_13',['updateWeather',['../interfacecom_1_1peternaggschga_1_1gwent_1_1data_1_1RowDao.xhtml#a2254d896dcb2af86a174303d5d7cf7cb',1,'com::peternaggschga::gwent::data::RowDao']]]
 ];

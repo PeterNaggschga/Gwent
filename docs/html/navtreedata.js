@@ -46,7 +46,7 @@ var NAVTREEINDEX =
 [
 "Ability_8java_source.xhtml",
 "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1SquadManager.xhtml#a6022deae36caaf2a1827b7e78b28d961",
-"dir_27598926e7d1ac5513646b5ddc7b1d04.xhtml"
+"classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1sounds_1_1SoundManager.xhtml#ae96ab0a84d0b8949bba084c6cbd243c2"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronization';

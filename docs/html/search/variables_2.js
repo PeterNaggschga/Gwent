@@ -1,7 +1,7 @@
 var searchData=
 [
   ['calculator_0',['calculator',['../classcom_1_1peternaggschga_1_1gwent_1_1domain_1_1damage_1_1DamageCalculatorBuilder.xhtml#aa139b6e6aefb9ba74e56c8425c0d4933',1,'com::peternaggschga::gwent::domain::damage::DamageCalculatorBuilder']]],
-  ['callback_1',['callback',['../classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1ChangeFactionDialog.xhtml#a66da2a9bdaa3a22166be0602dcefa70f',1,'com::peternaggschga::gwent::ui::dialogs::ChangeFactionDialog']]],
+  ['callback_1',['callback',['../classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1ChangeFactionDialog.xhtml#a66da2a9bdaa3a22166be0602dcefa70f',1,'com.peternaggschga.gwent.ui.dialogs.ChangeFactionDialog.callback'],['../classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1introduction_1_1IntroductionActivity.xhtml#ae25f8a6394e689adc800d431437482a6',1,'com.peternaggschga.gwent.ui.introduction.IntroductionActivity.callback']]],
   ['card_5fabilities_2',['CARD_ABILITIES',['../enumcom_1_1peternaggschga_1_1gwent_1_1ui_1_1settings_1_1RuleSection.xhtml#a1c6394b89357817d515327ac0af4d32c',1,'com::peternaggschga::gwent::ui::settings::RuleSection']]],
   ['cardlistadapter_3',['cardListAdapter',['../classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1cards_1_1ShowUnitsDialog.xhtml#a6e41a15dc9ca0633e0c68e6e5ae6d96d',1,'com::peternaggschga::gwent::ui::dialogs::cards::ShowUnitsDialog']]],
   ['cards_4',['CARDS',['../enumcom_1_1peternaggschga_1_1gwent_1_1ui_1_1settings_1_1RuleSection.xhtml#aa6f19266e13a0008448ddaa726bc821e',1,'com::peternaggschga::gwent::ui::settings::RuleSection']]],

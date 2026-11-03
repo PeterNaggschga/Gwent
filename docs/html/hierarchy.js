@@ -65,7 +65,7 @@ var hierarchy =
     [ "OnSharedPreferenceChangeListener", null, [
       [ "FactionSwitchListener", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1main_1_1FactionSwitchListener.xhtml", null ]
     ] ],
-    [ "ValuePicker&lt; T extends Comparable &gt;.OnValueChangeListener&lt; T &gt;", "interfacecom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1ValuePicker_1_1OnValueChangeListener.xhtml", null ],
+    [ "ValuePicker&lt; T extends Comparable &gt;.OnValueChangeListener&lt; T extends Comparable &gt;", "interfacecom_1_1peternaggschga_1_1gwent_1_1ui_1_1dialogs_1_1addcard_1_1ValuePicker_1_1OnValueChangeListener.xhtml", null ],
     [ "PreferenceFragmentCompat", null, [
       [ "SettingsHeaderFragment", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1settings_1_1SettingsHeaderFragment.xhtml", null ],
       [ "SettingsRuleFragment", "classcom_1_1peternaggschga_1_1gwent_1_1ui_1_1settings_1_1SettingsRuleFragment.xhtml", null ],

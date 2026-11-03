@@ -89,6 +89,7 @@ var menudata={children:[
 {text:"s",url:"functions_vars.xhtml#index_s"},
 {text:"t",url:"functions_vars.xhtml#index_t"},
 {text:"u",url:"functions_vars.xhtml#index_u"},
+{text:"v",url:"functions_vars.xhtml#index_v"},
 {text:"w",url:"functions_vars.xhtml#index_w"}]}]}]},
 {text:"Files",url:"files.xhtml",children:[
 {text:"File List",url:"files.xhtml"}]}]}
