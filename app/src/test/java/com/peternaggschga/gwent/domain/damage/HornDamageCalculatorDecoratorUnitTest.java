@@ -46,8 +46,7 @@ public class HornDamageCalculatorDecoratorUnitTest {
 
     @Test
     public void calculateDamageDoublesDamageForNullElement() {
-        // noinspection unchecked cast
-        List<Integer> list = (List<Integer>) Mockito.mock(List.class);
+        List<Integer> list = Mockito.mock();
         when(list.contains(null)).thenReturn(true);
         HornDamageCalculatorDecorator decorator = new HornDamageCalculatorDecorator(component, list);
         assertThat(decorator.calculateDamage(0, 0)).isEqualTo(2 * TESTING_DAMAGE);
@@ -55,8 +54,7 @@ public class HornDamageCalculatorDecoratorUnitTest {
 
     @Test
     public void calculateDamageDoublesDamageForOtherElement() {
-        // noinspection unchecked cast
-        List<Integer> list = (List<Integer>) Mockito.mock(List.class);
+        List<Integer> list = Mockito.mock();
         when(list.contains(anyInt())).thenReturn(false);
         when(list.contains(null)).thenReturn(false);
         HornDamageCalculatorDecorator decorator = new HornDamageCalculatorDecorator(component, list);
@@ -65,8 +63,7 @@ public class HornDamageCalculatorDecoratorUnitTest {
 
     @Test
     public void calculateDamageDoesNotDoubleOnlyHornUnit() {
-        // noinspection unchecked cast
-        List<Integer> list = (List<Integer>) Mockito.mock(List.class);
+        List<Integer> list = Mockito.mock();
         when(list.contains(anyInt())).thenReturn(false);
         when(list.contains(0)).thenReturn(true);
         when(list.size()).thenReturn(1);
@@ -76,8 +73,7 @@ public class HornDamageCalculatorDecoratorUnitTest {
 
     @Test
     public void calculateDamageMultipleHornUnitsDoubleEachOther() {
-        // noinspection unchecked cast
-        List<Integer> list = (List<Integer>) Mockito.mock(List.class);
+        List<Integer> list = Mockito.mock();
         when(list.contains(anyInt())).thenReturn(true);
         when(list.size()).thenReturn(2);
         HornDamageCalculatorDecorator decorator = new HornDamageCalculatorDecorator(component, list);
@@ -88,8 +84,7 @@ public class HornDamageCalculatorDecoratorUnitTest {
 
     @Test
     public void calculateDamageDoublesHornUnitWithHornCard() {
-        // noinspection unchecked cast
-        List<Integer> list = (List<Integer>) Mockito.mock(List.class);
+        List<Integer> list = Mockito.mock();
         when(list.contains(anyInt())).thenReturn(true);
         when(list.size()).thenReturn(2);
         HornDamageCalculatorDecorator decorator = new HornDamageCalculatorDecorator(component, list);
@@ -98,8 +93,7 @@ public class HornDamageCalculatorDecoratorUnitTest {
 
     @Test
     public void isBuffedReturnsBuffedWhenUnitIsDoubled() {
-        // noinspection unchecked cast
-        List<Integer> list = (List<Integer>) Mockito.mock(List.class);
+        List<Integer> list = Mockito.mock();
         when(list.contains(anyInt())).thenReturn(true);
         when(list.size()).thenReturn(2);
         HornDamageCalculatorDecorator decorator = new HornDamageCalculatorDecorator(component, list);
@@ -108,8 +102,7 @@ public class HornDamageCalculatorDecoratorUnitTest {
 
     @Test
     public void isBuffedCallsComponentWhenUnitIsNotDoubled() {
-        // noinspection unchecked cast
-        List<Integer> list = (List<Integer>) Mockito.mock(List.class);
+        List<Integer> list = Mockito.mock();
         when(list.contains(anyInt())).thenReturn(true);
         when(list.size()).thenReturn(1);
         HornDamageCalculatorDecorator decorator = new HornDamageCalculatorDecorator(component, list);

@@ -212,8 +212,7 @@ public class ValuePickerUnitTest {
 
     @Test
     public void setOnValueChangedListenerSetsListener() {
-        //noinspection unchecked
-        testPicker.setOnValueChangedListener(mock(ValuePicker.OnValueChangeListener.class));
+        testPicker.setOnValueChangedListener(mock());
         verify(mockPicker).setOnValueChangedListener(any());
     }
 

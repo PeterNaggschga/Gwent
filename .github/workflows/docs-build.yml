@@ -1,0 +1,56 @@
+name: Build documentation
+
+on:
+  pull_request:
+    branches: [ "main" ]
+  workflow_call:
+    inputs:
+      upload-artifact:
+        description: Transfer generated documentation to the publishing job
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  build-documentation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v7
+
+      - name: Install Doxygen and PDF build tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install doxygen graphviz texlive texlive-latex-extra ghostscript -y
+
+      - name: Remove old documentation
+        run: rm -rf docs/html docs/latex docs/documentation.pdf
+
+      - name: Run Doxygen
+        working-directory: docs
+        run: doxygen Doxyfile
+
+      - name: Make PDF
+        working-directory: docs/latex
+        run: |
+          make
+          mv refman.pdf ../documentation.pdf
+
+      - name: Copy PDFs and privacy policies to website
+        run: |
+          cp docs/documentation.pdf docs/html/
+          cp resources/cards/printing-layout.pdf docs/html/
+          cp -r docs/privacy_policy docs/html/
+
+      - name: Upload documentation for publishing
+        if: ${{ github.event_name != 'pull_request' && inputs.upload-artifact }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: documentation
+          path: |
+            docs/html/
+            docs/documentation.pdf
+          if-no-files-found: error
+          retention-days: 1

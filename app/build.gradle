@@ -2,35 +2,42 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.google.devtools.ksp'
 
 android {
-    compileSdk 37
+    compileSdk = 37
 
     defaultConfig {
-        applicationId 'com.peternaggschga.gwint'
-        minSdk 24
-        targetSdk 37
-        versionCode 24
-        versionName '2.1'
+        applicationId = 'com.peternaggschga.gwint'
+        minSdk = 24
+        targetSdk = 37
+        versionCode = 25
+        versionName = '2.1'
 
-        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
-        versionNameSuffix '.2'
+        testInstrumentationRunner = 'androidx.test.runner.AndroidJUnitRunner'
+        versionNameSuffix = '.3'
     }
 
     buildTypes {
         release {
-            minifyEnabled true
-            shrinkResources true
+            minifyEnabled = true
+            shrinkResources = true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 
     packagingOptions {
         jniLibs {
-            useLegacyPackaging true
+            useLegacyPackaging = true
         }
     }
 
-    namespace 'com.peternaggschga.gwent'
-    compileSdkMinor 2
+    namespace = 'com.peternaggschga.gwent'
+    compileSdkMinor = 2
+
+    testOptions {
+        unitTests.all {
+            // Mockito inline mocks append to the bootstrap classpath, which prevents CDS.
+            jvmArgs '-Xshare:off'
+        }
+    }
 }
 
 ksp {

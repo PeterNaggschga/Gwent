@@ -25,9 +25,35 @@ public class IntroductionActivity extends AppCompatActivity {
     private IndicatorManager indicatorManager;
 
     /**
-     * Sets layout to R.layoutactivity_introduction, initializes indicatorManager,
-     * sets listeners on the buttons, and creates a new OnBackPressedCallback that switches to the
-     * previous page, if it is not the first one.
+     * The ViewPager2 used to display the introduction-fragments.
+     */
+    private ViewPager2 viewPager;
+
+    /**
+     * The OnBackPressedCallback handling presses of the back-button.
+     */
+    private OnBackPressedCallback callback;
+
+    /**
+     * The skip button.
+     */
+    private Button skipButton;
+
+    /**
+     * The next button.
+     */
+    private ImageButton nextButton;
+
+    /**
+     * The finish button.
+     */
+    private Button finishButton;
+
+    /**
+     * Sets layout to R.layout.activity_introduction, initializes all attributes
+     * (viewPager, callback, skipButton, nextButton, finishButton, indicatorManager),
+     * sets listeners on the buttons, and creates a
+     * new OnBackPressedCallback that switches to the previous page, if it is not the first one.
      *
      * @param savedInstanceState If the activity is being re-initialized after
      *                           previously being shut down then this Bundle contains the data it most
@@ -43,8 +69,8 @@ public class IntroductionActivity extends AppCompatActivity {
             indicatorManager = new IndicatorManager(getWindow());
         }
 
-        final ViewPager2 viewPager = findViewById(R.id.introduction_viewPager);
-        OnBackPressedCallback callback = new OnBackPressedCallback(false) {
+        viewPager = findViewById(R.id.introduction_viewPager);
+        callback = new OnBackPressedCallback(false) {
             /**
              * Called when enabled and the user clicks on the back-button.
              * Switches the ViewPager2 containing the IntroductionFragments to the last position.
@@ -65,9 +91,9 @@ public class IntroductionActivity extends AppCompatActivity {
             getOnBackPressedDispatcher().onBackPressed();
         };
 
-        final Button skipButton = findViewById(R.id.introduction_button_skip);
-        final ImageButton nextButton = findViewById(R.id.introduction_button_next);
-        final Button finishButton = findViewById(R.id.introduction_button_finish);
+        skipButton = findViewById(R.id.introduction_button_skip);
+        nextButton = findViewById(R.id.introduction_button_next);
+        finishButton = findViewById(R.id.introduction_button_finish);
 
         skipButton.setOnClickListener(onFinish);
         nextButton.setOnClickListener(v -> viewPager.setCurrentItem(viewPager.getCurrentItem() + 1));
@@ -75,19 +101,35 @@ public class IntroductionActivity extends AppCompatActivity {
 
         viewPager.setAdapter(new SectionsPagerAdapter(this));
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            /**
-             * Updates the IntroductionActivityindicatorManager, changes button-visibility
-             * and whether the callback for onBackPressed is active.
-             * @see IndicatorManager.updateIndicators(int)
-             */
+            // Keep the bottom bar in sync with the selected page.
             @Override
             public void onPageSelected(int position) {
-                indicatorManager.updateIndicators(position);
-                skipButton.setVisibility(position == IntroductionFragment.PAGES_COUNT - 1 ? View.GONE : View.VISIBLE);
-                nextButton.setVisibility(position == IntroductionFragment.PAGES_COUNT - 1 ? View.GONE : View.VISIBLE);
-                finishButton.setVisibility(position == IntroductionFragment.PAGES_COUNT - 1 ? View.VISIBLE : View.GONE);
-                callback.setEnabled(position != 0);
+                updateBottomBar(position);
             }
         });
+    }
+
+    /**
+     * Refreshes the bottom bar for the currently selected page when the activity resumes.
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateBottomBar(viewPager.getCurrentItem());
+    }
+
+    /**
+     * Updates the progress indicators, button visibility, and back-button callback
+     * for the selected introduction page.
+     *
+     * @param position Position index of the selected page.
+     * @see IndicatorManager.updateIndicators(int)
+     */
+    private void updateBottomBar(int position) {
+        indicatorManager.updateIndicators(position);
+        skipButton.setVisibility(position == IntroductionFragment.PAGES_COUNT - 1 ? View.GONE : View.VISIBLE);
+        nextButton.setVisibility(position == IntroductionFragment.PAGES_COUNT - 1 ? View.GONE : View.VISIBLE);
+        finishButton.setVisibility(position == IntroductionFragment.PAGES_COUNT - 1 ? View.VISIBLE : View.GONE);
+        callback.setEnabled(position != 0);
     }
 }

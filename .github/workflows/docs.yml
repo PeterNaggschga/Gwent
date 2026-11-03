@@ -21,7 +21,15 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  build-documentation:
+    uses: ./.github/workflows/docs-build.yml
+    permissions:
+      contents: read
+    with:
+      upload-artifact: true
+
   update-documentation:
+    needs: build-documentation
     runs-on: ubuntu-latest
     outputs:
       SHA: ${{ steps.sha.outputs.SHA }}
@@ -29,44 +37,14 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v7
 
-      - name: Install Doxygen
-        run: |
-          sudo apt-get update
-          sudo apt-get install doxygen graphviz texlive texlive-latex-extra ghostscript -y
-        shell: bash
-
       - name: Remove old documentation
-        run: |
-          cd docs
-          touch html documentation.pdf
-          rm -r html documentation.pdf
+        run: rm -rf docs/html docs/documentation.pdf
 
-      - name: Run Doxygen
-        run: |
-          cd docs
-          doxygen Doxyfile
-        shell: bash
-
-      - name: Make PDF
-        run: |
-          cd docs/latex
-          make
-          mv refman.pdf ../documentation.pdf
-          cd ..
-          rm -r latex
-        shell: bash
-
-      - name: Copy PDFs to website
-        run: |
-          cp docs/documentation.pdf docs/html/
-          cp resources/cards/printing-layout.pdf docs/html
-        shell: bash
-
-      - name: Copy privacy policies to website
-        run: |
-          mkdir -p docs/html/privacy_policy
-          cp -r docs/privacy_policy docs/html/
-        shell: bash
+      - name: Download generated documentation
+        uses: actions/download-artifact@v4
+        with:
+          name: documentation
+          path: docs
 
       - name: Push changes
         uses: actions-x/commit@v6
@@ -81,10 +59,7 @@ jobs:
         id: sha
         run: |
           sha_new=$(git rev-parse HEAD)
-          echo "SHA=$sha_new" >> $GITHUB_OUTPUT
-          echo ${{ steps.sha.outputs.SHA }}
-      
-      - run: echo ${{ steps.sha.outputs.SHA }}
+          echo "SHA=$sha_new" >> "$GITHUB_OUTPUT"
       
   rebase-dev:
     needs: update-documentation

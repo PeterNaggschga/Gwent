@@ -72,8 +72,7 @@ public class BondDamageCalculatorDecoratorUnitTest {
 
     @Test
     public void calculateDamageMultipliesSizeOfSquadToDamage() {
-        // noinspection unchecked cast
-        Map<Integer, Integer> map = (Map<Integer, Integer>) Mockito.mock(Map.class);
+        Map<Integer, Integer> map = Mockito.mock();
         BondDamageCalculatorDecorator decorator = new BondDamageCalculatorDecorator(component, map);
         for (int squadSize = 1; squadSize <= TESTING_DEPTH; squadSize++) {
             when(map.getOrDefault(anyInt(), anyInt())).thenReturn(squadSize);
@@ -83,8 +82,7 @@ public class BondDamageCalculatorDecoratorUnitTest {
 
     @Test
     public void calculateDamageReturnsDefaultWhenNoSquad() {
-        // noinspection unchecked cast
-        Map<Integer, Integer> map = (Map<Integer, Integer>) Mockito.mock(Map.class);
+        Map<Integer, Integer> map = Mockito.mock();
         when(map.getOrDefault(anyInt(), anyInt())).then((Answer<Integer>) invocation -> invocation.getArgument(1));
         BondDamageCalculatorDecorator decorator = new BondDamageCalculatorDecorator(component, map);
         assertThat(decorator.calculateDamage(0, TESTING_DAMAGE)).isEqualTo(TESTING_DAMAGE);
@@ -92,8 +90,7 @@ public class BondDamageCalculatorDecoratorUnitTest {
 
     @Test
     public void isBuffedReturnsBuffedWhenSquadHasMultipleMembers() {
-        // noinspection unchecked cast
-        Map<Integer, Integer> map = (Map<Integer, Integer>) Mockito.mock(Map.class);
+        Map<Integer, Integer> map = Mockito.mock();
         when(map.getOrDefault(0, 0)).thenReturn(2);
         BondDamageCalculatorDecorator decorator = new BondDamageCalculatorDecorator(component, map);
         assertThat(decorator.isBuffed(0)).isEqualTo(BUFFED);
@@ -101,8 +98,7 @@ public class BondDamageCalculatorDecoratorUnitTest {
 
     @Test
     public void isBuffedCallsComponentWhenSquadHasOneMember() {
-        // noinspection unchecked cast
-        Map<Integer, Integer> map = (Map<Integer, Integer>) Mockito.mock(Map.class);
+        Map<Integer, Integer> map = Mockito.mock();
         when(map.getOrDefault(0, 0)).thenReturn(1);
         BondDamageCalculatorDecorator decorator = new BondDamageCalculatorDecorator(component, map);
         decorator.isBuffed(0);
@@ -111,8 +107,7 @@ public class BondDamageCalculatorDecoratorUnitTest {
 
     @Test
     public void isBuffedCallsComponentWhenSquadIsEmpty() {
-        // noinspection unchecked cast
-        Map<Integer, Integer> map = (Map<Integer, Integer>) Mockito.mock(Map.class);
+        Map<Integer, Integer> map = Mockito.mock();
         when(map.getOrDefault(0, 0)).thenReturn(0);
         BondDamageCalculatorDecorator decorator = new BondDamageCalculatorDecorator(component, map);
         decorator.isBuffed(0);
