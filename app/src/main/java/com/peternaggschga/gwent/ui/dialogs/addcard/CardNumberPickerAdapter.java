@@ -102,6 +102,7 @@ class CardNumberPickerAdapter {
         abilityStringResources.put(Ability.NONE, R.string.add_picker_ability_default);
         abilityStringResources.put(Ability.HORN, R.string.add_picker_ability_horn);
         abilityStringResources.put(Ability.REVENGE, R.string.add_picker_ability_revenge);
+        abilityStringResources.put(Ability.BERSERKER, R.string.add_picker_ability_berserker);
         abilityStringResources.put(Ability.BINDING, R.string.add_picker_ability_binding);
         abilityStringResources.put(Ability.MORAL_BOOST, R.string.add_picker_ability_moralBoost);
         abilityPicker = new StringValuePicker<>(pickerGroup.findViewById(R.id.popup_add_card_ability_picker),

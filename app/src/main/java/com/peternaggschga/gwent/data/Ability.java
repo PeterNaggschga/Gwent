@@ -20,6 +20,11 @@ public enum Ability {
     REVENGE,
 
     /**
+     * Represents a card that has the Berserker ability.
+     */
+    BERSERKER,
+
+    /**
      * Represents a card that has the Tight Bond ability.
      */
     BINDING,
@@ -27,5 +32,5 @@ public enum Ability {
     /**
      * Represents a card that has the Morale Boost ability.
      */
-    MORAL_BOOST
+    MORAL_BOOST,
 }
