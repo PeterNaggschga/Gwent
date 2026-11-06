@@ -4,7 +4,6 @@ import static com.peternaggschga.gwent.ui.main.FactionSwitchListener.THEME_PREFE
 import static com.peternaggschga.gwent.ui.main.FactionSwitchListener.THEME_SCOIATAEL;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -196,12 +195,18 @@ public class MainActivity extends AppCompatActivity {
 
             ImageView weather = rowLayout.findViewById(R.id.weatherView);
             ImageView horn = rowLayout.findViewById(R.id.hornView);
+            ImageView mardroeme = rowLayout.findViewById(R.id.mardroemeView);
+            mardroeme.setVisibility(PreferenceManager.getDefaultSharedPreferences(this)
+                    .getInt(THEME_PREFERENCE_KEY, THEME_SCOIATAEL) == FactionSwitchListener.THEME_SKELLIGE
+                    ? View.VISIBLE : View.GONE);
             ConstraintLayout cards = rowLayout.findViewById(R.id.cardView);
 
             weather.setOnClickListener(v ->
                     disposables.add(gameBoardViewModel.onWeatherViewPressed(row).subscribe()));
             horn.setOnClickListener(v ->
                     disposables.add(gameBoardViewModel.onHornViewPressed(row).subscribe()));
+            mardroeme.setOnClickListener(v ->
+                    disposables.add(gameBoardViewModel.onMardroemeViewPressed(row).subscribe()));
 
             cards.setOnClickListener(v -> disposables.add(
                     GwentApplication.getRepository(this)
@@ -218,6 +223,7 @@ public class MainActivity extends AppCompatActivity {
                     rowLayout.findViewById(R.id.pointView),
                     weather,
                     horn,
+                    mardroeme,
                     rowLayout.findViewById(R.id.cardCountView));
             disposables.add(gameBoardViewModel.getRowUiState(row).subscribe(observer));
         }
@@ -243,9 +249,9 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Shows a new ChangeFactionDialog enabling the user to choose the preferred theme.
      * The decision is saved in the preference at the key FactionSwitchListenerTHEME_PREFERENCE_KEY
-     * and if the user opted to reset on faction switch
-     * (i.e., the preference at R.stringpreference_key_faction_reset is true),
-     * GameBoardViewModelonFactionSwitchReset(Context) is called.
+     * GameBoardViewModel.onFactionSwitchReset(Context) clears Mardroeme on every actual
+     * faction change and optionally resets the board according to preferences.
+     * Selecting the current faction has no effect.
      */
     private void inflateFactionPopup() {
         new ChangeFactionDialog(this, theme -> {
@@ -255,13 +261,7 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
 
-            boolean resetOnFactionSwitch = preferences.getBoolean(
-                    getString(R.string.preference_key_faction_reset),
-                    getResources().getBoolean(R.bool.faction_reset_preference_default)
-            );
-            if (resetOnFactionSwitch) {
-                disposables.add(gameBoardViewModel.onFactionSwitchReset(this).subscribe());
-            }
+            disposables.add(gameBoardViewModel.onFactionSwitchReset(this).subscribe());
             preferences.edit()
                     .putInt(THEME_PREFERENCE_KEY, theme)
                     .apply();

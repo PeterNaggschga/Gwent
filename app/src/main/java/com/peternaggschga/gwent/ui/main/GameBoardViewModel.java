@@ -9,8 +9,11 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.lifecycle.viewmodel.ViewModelInitializer;
+import androidx.preference.PreferenceManager;
 
 import com.peternaggschga.gwent.GwentApplication;
+import com.peternaggschga.gwent.R;
+import com.peternaggschga.gwent.data.RowBuffState;
 import com.peternaggschga.gwent.data.RowType;
 import com.peternaggschga.gwent.data.UnitRepository;
 import com.peternaggschga.gwent.domain.cases.BurnDialogUseCase;
@@ -104,14 +107,15 @@ public class GameBoardViewModel extends AndroidViewModel {
         for (RowType row : RowType.values()) {
             result.rowUiStates.put(row,
                     Flowable.combineLatest(repository.isWeatherFlowable(row),
-                            repository.isHornFlowable(row),
+                                    repository.getBuffStateFlowable(row),
                             repository.getUnitsFlowable(row),
-                            (weather, horn, units) -> {
-                                DamageCalculator calculator = DamageCalculatorUseCase.getDamageCalculator(weather, horn, units);
+                                    (weather, buffState, units) -> {
+                                        DamageCalculator calculator = DamageCalculatorUseCase.getDamageCalculator(weather,
+                                                buffState == RowBuffState.HORN, units);
                                 int damage = units.stream()
                                         .map(unitEntity -> unitEntity.calculateDamage(calculator))
                                         .reduce(0, Integer::sum);
-                                return new RowUiState(damage, weather, horn, units.size());
+                                        return new RowUiState(damage, weather, buffState, units.size());
                             })
                             .distinctUntilChanged()
                             .onBackpressureLatest()
@@ -128,7 +132,7 @@ public class GameBoardViewModel extends AndroidViewModel {
             for (Object state : rowUiStates) {
                 RowUiState rowUiState = (RowUiState) state;
                 damage += rowUiState.getDamage();
-                reset |= rowUiState.isHorn() || rowUiState.getUnits() != 0;
+                reset |= rowUiState.isHorn() || rowUiState.isMardroeme() || rowUiState.getUnits() != 0;
                 weather |= rowUiState.isWeather();
             }
             reset |= weather;
@@ -219,7 +223,8 @@ public class GameBoardViewModel extends AndroidViewModel {
 
     /**
      * Updates the horn buff of the given row.
-     * Flips between on and off. Plays a matching sound, if the horn is switched on.
+     * If Mardroeme is active, only turns it off. Otherwise toggles the horn.
+     * Plays a matching sound, if the horn is switched on.
      * @param row RowType defining the affected row.
      * @return A Completable tracking operation status.
      * @see UnitRepository.switchHorn(RowType)
@@ -238,6 +243,20 @@ public class GameBoardViewModel extends AndroidViewModel {
     }
 
     /**
+     * Updates the persisted Mardroeme buff through the repository.
+     * If the horn is active, only turns it off. Otherwise toggles Mardroeme.
+     *
+     * @param row RowType defining the affected row.
+     * @return A Completable tracking operation status.
+     * @see UnitRepository.switchMardroeme(RowType)
+     */
+    @NonNull
+    public Completable onMardroemeViewPressed(@NonNull RowType row) {
+        // TODO: add sound effect
+        return getRepository().flatMapCompletable(repository -> repository.switchMardroeme(row));
+    }
+
+    /**
      * Triggers a reset and possibly an alert dialog, depending on preferences.
      * Should only be called by the button's View.OnClickListener.
      * Wrapper for .reset(Context, ResetDialogUseCase.Trigger).
@@ -252,16 +271,24 @@ public class GameBoardViewModel extends AndroidViewModel {
     }
 
     /**
-     * Triggers a reset and possibly an alert dialog, depending on preferences.
-     * Should only be called when the faction has been switched.
-     * Wrapper for .reset(Context, ResetDialogUseCase.Trigger).
+     * Clears Mardroeme on faction changes, preserving horn buffs unless a full reset is requested.
+     * Optionally resets the board and shows a confirmation dialog according to preferences.
+     * Should only be called when the selected faction differs from the current faction.
      * @param context Context object used to acquire SharedPreferences and inflate Dialog views.
      * @return A Completable tracking operation status.
      * @see .reset(Context, ResetDialogUseCase.Trigger)
      */
     @NonNull
     public Completable onFactionSwitchReset(@NonNull Context context) {
-        return reset(context, ResetDialogUseCase.Trigger.FACTION_SWITCH);
+        return getRepository().flatMapCompletable(UnitRepository::clearMardroeme)
+                .andThen(Completable.defer(() -> {
+                    boolean resetOnFactionSwitch = PreferenceManager.getDefaultSharedPreferences(context)
+                            .getBoolean(context.getString(R.string.preference_key_faction_reset),
+                                    context.getResources().getBoolean(R.bool.faction_reset_preference_default));
+                    return resetOnFactionSwitch
+                            ? reset(context, ResetDialogUseCase.Trigger.FACTION_SWITCH)
+                            : Completable.complete();
+                }));
     }
 
     /**

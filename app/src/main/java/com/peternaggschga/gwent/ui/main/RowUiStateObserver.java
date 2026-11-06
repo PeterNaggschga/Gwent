@@ -47,12 +47,18 @@ public class RowUiStateObserver implements Consumer<RowUiState> {
 
     /**
      * An ImageView responsible for showing the current state of the commander's horn buff in this row.
-     * Is gray when RowUiState.horn is ``false``.
+     * Is gray when RowUiState.isHorn() is ``false``.
      *
      * @see .weatherResource
      */
     @NonNull
     private final ImageView hornView;
+
+    /**
+     * An ImageView showing the Mardroeme effect, gray when inactive.
+     */
+    @NonNull
+    private final ImageView mardroemeView;
 
     /**
      * A TextView showing the number of units in this row, i.e., RowUiState.units.
@@ -68,16 +74,18 @@ public class RowUiStateObserver implements Consumer<RowUiState> {
      * @param weatherView     ImageView showing the current state of the weather debuff of the observed row.
      * @param weatherResource Integer representing the drawable resource shown when the weather debuff is active.
      * @param hornView        ImageView showing the current state of the commander's horn buff of the observed row.
+     * @param mardroemeView   ImageView showing the current state of the Mardroeme effect.
      * @param unitView        TextView showing the number of units in the observed row.
-     * @see .getObserver(RowType, TextView, ImageView, ImageView, TextView)
+     * @see .getObserver(RowType, TextView, ImageView, ImageView, ImageView, TextView)
      */
     private RowUiStateObserver(@NonNull TextView damageView, @NonNull ImageView weatherView,
                                @DrawableRes int weatherResource, @NonNull ImageView hornView,
-                               @NonNull TextView unitView) {
+                               @NonNull ImageView mardroemeView, @NonNull TextView unitView) {
         this.damageView = damageView;
         this.weatherView = weatherView;
         this.weatherResource = weatherResource;
         this.hornView = hornView;
+        this.mardroemeView = mardroemeView;
         this.unitView = unitView;
     }
 
@@ -90,15 +98,16 @@ public class RowUiStateObserver implements Consumer<RowUiState> {
      * @param damageView  TextView showing the summed-up damage of all units in the observed row.
      * @param weatherView ImageView showing the current state of the weather debuff of the observed row.
      * @param hornView    ImageView showing the current state of the commander's horn buff of the observed row.
+     * @param mardroemeView ImageView showing the current state of the Mardroeme effect.
      * @param unitView    TextView showing the number of units in the observed row.
      * @return A RowUiStateObserver updating the given views.
-     * @see .RowUiStateObserver(TextView, ImageView, int, ImageView, TextView)
+     * @see .RowUiStateObserver(TextView, ImageView, int, ImageView, ImageView, TextView)
      */
     @NonNull
-    @Contract("_, _, _, _, _ -> new")
+    @Contract("_, _, _, _, _, _ -> new")
     public static RowUiStateObserver getObserver(@NonNull RowType row, @NonNull TextView damageView,
                                                  @NonNull ImageView weatherView, @NonNull ImageView hornView,
-                                                 @NonNull TextView unitView) {
+                                                 @NonNull ImageView mardroemeView, @NonNull TextView unitView) {
         int weatherResource;
         switch (row) {
             case MELEE:
@@ -113,11 +122,12 @@ public class RowUiStateObserver implements Consumer<RowUiState> {
             default:
                 weatherResource = R.drawable.good_weather;
         }
-        return new RowUiStateObserver(damageView, weatherView, weatherResource, hornView, unitView);
+        return new RowUiStateObserver(damageView, weatherView, weatherResource, hornView, mardroemeView, unitView);
     }
 
     /**
-     * Changes values in .damageView and .unitView as well as the image in .weatherView and .hornView.
+     * Changes values in .damageView and .unitView as well as the images in
+     * .weatherView, .hornView, and .mardroemeView.
      * Image switches are animated using ImageViewSwitchAnimator.
      *
      * @param rowUiState RowUiState representing the updated state of the row.
@@ -129,6 +139,9 @@ public class RowUiStateObserver implements Consumer<RowUiState> {
         ImageViewSwitchAnimator.animatedSwitch(weatherView, rowUiState.isWeather() ? weatherResource : R.drawable.good_weather)
                 .subscribe();
         ImageViewSwitchAnimator.animatedSwitch(hornView, rowUiState.isHorn() ? R.drawable.horn : R.drawable.horn_grey)
+                .subscribe();
+        ImageViewSwitchAnimator.animatedSwitch(mardroemeView,
+                        rowUiState.isMardroeme() ? R.drawable.mardroeme : R.drawable.mardroeme_grey)
                 .subscribe();
         unitView.setText(String.valueOf(rowUiState.getUnits()));
     }

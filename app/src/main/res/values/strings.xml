@@ -6,6 +6,7 @@
     <string name="faction_nilfgaard">Nilfgaardian Empire</string>
     <string name="faction_northern_kingdoms">Northern Kingdoms</string>
     <string name="faction_scoiatael" translatable="false">Scoia\'tael</string>
+    <string name="faction_skellige" translatable="false">Skellige</string>
 
     <string name="popUp_cards_add">Add card</string>
     <string name="popUp_cards_save">Save</string>
@@ -16,6 +17,7 @@
     <string name="popUp_add_card_label_ability">Ability</string>
     <string name="add_picker_ability_default">None</string>
     <string name="add_picker_ability_moralBoost">Morale boost</string>
+    <string name="add_picker_ability_berserker" translatable="false">Berserker</string>
     <string name="add_picker_ability_horn" translatable="false">Horn</string>
     <string name="add_picker_ability_revenge">Avenger</string>
     <string name="add_picker_ability_binding">Tight bond</string>
@@ -133,9 +135,11 @@
     <string name="content_description_factionpopup_nilfgaard">Card with symbol of nilfgaardian empire faction</string>
     <string name="content_description_factionpopup_northern_kingdoms">Card with symbol of Northern Kingdoms faction</string>
     <string name="content_description_factionpopup_scoiatael">Card with symbol of Scoia\'tael faction</string>
+    <string name="content_description_factionpopup_skellige">Card with symbol of Skellige faction</string>
     <string name="content_description_row_pointball">point display of combat row</string>
     <string name="content_description_row_weather">weather display of combat row</string>
     <string name="content_description_row_horn">horn display of combat row</string>
+    <string name="content_description_row_mardroeme">mardroeme display of combat row</string>
     <string name="content_description_row_card">card display of combat row</string>
     <string name="content_description_introduction_image">screenshots of this app</string>
     <string name="content_description_introduction_indicator">dot that indicates progress</string>

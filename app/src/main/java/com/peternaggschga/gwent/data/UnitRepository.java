@@ -210,38 +210,104 @@ public class UnitRepository {
     }
 
     /**
-     * Flips RowEntity.horn of the given attack row.
+     * Clears Mardroeme from all attack rows without changing horn buffs or weather.
+     * @return A Completable tracking operation status.
+     */
+    @NonNull
+    public Completable clearMardroeme() {
+        return database.rows().clearMardroeme()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    /**
+     * Toggles RowEntity.buffState between RowBuffState.NONE and RowBuffState.HORN for the given
+     * attack row. If Mardroeme is active, only clears it to NONE; a second call activates HORN.
      * @param row RowEntity.id where the horn status should be updated.
      * @return A Completable tracking operation status.
      */
     @NonNull
     public Completable switchHorn(@NonNull RowType row) {
-        return database.rows().updateHorn(row).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+        return database
+                .rows()
+                .getBuffState(row)
+                .map(rowBuffState -> rowBuffState == RowBuffState.NONE ? RowBuffState.HORN : RowBuffState.NONE)
+                .flatMapCompletable(rowBuffState -> database.rows().updateBuffState(row, rowBuffState));
     }
 
     /**
-     * Returns the value of RowEntity.horn for the given attack row.
+     * Toggles RowEntity.buffState between RowBuffState.NONE and RowBuffState.MARDROEME.
+     * If the horn is active, only clears it to NONE; a second call activates MARDROEME.
+     * @param row RowEntity.id where the Mardroeme status should be updated.
+     * @return A Completable tracking operation status.
+     */
+    @NonNull
+    public Completable switchMardroeme(@NonNull RowType row) {
+        return database.rows().getBuffState(row)
+                .map(state -> state == RowBuffState.NONE ? RowBuffState.MARDROEME : RowBuffState.NONE)
+                .flatMapCompletable(state -> database.rows().updateBuffState(row, state));
+    }
+
+    /**
+     * Returns the persisted buff state for the given attack row.
+     *
+     * @param row RowEntity.id where the buff state is queried.
+     * @return A Single emitting NONE, HORN, or MARDROEME.
+     * @see .getBuffStateFlowable(RowType)
+     */
+    @NonNull
+    public Single<RowBuffState> getBuffState(@NonNull RowType row) {
+        return database.rows().getBuffState(row)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    /**
+     * Returns a Flowable emitting the persisted buff state for the given attack row.
+     *
+     * @param row RowEntity.id where the buff state is queried.
+     * @return A Flowable emitting distinct NONE, HORN, or MARDROEME values.
+     * @see .getBuffState(RowType)
+     */
+    @NonNull
+    public Flowable<RowBuffState> getBuffStateFlowable(@NonNull RowType row) {
+        return database.rows().getBuffStateFlowable(row)
+                .onBackpressureLatest()
+                .distinctUntilChanged()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    /**
+     * Returns whether RowEntity.buffState is RowBuffState.HORN for the given attack row.
      * @see .isHornFlowable(RowType)
      * @param row RowEntity.id where the horn status is queried.
-     * @return A Single tracking operation status and returning the value.
+     * @return A Single emitting true for HORN and false for NONE or MARDROEME.
      */
     @NonNull
     public Single<Boolean> isHorn(@NonNull RowType row) {
-        return database.rows().isHorn(row).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+        return database
+                .rows()
+                .getBuffState(row)
+                .map(rowBuffState -> rowBuffState == RowBuffState.HORN)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     /**
-     * Returns a Flowable emitting the values of RowEntity.horn for the given attack row.
+     * Returns a Flowable emitting whether RowEntity.buffState is RowBuffState.HORN for the given attack row.
      *
      * @param row RowEntity.id where the horn status is queried.
-     * @return A Flowable emitting the values.
+     * @return A Flowable emitting distinct Boolean values: true for HORN, false otherwise.
      * @see .isHorn(RowType)
      */
     @NonNull
     public Flowable<Boolean> isHornFlowable(@NonNull RowType row) {
-        return database.rows()
-                .isHornFlowable(row)
+        return database
+                .rows()
+                .getBuffStateFlowable(row)
                 .onBackpressureLatest()
+                .map(rowBuffState -> rowBuffState == RowBuffState.HORN)
                 .distinctUntilChanged()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
