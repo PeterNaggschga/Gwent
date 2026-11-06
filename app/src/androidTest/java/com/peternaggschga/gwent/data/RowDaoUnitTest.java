@@ -123,6 +123,24 @@ public class RowDaoUnitTest {
     }
 
     @Test
+    public void clearMardroemePreservesHornAndWeather() {
+        for (RowType target : RowType.values()) {
+            rowDao.clearRows().blockingAwait();
+            for (RowType row : RowType.values()) {
+                rowDao.insertRow(new RowEntity(row))
+                        .andThen(rowDao.updateBuffState(row, row == target ? RowBuffState.MARDROEME : RowBuffState.HORN))
+                        .andThen(rowDao.updateWeather(row)).blockingAwait();
+            }
+            rowDao.clearMardroeme().blockingAwait();
+            for (RowType row : RowType.values()) {
+                assertThat(rowDao.getBuffState(row).blockingGet())
+                        .isEqualTo(row == target ? RowBuffState.NONE : RowBuffState.HORN);
+                assertThat(rowDao.isWeather(row).blockingGet()).isTrue();
+            }
+        }
+    }
+
+    @Test
     public void updateBuffStateStoresAllStates() throws InterruptedException {
         for (RowType row : RowType.values()) {
             rowDao.insertRow(new RowEntity(row))

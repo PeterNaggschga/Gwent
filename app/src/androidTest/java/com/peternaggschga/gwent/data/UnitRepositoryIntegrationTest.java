@@ -1,6 +1,7 @@
 package com.peternaggschga.gwent.data;
 
 import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.fail;
 
 import androidx.room3.Room;
@@ -413,6 +414,87 @@ public class UnitRepositoryIntegrationTest {
             fail();
         } catch (NullPointerException ignored) {
         }
+    }
+
+    @Test
+    public void clearMardroemeClearsEveryRowAndPreservesOtherEffects() {
+        for (RowBuffState otherState : new RowBuffState[]{RowBuffState.NONE, RowBuffState.HORN, RowBuffState.MARDROEME}) {
+            for (RowType row : RowType.values()) {
+                database.rows().updateBuffState(row, row == RowType.MELEE ? otherState : RowBuffState.MARDROEME)
+                        .blockingAwait();
+                if (!repository.isWeather(row).blockingGet()) {
+                    repository.switchWeather(row).blockingAwait();
+                }
+            }
+            repository.clearMardroeme().blockingAwait();
+            repository.clearMardroeme().blockingAwait();
+            for (RowType row : RowType.values()) {
+                assertThat(repository.getBuffState(row).blockingGet())
+                        .isEqualTo(row == RowType.MELEE && otherState == RowBuffState.HORN
+                                ? RowBuffState.HORN : RowBuffState.NONE);
+                assertThat(repository.isWeather(row).blockingGet()).isTrue();
+            }
+        }
+    }
+
+    @Test
+    public void switchMardroemeTogglesAndOnlyClearsAnActiveHorn() {
+        for (RowType row : RowType.values()) {
+            for (RowBuffState initial : RowBuffState.values()) {
+                database.rows().updateBuffState(row, initial).blockingAwait();
+                repository.switchMardroeme(row).blockingAwait();
+                RowBuffState expected = initial == RowBuffState.NONE ? RowBuffState.MARDROEME : RowBuffState.NONE;
+                assertThat(database.rows().getBuffState(row).blockingGet()).isEqualTo(expected);
+                assertThat(repository.isHorn(row).blockingGet()).isFalse();
+            }
+            repository.switchMardroeme(row).blockingAwait();
+            assertThat(database.rows().getBuffState(row).blockingGet()).isEqualTo(RowBuffState.MARDROEME);
+        }
+    }
+
+    @Test
+    @SuppressWarnings("DataFlowIssue")
+    public void switchMardroemeAssertsNonNull() {
+        assertThrows(NullPointerException.class,
+                () -> repository.switchMardroeme(null).blockingAwait());
+    }
+
+    @Test
+    public void getBuffStateReturnsAllPersistedStates() {
+        for (RowType row : RowType.values()) {
+            for (RowBuffState state : RowBuffState.values()) {
+                database.rows().updateBuffState(row, state).blockingAwait();
+                assertThat(repository.getBuffState(row).blockingGet()).isEqualTo(state);
+            }
+        }
+    }
+
+    @Test
+    public void getBuffStateFlowableTracksPersistedChanges() {
+        for (RowType row : RowType.values()) {
+            TestSubscriber<RowBuffState> observer = repository.getBuffStateFlowable(row).test();
+            try {
+                observer.awaitCount(1).assertValues(RowBuffState.NONE);
+                repository.switchMardroeme(row).blockingAwait();
+                observer.awaitCount(2).assertValues(RowBuffState.NONE, RowBuffState.MARDROEME);
+                repository.switchHorn(row).blockingAwait();
+                observer.awaitCount(3).assertValues(RowBuffState.NONE, RowBuffState.MARDROEME, RowBuffState.NONE);
+                repository.switchHorn(row).blockingAwait();
+                observer.awaitCount(4).assertNoErrors().assertValues(RowBuffState.NONE, RowBuffState.MARDROEME,
+                        RowBuffState.NONE, RowBuffState.HORN);
+            } finally {
+                observer.cancel();
+            }
+        }
+    }
+
+    @Test
+    @SuppressWarnings("DataFlowIssue")
+    public void buffStateQueriesAssertNonNull() {
+        assertThrows(NullPointerException.class,
+                () -> repository.getBuffState(null).blockingGet());
+        assertThrows(NullPointerException.class,
+                () -> repository.getBuffStateFlowable(null).blockingFirst());
     }
 
     @Test

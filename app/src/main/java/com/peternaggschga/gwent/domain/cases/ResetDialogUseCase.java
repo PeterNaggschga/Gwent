@@ -13,6 +13,7 @@ import androidx.preference.PreferenceManager;
 
 import com.peternaggschga.gwent.GwentApplication;
 import com.peternaggschga.gwent.R;
+import com.peternaggschga.gwent.data.RowBuffState;
 import com.peternaggschga.gwent.data.RowType;
 import com.peternaggschga.gwent.data.UnitRepository;
 import com.peternaggschga.gwent.ui.sounds.SoundManager;
@@ -103,7 +104,8 @@ public class ResetDialogUseCase {
                                                     @NonNull Trigger trigger) {
         return Single.concat(Arrays.stream(RowType.values()).map(row ->
                         repository.isWeather(row)
-                                .concatWith(repository.isHorn(row))
+                                .concatWith(repository.getBuffState(row)
+                                        .map(state -> state != RowBuffState.NONE))
                                 .any(state -> state)
                 ).collect(Collectors.toList())).any(state -> state)
                 .zipWith(repository.getUnits(), (statusEffects, units) -> {

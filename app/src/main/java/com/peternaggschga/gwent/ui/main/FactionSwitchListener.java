@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.os.Build;
+import android.view.View;
 import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -94,6 +95,12 @@ public class FactionSwitchListener implements SharedPreferences.OnSharedPreferen
     private final List<TextView> unitViews;
 
     /**
+     * Mardroeme displays, visible only for the Skellige theme.
+     */
+    @NonNull
+    private final List<ImageView> mardroemeViews;
+
+    /**
      * ImageButton showing the logo of the current faction.
      * @see R.drawable.icon_round_monster
      * @see R.drawable.icon_round_nilfgaard
@@ -105,6 +112,11 @@ public class FactionSwitchListener implements SharedPreferences.OnSharedPreferen
     private final ImageButton factionButton;
 
     /**
+     * The currently applied faction, used to ignore redundant preference notifications.
+     */
+    private int currentTheme;
+
+    /**
      * Constructor of a FactionSwitchListener
      * updating the given View objects when .onSharedPreferenceChanged() is called.
      * Should only be used by factory method .getListener().
@@ -112,14 +124,19 @@ public class FactionSwitchListener implements SharedPreferences.OnSharedPreferen
      * @param ballViews List of ImageView objects showing a colored ball.
      * @param cardViews List of ImageView objects showing the backside of a card.
      * @param unitViews List of TextView objects showing the number of units.
+     * @param mardroemeViews List of ImageView objects showing Mardroeme.
      * @param factionButton ImageButton that shows the current faction logo.
      */
     private FactionSwitchListener(@NonNull List<ImageView> ballViews, @NonNull List<ImageView> cardViews,
-                                  @NonNull List<TextView> unitViews, @NonNull ImageButton factionButton) {
+                                  @NonNull List<TextView> unitViews, @NonNull List<ImageView> mardroemeViews,
+                                  @NonNull ImageButton factionButton) {
         this.ballViews = ballViews;
         this.cardViews = cardViews;
         this.unitViews = unitViews;
+        this.mardroemeViews = mardroemeViews;
         this.factionButton = factionButton;
+        this.currentTheme = PreferenceManager.getDefaultSharedPreferences(factionButton.getContext())
+                .getInt(THEME_PREFERENCE_KEY, THEME_SCOIATAEL);
     }
 
     /**
@@ -134,6 +151,7 @@ public class FactionSwitchListener implements SharedPreferences.OnSharedPreferen
         List<ImageView> ballViews = new ArrayList<>(4);
         List<ImageView> cardViews = new ArrayList<>(3);
         List<TextView> unitViews = new ArrayList<>(3);
+        List<ImageView> mardroemeViews = new ArrayList<>(3);
 
         for (int id : new int[]{R.id.firstRow, R.id.secondRow, R.id.thirdRow}) {
             ConstraintLayout rowLayout = mainWindow.findViewById(id);
@@ -141,11 +159,22 @@ public class FactionSwitchListener implements SharedPreferences.OnSharedPreferen
             ballViews.add(rowLayout.findViewById(R.id.pointBall));
             cardViews.add(rowLayout.findViewById(R.id.cardsImage));
             unitViews.add(rowLayout.findViewById(R.id.cardCountView));
+            mardroemeViews.add(rowLayout.findViewById(R.id.mardroemeView));
         }
 
         ballViews.add(mainWindow.findViewById(R.id.overallPointBall));
 
-        return new FactionSwitchListener(ballViews, cardViews, unitViews, mainWindow.findViewById(R.id.factionButton));
+        return new FactionSwitchListener(ballViews, cardViews, unitViews,
+                mardroemeViews, mainWindow.findViewById(R.id.factionButton));
+    }
+
+    /**
+     * Updates Mardroeme visibility without changing its active state.
+     *
+     * @param theme Integer identifying the selected faction theme.
+     */
+    private void updateMardroemeVisibility(int theme) {
+        mardroemeViews.forEach(view -> view.setVisibility(theme == THEME_SKELLIGE ? View.VISIBLE : View.GONE));
     }
 
     /**
@@ -178,6 +207,7 @@ public class FactionSwitchListener implements SharedPreferences.OnSharedPreferen
     /**
      * Called when a shared preference is changed, added, or removed.
      * Only handles changes when the given key is equal to .THEME_PREFERENCE_KEY.
+     * Does nothing when the requested faction is already applied.
      * Updates the View objects in .ballViews,
      * .cardViews, .unitViews, and .factionButton using ImageViewSwitchAnimator.
      * @see ImageViewSwitchAnimator
@@ -190,9 +220,15 @@ public class FactionSwitchListener implements SharedPreferences.OnSharedPreferen
             return;
         }
 
+        int theme = sharedPreferences.getInt(key, THEME_SCOIATAEL);
+        if (theme == currentTheme) {
+            return;
+        }
+        currentTheme = theme;
         Context context = factionButton.getContext();
+        updateMardroemeVisibility(theme);
 
-        switch (sharedPreferences.getInt(key, THEME_SCOIATAEL)) {
+        switch (theme) {
             case THEME_MONSTER:
                 context.setTheme(R.style.MonsterTheme);
                 break;

@@ -210,6 +210,17 @@ public class UnitRepository {
     }
 
     /**
+     * Clears Mardroeme from all attack rows without changing horn buffs or weather.
+     * @return A Completable tracking operation status.
+     */
+    @NonNull
+    public Completable clearMardroeme() {
+        return database.rows().clearMardroeme()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    /**
      * Toggles RowEntity.buffState between RowBuffState.NONE and RowBuffState.HORN for the given
      * attack row. If Mardroeme is active, only clears it to NONE; a second call activates HORN.
      * @param row RowEntity.id where the horn status should be updated.
@@ -222,6 +233,49 @@ public class UnitRepository {
                 .getBuffState(row)
                 .map(rowBuffState -> rowBuffState == RowBuffState.NONE ? RowBuffState.HORN : RowBuffState.NONE)
                 .flatMapCompletable(rowBuffState -> database.rows().updateBuffState(row, rowBuffState));
+    }
+
+    /**
+     * Toggles RowEntity.buffState between RowBuffState.NONE and RowBuffState.MARDROEME.
+     * If the horn is active, only clears it to NONE; a second call activates MARDROEME.
+     * @param row RowEntity.id where the Mardroeme status should be updated.
+     * @return A Completable tracking operation status.
+     */
+    @NonNull
+    public Completable switchMardroeme(@NonNull RowType row) {
+        return database.rows().getBuffState(row)
+                .map(state -> state == RowBuffState.NONE ? RowBuffState.MARDROEME : RowBuffState.NONE)
+                .flatMapCompletable(state -> database.rows().updateBuffState(row, state));
+    }
+
+    /**
+     * Returns the persisted buff state for the given attack row.
+     *
+     * @param row RowEntity.id where the buff state is queried.
+     * @return A Single emitting NONE, HORN, or MARDROEME.
+     * @see .getBuffStateFlowable(RowType)
+     */
+    @NonNull
+    public Single<RowBuffState> getBuffState(@NonNull RowType row) {
+        return database.rows().getBuffState(row)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    /**
+     * Returns a Flowable emitting the persisted buff state for the given attack row.
+     *
+     * @param row RowEntity.id where the buff state is queried.
+     * @return A Flowable emitting distinct NONE, HORN, or MARDROEME values.
+     * @see .getBuffState(RowType)
+     */
+    @NonNull
+    public Flowable<RowBuffState> getBuffStateFlowable(@NonNull RowType row) {
+        return database.rows().getBuffStateFlowable(row)
+                .onBackpressureLatest()
+                .distinctUntilChanged()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     /**

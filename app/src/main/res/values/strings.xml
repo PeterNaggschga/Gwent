@@ -138,6 +138,7 @@
     <string name="content_description_row_pointball">point display of combat row</string>
     <string name="content_description_row_weather">weather display of combat row</string>
     <string name="content_description_row_horn">horn display of combat row</string>
+    <string name="content_description_row_mardroeme">mardroeme display of combat row</string>
     <string name="content_description_row_card">card display of combat row</string>
     <string name="content_description_introduction_image">screenshots of this app</string>
     <string name="content_description_introduction_indicator">dot that indicates progress</string>

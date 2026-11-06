@@ -105,6 +105,7 @@
     <string name="content_description_row_pointball">Punktanzeige der Angriffsreihe</string>
     <string name="content_description_row_weather">Wetteranzeige der Angriffsreihe</string>
     <string name="content_description_row_horn">Hornanzeige der Angriffsreihe</string>
+    <string name="content_description_row_mardroeme">Mardroemeanzeige der Angriffsreihe</string>
     <string name="content_description_row_card">Kartenanzeige der Angriffsreihe</string>
     <string name="content_description_introduction_image">Screenshots der App</string>
     <string name="content_description_introduction_indicator">Punkt, der den Fortschritt der Einführung zeigt</string>

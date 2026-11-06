@@ -55,6 +55,13 @@ public interface RowDao {
     Completable clearWeather();
 
     /**
+     * Clears Mardroeme from all rows, preserving horn buffs and weather.
+     * @return A Completable tracking operation status.
+     */
+    @Query("UPDATE rows SET buffState = 'NONE' WHERE buffState = 'MARDROEME'")
+    Completable clearMardroeme();
+
+    /**
      * Sets RowEntity.buffState for the given RowType in `rows`.
      *
      * @param row RowType of the updated RowEntity.
