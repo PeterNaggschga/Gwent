@@ -6,6 +6,7 @@
     <string name="faction_nilfgaard">Nilfgaardian Empire</string>
     <string name="faction_northern_kingdoms">Northern Kingdoms</string>
     <string name="faction_scoiatael" translatable="false">Scoia\'tael</string>
+    <string name="faction_skellige" translatable="false">Skellige</string>
 
     <string name="popUp_cards_add">Add card</string>
     <string name="popUp_cards_save">Save</string>
@@ -133,6 +134,7 @@
     <string name="content_description_factionpopup_nilfgaard">Card with symbol of nilfgaardian empire faction</string>
     <string name="content_description_factionpopup_northern_kingdoms">Card with symbol of Northern Kingdoms faction</string>
     <string name="content_description_factionpopup_scoiatael">Card with symbol of Scoia\'tael faction</string>
+    <string name="content_description_factionpopup_skellige">Card with symbol of Skellige faction</string>
     <string name="content_description_row_pointball">point display of combat row</string>
     <string name="content_description_row_weather">weather display of combat row</string>
     <string name="content_description_row_horn">horn display of combat row</string>

@@ -101,6 +101,7 @@
     <string name="content_description_factionpopup_nilfgaard">Karte mit Symbol der Kaiserreich-Nilfgaard-Fraktion</string>
     <string name="content_description_factionpopup_northern_kingdoms">Karte mit Symbol der Nördliche-Königreiche-Fraktion</string>
     <string name="content_description_factionpopup_scoiatael">Karte mit Symbol der Scoia\'taelfraktion</string>
+    <string name="content_description_factionpopup_skellige">Karte mit Symbol der Skelligefraktion</string>
     <string name="content_description_row_pointball">Punktanzeige der Angriffsreihe</string>
     <string name="content_description_row_weather">Wetteranzeige der Angriffsreihe</string>
     <string name="content_description_row_horn">Hornanzeige der Angriffsreihe</string>

@@ -56,11 +56,17 @@ public class FactionSwitchListener implements SharedPreferences.OnSharedPreferen
     public static final int THEME_SCOIATAEL = 3;
 
     /**
+     * Integer constant representing the Scoia'tael theme.
+     */
+    public static final int THEME_SKELLIGE = 4;
+
+    /**
      * List of ImageView objects that show a colored ball.
      * @see R.drawable.ball_red
      * @see R.drawable.ball_grey
      * @see R.drawable.ball_blue
      * @see R.drawable.ball_green
+     * @see R.drawable.ball_violet
      */
     @NonNull
     private final List<ImageView> ballViews;
@@ -71,6 +77,7 @@ public class FactionSwitchListener implements SharedPreferences.OnSharedPreferen
      * @see R.drawable.card_nilfgaard_landscape_free
      * @see R.drawable.card_northern_kingdoms_landscape_free
      * @see R.drawable.card_scoiatael_landscape_free
+     * @see R.drawable.card_skellige_landscape_free
      */
     @NonNull
     private final List<ImageView> cardViews;
@@ -81,6 +88,7 @@ public class FactionSwitchListener implements SharedPreferences.OnSharedPreferen
      * @see R.color.color_text_nilfgaard
      * @see R.color.color_text_northern_kingdoms
      * @see R.color.color_text_scoiatael
+     * @see R.color.color_text_skellige
      */
     @NonNull
     private final List<TextView> unitViews;
@@ -91,6 +99,7 @@ public class FactionSwitchListener implements SharedPreferences.OnSharedPreferen
      * @see R.drawable.icon_round_nilfgaard
      * @see R.drawable.icon_round_northern_kingdoms
      * @see R.drawable.icon_round_scoiatael
+     * @see R.drawable.icon_round_skellige
      */
     @NonNull
     private final ImageButton factionButton;
@@ -157,6 +166,9 @@ public class FactionSwitchListener implements SharedPreferences.OnSharedPreferen
             case THEME_NORTHERN_KINGDOMS:
                 context.setTheme(R.style.NorthernKingdomsTheme);
                 break;
+            case THEME_SKELLIGE:
+                context.setTheme(R.style.SkelligeTheme);
+                break;
             case THEME_SCOIATAEL:
             default:
                 context.setTheme(R.style.ScoiataelTheme);
@@ -189,6 +201,9 @@ public class FactionSwitchListener implements SharedPreferences.OnSharedPreferen
                 break;
             case THEME_NORTHERN_KINGDOMS:
                 context.setTheme(R.style.NorthernKingdomsTheme);
+                break;
+            case THEME_SKELLIGE:
+                context.setTheme(R.style.SkelligeTheme);
                 break;
             case THEME_SCOIATAEL:
             default:
