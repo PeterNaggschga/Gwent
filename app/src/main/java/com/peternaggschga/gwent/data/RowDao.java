@@ -55,13 +55,14 @@ public interface RowDao {
     Completable clearWeather();
 
     /**
-     * Flips RowEntity.horn for the given RowType in `rows`.
+     * Sets RowEntity.buffState for the given RowType in `rows`.
      *
      * @param row RowType of the updated RowEntity.
+     * @param buffState RowBuffState representing the new active buff, or NONE to clear it.
      * @return A Completable tracking operation status.
      */
-    @Query("UPDATE rows SET horn = NOT horn WHERE id = :row")
-    Completable updateHorn(@NonNull RowType row);
+    @Query("UPDATE rows SET buffState = :buffState WHERE id = :row")
+    Completable updateBuffState(@NonNull RowType row, @NonNull RowBuffState buffState);
 
     /**
      * Fetches RowEntity.weather for the given RowType in `rows`.
@@ -83,21 +84,21 @@ public interface RowDao {
     Flowable<Boolean> isWeatherFlowable(@NonNull RowType row);
 
     /**
-     * Fetches RowEntity.horn for the given RowType in `rows`.
-     * @see .isHornFlowable(RowType)
+     * Fetches RowEntity.buffState for the given RowType in `rows`.
+     * @see .getBuffStateFlowable(RowType)
      * @param row RowType of the queried RowEntity.
-     * @return A Single tracking operation status and returning the value.
+     * @return A Single emitting the currently active buff, or NONE if no buff is active.
      */
-    @Query("SELECT horn FROM rows WHERE id = :row")
-    Single<Boolean> isHorn(@NonNull RowType row);
+    @Query("SELECT buffState FROM rows WHERE id = :row")
+    Single<RowBuffState> getBuffState(@NonNull RowType row);
 
     /**
-     * Fetches a Flowable of RowEntity.horn for the given RowType in `rows`.
+     * Fetches a Flowable of RowEntity.buffState for the given RowType in `rows`.
      *
      * @param row RowType of the queried RowEntity.
-     * @return A Flowable emitting the values.
-     * @see .isHorn(RowType)
+     * @return A Flowable emitting the active buff states, including NONE when no buff is active.
+     * @see .getBuffState(RowType)
      */
-    @Query("SELECT horn FROM rows WHERE id = :row")
-    Flowable<Boolean> isHornFlowable(@NonNull RowType row);
+    @Query("SELECT buffState FROM rows WHERE id = :row")
+    Flowable<RowBuffState> getBuffStateFlowable(@NonNull RowType row);
 }
