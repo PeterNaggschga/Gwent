@@ -21,12 +21,18 @@
     <string name="popUp_coin_vin">Vin hat Stahl verbrannt und die Münze weggedrückt!</string>
 
     <string name="unit_toString">%1$s%2$s (%3$d) - Fähigkeit: %4$s %5$s</string>
-    <string name="unit_toString_multiplicity">%1$d× %2$s</string>
+    <string name="unit_toString_multiplicity">%1$d %2$s</string>
     <string name="unit_toString_melee">Nahkampf</string>
     <string name="unit_toString_range">Fernkampf</string>
     <string name="unit_toString_siege">Belagerungs</string>
-    <string name="unit_toString_epic">held</string>
-    <string name="unit_toString_unit">einheit</string>
+    <plurals name="unit_toString_epic">
+        <item quantity="one">held</item>
+        <item quantity="other">helden</item>
+    </plurals>
+    <plurals name="unit_toString_unit">
+        <item quantity="one">einheit</item>
+        <item quantity="other">einheiten</item>
+    </plurals>
     <string name="unit_toString_ability_none">Keine</string>
     <string name="unit_toString_squad">(%1$d)</string>
     <string name="unit_collection_toString_accumulation_word">%1$s und %2$s</string>
@@ -35,7 +41,10 @@
 
     <string name="alertDialog_burn_title">Verbrennen</string>
     <string name="alertDialog_burn_positive">Verbrennen</string>
-    <string name="alertDialog_burn_msg">Möchtest du wirklich %1$s verbrennen?</string>
+    <plurals name="alertDialog_burn_msg">
+        <item quantity="one">Möchtest du wirklich diese Einheit verbrennen?\n%2$s</item>
+        <item quantity="other">Möchtest du wirklich diese %1$d Einheiten verbrennen?\n%2$s</item>
+    </plurals>
     <string name="alertDialog_burn_negative">Nicht verbrennen</string>
 
     <string name="alertDialog_reset_title">Spielfeld zurücksetzen</string>
@@ -47,8 +56,14 @@
     <string name="alertDialog_reset_negative">Nicht zurücksetzen</string>
 
     <string name="alertDialog_revenge_title">Rächerfähigkeit</string>
-    <string name="alertDialog_revenge_msg">Du hast eine Einheit vom Spielfeld entfernt, die einen Rächer herbeirufen kann. Möchtest du diese Fähigkeit auslösen?</string>
-    <string name="alertDialog_revenge_positive">Rächer rufen</string>
+    <plurals name="alertDialog_revenge_msg">
+        <item quantity="one">Du hast %d Einheit vom Spielfeld entfernt, die einen Rächer herbeirufen kann. Möchtest du ihre Fähigkeit auslösen?</item>
+        <item quantity="other">Du hast %d Einheiten vom Spielfeld entfernt, die jeweils einen Rächer herbeirufen können. Möchtest du ihre Fähigkeit auslösen?</item>
+    </plurals>
+    <plurals name="alertDialog_revenge_positive">
+        <item quantity="one">Einen Rächer rufen</item>
+        <item quantity="other">Rächer rufen</item>
+    </plurals>
 
     <string name="preference_design">Hintergrundbild</string>
     <string name="preference_warnings_title">Warnungen</string>
@@ -215,7 +230,10 @@
     <string name="add_picker_ability_moralBoost">Moralschub</string>
     <string name="add_picker_ability_revenge">Rächer</string>
     <string name="add_picker_ability_binding">Enge Bindung</string>
-    <string name="popUp_add_card_binding_count">Anzahl Einheiten in %1$d. Gruppe: %2$d</string>
+    <plurals name="popUp_add_card_binding_count">
+        <item quantity="one">Gruppe %1$d enthält %2$d Einheit.</item>
+        <item quantity="other">Gruppe %1$d enthält %2$d Einheiten.</item>
+    </plurals>
     <string name="alertDialog_revenge_negative">Nicht auslösen</string>
     <plurals name="berserkers_transformed">
         <item quantity="one">%d Berserker wurde verwandelt.</item>

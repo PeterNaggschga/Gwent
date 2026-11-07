@@ -77,7 +77,8 @@ class SquadManager {
 
         Context context = picker.getContext();
         Toast.makeText(context,
-                context.getString(R.string.popUp_add_card_binding_count, squad.getSquadNumber(), squad.getSquadMembers()),
+                context.getResources().getQuantityString(R.plurals.popUp_add_card_binding_count,
+                        squad.getSquadMembers(), squad.getSquadNumber(), squad.getSquadMembers()),
                 Toast.LENGTH_SHORT).show();
 
         if (squad.hasMembers()) {

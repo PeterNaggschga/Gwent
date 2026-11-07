@@ -90,7 +90,7 @@ public class RemoveUnitsUseCase {
     private static Dialog getRevengeDialog(@NonNull Context context, @NonNull UnitRepository repository,
                                            @NonNull CompletableEmitter emitter, @NonNull Collection<UnitEntity> units,
                                            @IntRange(from = 1) int revengeUnits, @NonNull SoundManager soundManager) {
-        return new RevengeAlertDialogBuilderAdapter(context)
+        return new RevengeAlertDialogBuilderAdapter(context, revengeUnits)
                 .setPositiveCallback((dialog, which) -> {
                     // noinspection CheckResult, ResultOfMethodCallIgnored
                     repository.delete(units)

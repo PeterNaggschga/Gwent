@@ -43,6 +43,6 @@ public class RevengeAlertDialogBuilderAdapterUnitTest {
     @Test
     public void createReturnsNonNullDialog() {
         Looper.prepare();
-        assertThat(new RevengeAlertDialogBuilderAdapter(ApplicationProvider.getApplicationContext()).create()).isNotNull();
+        assertThat(new RevengeAlertDialogBuilderAdapter(ApplicationProvider.getApplicationContext(), 1).create()).isNotNull();
     }
 }

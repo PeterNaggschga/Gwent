@@ -93,7 +93,7 @@ class ResetRepositoryUseCase {
     private static Dialog getRevengeDialog(@NonNull Context context, @NonNull UnitRepository repository,
                                            @NonNull CompletableEmitter emitter, @Nullable UnitEntity keptUnit,
                                            @IntRange(from = 1) int revengeUnits, @NonNull SoundManager soundManager) {
-        return new RevengeAlertDialogBuilderAdapter(context)
+        return new RevengeAlertDialogBuilderAdapter(context, revengeUnits)
                 .setPositiveCallback((dialogInterface, which) -> {
                     // noinspection CheckResult, ResultOfMethodCallIgnored
                     repository.reset(keptUnit)

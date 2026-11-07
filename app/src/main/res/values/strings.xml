@@ -23,7 +23,10 @@
     <string name="add_picker_ability_binding">Tight bond</string>
     <string name="popUp_add_card_label_binding">Squad</string>
     <string name="popUp_add_card_label_number">Number</string>
-    <string name="popUp_add_card_binding_count">Number of units in squad %1$d: %2$d</string>
+    <plurals name="popUp_add_card_binding_count">
+        <item quantity="one">Squad %1$d contains %2$d unit.</item>
+        <item quantity="other">Squad %1$d contains %2$d units.</item>
+    </plurals>
 
     <string name="popUp_coin_normal_win">You begin.</string>
     <string name="popUp_coin_normal_lose">Your opponent begins.</string>
@@ -37,12 +40,18 @@
     <string name="popUp_coin_vin">Vin burned steel and pushed away your coin!</string>
 
     <string name="unit_toString">%1$s %2$s (%3$d) with %4$s ability %5$s</string>
-    <string name="unit_toString_multiplicity">%1$d× %2$s</string>
+    <string name="unit_toString_multiplicity">%1$d %2$s</string>
     <string name="unit_toString_melee">Close combat</string>
     <string name="unit_toString_range">Ranged combat</string>
     <string name="unit_toString_siege">Siege combat</string>
-    <string name="unit_toString_epic">hero</string>
-    <string name="unit_toString_unit">unit</string>
+    <plurals name="unit_toString_epic">
+        <item quantity="one">hero</item>
+        <item quantity="other">heroes</item>
+    </plurals>
+    <plurals name="unit_toString_unit">
+        <item quantity="one">unit</item>
+        <item quantity="other">units</item>
+    </plurals>
     <string name="unit_toString_ability_none">no</string>
     <string name="unit_toString_squad">(%1$d)</string>
     <string name="unit_collection_toString_accumulation_symbol" translatable="false">%1$s, %2$s</string>
@@ -53,7 +62,10 @@
     <string name="alertDialog_burn_title">Scorch</string>
     <string name="alertDialog_burn_positive">Scorch</string>
     <string name="alertDialog_burn_negative">Don\'t scorch</string>
-    <string name="alertDialog_burn_msg">Do you really want to scorch %1$s?</string>
+    <plurals name="alertDialog_burn_msg">
+        <item quantity="one">Do you really want to scorch this unit?\n%2$s</item>
+        <item quantity="other">Do you really want to scorch these %1$d units?\n%2$s</item>
+    </plurals>
 
     <string name="alertDialog_reset_title">Reset board</string>
     <string name="alertDialog_reset_msg_default">Do you really want to reset the board?</string>
@@ -64,8 +76,14 @@
     <string name="alertDialog_reset_negative">Don\'t reset</string>
 
     <string name="alertDialog_revenge_title">Avenger ability</string>
-    <string name="alertDialog_revenge_msg">You removed units that can summon an avenger. Do you want to activate their ability?</string>
-    <string name="alertDialog_revenge_positive">Summon avenger</string>
+    <plurals name="alertDialog_revenge_msg">
+        <item quantity="one">You removed %d unit that can summon an avenger. Do you want to activate its ability?</item>
+        <item quantity="other">You removed %d units that can each summon an avenger. Do you want to activate their ability?</item>
+    </plurals>
+    <plurals name="alertDialog_revenge_positive">
+        <item quantity="one">Summon avenger</item>
+        <item quantity="other">Summon avengers</item>
+    </plurals>
     <string name="alertDialog_revenge_negative">Don\'t activate</string>
 
     <string name="array_design_default">Default</string>

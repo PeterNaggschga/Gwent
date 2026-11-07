@@ -68,18 +68,28 @@ class RevengeAlertDialogBuilderAdapter {
     private final AlertDialog.Builder adapteeBuilder;
 
     /**
+     * Localized positive button label for the number of avengers to summon.
+     */
+    @NonNull
+    private final String positiveButtonText;
+
+    /**
      * Constructor of a RevengeAlertDialogBuilderAdapter.
      * Initializes the buttons with empty callbacks.
      *
      * @param context Context of the built AlertDialog.
+     * @param numberOfAvengers Number of removed units whose ability can be activated.
      */
-    RevengeAlertDialogBuilderAdapter(@NonNull Context context) {
+    RevengeAlertDialogBuilderAdapter(@NonNull Context context, @IntRange(from = 1) int numberOfAvengers) {
+        positiveButtonText = context.getResources().getQuantityString(
+                R.plurals.alertDialog_revenge_positive, numberOfAvengers);
         this.adapteeBuilder = new AlertDialog.Builder(context)
                 .setIconAttribute(android.R.attr.alertDialogIcon)
                 .setTitle(R.string.alertDialog_revenge_title)
-                .setMessage(R.string.alertDialog_revenge_msg)
+                .setMessage(context.getResources().getQuantityString(
+                        R.plurals.alertDialog_revenge_msg, numberOfAvengers, numberOfAvengers))
                 .setCancelable(false)
-                .setPositiveButton(R.string.alertDialog_revenge_positive, (dialog, which) -> dialog.cancel())
+                .setPositiveButton(positiveButtonText, (dialog, which) -> dialog.cancel())
                 .setNegativeButton(R.string.alertDialog_revenge_negative, (dialog, which) -> dialog.cancel());
     }
 
@@ -121,7 +131,7 @@ class RevengeAlertDialogBuilderAdapter {
      */
     @NonNull
     RevengeAlertDialogBuilderAdapter setPositiveCallback(@NonNull DialogInterface.OnClickListener onPositiveButtonClick) {
-        adapteeBuilder.setPositiveButton(R.string.alertDialog_revenge_positive, onPositiveButtonClick);
+        adapteeBuilder.setPositiveButton(positiveButtonText, onPositiveButtonClick);
         return this;
     }
 
