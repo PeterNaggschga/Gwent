@@ -134,35 +134,35 @@
     <string name="rules_factions_text"><![CDATA[<p>
     Bei Gwint unterscheidet man fünf Fraktionen: Monster, Kaiserreich Nilfgaard, Nördliche Königreiche, Scoia\'tael und Skellige. Jede dieser Fraktionen besitzt einzigartige Karten, Anführer und jeweils einen bestimmten Fraktionsvorteil. Zusätzlich gibt es noch neutrale Einheiten, welche keiner Fraktion zugehörig sind und somit in jedem Deck auftauchen können.</p>
     Die Monster werden vom König der Wilden Jagd Eredin Bréacc Glas, auch Sperber genannt, angeführt. Ihr Vorteil ist die Eisenhaut, welche es ermöglicht, dass nach jeder Runde eine zufällige Einheit auf dem Feld verbleibt.<br />
-    Emhyr var Emreis, der sich auch „Die Weiße Flamme, Die Auf den Grabhügeln Der Feinde tanzt“ nennt, ist Kaiser von Nilfgaard, dessen Stärke der Verrat ist. Dieser ermöglicht es, dass Spieler mit einem Nilfgaard-Deck jede Runde gewinnen, die sonst als Unentschieden enden würde.<br />
+    Emhyr var Emreis, auch „Die Weiße Flamme, die auf den Grabhügeln der Feinde tanzt“ genannt, ist Kaiser von Nilfgaard. Der Fraktionsvorteil Verrat ermöglicht es Spielern mit einem Nilfgaard-Deck, Runden zu gewinnen, die sonst unentschieden enden würden.<br />
     Den expandierenden Nilfgaardern stellen sich die Nördlichen Königreiche unter Foltest, König Temeriens, entgegen. Diese erhalten nach einer gewonnenen Runde eine Verstärkung, dürfen also eine Karte vom Nachziehstapel ziehen.<br />
     In ihrem Kampf versuchen die Königreiche, Anderlinge zu dezimieren, darunter die Scoia\'tael, welche als nicht-menschliche Rebellen gegen die Repressionen aufbegehren und sich dafür den Hinterhalt zunutze machen: Die Scoia\'tael können in der ersten Runde entscheiden, wer den ersten Zug macht. Sie werden von der Elfin Francesca Findabair angeführt, die auch als Enid an Gleanna (Gänseblümchen des Tals) bekannt ist.<br />
     Der Fraktionsvorteil von Skellige bewirkt, dass zu Beginn der dritten Runde zwei zufällige Einheitenkarten aus deinem Ablagestapel auf das Schlachtfeld gelegt werden.
     ]]></string>
-    <string name="rules_commander_text"><![CDATA[<p>
+    <string name="rules_commander_text"><![CDATA[
     <p>Jede Fraktion besitzt bestimmte Anführer mit unterschiedlichen Fähigkeiten. Diese werden hier aufgezählt.</p>
     <h1>Monster: Eredin Bréacc Glas</h1>
-    <p>Der Trügerische: <br />Passiv - Verdoppelt die Stärke aller Karten mit der Fähigkeit "Spion" (wirkt auf beide Spieler).</p>
+    <p>Der Trügerische: <br />Passiv: Verdopple die Stärke aller Karten mit der Fähigkeit „Spion“ (wirkt auf beide Spieler).</p>
     <p>Bringer des Todes: <br />Wirf 2 Karten ab und ziehe 1 Karte deiner Wahl aus deinem Kartensatz.</p>
     <p>Führer der Roten Reiter: <br />Durchsuche deinen Nachziehstapel nach einer Wetterkarte und spiele sie sofort aus.</p>
-    <p>König der Wilden Jagd: <br />Verdopple die Stärke deiner Nahkampfeinheiten, sofern kein "Horn des Kommandanten" in der Reihe liegt.</p>
+    <p>König der Wilden Jagd: <br />Verdopple die Stärke deiner Nahkampfeinheiten, sofern kein „Horn des Kommandanten“ in der Reihe liegt.</p>
     <p>Zerstörer der Welten: <br />Nimm eine Karte von deinem Ablagestapel zurück auf die Hand.</p>
     <h1>Kaiserreich Nilfgaard: Emhyr var Emreis</h1>
     <p>Der Unbarmherzige: <br />Zieh eine Karte vom Ablagestapel deines Gegners.</p>
     <p>Die Weiße Flamme: <br />Lass die Anführer-Fähigkeit deines Gegners unwirksam werden.</p>
-    <p>Invasor des Nordens: <br />Fähigkeiten, die Einheiten auf dem Schlachtfeld wiederherstellen, stellen zufällig ausgewählte Einheiten wieder her. Wirkt auf beide Spieler.</p>
+    <p>Invasor des Nordens: <br />Fähigkeiten, die Einheiten auf das Schlachtfeld zurückbringen, bringen stattdessen zufällig ausgewählte Einheiten zurück. Dies gilt für beide Spieler.</p>
     <p>Kaiser von Nilfgaard: <br />Schau dir drei zufällig gewählte Karten aus der Hand deines Gegners an.</p>
-    <p>Kaiserliche Majestät: <br />Durchsuche deinen Nachziehstapel nach "Strömender Regen" und spiele die Karte sofort aus.</p>
+    <p>Kaiserliche Majestät: <br />Durchsuche deinen Nachziehstapel nach „Strömender Regen“ und spiele die Karte sofort aus.</p>
     <h1>Nördliche Königreiche: Foltest</h1>
-    <p>Der Stählerne: <br />Zerstöre die stärkste(n) Belagerungseinheit(en) des Gegners, sofern deren Gesamtstärke mindestens 10 beträgt.</p>
-    <p>Der Anführer des Nordens: <br />Entferne durch "Klirrende Kälte", "Strömender Regen" und "Extrem dichter Nebel" hervorgerufene Wettereffekte.</p>
-    <p>Der Belagerer: <br />Verdopple die Stärke deiner Belagerungseinheiten, sofern kein "Horn des Kommandanten" in der Reihe liegt.</p>
-    <p>König Temeriens: <br />Durchsuche deinen Nachziehstapel nach "Extrem dichter Nebel" und spiele die Karte sofort aus.</p>
-    <p>Sohn des Medell: <br />Zerstöre die stärkste(n) Fernkampfeinheit(en) des Gegners, wenn die Gesamtstärke seiner Fernkampfeinheiten mindestens 10 beträgt.</p>
+    <p>Der Stählerne: <br />Zerstöre alle Belagerungseinheiten des Gegners mit der höchsten Stärke, sofern die Gesamtstärke seiner Belagerungseinheiten mindestens 10 beträgt.</p>
+    <p>Der Anführer des Nordens: <br />Entferne alle aktiven Wettereffekte.</p>
+    <p>Der Belagerer: <br />Verdopple die Stärke deiner Belagerungseinheiten, sofern kein „Horn des Kommandanten“ in der Reihe liegt.</p>
+    <p>König Temeriens: <br />Durchsuche deinen Nachziehstapel nach „Extrem dichter Nebel“ und spiele die Karte sofort aus.</p>
+    <p>Sohn des Medell: <br />Zerstöre alle Fernkampfeinheiten des Gegners mit der höchsten Stärke, sofern die Gesamtstärke seiner Fernkampfeinheiten mindestens 10 beträgt.</p>
     <h1>Scoia\'tael: Francesca Findabair</h1>
     <p>Gänseblümchen des Tals: <br />Zieh zu Beginn der Schlacht eine Extrakarte.</p>
-    <p>Hoffnung der Aen Seidhe: <br />Verschiebt Einheiten mit der Fähigkeit „Gewandtheit“ auf die für sie optimale Reihe, sofern sie nicht bereits dort befinden.</p>
-    <p>Königin Dol Blathannas: <br />Zerstöre die stärkste(n) Nahkampfeinheit(en) des Gegners, wenn die Gesamtstärke seiner Nahkampfeinheiten mindestens 10 beträgt.</p>
+    <p>Hoffnung der Aen Seidhe: <br />Verschiebe Einheiten mit der Fähigkeit „Gewandtheit“ in die für sie optimale Reihe, sofern sie sich nicht bereits dort befinden.</p>
+    <p>Königin Dol Blathannas: <br />Zerstöre alle Nahkampfeinheiten des Gegners mit der höchsten Stärke, sofern die Gesamtstärke seiner Nahkampfeinheiten mindestens 10 beträgt.</p>
     <p>Die Schöne: <br />Verdopple die Stärke deiner Fernkampfeinheiten, sofern kein „Horn des Kommandanten“ in der Reihe liegt.</p>
     <p>Reinblütige Elfin: <br />Durchsuche deinen Nachziehstapel nach „Klirrende Kälte“ und spiele die Karte sofort aus.</p>
     <h1>Skellige</h1>
@@ -170,9 +170,9 @@
     <p>König Bran: <br />Einheiten verlieren bei schlechtem Wetter nur die Hälfte ihrer Stärke.</p>
     ]]></string>
     <string name="rules_cards_text"><![CDATA[<p>
-    Man unterscheidet bei den Kartentypen in drei Hauptkategorien: Anführer-, Einheiten- und Sonderkarten. In jedem Kartensatz gibt es genau eine Anführerkarte (je Fraktion stehen unterschiedliche Anführer zur Auswahl). Diese hat eine bestimmte Fähigkeit, die nur einmal im ganzen Spiel während eines Zuges aktiviert werden kann, dafür aber unabhängig von den Handkarten immer verfügbar ist.<br />
+    Es gibt drei Hauptkategorien von Karten: Anführer-, Einheiten- und Sonderkarten. In jedem Kartensatz gibt es genau eine Anführerkarte (je Fraktion stehen unterschiedliche Anführer zur Auswahl). Diese hat eine bestimmte Fähigkeit, die nur einmal im ganzen Spiel während eines Zuges aktiviert werden kann, dafür aber unabhängig von den Handkarten immer verfügbar ist.<br />
     Dazu kommen mindestens 22 Einheitenkarten, zu denen auch die Heldenkarten zählen. Letztere sind gegen Karteneffekte jeglicher Art (positiv wie negativ) immun. Die Einheitenkarten werden während eines Spielzuges in Angriffsreihen gelegt. Jeder Spieler besitzt davon drei, jeweils eine für Nahkämpfer, Fernkämpfer und Belagerungsgeräte. In welche dieser Reihen die Einheit gelegt werden kann, erkennt man am orange hinterlegten Symbol.<br />
-    Schließlich gibt es noch maximal zehn Sonderkarten, zu denen „Finte“, „Verbrennen“, „Horn des Kommandanten“, „Mardroeme“ und die Wetterkarten gehören (Effektbeschreibungen sind unter „Spezialkarten“ nachzulesen). Wetterkarten werden in einen abgesonderten Bereich des Spielfelds platziert, da sie die Reihen beider Spieler betreffen. Das Horn des Kommandanten wird an die Reihe angelegt, für die es ausgespielt wird.
+    Schließlich gibt es noch maximal zehn Sonderkarten, zu denen „Finte“, „Verbrennen“, „Horn des Kommandanten“, „Mardroeme“ und die Wetterkarten gehören (Effektbeschreibungen sind unter „Spezialkarten“ nachzulesen). Wetterkarten werden in einem abgesonderten Bereich des Spielfelds platziert, da sie die Reihen beider Spieler betreffen. Das Horn des Kommandanten wird an die Reihe angelegt, für die es ausgespielt wird.
     ]]></string>
     <string name="rules_card_abilities_text"><![CDATA[
     <p>Einige Einheitenkarten besitzen besondere Fähigkeiten, welche hier genauer erklärt werden.</p>
@@ -181,12 +181,12 @@
     <p>Musterung: <br />Wird diese Karte gespielt, durchsuche deinen Nachziehstapel nach Einheiten mit demselben Namen und spiele diese sofort aus.</p>
     <p>Moralschub: <br />Verstärke alle anderen Einheiten der Reihe um einen Stärkepunkt.</p>
     <p>Heilung: <br />Wird diese Karte gespielt, wähle eine Einheitenkarte aus deinem Ablagestapel (Heldenkarten ausgenommen) und spiele diese aus. Karten mit der Fähigkeit Gewandtheit müssen wieder in ihre ursprüngliche Reihe zurückgelegt werden.</p>
-    <p>Horn des Kommandanten: <br />Verdoppele die Stärke aller anderen Einheitenkarten dieser Reihe. Dieser Effekt kumuliert nicht mit dem Effekt der Spezialkarte Horn des Kommandanten! Liegen also beide Karten in der Angriffsreihe, wird der Schaden aller Einheiten (einschließlich dieser) nur einmal verdoppelt.</p>
+    <p>Horn des Kommandanten: <br />Verdopple die Stärke aller anderen Einheitenkarten dieser Reihe. Dieser Effekt ist nicht mit dem Effekt der Spezialkarte Horn des Kommandanten stapelbar! Liegen beide Karten in der Angriffsreihe, wird die Stärke aller Einheiten (einschließlich dieser) nur einmal verdoppelt.</p>
     <p>Gewandtheit: <br />Platziere diese Karte in der Nah- oder Fernkampfreihe. Nach dem Ausspielen kannst du sie nicht mehr verschieben.</p>
-    <p>Verbrennen: <br />Zerstöre die stärkste(n) Nahkampfeinheit(en) des Gegners, wenn die Gesamtstärke seiner Nahkampfeinheiten mindestens 10 beträgt.</p>
-    <p>Clan-Dimun-Pirat: <br />Anders als bei anderen Einheiten mit der Fähigkeit Verbrennen werden beim Ausspielen dieser Karte die stärkste(n) Karte(n) auf dem gesamten Spielfeld zerstört, genau wie bei einer normalen Spezialkarte Verbrennen.</p>
+    <p>Verbrennen: <br />Zerstöre alle Nahkampfeinheiten des Gegners mit der höchsten Stärke, sofern die Gesamtstärke seiner Nahkampfeinheiten mindestens 10 beträgt.</p>
+    <p>Clan-Dimun-Pirat: <br />Anders als bei anderen Einheiten mit der Fähigkeit Verbrennen werden beim Ausspielen dieser Karte alle Karten mit der höchsten Stärke auf dem gesamten Spielfeld zerstört, genau wie bei einer normalen Spezialkarte Verbrennen.</p>
     <p>Rächer herbeirufen: <br />Wird diese Karte vom Spielfeld entfernt (egal auf welche Art), wird ein Rächer herbeigerufen.</p>
-    <p>Mardroeme: <br />Verwandelt alle Berserker in derselben Angriffsreihe in Bären.</p>
+    <p>Mardroeme: <br />Verwandle alle Berserker in derselben Angriffsreihe in Bären.</p>
     <p>Berserker: <br />Verwandelt sich in einen Bären, wenn Mardroeme in derselben Angriffsreihe vorhanden ist. Die Verwandlung ist dauerhaft.</p>
     ]]></string>
     <string name="rules_special_cards_text"><![CDATA[
@@ -196,10 +196,10 @@
     <p>Strömender Regen: <br />Setze die Stärke aller Belagerungseinheiten beider Spieler auf 1. Wenn diese Karte bereits ausgespielt wurde, lege sie sofort auf den Ablagestapel.</p>
     <p>Skellige-Sturm: <br />Kombiniert die Effekte von Extrem dichter Nebel und Strömender Regen. In der Fernkampf- und Belagerungsreihe beider Spieler gelten die jeweiligen Wettereffekte genauso wie bei den einzelnen Wetterkarten.</p>
     <p>Gutes Wetter: <br />Entferne alle Effekte von Wetterkarten und lege sie mit dieser Karte auf den Ablagestapel.</p>
-    <p>Finte: <br />Tausche diese Karte gegen eine Einheitenkarte auf dem Schlachtfeld aus, um sie wieder deiner Hand hinzuzufügen. </p>
-    <p>Horn des Kommandanten: <br />Verdoppele die Stärke aller Einheitenkarte dieser Reihe (maximal einmal pro Reihe). Dieser Effekt kumuliert nicht mit dem Karteneffekt Rittersporns! Liegen also beide Karten in der Angriffsreihe, wird der Schaden aller Einheiten (einschließlich Rittersporn) nur einmal verdoppelt.</p>
-    <p>Verbrennen: <br />Entferne die stärkste(n) Karte(n) beider Spieler auf dem Schlachtfeld und lege sie mit dieser Karte auf den Ablagestapel.</p>
-    <p>Mardroeme: <br />Verwandelt alle Berserker in der gewählten Angriffsreihe in Bären.</p>
+    <p>Finte: <br />Tausche diese Karte gegen eine Einheitenkarte auf deiner Seite des Schlachtfelds aus und nimm diese Einheit zurück auf die Hand.</p>
+    <p>Horn des Kommandanten: <br />Verdopple die Stärke aller Einheitenkarten dieser Reihe (maximal einmal pro Reihe). Dieser Effekt ist nicht mit dem Karteneffekt Rittersporns stapelbar! Liegen beide Karten in der Angriffsreihe, wird die Stärke aller Einheiten (einschließlich Rittersporn) nur einmal verdoppelt.</p>
+    <p>Verbrennen: <br />Zerstöre alle Karten mit der höchsten Stärke auf dem gesamten Schlachtfeld. Lege sie auf die Ablagestapel ihrer Besitzer und lege anschließend diese Karte ab.</p>
+    <p>Mardroeme: <br />Verwandle alle Berserker in der gewählten Angriffsreihe in Bären.</p>
     ]]></string>
     <string name="introduction_page1"><![CDATA[
     <p>Danke, dass du Rittersporns Rechner installiert hast! Bitte beachte, dass diese App nur dazu da ist, dich bei einem Spiel mit analogen Gwintkarten zu unterstützen, indem sie deinen Punktestand errechnet. Du kannst in dieser App nicht gegen KI-Gegner oder ohne analoge Gwintkarten spielen!</p>
