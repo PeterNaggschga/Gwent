@@ -4,10 +4,13 @@ import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -99,7 +102,7 @@ public class UnitRepository {
     public Completable reset(@Nullable UnitEntity keptUnit) {
         Completable result = database.rows().clearRows().andThen(initializeRows());
         if (keptUnit != null) {
-            result = result.andThen(database.units().insertUnit(keptUnit));
+            result = result.andThen(database.units().insertUnits(Collections.singletonList(keptUnit)));
         }
         return result.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
@@ -118,6 +121,25 @@ public class UnitRepository {
     @NonNull
     private Completable insertUnit(boolean epic, @IntRange(from = 0, to = UnitEntity.NON_EPIC_DAMAGE_VALUES_UPPER_BOUND) int damage, @NonNull Ability ability,
                                    @IntRange(from = 1) @Nullable Integer squad, @NonNull RowType row) {
+        return insertUnit(epic, damage, ability, squad, row, 1);
+    }
+
+    /**
+     * Creates a unit after validating the repository's insertion constraints.
+     *
+     * @param epic    Boolean representing whether the card is epic.
+     * @param damage  Non-negative base damage within the permitted damage values.
+     * @param ability Ability of the card.
+     * @param squad   Positive Tight Bond squad number, or null for other abilities.
+     * @param row     Combat row of the card.
+     * @return A new UnitEntity with an automatically generated ID on insertion.
+     * @throws IllegalArgumentException When damage or the ability/squad combination is invalid.
+     */
+    @NonNull
+    private UnitEntity createUnit(boolean epic, int damage, @NonNull Ability ability, @Nullable Integer squad,
+                                  @NonNull RowType row) {
+        Objects.requireNonNull(ability);
+        Objects.requireNonNull(row);
         if (damage < 0 || damage > UnitEntity.NON_EPIC_DAMAGE_VALUES_UPPER_BOUND) {
             throw new IllegalArgumentException("Damage be between 0 and " + UnitEntity.NON_EPIC_DAMAGE_VALUES_UPPER_BOUND + " but is " + damage + ".");
         }
@@ -130,14 +152,12 @@ public class UnitRepository {
         if (ability == Ability.BINDING && (squad == null || squad < 1)) {
             throw new IllegalArgumentException("Squad must not be null or less than one but squad is " + squad + ".");
         }
-        return database.units().insertUnit(epic, damage, ability, squad, row)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+        return new UnitEntity(epic, damage, ability, squad, row);
     }
 
     /**
      * Adds a number of units with the given stats to the given row.
-     * Essentially calls .insertUnit(boolean, int, Ability, Integer, RowType) multiple times.
+     * Creates the units in memory and inserts them with a single batched DAO call.
      * @param epic    Boolean representing whether card is .epic.
      * @param damage  Non-negative value representing the .damage of the card.
      * @param ability Ability representing the .ability of the card.
@@ -153,11 +173,12 @@ public class UnitRepository {
     public Completable insertUnit(boolean epic, @IntRange(from = 0, to = UnitEntity.NON_EPIC_DAMAGE_VALUES_UPPER_BOUND) int damage, @NonNull Ability ability,
                                   @IntRange(from = 1) @Nullable Integer squad, @NonNull RowType row,
                                   @IntRange(from = 0) int number) {
-        Completable result = Completable.complete();
+        List<UnitEntity> units = new ArrayList<>(number);
         for (int i = 0; i < number; i++) {
-            result = result.andThen(insertUnit(epic, damage, ability, squad, row));
+            units.add(createUnit(epic, damage, ability, squad, row));
         }
-        return result.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+        return database.units().insertUnits(units)
+                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 
     /**

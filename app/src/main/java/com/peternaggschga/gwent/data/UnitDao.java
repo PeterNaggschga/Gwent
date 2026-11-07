@@ -1,8 +1,6 @@
 package com.peternaggschga.gwent.data;
 
-import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.room3.Dao;
 import androidx.room3.DaoReturnTypeConverters;
 import androidx.room3.Delete;
@@ -26,28 +24,14 @@ import io.reactivex.rxjava3.core.Single;
 @DaoReturnTypeConverters(RxDaoReturnTypeConverters.class)
 public interface UnitDao {
     /**
-     * Inserts the given UnitEntity into `units`.
-     * If the same UnitEntity.id is already in the table, the new insert is ignored.
+     * Inserts the given UnitEntity objects into `units` in one batch.
+     * If a UnitEntity.id is already in the table, that insert is ignored.
      *
-     * @param unit UnitEntity that is being inserted.
+     * @param units List of UnitEntity objects that are being inserted. May be empty.
      * @return A Completable tracking operation status.
      */
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    Completable insertUnit(@NonNull UnitEntity unit);
-
-    /**
-     * Inserts a UnitEntity with the given values into `units`.
-     *
-     * @param epic    Boolean defining whether the unit is epic.
-     * @param damage  Non-Negative value defining the base-damage of the unit.
-     * @param ability Ability defining the ability of the unit.
-     * @param squad   Non-Negative value defining the squad of units,
-     *                if UnitEntity.ability is Ability.BINDING, or `null`.
-     * @param row     RowType defining the UnitEntity.row foreign key.
-     * @return A Completable tracking operation status.
-     */
-    @Query("INSERT INTO units (epic, damage, ability, squad, `row`) VALUES (:epic, :damage, :ability, :squad, :row)")
-    Completable insertUnit(boolean epic, @IntRange(from = 0, to = UnitEntity.NON_EPIC_DAMAGE_VALUES_UPPER_BOUND) int damage, @NonNull Ability ability, @IntRange(from = 1) @Nullable Integer squad, @NonNull RowType row);
+    Completable insertUnits(@NonNull List<UnitEntity> units);
 
     /**
      * Deletes the UnitEntity object with the given id from `units`.

@@ -15,6 +15,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -51,7 +52,7 @@ public class UnitRepositoryIntegrationTest {
     private void insertDummys() {
         for (RowType row : RowType.values()) {
             for (int dummyNumber = 0; dummyNumber < 5; dummyNumber++) {
-                database.units().insertUnit(false, dummyNumber, Ability.values()[dummyNumber / 2], null, row)
+                database.units().insertUnits(Collections.singletonList(new UnitEntity(false, dummyNumber, Ability.values()[dummyNumber / 2], null, row)))
                         .blockingAwait();
             }
         }
@@ -88,7 +89,7 @@ public class UnitRepositoryIntegrationTest {
     public void resetNullDeletesUnits() {
         for (int i = 0; i < TESTING_DEPTH; i++) {
             for (RowType row : RowType.values()) {
-                database.units().insertUnit(false, 5, Ability.NONE, null, row).blockingAwait();
+                database.units().insertUnits(Collections.singletonList(new UnitEntity(false, 5, Ability.NONE, null, row))).blockingAwait();
             }
         }
         assertThat(repository.reset()
@@ -102,7 +103,7 @@ public class UnitRepositoryIntegrationTest {
     public void resetKeepsUnit() {
         for (int i = 0; i < TESTING_DEPTH; i++) {
             for (RowType row : RowType.values()) {
-                database.units().insertUnit(false, 5, Ability.NONE, null, row).blockingAwait();
+                database.units().insertUnits(Collections.singletonList(new UnitEntity(false, 5, Ability.NONE, null, row))).blockingAwait();
             }
         }
         //noinspection OptionalGetWithoutIsPresent
@@ -630,7 +631,7 @@ public class UnitRepositoryIntegrationTest {
                 assertThat(repository.countUnits()
                         .blockingGet())
                         .isEqualTo(rowNumber * 5 + unitNumber);
-                assertThat(database.units().insertUnit(false, unitNumber, Ability.values()[unitNumber / 2], null, row)
+                assertThat(database.units().insertUnits(Collections.singletonList(new UnitEntity(false, unitNumber, Ability.values()[unitNumber / 2], null, row)))
                         .andThen(repository.countUnits(row))
                         .blockingGet())
                         .isEqualTo(unitNumber + 1);
@@ -659,7 +660,7 @@ public class UnitRepositoryIntegrationTest {
         for (RowType row : RowType.values()) {
             for (int unitNumber = 0; unitNumber < 5; unitNumber++) {
                 assertThat(
-                        database.units().insertUnit(false, unitNumber, Ability.values()[unitNumber / 2], null, row)
+                        database.units().insertUnits(Collections.singletonList(new UnitEntity(false, unitNumber, Ability.values()[unitNumber / 2], null, row)))
                                 .andThen(repository.getUnits(row))
                                 .blockingGet())
                         .hasSize(unitNumber + 1);
@@ -750,7 +751,7 @@ public class UnitRepositoryIntegrationTest {
     public void hasNonEpicUnitsFlowableReturnsHorn() {
         Flowable<Boolean> hasNonEpicUnits = repository.hasNonEpicUnitsFlowable();
         assertThat(hasNonEpicUnits.blockingFirst()).isFalse();
-        assertThat(database.units().insertUnit(false, 5, Ability.NONE, null, RowType.MELEE)
+        assertThat(database.units().insertUnits(Collections.singletonList(new UnitEntity(false, 5, Ability.NONE, null, RowType.MELEE)))
                 .andThen(hasNonEpicUnits)
                 .blockingFirst())
                 .isTrue();
