@@ -7,6 +7,7 @@ import androidx.room3.Delete;
 import androidx.room3.Insert;
 import androidx.room3.OnConflictStrategy;
 import androidx.room3.Query;
+import androidx.room3.Update;
 import androidx.room3.rxjava3.RxDaoReturnTypeConverters;
 
 import java.util.Collection;
@@ -28,10 +29,20 @@ public interface UnitDao {
      * If a UnitEntity.id is already in the table, that insert is ignored.
      *
      * @param units List of UnitEntity objects that are being inserted. May be empty.
-     * @return A Completable tracking operation status.
+     * @return A Single emitting generated IDs in input order, or -1 for ignored inserts.
      */
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    Completable insertUnits(@NonNull List<UnitEntity> units);
+    Single<List<Long>> insertUnits(@NonNull List<UnitEntity> units);
+
+    /**
+     * Updates the given units in one batch, matching existing rows by UnitEntity.id.
+     * Units whose IDs are not present are not inserted.
+     *
+     * @param units List of units containing their persisted IDs and new values.
+     * @return A Completable tracking completion of the batch update.
+     */
+    @Update
+    Completable updateUnits(@NonNull List<UnitEntity> units);
 
     /**
      * Deletes the UnitEntity object with the given id from `units`.
@@ -57,6 +68,15 @@ public interface UnitDao {
      */
     @Query("SELECT * FROM units WHERE `id` = :id")
     Single<UnitEntity> getUnit(int id);
+
+    /**
+     * Fetches only the units matching the given IDs. Missing IDs are omitted.
+     *
+     * @param ids Persisted IDs of the requested units.
+     * @return A Single emitting the matching units; result order is unspecified.
+     */
+    @Query("SELECT * FROM units WHERE `id` IN (:ids)")
+    Single<List<UnitEntity>> getUnitsByIds(@NonNull List<Long> ids);
 
     /**
      * Fetches all UnitEntity objects from `units` in the given row.

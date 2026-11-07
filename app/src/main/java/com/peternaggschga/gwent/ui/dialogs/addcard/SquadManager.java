@@ -25,7 +25,7 @@ class SquadManager {
     /**
      * Integer constant defining how many different squads there may be per row.
      */
-    public static final int MAX_NR_SQUADS = 3;
+    public static final int MAX_NR_SQUADS = UnitEntity.BERSERKER_SQUAD - 1;
 
     /**
      * Array of SquadState objects containing one SquadState for each possible squad.

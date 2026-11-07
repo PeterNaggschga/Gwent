@@ -1,17 +1,21 @@
 package com.peternaggschga.gwent.data;
 
+import android.content.Context;
+
 import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.peternaggschga.gwent.domain.cases.TransformBerserkersUseCase;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Completable;
@@ -34,15 +38,23 @@ public class UnitRepository {
     private final AppDatabase database;
 
     /**
+     * Application context, never an Activity context, used for domain notifications.
+     */
+    @NonNull
+    private final Context context;
+
+    /**
      * Constructor of a UnitRepository.
      * Depends on the given AppDatabase as a data source.
      * Should only be called by .getRepository().
      *
      * @param database AppDatabase that is injected for the repository.
-     * @see .getRepository(AppDatabase)
+     * @param context Context whose application context is retained for transformation notifications.
+     * @see .getRepository(AppDatabase, Context)
      */
-    private UnitRepository(@NonNull AppDatabase database) {
+    private UnitRepository(@NonNull AppDatabase database, @NonNull Context context) {
         this.database = database;
+        this.context = Objects.requireNonNull(context.getApplicationContext());
     }
 
     /**
@@ -51,11 +63,12 @@ public class UnitRepository {
      * Also initializes one RowEntity per RowType using .initializeRows().
      * @see .initializeRows()
      * @param database AppDatabase managed and initialized by the returned UnitRepository.
+     * @param context Context whose application context is retained for domain notifications.
      * @return A Single emitting the created UnitRepository when initialization is finished.
      */
     @NonNull
-    public static Single<UnitRepository> getRepository(@NonNull AppDatabase database) {
-        UnitRepository repository = new UnitRepository(database);
+    public static Single<UnitRepository> getRepository(@NonNull AppDatabase database, @NonNull Context context) {
+        UnitRepository repository = new UnitRepository(database, context);
         return repository.initializeRows()
                 .andThen(Single.just(repository))
                 .subscribeOn(Schedulers.io())
@@ -102,26 +115,9 @@ public class UnitRepository {
     public Completable reset(@Nullable UnitEntity keptUnit) {
         Completable result = database.rows().clearRows().andThen(initializeRows());
         if (keptUnit != null) {
-            result = result.andThen(database.units().insertUnits(Collections.singletonList(keptUnit)));
+            result = result.andThen(insertUnits(Collections.singletonList(keptUnit)));
         }
         return result.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
-    }
-
-    /**
-     * Adds a unit with the given stats to the given row.
-     *
-     * @param epic    Boolean representing whether card is .epic.
-     * @param damage  Non-negative value representing the .damage of the card.
-     * @param ability Ability representing the .ability of the card.
-     * @param squad   Integer representing the .squad of a card that has the Ability.BINDING .ability.
-     * @param row     RowType representing the combat type of the card.
-     * @return A Completable tracking operation status.
-     * @throws IllegalArgumentException When damage is less than zero or if ability is Ability.BINDING and squad is null or less than zero or if ability is not Ability.BINDING and squad is not null.
-     */
-    @NonNull
-    private Completable insertUnit(boolean epic, @IntRange(from = 0, to = UnitEntity.NON_EPIC_DAMAGE_VALUES_UPPER_BOUND) int damage, @NonNull Ability ability,
-                                   @IntRange(from = 1) @Nullable Integer squad, @NonNull RowType row) {
-        return insertUnit(epic, damage, ability, squad, row, 1);
     }
 
     /**
@@ -152,12 +148,16 @@ public class UnitRepository {
         if (ability == Ability.BINDING && (squad == null || squad < 1)) {
             throw new IllegalArgumentException("Squad must not be null or less than one but squad is " + squad + ".");
         }
+        if (Objects.equals(squad, UnitEntity.BERSERKER_SQUAD)) {
+            throw new IllegalArgumentException("The Berserker squad is reserved for transformed units.");
+        }
         return new UnitEntity(epic, damage, ability, squad, row);
     }
 
     /**
      * Adds a number of units with the given stats to the given row.
      * Creates the units in memory and inserts them with a single batched DAO call.
+     * The central insertion method invokes the UseCase after the units have been persisted.
      * @param epic    Boolean representing whether card is .epic.
      * @param damage  Non-negative value representing the .damage of the card.
      * @param ability Ability representing the .ability of the card.
@@ -165,7 +165,7 @@ public class UnitRepository {
      * @param row     RowType representing the combat type of the card.
      * @param number  Integer representing the number of units to be added.
      * @return A Completable tracking operation status.
-     * @see .insertUnit(boolean, int, Ability, Integer, RowType)
+     * @see .insertUnits(List)
      * @throws IllegalArgumentException When damage is less than zero or if ability is Ability.BINDING and squad is null or less than zero
      * or if ability is not Ability.BINDING and squad is not null.
      */
@@ -177,7 +177,33 @@ public class UnitRepository {
         for (int i = 0; i < number; i++) {
             units.add(createUnit(epic, damage, ability, squad, row));
         }
+        return insertUnits(units);
+    }
+
+    /**
+     * Central insertion path for additions, copies, and retained units during reset.
+     * Inserts one batch, then passes only successfully inserted IDs to the transformation UseCase.
+     *
+     * @param units Units to insert. Normal card additions use insertUnit to validate their stats first.
+     * @return A Completable tracking insertion, any required transformations, and notification.
+     */
+    @NonNull
+    public Completable insertUnits(@NonNull List<UnitEntity> units) {
         return database.units().insertUnits(units)
+                .map(ids -> ids.stream().filter(id -> id != -1).collect(Collectors.toList()))
+                .flatMapCompletable(ids -> TransformBerserkersUseCase.transformAddedUnits(context, this, ids))
+                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+    }
+
+    /**
+     * Updates a list of units in one batch by their existing IDs; does not insert missing IDs.
+     *
+     * @param units Units containing their persisted IDs and new values.
+     * @return A Completable tracking the batch update.
+     */
+    @NonNull
+    public Completable updateUnits(@NonNull List<UnitEntity> units) {
+        return database.units().updateUnits(units)
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 
@@ -259,6 +285,7 @@ public class UnitRepository {
     /**
      * Toggles RowEntity.buffState between RowBuffState.NONE and RowBuffState.MARDROEME.
      * If the horn is active, only clears it to NONE; a second call activates MARDROEME.
+     * Activating Mardroeme implicitly transforms this row's Berserkers and notifies the user.
      * @param row RowEntity.id where the Mardroeme status should be updated.
      * @return A Completable tracking operation status.
      */
@@ -266,7 +293,11 @@ public class UnitRepository {
     public Completable switchMardroeme(@NonNull RowType row) {
         return database.rows().getBuffState(row)
                 .map(state -> state == RowBuffState.NONE ? RowBuffState.MARDROEME : RowBuffState.NONE)
-                .flatMapCompletable(state -> database.rows().updateBuffState(row, state));
+                .flatMapCompletable(state -> database.rows().updateBuffState(row, state)
+                        .andThen(Completable.defer(() -> state == RowBuffState.MARDROEME
+                                ? TransformBerserkersUseCase.transformRow(context, this, row)
+                                : Completable.complete())))
+                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 
     /**
@@ -362,8 +393,7 @@ public class UnitRepository {
      */
     @NonNull
     public Completable copy(int id) {
-        return getUnit(id).flatMapCompletable(unit ->
-                        insertUnit(unit.isEpic(), unit.getDamage(), unit.getAbility(), unit.getSquad(), unit.getRow()))
+        return getUnit(id).flatMapCompletable(unit -> insertUnits(Collections.singletonList(unit.copy())))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
@@ -402,6 +432,21 @@ public class UnitRepository {
     }
 
     /**
+     * Returns persisted units matching the supplied IDs.
+     *
+     * @param ids IDs to retrieve; missing IDs are omitted.
+     * @return A Single emitting matching units, or an empty list for an empty ID list.
+     */
+    @NonNull
+    public Single<List<UnitEntity>> getUnitsByIds(@NonNull List<Long> ids) {
+        if (ids.isEmpty()) {
+            return Single.just(Collections.emptyList());
+        }
+        return database.units().getUnitsByIds(ids)
+                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+    }
+
+    /**
      * Returns the units in the given attack row.
      * @see .getUnitsFlowable(RowType)
      * @param row RowEntity.id where the units have been placed.
@@ -427,13 +472,7 @@ public class UnitRepository {
                 .getUnitsFlowable(row)
                 .onBackpressureLatest()
                 .debounce(10, TimeUnit.MILLISECONDS)
-                .distinctUntilChanged((list1, list2) -> {
-                    if (list1.size() != list2.size()) {
-                        return false;
-                    }
-                    Iterator<UnitEntity> list1Iterator = list1.iterator();
-                    return list2.stream().map(UnitEntity::getId).allMatch(id -> id.equals(list1Iterator.next().getId()));
-                })
+                .distinctUntilChanged()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

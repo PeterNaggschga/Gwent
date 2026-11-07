@@ -51,21 +51,21 @@ public class UnitDaoUnitTest {
     public void insertUnitsAssertsNonNull() {
         try {
             //noinspection DataFlowIssue
-            unitDao.insertUnits(null)
+            unitDao.insertUnits(null).ignoreElement()
                     .blockingAwait();
             fail();
         } catch (NullPointerException ignored) {
         }
         try {
             //noinspection DataFlowIssue
-            unitDao.insertUnits(Collections.singletonList(new UnitEntity(false, 0, null, null, RowType.MELEE)))
+            unitDao.insertUnits(Collections.singletonList(new UnitEntity(false, 0, null, null, RowType.MELEE))).ignoreElement()
                     .blockingAwait();
             fail();
         } catch (NullPointerException ignored) {
         }
         try {
             //noinspection DataFlowIssue
-            unitDao.insertUnits(Collections.singletonList(new UnitEntity(false, 0, Ability.NONE, null, null)))
+            unitDao.insertUnits(Collections.singletonList(new UnitEntity(false, 0, Ability.NONE, null, null))).ignoreElement()
                     .blockingAwait();
             fail();
         } catch (NullPointerException ignored) {
@@ -75,12 +75,12 @@ public class UnitDaoUnitTest {
     @Test
     public void insertUnitsIgnoresDoubles() {
         //noinspection OptionalGetWithoutIsPresent
-        UnitEntity entity = unitDao.insertUnits(Collections.singletonList(new UnitEntity(false, 0, Ability.NONE, null, RowType.MELEE)))
+        UnitEntity entity = unitDao.insertUnits(Collections.singletonList(new UnitEntity(false, 0, Ability.NONE, null, RowType.MELEE))).ignoreElement()
                 .andThen(unitDao.getUnits())
                 .blockingGet()
                 .stream().findFirst().get();
         try {
-            unitDao.insertUnits(Collections.singletonList(entity))
+            unitDao.insertUnits(Collections.singletonList(entity)).ignoreElement()
                     .andThen(unitDao.countUnits())
                     .test()
                     .await()
@@ -99,7 +99,7 @@ public class UnitDaoUnitTest {
                 batch.add(new UnitEntity(false, damage, Ability.NONE, null, row));
             }
         }
-        unitDao.insertUnits(batch).blockingAwait();
+        unitDao.insertUnits(batch).ignoreElement().blockingAwait();
         List<UnitEntity> inserted = unitDao.getUnits().blockingGet();
         assertThat(inserted).hasSize(batch.size());
         assertThat(inserted.stream().map(UnitEntity::getId).distinct().count()).isEqualTo(batch.size());
@@ -112,19 +112,36 @@ public class UnitDaoUnitTest {
 
     @Test
     public void insertUnitsAcceptsEmptyBatch() {
-        unitDao.insertUnits(Collections.emptyList()).blockingAwait();
+        unitDao.insertUnits(Collections.emptyList()).ignoreElement().blockingAwait();
         assertThat(unitDao.countUnits().blockingGet()).isEqualTo(0);
     }
 
     @Test
     public void insertUnitsIgnoresExistingIdsButInsertsNewUnitsInSameBatch() {
-        unitDao.insertUnits(Collections.singletonList(new UnitEntity(false, 5, Ability.NONE, null, RowType.MELEE)))
+        unitDao.insertUnits(Collections.singletonList(new UnitEntity(false, 5, Ability.NONE, null, RowType.MELEE))).ignoreElement()
                 .blockingAwait();
         UnitEntity existing = unitDao.getUnits().blockingGet().get(0);
-        unitDao.insertUnits(Arrays.asList(existing, new UnitEntity(false, 8, Ability.NONE, null, RowType.RANGE)))
+        unitDao.insertUnits(Arrays.asList(existing, new UnitEntity(false, 8, Ability.NONE, null, RowType.RANGE))).ignoreElement()
                 .blockingAwait();
         assertThat(unitDao.countUnits().blockingGet()).isEqualTo(2);
         assertThat(unitDao.getUnit(existing.getId()).blockingGet().getDamage()).isEqualTo(5);
+    }
+
+    @Test
+    public void insertUnitsReturnsMatchingIdsAndMinusOneForIgnoredEntries() {
+        List<Long> originalIds = unitDao.insertUnits(Arrays.asList(
+                new UnitEntity(false, 5, Ability.NONE, null, RowType.MELEE),
+                new UnitEntity(false, 8, Ability.NONE, null, RowType.RANGE))).blockingGet();
+        assertThat(originalIds).hasSize(2);
+        UnitEntity existing = unitDao.getUnit(originalIds.get(0).intValue()).blockingGet();
+        List<Long> ids = unitDao.insertUnits(Arrays.asList(existing,
+                new UnitEntity(false, 3, Ability.NONE, null, RowType.SIEGE))).blockingGet();
+        assertThat(ids.get(0)).isEqualTo(-1L);
+        assertThat(ids.get(1)).isGreaterThan(0L);
+        List<UnitEntity> selected = unitDao.getUnitsByIds(Arrays.asList(originalIds.get(1), ids.get(1), 999999L)).blockingGet();
+        assertThat(selected.stream().map(UnitEntity::getId).collect(Collectors.toList()))
+                .containsExactly(originalIds.get(1).intValue(), ids.get(1).intValue());
+        assertThat(unitDao.getUnitsByIds(Collections.emptyList()).blockingGet()).isEmpty();
     }
 
     @Test
@@ -132,7 +149,7 @@ public class UnitDaoUnitTest {
         database.rows().clearRows().andThen(database.rows().insertRow(new RowEntity(RowType.MELEE))).blockingAwait();
         assertThrows(RuntimeException.class, () -> unitDao.insertUnits(Arrays.asList(
                 new UnitEntity(false, 5, Ability.NONE, null, RowType.MELEE),
-                new UnitEntity(false, 5, Ability.NONE, null, RowType.RANGE))).blockingAwait());
+                new UnitEntity(false, 5, Ability.NONE, null, RowType.RANGE))).ignoreElement().blockingAwait());
         assertThat(unitDao.countUnits().blockingGet()).isEqualTo(0);
     }
 
@@ -179,7 +196,7 @@ public class UnitDaoUnitTest {
         for (RowType row : RowType.values()) {
             for (int unitNumber = 0; unitNumber < 5; unitNumber++) {
                 assertThat(
-                        unitDao.insertUnits(Collections.singletonList(new UnitEntity(false, unitNumber, Ability.values()[unitNumber / 2], null, row)))
+                        unitDao.insertUnits(Collections.singletonList(new UnitEntity(false, unitNumber, Ability.values()[unitNumber / 2], null, row))).ignoreElement()
                                 .andThen(unitDao.getUnits(row))
                                 .blockingGet())
                         .hasSize(unitNumber + 1);
@@ -206,7 +223,7 @@ public class UnitDaoUnitTest {
     @Test
     public void getUnitReturnsUnit() {
         try {
-            UnitEntity unitEntity = unitDao.insertUnits(Collections.singletonList(new UnitEntity(false, 0, Ability.NONE, null, RowType.MELEE)))
+            UnitEntity unitEntity = unitDao.insertUnits(Collections.singletonList(new UnitEntity(false, 0, Ability.NONE, null, RowType.MELEE))).ignoreElement()
                     .andThen(unitDao.getUnit(1)).blockingGet();
             assertThat(
                     !unitEntity.isEpic() && unitEntity.getDamage() == 0 && unitEntity.getAbility() == Ability.NONE
@@ -235,7 +252,7 @@ public class UnitDaoUnitTest {
             Flowable<List<UnitEntity>> unitsFlowable = unitDao.getUnitsFlowable(row);
             for (int unitNumber = 0; unitNumber < 5; unitNumber++) {
                 assertThat(
-                        unitDao.insertUnits(Collections.singletonList(new UnitEntity(false, unitNumber, Ability.values()[unitNumber / 2], null, row)))
+                        unitDao.insertUnits(Collections.singletonList(new UnitEntity(false, unitNumber, Ability.values()[unitNumber / 2], null, row))).ignoreElement()
                                 .andThen(unitsFlowable)
                                 .blockingFirst())
                         .hasSize(unitNumber + 1);
@@ -266,7 +283,7 @@ public class UnitDaoUnitTest {
                         .test()
                         .await()
                         .assertValue(rowTypeNumber * 5 + unitNumber);
-                unitDao.insertUnits(Collections.singletonList(new UnitEntity(false, unitNumber, Ability.values()[unitNumber / 2], null, row)))
+                unitDao.insertUnits(Collections.singletonList(new UnitEntity(false, unitNumber, Ability.values()[unitNumber / 2], null, row))).ignoreElement()
                         .andThen(unitDao.countUnits(row))
                         .test()
                         .await()

@@ -37,7 +37,8 @@ public class UnitRepositoryIntegrationTest {
     public void initDatabase() {
         database = Room.inMemoryDatabaseBuilder(ApplicationProvider.getApplicationContext(), AppDatabase.class)
                 .build();
-        repository = UnitRepository.getRepository(database).blockingGet();
+        repository = UnitRepository.getRepository(database,
+                ApplicationProvider.getApplicationContext()).blockingGet();
     }
 
     @After
@@ -52,7 +53,7 @@ public class UnitRepositoryIntegrationTest {
     private void insertDummys() {
         for (RowType row : RowType.values()) {
             for (int dummyNumber = 0; dummyNumber < 5; dummyNumber++) {
-                database.units().insertUnits(Collections.singletonList(new UnitEntity(false, dummyNumber, Ability.values()[dummyNumber / 2], null, row)))
+                database.units().insertUnits(Collections.singletonList(new UnitEntity(false, dummyNumber, Ability.values()[dummyNumber / 2], null, row))).ignoreElement()
                         .blockingAwait();
             }
         }
@@ -62,7 +63,8 @@ public class UnitRepositoryIntegrationTest {
     public void getRepositoryAssertsNonNull() {
         try {
             //noinspection DataFlowIssue
-            repository = UnitRepository.getRepository(null).blockingGet();
+            repository = UnitRepository.getRepository(null,
+                    ApplicationProvider.getApplicationContext()).blockingGet();
             fail();
         } catch (NullPointerException ignored) {
         }
@@ -80,7 +82,8 @@ public class UnitRepositoryIntegrationTest {
     public void getRepositoryDoesNotResetDatabase() {
         insertDummys();
         database.rows().updateBuffState(RowType.MELEE, RowBuffState.MARDROEME).blockingAwait();
-        repository = UnitRepository.getRepository(database).blockingGet();
+        repository = UnitRepository.getRepository(database,
+                ApplicationProvider.getApplicationContext()).blockingGet();
         assertThat(database.units().countUnits().blockingGet()).isGreaterThan(0);
         assertThat(database.rows().getBuffState(RowType.MELEE).blockingGet()).isEqualTo(RowBuffState.MARDROEME);
     }
@@ -89,7 +92,7 @@ public class UnitRepositoryIntegrationTest {
     public void resetNullDeletesUnits() {
         for (int i = 0; i < TESTING_DEPTH; i++) {
             for (RowType row : RowType.values()) {
-                database.units().insertUnits(Collections.singletonList(new UnitEntity(false, 5, Ability.NONE, null, row))).blockingAwait();
+                database.units().insertUnits(Collections.singletonList(new UnitEntity(false, 5, Ability.NONE, null, row))).ignoreElement().blockingAwait();
             }
         }
         assertThat(repository.reset()
@@ -103,7 +106,7 @@ public class UnitRepositoryIntegrationTest {
     public void resetKeepsUnit() {
         for (int i = 0; i < TESTING_DEPTH; i++) {
             for (RowType row : RowType.values()) {
-                database.units().insertUnits(Collections.singletonList(new UnitEntity(false, 5, Ability.NONE, null, row))).blockingAwait();
+                database.units().insertUnits(Collections.singletonList(new UnitEntity(false, 5, Ability.NONE, null, row))).ignoreElement().blockingAwait();
             }
         }
         //noinspection OptionalGetWithoutIsPresent
@@ -631,7 +634,7 @@ public class UnitRepositoryIntegrationTest {
                 assertThat(repository.countUnits()
                         .blockingGet())
                         .isEqualTo(rowNumber * 5 + unitNumber);
-                assertThat(database.units().insertUnits(Collections.singletonList(new UnitEntity(false, unitNumber, Ability.values()[unitNumber / 2], null, row)))
+                assertThat(database.units().insertUnits(Collections.singletonList(new UnitEntity(false, unitNumber, Ability.values()[unitNumber / 2], null, row))).ignoreElement()
                         .andThen(repository.countUnits(row))
                         .blockingGet())
                         .isEqualTo(unitNumber + 1);
@@ -660,7 +663,7 @@ public class UnitRepositoryIntegrationTest {
         for (RowType row : RowType.values()) {
             for (int unitNumber = 0; unitNumber < 5; unitNumber++) {
                 assertThat(
-                        database.units().insertUnits(Collections.singletonList(new UnitEntity(false, unitNumber, Ability.values()[unitNumber / 2], null, row)))
+                        database.units().insertUnits(Collections.singletonList(new UnitEntity(false, unitNumber, Ability.values()[unitNumber / 2], null, row))).ignoreElement()
                                 .andThen(repository.getUnits(row))
                                 .blockingGet())
                         .hasSize(unitNumber + 1);
@@ -751,7 +754,7 @@ public class UnitRepositoryIntegrationTest {
     public void hasNonEpicUnitsFlowableReturnsHorn() {
         Flowable<Boolean> hasNonEpicUnits = repository.hasNonEpicUnitsFlowable();
         assertThat(hasNonEpicUnits.blockingFirst()).isFalse();
-        assertThat(database.units().insertUnits(Collections.singletonList(new UnitEntity(false, 5, Ability.NONE, null, RowType.MELEE)))
+        assertThat(database.units().insertUnits(Collections.singletonList(new UnitEntity(false, 5, Ability.NONE, null, RowType.MELEE))).ignoreElement()
                 .andThen(hasNonEpicUnits)
                 .blockingFirst())
                 .isTrue();

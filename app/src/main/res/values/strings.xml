@@ -244,4 +244,8 @@
     <p>But first: Have fun with analog Gwent! Please use the <a href="https://play.google.com/store/apps/details?id=com.peternaggschga.gwint">Google Play Store</a> or <a href="https://github.com/PeterNaggschga/Gwent/issues/new/choose">GitHub</a> to share improvement suggestions, bugs and other feedback with me!</p>
     ]]></string>
     <string name="settings_title">Settings</string>
+    <plurals name="berserkers_transformed">
+        <item quantity="one">%d Berserker transformed.</item>
+        <item quantity="other">%d Berserkers transformed.</item>
+    </plurals>
 </resources>
