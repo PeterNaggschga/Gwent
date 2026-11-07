@@ -15,12 +15,16 @@ import android.os.Looper;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import com.peternaggschga.gwent.data.RowType;
+import com.peternaggschga.gwent.data.UnitEntity;
 import com.peternaggschga.gwent.data.UnitRepository;
 import com.peternaggschga.gwent.ui.sounds.SoundManager;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+
+import java.util.Collections;
 
 import io.reactivex.rxjava3.core.Completable;
 
@@ -33,9 +37,12 @@ public class RevengeAlertDialogBuilderAdapterUnitTest {
     @Test
     public void insertAvengersInsertsUnits() {
         UnitRepository repository = mock(UnitRepository.class);
+        UnitEntity avenger = mock(UnitEntity.class);
+        when(avenger.getRow()).thenReturn(RowType.RANGE);
         when(repository.insertUnit(anyBoolean(), anyInt(), any(), any(), any(), anyInt())).thenReturn(Completable.complete());
-        for (int numberOfAvengers = 0; numberOfAvengers < TESTING_DEPTH; numberOfAvengers++) {
-            RevengeAlertDialogBuilderAdapter.insertAvengers(repository, numberOfAvengers, soundManager);
+        for (int numberOfAvengers = 1; numberOfAvengers < TESTING_DEPTH; numberOfAvengers++) {
+            RevengeAlertDialogBuilderAdapter.insertAvengers(repository,
+                    Collections.nCopies(numberOfAvengers, avenger), soundManager);
             verify(repository, atLeastOnce()).insertUnit(anyBoolean(), anyInt(), any(), any(), any(), eq(numberOfAvengers));
         }
     }

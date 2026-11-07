@@ -10,8 +10,11 @@ import androidx.appcompat.app.AlertDialog;
 import com.peternaggschga.gwent.R;
 import com.peternaggschga.gwent.data.Ability;
 import com.peternaggschga.gwent.data.RowType;
+import com.peternaggschga.gwent.data.UnitEntity;
 import com.peternaggschga.gwent.data.UnitRepository;
 import com.peternaggschga.gwent.ui.sounds.SoundManager;
+
+import java.util.Collection;
 
 import io.reactivex.rxjava3.core.Completable;
 
@@ -44,6 +47,11 @@ class RevengeAlertDialogBuilderAdapter {
      * @see Ability.REVENGE
      */
     private static final int AVENGER_DAMAGE = 8;
+
+    /**
+     * Strength of the melee hero summoned by a removed melee Avenger card.
+     */
+    private static final int HERO_AVENGER_DAMAGE = 11;
 
     /**
      * Integer constant defining the squad of the default UnitEntity
@@ -94,19 +102,30 @@ class RevengeAlertDialogBuilderAdapter {
     }
 
     /**
-     * Inserts numberOfAvengers avenger units into the given UnitRepository.
-     * The inserted UnitEntity objects have the attributes defined in AVENGER_EPIC,
-     * AVENGER_DAMAGE, AVENGER_ABILITY, AVENGER_SQUAD, and AVENGER_ROW.
+     * Inserts avengers corresponding to the removed cards into the given UnitRepository.
+     * Melee cards summon strength-11 melee heroes; other rows summon strength-8 normal melee units.
+     * All summoned units have no ability or squad. Plays one sound after successful insertion,
+     * giving the hero sound precedence if any heroes are summoned.
      *
      * @param repository       UnitRepository where avengers are inserted.
-     * @param numberOfAvengers Integer defining how many avengers are inserted.
+     * @param avengers Removed cards with the Avenger ability, whose rows select the summoned units.
      * @param soundManager     SoundManager used to play the card add sound.
      * @return A Completable tracking operation status.
      */
     @NonNull
-    public static Completable insertAvengers(@NonNull UnitRepository repository, @IntRange(from = 0) int numberOfAvengers, @NonNull SoundManager soundManager) {
-        return repository.insertUnit(AVENGER_EPIC, AVENGER_DAMAGE, AVENGER_ABILITY, AVENGER_SQUAD, AVENGER_ROW, numberOfAvengers)
-                .doOnComplete(() -> soundManager.playCardAddSound(AVENGER_ROW, AVENGER_EPIC));
+    public static Completable insertAvengers(@NonNull UnitRepository repository,
+                                             @NonNull Collection<UnitEntity> avengers, @NonNull SoundManager soundManager) {
+        int heroes = (int) avengers.stream().filter(unit -> unit.getRow() == RowType.MELEE).count();
+        int normal = avengers.size() - heroes;
+        Completable normalInsertion = normal == 0 ? Completable.complete()
+                : repository.insertUnit(AVENGER_EPIC, AVENGER_DAMAGE, AVENGER_ABILITY, AVENGER_SQUAD, AVENGER_ROW, normal);
+        return normalInsertion.andThen(Completable.defer(() -> heroes == 0 ? Completable.complete()
+                        : repository.insertUnit(true, HERO_AVENGER_DAMAGE, AVENGER_ABILITY, AVENGER_SQUAD, AVENGER_ROW, heroes)))
+                .doOnComplete(() -> {
+                    if (!avengers.isEmpty()) {
+                        soundManager.playCardAddSound(AVENGER_ROW, heroes > 0);
+                    }
+                });
     }
 
     /**
@@ -127,7 +146,7 @@ class RevengeAlertDialogBuilderAdapter {
      *
      * @param onPositiveButtonClick DialogInterface.OnClickListener that is called, when the positive button is clicked.
      * @return The RevengeAlertDialogBuilder with the updated positive callback.
-     * @see .insertAvengers(UnitRepository, int, SoundManager)
+     * @see .insertAvengers(UnitRepository, Collection, SoundManager)
      */
     @NonNull
     RevengeAlertDialogBuilderAdapter setPositiveCallback(@NonNull DialogInterface.OnClickListener onPositiveButtonClick) {

@@ -3,7 +3,6 @@ package com.peternaggschga.gwent.domain.cases;
 import android.app.Dialog;
 import android.content.Context;
 
-import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -12,6 +11,7 @@ import com.peternaggschga.gwent.data.UnitEntity;
 import com.peternaggschga.gwent.data.UnitRepository;
 import com.peternaggschga.gwent.ui.sounds.SoundManager;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -39,7 +39,7 @@ class ResetRepositoryUseCase {
      * @param keepUnit   Boolean defining whether a single UnitEntity should be kept.
      * @param soundManager SoundManager used, if an UnitEntity has the Ability.REVENGE ability.
      * @return A Maybe emitting the kept UnitEntity or nothing if keepUnit is false.
-     * @see .getRevengeDialog(Context, UnitRepository, CompletableEmitter, UnitEntity, int, SoundManager)
+     * @see .getRevengeDialog(Context, UnitRepository, CompletableEmitter, UnitEntity, Collection, SoundManager)
      * @see UnitRepository.reset(UnitEntity)
      */
     @NonNull
@@ -48,13 +48,14 @@ class ResetRepositoryUseCase {
         return repository.getUnits()
                 .flatMapMaybe(units -> {
                     Optional<UnitEntity> keptUnit = keepUnit ? getRandomUnit(units) : Optional.empty();
-                    long revengeUnits = units.stream()
+                    List<UnitEntity> revengeUnits = units.stream()
                             .filter(unit -> unit.getAbility() == Ability.REVENGE)
-                            .count() - (keptUnit.isPresent() && keptUnit.get().getAbility() == Ability.REVENGE ? 1 : 0);
-                    Completable resultAction = (revengeUnits == 0) ?
+                            .filter(unit -> unit != keptUnit.orElse(null))
+                            .collect(Collectors.toList());
+                    Completable resultAction = revengeUnits.isEmpty() ?
                             repository.reset(keptUnit.orElse(null)) :
                             Completable.create(emitter ->
-                                    getRevengeDialog(context, repository, emitter, keptUnit.orElse(null), (int) revengeUnits, soundManager).show()
+                                    getRevengeDialog(context, repository, emitter, keptUnit.orElse(null), revengeUnits, soundManager).show()
                             );
                     return resultAction.andThen(Maybe.fromOptional(keptUnit));
                 });
@@ -84,16 +85,16 @@ class ResetRepositoryUseCase {
      * @param emitter      CompletableEmitter where CompletableEmitter.onComplete must be called,
      *                     when the user makes a decision.
      * @param keptUnit     UnitEntity that should be kept.
-     * @param revengeUnits Long representing the number of revenge units.
+     * @param revengeUnits Removed Avenger cards, excluding the kept unit.
      * @param soundManager SoundManager used, if an Avenger is added.
      * @return A Dialog asking whether the Ability.REVENGE ability should be activated.
-     * @see RevengeAlertDialogBuilderAdapter.insertAvengers(UnitRepository, int, SoundManager)
+     * @see RevengeAlertDialogBuilderAdapter.insertAvengers(UnitRepository, Collection, SoundManager)
      */
     @NonNull
     private static Dialog getRevengeDialog(@NonNull Context context, @NonNull UnitRepository repository,
                                            @NonNull CompletableEmitter emitter, @Nullable UnitEntity keptUnit,
-                                           @IntRange(from = 1) int revengeUnits, @NonNull SoundManager soundManager) {
-        return new RevengeAlertDialogBuilderAdapter(context, revengeUnits)
+                                           @NonNull Collection<UnitEntity> revengeUnits, @NonNull SoundManager soundManager) {
+        return new RevengeAlertDialogBuilderAdapter(context, revengeUnits.size())
                 .setPositiveCallback((dialogInterface, which) -> {
                     // noinspection CheckResult, ResultOfMethodCallIgnored
                     repository.reset(keptUnit)

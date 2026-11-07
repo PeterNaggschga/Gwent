@@ -3,7 +3,6 @@ package com.peternaggschga.gwent.domain.cases;
 import android.app.Dialog;
 import android.content.Context;
 
-import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 
 import com.peternaggschga.gwent.data.Ability;
@@ -13,6 +12,8 @@ import com.peternaggschga.gwent.ui.sounds.SoundManager;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.CompletableEmitter;
@@ -36,20 +37,20 @@ public class RemoveUnitsUseCase {
      * @param soundManager SoundManager used, if an UnitEntity has the Ability.REVENGE ability.
      * @return A Completable tracking operation status.
      * @throws NullPointerException When units contains a null value.
-     * @see .getRevengeDialog(Context, UnitRepository, CompletableEmitter, Collection, int, SoundManager)
+     * @see .getRevengeDialog(Context, UnitRepository, CompletableEmitter, Collection, Collection, SoundManager)
      * @see UnitRepository.delete(Collection)
      */
     @NonNull
     public static Completable remove(@NonNull Context context, @NonNull UnitRepository repository,
                                      @NonNull Collection<UnitEntity> units, @NonNull SoundManager soundManager) {
-        long revengeUnits = units.stream()
+        List<UnitEntity> revengeUnits = units.stream()
                 .filter(unit -> unit.getAbility() == Ability.REVENGE)
-                .count();
-        if (revengeUnits == 0) {
+                .collect(Collectors.toList());
+        if (revengeUnits.isEmpty()) {
             return repository.delete(units);
         }
         return Completable.create(emitter ->
-                getRevengeDialog(context, repository, emitter, units, (int) revengeUnits, soundManager).show()
+                getRevengeDialog(context, repository, emitter, units, revengeUnits, soundManager).show()
         );
     }
 
@@ -81,16 +82,16 @@ public class RemoveUnitsUseCase {
      * @param emitter      CompletableEmitter where CompletableEmitter.onComplete must be called,
      *                     when the user makes a decision.
      * @param units        Collection of UnitEntity objects that are removed.
-     * @param revengeUnits Long representing the number of revenge units.
+     * @param revengeUnits Removed Avenger cards whose rows determine the summoned units.
      * @param soundManager SoundManager used when an Avenger is added.
      * @return A Dialog asking whether the Ability.REVENGE ability should be activated.
-     * @see RevengeAlertDialogBuilderAdapter.insertAvengers(UnitRepository, int, SoundManager)
+     * @see RevengeAlertDialogBuilderAdapter.insertAvengers(UnitRepository, Collection, SoundManager)
      */
     @NonNull
     private static Dialog getRevengeDialog(@NonNull Context context, @NonNull UnitRepository repository,
                                            @NonNull CompletableEmitter emitter, @NonNull Collection<UnitEntity> units,
-                                           @IntRange(from = 1) int revengeUnits, @NonNull SoundManager soundManager) {
-        return new RevengeAlertDialogBuilderAdapter(context, revengeUnits)
+                                           @NonNull Collection<UnitEntity> revengeUnits, @NonNull SoundManager soundManager) {
+        return new RevengeAlertDialogBuilderAdapter(context, revengeUnits.size())
                 .setPositiveCallback((dialog, which) -> {
                     // noinspection CheckResult, ResultOfMethodCallIgnored
                     repository.delete(units)
