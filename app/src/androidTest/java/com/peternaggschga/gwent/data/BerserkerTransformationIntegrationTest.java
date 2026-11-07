@@ -85,6 +85,59 @@ public class BerserkerTransformationIntegrationTest {
     }
 
     @Test
+    public void mardroemeUnitTransformsExistingAndFutureBerserkersWithoutChangingBuffs() {
+        for (RowType row : new RowType[]{RowType.MELEE, RowType.RANGE}) {
+            repository.insertUnit(false, 2, Ability.BERSERKER, null, row, 2).blockingAwait();
+        }
+        List<UnitEntity> existing = repository.getUnits(RowType.MELEE).blockingGet();
+        repository.switchHorn(RowType.MELEE).blockingAwait();
+        repository.insertUnit(false, 2, Ability.MARDROEME, null, RowType.MELEE, 1).blockingAwait();
+        for (UnitEntity unit : existing) {
+            assertTransformed(repository.getUnit(unit.getId()).blockingGet(), RowType.MELEE);
+        }
+        for (UnitEntity unit : repository.getUnits(RowType.RANGE).blockingGet()) {
+            assertThat(unit.getAbility()).isEqualTo(Ability.BERSERKER);
+        }
+        repository.insertUnit(false, 2, Ability.BERSERKER, null, RowType.MELEE, 1).blockingAwait();
+        List<UnitEntity> units = repository.getUnits(RowType.MELEE).blockingGet();
+        for (UnitEntity unit : units) {
+            if (unit.getAbility() != Ability.MARDROEME) {
+                assertTransformed(unit, RowType.MELEE);
+            }
+        }
+        assertThat(repository.getBuffState(RowType.MELEE).blockingGet()).isEqualTo(RowBuffState.HORN);
+
+        UnitEntity mardroeme = units.stream().filter(unit -> unit.getAbility() == Ability.MARDROEME).findFirst().get();
+        repository.delete(mardroeme.getId()).blockingAwait();
+        repository.insertUnit(false, 2, Ability.BERSERKER, null, RowType.MELEE, 1).blockingAwait();
+        units = repository.getUnits(RowType.MELEE).blockingGet();
+        assertThat(units.stream().filter(unit -> unit.getAbility() == Ability.BERSERKER).count()).isEqualTo(1);
+        assertThat(units.stream().filter(unit -> unit.getAbility() == Ability.MORAL_BOOST).count()).isEqualTo(3);
+    }
+
+    @Test
+    public void mixedBatchMardroemeUnitsTransformTheirEntireRowsOnlyOnce() {
+        repository.insertUnit(false, 2, Ability.BERSERKER, null, RowType.RANGE, 1).blockingAwait();
+        repository.insertUnit(false, 2, Ability.BERSERKER, null, RowType.MELEE, 1).blockingAwait();
+        repository.insertUnits(Arrays.asList(
+                new UnitEntity(false, 2, Ability.MARDROEME, null, RowType.RANGE),
+                new UnitEntity(false, 2, Ability.BERSERKER, null, RowType.RANGE),
+                new UnitEntity(false, 2, Ability.MARDROEME, null, RowType.RANGE),
+                new UnitEntity(false, 2, Ability.MARDROEME, null, RowType.MELEE),
+                new UnitEntity(false, 2, Ability.BERSERKER, null, RowType.MELEE))).blockingAwait();
+        for (RowType row : new RowType[]{RowType.MELEE, RowType.RANGE}) {
+            List<UnitEntity> units = repository.getUnits(row).blockingGet();
+            for (UnitEntity unit : units) {
+                if (unit.getAbility() != Ability.MARDROEME) {
+                    assertTransformed(unit, row);
+                }
+            }
+            assertThat(units.stream().filter(unit -> unit.getAbility() != Ability.MARDROEME).count()).isEqualTo(2);
+            assertThat(repository.getBuffState(row).blockingGet()).isEqualTo(RowBuffState.NONE);
+        }
+    }
+
+    @Test
     public void hornMustBeClearedBeforeTransformationAndTransformationsArePermanent() {
         repository.insertUnit(false, 2, Ability.BERSERKER, null, RowType.MELEE, 1).blockingAwait();
         repository.switchHorn(RowType.MELEE).blockingAwait();

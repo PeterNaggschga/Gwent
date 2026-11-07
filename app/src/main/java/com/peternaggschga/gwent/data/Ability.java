@@ -25,6 +25,11 @@ public enum Ability {
     BERSERKER,
 
     /**
+     * Represents a card that has the Mardroeme ability.
+     */
+    MARDROEME,
+
+    /**
      * Represents a card that has the Tight Bond ability.
      */
     BINDING,

@@ -35,7 +35,7 @@ class CardNumberPickerAdapter {
      * List of Ability values that epic units can have.
      */
     @NonNull
-    private static final List<Ability> EPIC_UNIT_ABILITIES = Arrays.asList(Ability.NONE, Ability.HORN, Ability.MORAL_BOOST);
+    private static final List<Ability> EPIC_UNIT_ABILITIES = Arrays.asList(Ability.NONE, Ability.HORN, Ability.MARDROEME, Ability.MORAL_BOOST);
 
     /**
      * ValuePicker used to decide the value of UnitEntity.epic.
@@ -103,6 +103,7 @@ class CardNumberPickerAdapter {
         abilityStringResources.put(Ability.HORN, R.string.add_picker_ability_horn);
         abilityStringResources.put(Ability.REVENGE, R.string.add_picker_ability_revenge);
         abilityStringResources.put(Ability.BERSERKER, R.string.add_picker_ability_berserker);
+        abilityStringResources.put(Ability.MARDROEME, R.string.add_picker_ability_mardroeme);
         abilityStringResources.put(Ability.BINDING, R.string.add_picker_ability_binding);
         abilityStringResources.put(Ability.MORAL_BOOST, R.string.add_picker_ability_moralBoost);
         abilityPicker = new StringValuePicker<>(pickerGroup.findViewById(R.id.popup_add_card_ability_picker),

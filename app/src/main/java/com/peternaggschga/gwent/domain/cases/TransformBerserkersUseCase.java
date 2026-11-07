@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.core.Single;
 
 /**
  * Permanently transforms Berserkers through UnitRepository and informs the user after persistence.
@@ -55,8 +56,10 @@ public final class TransformBerserkersUseCase {
     }
 
     /**
-     * Retrieves newly inserted units by ID and transforms their Berserkers under active Mardroeme.
-     * Checks each relevant row's buff once, updates eligible units in one batch, and notifies once.
+     * Retrieves newly inserted units by ID and transforms Berserkers affected by Mardroeme.
+     * Newly added Mardroeme units affect all Berserkers in their row; newly added Berserkers
+     * transform if their row has the Mardroeme buff or a Mardroeme unit.
+     * Updates eligible units in one batch and notifies once without changing row buffs.
      *
      * @param context    Application context used for the localized notification.
      * @param repository Repository used to retrieve the units, read buffs, and update units.
@@ -70,12 +73,19 @@ public final class TransformBerserkersUseCase {
             return Completable.complete();
         }
         return repository.getUnitsByIds(ids).flatMapCompletable(units -> Flowable.fromIterable(units)
-                .filter(unit -> unit.getAbility() == Ability.BERSERKER)
+                .filter(unit -> unit.getAbility() == Ability.BERSERKER || unit.getAbility() == Ability.MARDROEME)
                 .groupBy(UnitEntity::getRow)
-                .flatMapSingle(group -> group.toList().flatMap(berserkers -> repository.getBuffState(group.getKey())
-                        .map(state -> state == RowBuffState.MARDROEME
-                                ? berserkers.stream().map(TransformBerserkersUseCase::transform).collect(Collectors.toList())
-                                : Collections.<UnitEntity>emptyList())))
+                .flatMapSingle(group -> group.toList().flatMap(added -> {
+                    if (added.stream().anyMatch(unit -> unit.getAbility() == Ability.MARDROEME)) {
+                        return repository.getUnits(group.getKey());
+                    }
+                    return repository.getBuffState(group.getKey()).flatMap(state -> state == RowBuffState.MARDROEME
+                            ? Single.just(added)
+                            : repository.getUnits(group.getKey()).map(rowUnits -> rowUnits.stream()
+                            .anyMatch(unit -> unit.getAbility() == Ability.MARDROEME)
+                            ? added : Collections.<UnitEntity>emptyList()));
+                }).map(eligible -> eligible.stream().filter(unit -> unit.getAbility() == Ability.BERSERKER)
+                        .map(TransformBerserkersUseCase::transform).collect(Collectors.toList())))
                 .collect(ArrayList<UnitEntity>::new, List::addAll)
                 .flatMapCompletable(transformed -> transformed.isEmpty() ? Completable.complete()
                         : repository.updateUnits(transformed).andThen(showToast(context, transformed.size()))));

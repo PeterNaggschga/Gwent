@@ -106,6 +106,7 @@ public class TransformBerserkersUseCaseUnitTest {
         when(melee.withStats(14, Ability.MORAL_BOOST, null)).thenReturn(transformed);
         when(repository.getBuffState(RowType.MELEE)).thenReturn(Single.just(RowBuffState.MARDROEME));
         when(repository.getBuffState(RowType.RANGE)).thenReturn(Single.just(RowBuffState.HORN));
+        when(repository.getUnits(RowType.RANGE)).thenReturn(Single.just(Collections.singletonList(range)));
 
         TransformBerserkersUseCase.transformAddedUnits(context, repository, ids).test().assertComplete();
 
@@ -117,6 +118,63 @@ public class TransformBerserkersUseCaseUnitTest {
         verify(repository, never()).insertUnits(anyList());
         verify(resources).getQuantityString(R.plurals.berserkers_transformed, 1, 1);
         verify(notification).show();
+    }
+
+    @Test
+    public void addedMardroemeTransformsExistingAndAddedBerserkersInOneBatch() {
+        List<Long> ids = Arrays.asList(1L, 2L, 3L);
+        UnitEntity mardroeme = unit(RowType.MELEE, Ability.MARDROEME);
+        UnitEntity secondMardroeme = unit(RowType.MELEE, Ability.MARDROEME);
+        UnitEntity addedBerserker = unit(RowType.MELEE, Ability.BERSERKER);
+        UnitEntity existingBerserker = unit(RowType.MELEE, Ability.BERSERKER);
+        UnitEntity firstTransformed = unit(RowType.MELEE, Ability.MORAL_BOOST);
+        UnitEntity secondTransformed = unit(RowType.MELEE, Ability.MORAL_BOOST);
+        when(repository.getUnitsByIds(ids)).thenReturn(Single.just(Arrays.asList(mardroeme, secondMardroeme, addedBerserker)));
+        when(repository.getUnits(RowType.MELEE)).thenReturn(Single.just(
+                Arrays.asList(existingBerserker, mardroeme, secondMardroeme, addedBerserker)));
+        when(existingBerserker.withStats(14, Ability.MORAL_BOOST, null)).thenReturn(firstTransformed);
+        when(addedBerserker.withStats(14, Ability.MORAL_BOOST, null)).thenReturn(secondTransformed);
+
+        TransformBerserkersUseCase.transformAddedUnits(context, repository, ids).test().assertComplete();
+
+        verify(repository).getUnits(RowType.MELEE);
+        verify(repository, never()).getUnits(RowType.RANGE);
+        verify(repository, never()).getBuffState(RowType.MELEE);
+        verify(repository).updateUnits(Arrays.asList(firstTransformed, secondTransformed));
+        verify(resources).getQuantityString(R.plurals.berserkers_transformed, 2, 2);
+        verify(notification).show();
+    }
+
+    @Test
+    public void existingMardroemeUnitTransformsAddedBerserkersEvenWithHorn() {
+        UnitEntity berserker = unit(RowType.RANGE, Ability.BERSERKER);
+        UnitEntity mardroeme = unit(RowType.RANGE, Ability.MARDROEME);
+        UnitEntity transformed = unit(RowType.RANGE, Ability.BINDING);
+        when(repository.getUnitsByIds(Collections.singletonList(1L)))
+                .thenReturn(Single.just(Collections.singletonList(berserker)));
+        when(repository.getBuffState(RowType.RANGE)).thenReturn(Single.just(RowBuffState.HORN));
+        when(repository.getUnits(RowType.RANGE)).thenReturn(Single.just(Arrays.asList(berserker, mardroeme)));
+        when(berserker.withStats(8, Ability.BINDING, UnitEntity.BERSERKER_SQUAD)).thenReturn(transformed);
+
+        TransformBerserkersUseCase.transformAddedUnits(context, repository, Collections.singletonList(1L))
+                .test().assertComplete();
+
+        verify(repository).updateUnits(Collections.singletonList(transformed));
+        verify(notification).show();
+    }
+
+    @Test
+    public void addedMardroemeWithoutBerserkersDoesNotUpdateOrNotify() {
+        UnitEntity mardroeme = unit(RowType.MELEE, Ability.MARDROEME);
+        when(repository.getUnitsByIds(Collections.singletonList(1L)))
+                .thenReturn(Single.just(Collections.singletonList(mardroeme)));
+        when(repository.getUnits(RowType.MELEE)).thenReturn(Single.just(Collections.singletonList(mardroeme)));
+
+        TransformBerserkersUseCase.transformAddedUnits(context, repository, Collections.singletonList(1L))
+                .test().assertComplete();
+
+        verify(repository, never()).updateUnits(anyList());
+        verifyNoInteractions(notification);
     }
 
     @Test

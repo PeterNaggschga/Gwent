@@ -122,12 +122,15 @@ public class CardUiStateFactoryUnitTest {
                 Pair.create(Ability.NONE, CardUiState.UNUSED),
                 Pair.create(Ability.BINDING, R.drawable.icon_binding),
                 Pair.create(Ability.HORN, R.drawable.icon_horn),
+                Pair.create(Ability.BERSERKER, R.drawable.icon_berserker),
+                Pair.create(Ability.MARDROEME, R.drawable.icon_mardroeme),
                 Pair.create(Ability.MORAL_BOOST, R.drawable.icon_moral_boost),
                 Pair.create(Ability.REVENGE, R.drawable.icon_revenge)
         ).forEach(pair -> {
             when(unitMock.getAbility()).thenReturn(pair.first);
             CardUiState state = factory.createCardUiState(unitMock, calculator);
             assertThat(state.getAbilityImageId()).isEqualTo(pair.second);
+            assertThat(state.showAbility()).isEqualTo(pair.first != Ability.NONE);
         });
     }
 

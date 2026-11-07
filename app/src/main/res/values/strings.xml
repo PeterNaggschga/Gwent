@@ -18,6 +18,7 @@
     <string name="add_picker_ability_default">None</string>
     <string name="add_picker_ability_moralBoost">Morale boost</string>
     <string name="add_picker_ability_berserker" translatable="false">Berserker</string>
+    <string name="add_picker_ability_mardroeme" translatable="false">Mardroeme</string>
     <string name="add_picker_ability_horn" translatable="false">Horn</string>
     <string name="add_picker_ability_revenge">Avenger</string>
     <string name="add_picker_ability_binding">Tight bond</string>

@@ -133,6 +133,9 @@ public class CardUiStateFactory {
             case BERSERKER:
                 abilityImage = R.drawable.icon_berserker;
                 break;
+            case MARDROEME:
+                abilityImage = R.drawable.icon_mardroeme;
+                break;
             case NONE:
             default:
                 abilityImage = CardUiState.UNUSED;
