@@ -164,9 +164,9 @@
     <string name="content_description_introduction_indicator">dot that indicates progress</string>
     <string name="content_description_introduction_next">forward arrow</string>
 
-    <string name="rules_general_text"><![CDATA[<p>Gwent is an old card game especially fancied by dwarfs. It represents the confrontation of two opposing armies. The players are generals and cards represent their units. Every player uses his own unique deck of cards. Decks can be created for each of the four factions: Monsters, Nilfgaardian Empire, Northern Kingdoms and Scoia\'tael. Each faction has unique cards which lead to different play styles. Moreover, there are cards that can be used for every faction. Your goal is to win two rounds out of three by having more strength than your opponent.</p>]]></string>
+    <string name="rules_general_text"><![CDATA[<p>Gwent is an old card game especially fancied by dwarfs. It represents the confrontation of two opposing armies. The players are generals and cards represent their units. Every player uses his own unique deck of cards. Decks can be created for each of the five factions: Monsters, Nilfgaardian Empire, Northern Kingdoms, Scoia\'tael and Skellige. Each faction has unique cards which lead to different play styles. Moreover, there are cards that can be used for every faction. Your goal is to win two rounds out of three by having more strength than your opponent.</p>]]></string>
     <string name="rules_course_text"><![CDATA[<p>At the beginning of the first round each player draws ten cards from their deck. After drawing, you can discard two cards and draw a new card for each. This step is optional, discarded cards are put back into the deck. The beginning player is determined by flipping a coin.<br/>The players place cards alternately. You have to play one card every round! If a player doesn\'t want to play a card, they have to pass and aren\'t allowed to play another card until the round has ended. When one player passes, their opponent can still play cards until they pass too. If one of the opponents uses up all of his cards, he has to pass.<br />A round ends when both players pass. The player with the highest total score wins the round. When both opponents have the same number of points, the round is seen as a win for both sides. All cards are moved to the discard pile at the end of each round. Your hand is reused in the next round—you don\'t draw new cards. The winner of the last round gets the first turn. Goal of the game is to win two rounds.</p>]]></string>
-    <string name="rules_factions_text"><![CDATA[<p>There are four factions: Monsters, Nilfgaardian Empire, Northern Kingdoms and Scoia\'tael. Every faction has got unique cards, leaders and perks. Moreover, there are some additional cards that are neutral and can be used in every faction.</p>Leader of monster faction is Eredin Bréacc Glas, also known as Sparrowhawk who is the King of the Wild Hunt. Their perk is iron skin which makes it possible to keep one unit at the end of each round.<br />Emhyr var Emreis, also known as \"The White Flame Dancing on the Barrows of his Enemies\", is emperor of Nilfgaard. Treachery causes any player with a nilfgaardian deck to win if points draw level.<br />Archenemy of Nilfgaard is Foltest, King of Temeria and leader of the Northern Kingdoms faction. They are able to draw one card after a won round.<br />In their fight, the Northern Kingdoms try to decimate Nonhumans which are represented by the Scoia\'tael faction. Scoia\'tael players may decide who gets the first turn in the first round. They are led by Francesca Findabair, also known as Enid an Gleanna (Daisy of the Valleys).]]></string>
+    <string name="rules_factions_text"><![CDATA[<p>There are five factions: Monsters, Nilfgaardian Empire, Northern Kingdoms, Scoia\'tael and Skellige. Every faction has got unique cards, leaders and perks. Moreover, there are some additional cards that are neutral and can be used in every faction.</p>Leader of monster faction is Eredin Bréacc Glas, also known as Sparrowhawk who is the King of the Wild Hunt. Their perk is iron skin which makes it possible to keep one unit at the end of each round.<br />Emhyr var Emreis, also known as \"The White Flame Dancing on the Barrows of his Enemies\", is emperor of Nilfgaard. Treachery causes any player with a nilfgaardian deck to win if points draw level.<br />Archenemy of Nilfgaard is Foltest, King of Temeria and leader of the Northern Kingdoms faction. They are able to draw one card after a won round.<br />In their fight, the Northern Kingdoms try to decimate Nonhumans which are represented by the Scoia\'tael faction. Scoia\'tael players may decide who gets the first turn in the first round. They are led by Francesca Findabair, also known as Enid an Gleanna (Daisy of the Valleys).<br />Skellige\'s faction perk places two random unit cards from your discard pile on the battlefield at the start of the third round.]]></string>
     <string name="rules_commander_text"><![CDATA[<p>
     <p>Each faction has certain leaders with different abilities. They are listed here.</p>
     <h5>Monsters: Eredin Bréacc Glas</h5>
@@ -193,6 +193,9 @@
     <p>Queen of Dol Blathanna: <br />Destroy your enemy\'s strongest Close combat unit(s) if the combined strength of all their Close combat units is 10 or more.</p>
     <p>The Beautiful: <br />Doubles the strength of all your Ranged combat units (unless a Commander\'s Horn is also present on that row).</p>
     <p>Pureblood Elf: <br />Pick a Biting Frost card from your deck and play it instantly.</p>
+    <h5>Skellige</h5>
+    <p>Crach an Craite: <br />Shuffle all cards from each player\'s discard pile back into their respective decks.</p>
+    <p>King Bran: <br />Units only lose half their strength in bad weather conditions.</p>
     ]]></string>
     <string name="rules_cards_text"><![CDATA[<p>
     There are three major types of cards: Leaders, units and Special Cards.
@@ -204,7 +207,7 @@
     Each player has got three combat rows, one for Close combat, Ranged combat and Siege units each.
     It can be seen on the cards which row must be used.<br />
     Also there are Special Cards (maximum 10), \"Decoy\",
-    \"Scorch\", \"Commander\'s Horn\" and weather cards.
+    \"Scorch\", \"Commander\'s Horn\", \"Mardroeme\" and weather cards.
     Weather cards are placed in a separate section of the board
     because they influence both players equally.
     Commander\'s Horn is placed at the designated combat row.</p>
@@ -219,17 +222,22 @@
     <p>Commander\'s Horn: <br />Double the strength of all other units in this combat row.</p>
     <p>Agile: <br />Can be placed in either the Close combat or the Ranged combat row. They cannot be moved once placed.</p>
     <p>Scorch: <br />Kill the strongest card(s) in the specified row of the enemy.</p>
+    <p>Clan Dimun Pirate: <br />Unlike other units with Scorch, playing this card destroys the strongest card(s) on the entire battlefield, just like a normal Scorch special card.</p>
     <p>Summon Avenger: <br />Summon a powerful new unit card to take their place when they are removed from the battlefield.</p>
+    <p>Mardroeme: <br />Transforms all Berserkers in the same combat row into bears.</p>
+    <p>Berserker: <br />Transforms into a bear when Mardroeme is present in the same combat row. The transformation is permanent.</p>
     ]]></string>
     <string name="rules_special_cards_text"><![CDATA[
     <p>Special Cards can be played instead of Unit Cards and trigger certain effects which are listed below.</p>
     <p>Biting Frost: <br />Sets all Close combat units to strength 1 for both players.</p>
     <p>Impenetrable Fog: <br />Sets all Ranged combat units to strength 1 for both players.</p>
     <p>Torrential Rain: <br />Sets all Siege units to strength 1 for both players.</p>
+    <p>Skellige Storm: <br />Combines the effects of Impenetrable Fog and Torrential Rain. The respective weather effects apply to the Ranged combat and Siege rows of both players, exactly as with the individual weather cards.</p>
     <p>Clear Weather: <br />Removes all weather effects.</p>
     <p>Decoy: <br />Swap with a card on the battlefield.</p>
     <p>Commander\'s Horn: <br />Doubles the strength of the selected row.</p>
     <p>Scorch: <br />Discard after playing. Kills the strongest card(s) on the battlefield.</p>
+    <p>Mardroeme: <br />Transforms all Berserkers in the selected combat row into bears.</p>
     ]]></string>
     <string name="introduction_page1"><![CDATA[
     <p>Thanks for installing Dandelion\'s Calculator! Please note that this app is made to support you in playing Gwent using analog cards by calculating your points. This app does not allow you to play Gwent against AI or without analog cards!</p>
