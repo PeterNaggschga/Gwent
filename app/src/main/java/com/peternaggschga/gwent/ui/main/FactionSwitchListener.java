@@ -206,7 +206,7 @@ public class FactionSwitchListener implements SharedPreferences.OnSharedPreferen
 
     /**
      * Called when a shared preference is changed, added, or removed.
-     * Only handles changes when the given key is equal to .THEME_PREFERENCE_KEY.
+     * Handles changes to .THEME_PREFERENCE_KEY and null-key notifications after preferences are cleared.
      * Does nothing when the requested faction is already applied.
      * Updates the View objects in .ballViews,
      * .cardViews, .unitViews, and .factionButton using ImageViewSwitchAnimator.
@@ -216,11 +216,11 @@ public class FactionSwitchListener implements SharedPreferences.OnSharedPreferen
      */
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, @Nullable String key) {
-        if (!THEME_PREFERENCE_KEY.equals(key)) {
+        if (key != null && !THEME_PREFERENCE_KEY.equals(key)) {
             return;
         }
 
-        int theme = sharedPreferences.getInt(key, THEME_SCOIATAEL);
+        int theme = sharedPreferences.getInt(THEME_PREFERENCE_KEY, THEME_SCOIATAEL);
         if (theme == currentTheme) {
             return;
         }

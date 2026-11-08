@@ -1,5 +1,6 @@
 package com.peternaggschga.gwent.ui.main;
 
+import static com.peternaggschga.gwent.ui.introduction.IntroductionActivity.FIRST_USE_PREFERENCE_KEY;
 import static com.peternaggschga.gwent.ui.main.FactionSwitchListener.THEME_PREFERENCE_KEY;
 import static com.peternaggschga.gwent.ui.main.FactionSwitchListener.THEME_SCOIATAEL;
 import static com.peternaggschga.gwent.ui.main.FactionSwitchListener.THEME_SKELLIGE;
@@ -69,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Sets the theme and layout, initializes gameBoardViewModel and factionSwitchListener
      * and sets listeners for some menu buttons.
-     * If the application is started for the first time (as tracked by the preference at key R.stringpreference_first_use_key)
+     * If the application is started for the first time (as tracked by IntroductionActivity.FIRST_USE_PREFERENCE_KEY)
      * the IntroductionActivity is called first.
      * The theme is set according to the preference at the key specified by FactionSwitchListenerTHEME_PREFERENCE_KEY.
      * The layout is set to R.layoutactivity_main.
@@ -86,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
-        if (preferences.getBoolean(getString(R.string.preference_first_use_key), true)) {
+        if (preferences.getBoolean(FIRST_USE_PREFERENCE_KEY, true)) {
             startActivity(new Intent(this, IntroductionActivity.class));
         }
 
