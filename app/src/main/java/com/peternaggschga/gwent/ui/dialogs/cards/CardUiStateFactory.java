@@ -39,6 +39,11 @@ public class CardUiStateFactory {
     private final boolean horn;
 
     /**
+     * Whether the selected Skellige leader changes the weather penalty.
+     */
+    private final boolean kingBran;
+
+    /**
      * Map containing a color integer for each Color value possible,
      * i.e., Color.DEFAULT, Color.BUFFED, and Color.DEBUFFED.
      */
@@ -46,18 +51,16 @@ public class CardUiStateFactory {
     private final Map<Color, Integer> damageTextColors = new HashMap<>(Color.values().length);
 
     /**
-     * Constructor of a CardUiStateFactory for a row with the given weather and horn
-     * (de-)buff values.
-     * The Context parameter is used to retrieve the color values saved in .damageTextColors.
-     *
-     * @param context Context object used to get colors.
-     * @param weather Boolean defining whether the weather debuff is active.
-     * @param horn    Boolean defining whether the horn buff is active.
-     * @see Context.getColor(int)
+     * Creates a card factory from row and repository-provided leader state.
+     * @param context Context used to resolve damage text colors.
+     * @param weather Whether weather is active.
+     * @param horn Whether a commander's horn is active.
+     * @param kingBran Whether King Bran's weather effect is enabled.
      */
-    public CardUiStateFactory(@NonNull Context context, boolean weather, boolean horn) {
+    public CardUiStateFactory(@NonNull Context context, boolean weather, boolean horn, boolean kingBran) {
         this.weather = weather;
         this.horn = horn;
+        this.kingBran = kingBran;
         damageTextColors.put(DEFAULT, context.getColor(R.color.color_damage_textColor));
         damageTextColors.put(BUFFED, context.getColor(R.color.color_damage_textColor_buffed));
         damageTextColors.put(DEBUFFED, context.getColor(R.color.color_damage_textColor_debuffed));
@@ -72,7 +75,7 @@ public class CardUiStateFactory {
      */
     @NonNull
     public List<CardUiState> createCardUiState(@NonNull Collection<UnitEntity> units) {
-        DamageCalculator calculator = DamageCalculatorUseCase.getDamageCalculator(weather, horn, units);
+        DamageCalculator calculator = DamageCalculatorUseCase.getDamageCalculator(weather, horn, kingBran, units);
         return units.stream()
                 .map(unit -> createCardUiState(unit, calculator))
                 .collect(Collectors.toList());

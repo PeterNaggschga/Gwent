@@ -92,6 +92,7 @@ public class CardListAdapterUnitTest {
 
         return new CardUiStateFactory(ApplicationProvider.getApplicationContext(),
                 true,
+                false,
                 false).createCardUiState(units);
     }
 

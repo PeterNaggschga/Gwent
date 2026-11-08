@@ -1,10 +1,12 @@
 package com.peternaggschga.gwent.data;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.preference.PreferenceManager;
 
 import com.peternaggschga.gwent.domain.cases.TransformBerserkersUseCase;
 
@@ -18,6 +20,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.BackpressureStrategy;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Single;
@@ -31,6 +34,11 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
  */
 public class UnitRepository {
     /**
+     * Preference storing the selected leader's weather effect between application launches.
+     */
+    private static final String KING_BRAN_PREFERENCE_KEY = "kingBran";
+
+    /**
      * Defines the AppDatabase that is used as a data source by this repository.
      * Is provided by dependency injection in .UnitRepository().
      */
@@ -38,7 +46,7 @@ public class UnitRepository {
     private final AppDatabase database;
 
     /**
-     * Application context, never an Activity context, used for domain notifications.
+     * Application context, never an Activity context, used for notifications and preferences.
      */
     @NonNull
     private final Context context;
@@ -88,6 +96,48 @@ public class UnitRepository {
             result = result.andThen(database.rows().insertRow(new RowEntity(row)));
         }
         return result;
+    }
+
+    /**
+     * Reads the saved King Bran weather effect without involving UI context.
+     *
+     * @return Whether King Bran's weather effect is enabled.
+     */
+    public boolean isKingBran() {
+        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(KING_BRAN_PREFERENCE_KEY, false);
+    }
+
+    /**
+     * Saves the leader effect independently of board resets. Faction switching clears or replaces it.
+     *
+     * @param enabled Whether King Bran's weather effect should be enabled.
+     * @return A Completable saving the preference on subscription.
+     */
+    @NonNull
+    public Completable setKingBran(boolean enabled) {
+        return Completable.fromAction(() -> PreferenceManager.getDefaultSharedPreferences(context).edit()
+                .putBoolean(KING_BRAN_PREFERENCE_KEY, enabled).apply());
+    }
+
+    /**
+     * Observes the persisted leader effect, including its initial value.
+     *
+     * @return A stream releasing its preference listener when disposed.
+     */
+    @NonNull
+    public Flowable<Boolean> isKingBranFlowable() {
+        return Flowable.<Boolean>create(emitter -> {
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+            SharedPreferences.OnSharedPreferenceChangeListener listener = (changed, key) -> {
+                // Editor.clear() can notify with a null key; re-read the default in that case.
+                if (key == null || KING_BRAN_PREFERENCE_KEY.equals(key)) {
+                    emitter.onNext(changed.getBoolean(KING_BRAN_PREFERENCE_KEY, false));
+                }
+            };
+            preferences.registerOnSharedPreferenceChangeListener(listener);
+            emitter.setCancellable(() -> preferences.unregisterOnSharedPreferenceChangeListener(listener));
+            emitter.onNext(preferences.getBoolean(KING_BRAN_PREFERENCE_KEY, false));
+        }, BackpressureStrategy.LATEST).distinctUntilChanged();
     }
 
     /**
