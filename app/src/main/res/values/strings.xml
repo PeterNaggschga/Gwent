@@ -59,6 +59,10 @@
     <string name="unit_collection_toString_accumulation_word">%1$s, and %2$s</string>
 
     <string name="alertDialog_cancel">Cancel</string>
+    <string name="alertDialog_skellige_leader_title">Skellige Leader</string>
+    <string name="alertDialog_skellige_leader_msg">Use King Bran\'s ability?</string>
+    <string name="alertDialog_yes">Yes</string>
+    <string name="alertDialog_no">No</string>
 
     <string name="alertDialog_burn_title">Scorch</string>
     <string name="alertDialog_burn_positive">Scorch</string>

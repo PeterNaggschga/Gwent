@@ -108,10 +108,11 @@ public class GameBoardViewModel extends AndroidViewModel {
             result.rowUiStates.put(row,
                     Flowable.combineLatest(repository.isWeatherFlowable(row),
                                     repository.getBuffStateFlowable(row),
-                            repository.getUnitsFlowable(row),
-                                    (weather, buffState, units) -> {
+                                    repository.getUnitsFlowable(row),
+                                    repository.isKingBranFlowable(),
+                                    (weather, buffState, units, kingBran) -> {
                                         DamageCalculator calculator = DamageCalculatorUseCase.getDamageCalculator(weather,
-                                                buffState == RowBuffState.HORN, units);
+                                                buffState == RowBuffState.HORN, kingBran, units);
                                 int damage = units.stream()
                                         .map(unitEntity -> unitEntity.calculateDamage(calculator))
                                         .reduce(0, Integer::sum);

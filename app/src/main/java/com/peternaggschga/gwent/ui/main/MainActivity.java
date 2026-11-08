@@ -2,6 +2,7 @@ package com.peternaggschga.gwent.ui.main;
 
 import static com.peternaggschga.gwent.ui.main.FactionSwitchListener.THEME_PREFERENCE_KEY;
 import static com.peternaggschga.gwent.ui.main.FactionSwitchListener.THEME_SCOIATAEL;
+import static com.peternaggschga.gwent.ui.main.FactionSwitchListener.THEME_SKELLIGE;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -16,6 +17,7 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.WindowCompat;
@@ -251,21 +253,46 @@ public class MainActivity extends AppCompatActivity {
      * The decision is saved in the preference at the key FactionSwitchListenerTHEME_PREFERENCE_KEY
      * GameBoardViewModel.onFactionSwitchReset(Context) clears Mardroeme on every actual
      * faction change and optionally resets the board according to preferences.
-     * Selecting the current faction has no effect.
+     * Selecting Skellige always asks for its leader, including when it is already selected.
+     * Selecting another current faction has no effect.
      */
     private void inflateFactionPopup() {
         new ChangeFactionDialog(this, theme -> {
+            if (theme == THEME_SKELLIGE) {
+                new AlertDialog.Builder(this)
+                        .setTitle(R.string.alertDialog_skellige_leader_title)
+                        .setMessage(R.string.alertDialog_skellige_leader_msg)
+                        .setPositiveButton(R.string.alertDialog_yes, (dialog, which) -> selectFaction(theme, true))
+                        .setNegativeButton(R.string.alertDialog_no, (dialog, which) -> selectFaction(theme, false))
+                        .setCancelable(false)
+                        .show();
+                return;
+            }
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
             if (preferences.getInt(THEME_PREFERENCE_KEY, THEME_SCOIATAEL) == theme) {
                 return;
             }
 
-            disposables.add(gameBoardViewModel.onFactionSwitchReset(this).subscribe());
-            preferences.edit()
-                    .putInt(THEME_PREFERENCE_KEY, theme)
-                    .apply();
+            selectFaction(theme, false);
         }).show();
+    }
+
+    /**
+     * Saves the faction and repository-owned leader state, resetting only on an actual faction change.
+     *
+     * @param theme    Selected faction theme.
+     * @param kingBran Whether King Bran was selected for Skellige.
+     */
+    private void selectFaction(int theme, boolean kingBran) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        if (preferences.getInt(THEME_PREFERENCE_KEY, THEME_SCOIATAEL) != theme) {
+            disposables.add(gameBoardViewModel.onFactionSwitchReset(this).subscribe());
+        }
+        disposables.add(GwentApplication.getRepository(this)
+                .flatMapCompletable(repository -> repository.setKingBran(theme == THEME_SKELLIGE && kingBran))
+                .doOnComplete(() -> preferences.edit().putInt(THEME_PREFERENCE_KEY, theme).apply())
+                .subscribe());
     }
 
     /**

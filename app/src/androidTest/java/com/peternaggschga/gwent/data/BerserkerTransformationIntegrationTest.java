@@ -165,7 +165,7 @@ public class BerserkerTransformationIntegrationTest {
                 UnitEntity.BERSERKER_SQUAD, RowType.RANGE, 1).blockingAwait());
         List<UnitEntity> units = repository.getUnits(RowType.RANGE).blockingGet();
         assertThat(units.stream().filter(unit -> unit.getSquad() == UnitEntity.BERSERKER_SQUAD).count()).isEqualTo(3);
-        DamageCalculator calculator = DamageCalculatorUseCase.getDamageCalculator(false, false, units);
+        DamageCalculator calculator = DamageCalculatorUseCase.getDamageCalculator(false, false, false, units);
         for (UnitEntity unit : units) {
             assertThat(unit.calculateDamage(calculator)).isEqualTo(unit.getSquad() == UnitEntity.BERSERKER_SQUAD ? 24 : 8);
         }

@@ -38,6 +38,10 @@
     <string name="unit_collection_toString_accumulation_word">%1$s und %2$s</string>
 
     <string name="alertDialog_cancel">Abbrechen</string>
+    <string name="alertDialog_skellige_leader_title">Skellige-Anführer</string>
+    <string name="alertDialog_skellige_leader_msg">König Brans Fähigkeit nutzen?</string>
+    <string name="alertDialog_yes">Ja</string>
+    <string name="alertDialog_no">Nein</string>
 
     <string name="alertDialog_burn_title">Verbrennen</string>
     <string name="alertDialog_burn_positive">Verbrennen</string>

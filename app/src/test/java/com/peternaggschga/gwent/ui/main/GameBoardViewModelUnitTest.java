@@ -2,6 +2,7 @@ package com.peternaggschga.gwent.ui.main;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.never;
@@ -19,8 +20,10 @@ import com.peternaggschga.gwent.GwentApplication;
 import com.peternaggschga.gwent.R;
 import com.peternaggschga.gwent.data.RowBuffState;
 import com.peternaggschga.gwent.data.RowType;
+import com.peternaggschga.gwent.data.UnitEntity;
 import com.peternaggschga.gwent.data.UnitRepository;
 import com.peternaggschga.gwent.domain.cases.ResetDialogUseCase;
+import com.peternaggschga.gwent.domain.damage.DamageCalculator;
 import com.peternaggschga.gwent.ui.sounds.SoundManager;
 
 import org.junit.After;
@@ -154,6 +157,7 @@ public class GameBoardViewModelUnitTest {
         when(repository.hasNonEpicUnitsFlowable()).thenReturn(Flowable.just(false));
         ViewModelStore store = new ViewModelStore();
         store.put("androidx.lifecycle.ViewModelProvider.DefaultKey:" + GameBoardViewModel.class.getCanonicalName(), model);
+        when(repository.isKingBranFlowable()).thenReturn(Flowable.just(false));
         GameBoardViewModel.getModel(() -> store, repository, soundManager);
 
         TestSubscriber<RowUiState> rows = model.getRowUiState(RowType.MELEE).test();
@@ -172,6 +176,48 @@ public class GameBoardViewModelUnitTest {
             scheduler.advanceTimeBy(30, TimeUnit.MILLISECONDS);
             rows.assertValueAt(2, state -> state.isHorn() && !state.isMardroeme());
             rows.assertNoErrors().assertValueCount(3);
+        } finally {
+            rows.cancel();
+            menu.cancel();
+            store.clear();
+        }
+    }
+
+    @Test
+    public void leaderChangesRecalculateRowAndMenuWithoutDatabaseChanges() {
+        TestScheduler scheduler = new TestScheduler();
+        RxJavaPlugins.setIoSchedulerHandler(ignored -> Schedulers.trampoline());
+        RxJavaPlugins.setComputationSchedulerHandler(ignored -> scheduler);
+        RxAndroidPlugins.setInitMainThreadSchedulerHandler(ignored -> Schedulers.trampoline());
+        RxAndroidPlugins.setMainThreadSchedulerHandler(ignored -> Schedulers.trampoline());
+        UnitEntity unit = mock(UnitEntity.class);
+        when(unit.calculateDamage(any())).thenAnswer(invocation ->
+                ((DamageCalculator) invocation.getArgument(0)).calculateDamage(1, 5));
+        BehaviorProcessor<Boolean> kingBran = BehaviorProcessor.createDefault(false);
+        for (RowType row : RowType.values()) {
+            when(repository.isWeatherFlowable(row)).thenReturn(Flowable.just(row == RowType.MELEE));
+            when(repository.getBuffStateFlowable(row)).thenReturn(Flowable.just(RowBuffState.NONE));
+            when(repository.getUnitsFlowable(row)).thenReturn(Flowable.just(row == RowType.MELEE
+                    ? Collections.singletonList(unit) : Collections.emptyList()));
+        }
+        when(repository.hasNonEpicUnitsFlowable()).thenReturn(Flowable.just(true));
+        ViewModelStore store = new ViewModelStore();
+        store.put("androidx.lifecycle.ViewModelProvider.DefaultKey:" + GameBoardViewModel.class.getCanonicalName(), model);
+        when(repository.isKingBranFlowable()).thenReturn(kingBran);
+        GameBoardViewModel.getModel(() -> store, repository, soundManager);
+        TestSubscriber<RowUiState> rows = model.getRowUiState(RowType.MELEE).test();
+        TestSubscriber<MenuUiState> menu = model.getMenuUiState().test();
+        try {
+            scheduler.advanceTimeBy(30, TimeUnit.MILLISECONDS);
+            rows.assertValueAt(0, state -> state.getDamage() == 1);
+            kingBran.onNext(true);
+            scheduler.advanceTimeBy(30, TimeUnit.MILLISECONDS);
+            rows.assertValueAt(1, state -> state.getDamage() == 2);
+            menu.assertValueAt(1, state -> state.getDamage() == 2);
+            kingBran.onNext(false);
+            scheduler.advanceTimeBy(30, TimeUnit.MILLISECONDS);
+            rows.assertValueAt(2, state -> state.getDamage() == 1);
+            menu.assertValueAt(2, state -> state.getDamage() == 1);
         } finally {
             rows.cancel();
             menu.cancel();
