@@ -1,16 +1,26 @@
 package com.peternaggschga.gwent.data;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.preference.PreferenceManager;
 
+import com.peternaggschga.gwent.domain.cases.TransformBerserkersUseCase;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Iterator;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.BackpressureStrategy;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Single;
@@ -24,6 +34,11 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
  */
 public class UnitRepository {
     /**
+     * Preference storing the selected leader's weather effect between application launches.
+     */
+    private static final String KING_BRAN_PREFERENCE_KEY = "kingBran";
+
+    /**
      * Defines the AppDatabase that is used as a data source by this repository.
      * Is provided by dependency injection in .UnitRepository().
      */
@@ -31,15 +46,23 @@ public class UnitRepository {
     private final AppDatabase database;
 
     /**
+     * Application context, never an Activity context, used for notifications and preferences.
+     */
+    @NonNull
+    private final Context context;
+
+    /**
      * Constructor of a UnitRepository.
      * Depends on the given AppDatabase as a data source.
      * Should only be called by .getRepository().
      *
      * @param database AppDatabase that is injected for the repository.
-     * @see .getRepository(AppDatabase)
+     * @param context Context whose application context is retained for transformation notifications.
+     * @see .getRepository(AppDatabase, Context)
      */
-    private UnitRepository(@NonNull AppDatabase database) {
+    private UnitRepository(@NonNull AppDatabase database, @NonNull Context context) {
         this.database = database;
+        this.context = Objects.requireNonNull(context.getApplicationContext());
     }
 
     /**
@@ -48,11 +71,12 @@ public class UnitRepository {
      * Also initializes one RowEntity per RowType using .initializeRows().
      * @see .initializeRows()
      * @param database AppDatabase managed and initialized by the returned UnitRepository.
+     * @param context Context whose application context is retained for domain notifications.
      * @return A Single emitting the created UnitRepository when initialization is finished.
      */
     @NonNull
-    public static Single<UnitRepository> getRepository(@NonNull AppDatabase database) {
-        UnitRepository repository = new UnitRepository(database);
+    public static Single<UnitRepository> getRepository(@NonNull AppDatabase database, @NonNull Context context) {
+        UnitRepository repository = new UnitRepository(database, context);
         return repository.initializeRows()
                 .andThen(Single.just(repository))
                 .subscribeOn(Schedulers.io())
@@ -72,6 +96,48 @@ public class UnitRepository {
             result = result.andThen(database.rows().insertRow(new RowEntity(row)));
         }
         return result;
+    }
+
+    /**
+     * Reads the saved King Bran weather effect without involving UI context.
+     *
+     * @return Whether King Bran's weather effect is enabled.
+     */
+    public boolean isKingBran() {
+        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(KING_BRAN_PREFERENCE_KEY, false);
+    }
+
+    /**
+     * Saves the leader effect independently of board resets. Faction switching clears or replaces it.
+     *
+     * @param enabled Whether King Bran's weather effect should be enabled.
+     * @return A Completable saving the preference on subscription.
+     */
+    @NonNull
+    public Completable setKingBran(boolean enabled) {
+        return Completable.fromAction(() -> PreferenceManager.getDefaultSharedPreferences(context).edit()
+                .putBoolean(KING_BRAN_PREFERENCE_KEY, enabled).apply());
+    }
+
+    /**
+     * Observes the persisted leader effect, including its initial value.
+     *
+     * @return A stream releasing its preference listener when disposed.
+     */
+    @NonNull
+    public Flowable<Boolean> isKingBranFlowable() {
+        return Flowable.<Boolean>create(emitter -> {
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+            SharedPreferences.OnSharedPreferenceChangeListener listener = (changed, key) -> {
+                // Editor.clear() can notify with a null key; re-read the default in that case.
+                if (key == null || KING_BRAN_PREFERENCE_KEY.equals(key)) {
+                    emitter.onNext(changed.getBoolean(KING_BRAN_PREFERENCE_KEY, false));
+                }
+            };
+            preferences.registerOnSharedPreferenceChangeListener(listener);
+            emitter.setCancellable(() -> preferences.unregisterOnSharedPreferenceChangeListener(listener));
+            emitter.onNext(preferences.getBoolean(KING_BRAN_PREFERENCE_KEY, false));
+        }, BackpressureStrategy.LATEST).distinctUntilChanged();
     }
 
     /**
@@ -99,25 +165,27 @@ public class UnitRepository {
     public Completable reset(@Nullable UnitEntity keptUnit) {
         Completable result = database.rows().clearRows().andThen(initializeRows());
         if (keptUnit != null) {
-            result = result.andThen(database.units().insertUnit(keptUnit));
+            result = result.andThen(insertUnits(Collections.singletonList(keptUnit)));
         }
         return result.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 
     /**
-     * Adds a unit with the given stats to the given row.
+     * Creates a unit after validating the repository's insertion constraints.
      *
-     * @param epic    Boolean representing whether card is .epic.
-     * @param damage  Non-negative value representing the .damage of the card.
-     * @param ability Ability representing the .ability of the card.
-     * @param squad   Integer representing the .squad of a card that has the Ability.BINDING .ability.
-     * @param row     RowType representing the combat type of the card.
-     * @return A Completable tracking operation status.
-     * @throws IllegalArgumentException When damage is less than zero or if ability is Ability.BINDING and squad is null or less than zero or if ability is not Ability.BINDING and squad is not null.
+     * @param epic    Boolean representing whether the card is epic.
+     * @param damage  Non-negative base damage within the permitted damage values.
+     * @param ability Ability of the card.
+     * @param squad   Positive Tight Bond squad number, or null for other abilities.
+     * @param row     Combat row of the card.
+     * @return A new UnitEntity with an automatically generated ID on insertion.
+     * @throws IllegalArgumentException When damage or the ability/squad combination is invalid.
      */
     @NonNull
-    private Completable insertUnit(boolean epic, @IntRange(from = 0, to = UnitEntity.NON_EPIC_DAMAGE_VALUES_UPPER_BOUND) int damage, @NonNull Ability ability,
-                                   @IntRange(from = 1) @Nullable Integer squad, @NonNull RowType row) {
+    private UnitEntity createUnit(boolean epic, int damage, @NonNull Ability ability, @Nullable Integer squad,
+                                  @NonNull RowType row) {
+        Objects.requireNonNull(ability);
+        Objects.requireNonNull(row);
         if (damage < 0 || damage > UnitEntity.NON_EPIC_DAMAGE_VALUES_UPPER_BOUND) {
             throw new IllegalArgumentException("Damage be between 0 and " + UnitEntity.NON_EPIC_DAMAGE_VALUES_UPPER_BOUND + " but is " + damage + ".");
         }
@@ -130,14 +198,16 @@ public class UnitRepository {
         if (ability == Ability.BINDING && (squad == null || squad < 1)) {
             throw new IllegalArgumentException("Squad must not be null or less than one but squad is " + squad + ".");
         }
-        return database.units().insertUnit(epic, damage, ability, squad, row)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+        if (Objects.equals(squad, UnitEntity.BERSERKER_SQUAD)) {
+            throw new IllegalArgumentException("The Berserker squad is reserved for transformed units.");
+        }
+        return new UnitEntity(epic, damage, ability, squad, row);
     }
 
     /**
      * Adds a number of units with the given stats to the given row.
-     * Essentially calls .insertUnit(boolean, int, Ability, Integer, RowType) multiple times.
+     * Creates the units in memory and inserts them with a single batched DAO call.
+     * The central insertion method invokes the UseCase after the units have been persisted.
      * @param epic    Boolean representing whether card is .epic.
      * @param damage  Non-negative value representing the .damage of the card.
      * @param ability Ability representing the .ability of the card.
@@ -145,7 +215,7 @@ public class UnitRepository {
      * @param row     RowType representing the combat type of the card.
      * @param number  Integer representing the number of units to be added.
      * @return A Completable tracking operation status.
-     * @see .insertUnit(boolean, int, Ability, Integer, RowType)
+     * @see .insertUnits(List)
      * @throws IllegalArgumentException When damage is less than zero or if ability is Ability.BINDING and squad is null or less than zero
      * or if ability is not Ability.BINDING and squad is not null.
      */
@@ -153,11 +223,38 @@ public class UnitRepository {
     public Completable insertUnit(boolean epic, @IntRange(from = 0, to = UnitEntity.NON_EPIC_DAMAGE_VALUES_UPPER_BOUND) int damage, @NonNull Ability ability,
                                   @IntRange(from = 1) @Nullable Integer squad, @NonNull RowType row,
                                   @IntRange(from = 0) int number) {
-        Completable result = Completable.complete();
+        List<UnitEntity> units = new ArrayList<>(number);
         for (int i = 0; i < number; i++) {
-            result = result.andThen(insertUnit(epic, damage, ability, squad, row));
+            units.add(createUnit(epic, damage, ability, squad, row));
         }
-        return result.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+        return insertUnits(units);
+    }
+
+    /**
+     * Central insertion path for additions, copies, and retained units during reset.
+     * Inserts one batch, then passes only successfully inserted IDs to the transformation UseCase.
+     *
+     * @param units Units to insert. Normal card additions use insertUnit to validate their stats first.
+     * @return A Completable tracking insertion, any required transformations, and notification.
+     */
+    @NonNull
+    public Completable insertUnits(@NonNull List<UnitEntity> units) {
+        return database.units().insertUnits(units)
+                .map(ids -> ids.stream().filter(id -> id != -1).collect(Collectors.toList()))
+                .flatMapCompletable(ids -> TransformBerserkersUseCase.transformAddedUnits(context, this, ids))
+                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+    }
+
+    /**
+     * Updates a list of units in one batch by their existing IDs; does not insert missing IDs.
+     *
+     * @param units Units containing their persisted IDs and new values.
+     * @return A Completable tracking the batch update.
+     */
+    @NonNull
+    public Completable updateUnits(@NonNull List<UnitEntity> units) {
+        return database.units().updateUnits(units)
+                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 
     /**
@@ -210,38 +307,109 @@ public class UnitRepository {
     }
 
     /**
-     * Flips RowEntity.horn of the given attack row.
+     * Clears Mardroeme from all attack rows without changing horn buffs or weather.
+     * @return A Completable tracking operation status.
+     */
+    @NonNull
+    public Completable clearMardroeme() {
+        return database.rows().clearMardroeme()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    /**
+     * Toggles RowEntity.buffState between RowBuffState.NONE and RowBuffState.HORN for the given
+     * attack row. If Mardroeme is active, only clears it to NONE; a second call activates HORN.
      * @param row RowEntity.id where the horn status should be updated.
      * @return A Completable tracking operation status.
      */
     @NonNull
     public Completable switchHorn(@NonNull RowType row) {
-        return database.rows().updateHorn(row).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+        return database
+                .rows()
+                .getBuffState(row)
+                .map(rowBuffState -> rowBuffState == RowBuffState.NONE ? RowBuffState.HORN : RowBuffState.NONE)
+                .flatMapCompletable(rowBuffState -> database.rows().updateBuffState(row, rowBuffState));
     }
 
     /**
-     * Returns the value of RowEntity.horn for the given attack row.
+     * Toggles RowEntity.buffState between RowBuffState.NONE and RowBuffState.MARDROEME.
+     * If the horn is active, only clears it to NONE; a second call activates MARDROEME.
+     * Activating Mardroeme implicitly transforms this row's Berserkers and notifies the user.
+     * @param row RowEntity.id where the Mardroeme status should be updated.
+     * @return A Completable tracking operation status.
+     */
+    @NonNull
+    public Completable switchMardroeme(@NonNull RowType row) {
+        return database.rows().getBuffState(row)
+                .map(state -> state == RowBuffState.NONE ? RowBuffState.MARDROEME : RowBuffState.NONE)
+                .flatMapCompletable(state -> database.rows().updateBuffState(row, state)
+                        .andThen(Completable.defer(() -> state == RowBuffState.MARDROEME
+                                ? TransformBerserkersUseCase.transformRow(context, this, row)
+                                : Completable.complete())))
+                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+    }
+
+    /**
+     * Returns the persisted buff state for the given attack row.
+     *
+     * @param row RowEntity.id where the buff state is queried.
+     * @return A Single emitting NONE, HORN, or MARDROEME.
+     * @see .getBuffStateFlowable(RowType)
+     */
+    @NonNull
+    public Single<RowBuffState> getBuffState(@NonNull RowType row) {
+        return database.rows().getBuffState(row)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    /**
+     * Returns a Flowable emitting the persisted buff state for the given attack row.
+     *
+     * @param row RowEntity.id where the buff state is queried.
+     * @return A Flowable emitting distinct NONE, HORN, or MARDROEME values.
+     * @see .getBuffState(RowType)
+     */
+    @NonNull
+    public Flowable<RowBuffState> getBuffStateFlowable(@NonNull RowType row) {
+        return database.rows().getBuffStateFlowable(row)
+                .onBackpressureLatest()
+                .distinctUntilChanged()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    /**
+     * Returns whether RowEntity.buffState is RowBuffState.HORN for the given attack row.
      * @see .isHornFlowable(RowType)
      * @param row RowEntity.id where the horn status is queried.
-     * @return A Single tracking operation status and returning the value.
+     * @return A Single emitting true for HORN and false for NONE or MARDROEME.
      */
     @NonNull
     public Single<Boolean> isHorn(@NonNull RowType row) {
-        return database.rows().isHorn(row).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+        return database
+                .rows()
+                .getBuffState(row)
+                .map(rowBuffState -> rowBuffState == RowBuffState.HORN)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     /**
-     * Returns a Flowable emitting the values of RowEntity.horn for the given attack row.
+     * Returns a Flowable emitting whether RowEntity.buffState is RowBuffState.HORN for the given attack row.
      *
      * @param row RowEntity.id where the horn status is queried.
-     * @return A Flowable emitting the values.
+     * @return A Flowable emitting distinct Boolean values: true for HORN, false otherwise.
      * @see .isHorn(RowType)
      */
     @NonNull
     public Flowable<Boolean> isHornFlowable(@NonNull RowType row) {
-        return database.rows()
-                .isHornFlowable(row)
+        return database
+                .rows()
+                .getBuffStateFlowable(row)
                 .onBackpressureLatest()
+                .map(rowBuffState -> rowBuffState == RowBuffState.HORN)
                 .distinctUntilChanged()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
@@ -275,8 +443,7 @@ public class UnitRepository {
      */
     @NonNull
     public Completable copy(int id) {
-        return getUnit(id).flatMapCompletable(unit ->
-                        insertUnit(unit.isEpic(), unit.getDamage(), unit.getAbility(), unit.getSquad(), unit.getRow()))
+        return getUnit(id).flatMapCompletable(unit -> insertUnits(Collections.singletonList(unit.copy())))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
@@ -315,6 +482,21 @@ public class UnitRepository {
     }
 
     /**
+     * Returns persisted units matching the supplied IDs.
+     *
+     * @param ids IDs to retrieve; missing IDs are omitted.
+     * @return A Single emitting matching units, or an empty list for an empty ID list.
+     */
+    @NonNull
+    public Single<List<UnitEntity>> getUnitsByIds(@NonNull List<Long> ids) {
+        if (ids.isEmpty()) {
+            return Single.just(Collections.emptyList());
+        }
+        return database.units().getUnitsByIds(ids)
+                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+    }
+
+    /**
      * Returns the units in the given attack row.
      * @see .getUnitsFlowable(RowType)
      * @param row RowEntity.id where the units have been placed.
@@ -340,13 +522,7 @@ public class UnitRepository {
                 .getUnitsFlowable(row)
                 .onBackpressureLatest()
                 .debounce(10, TimeUnit.MILLISECONDS)
-                .distinctUntilChanged((list1, list2) -> {
-                    if (list1.size() != list2.size()) {
-                        return false;
-                    }
-                    Iterator<UnitEntity> list1Iterator = list1.iterator();
-                    return list2.stream().map(UnitEntity::getId).allMatch(id -> id.equals(list1Iterator.next().getId()));
-                })
+                .distinctUntilChanged()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

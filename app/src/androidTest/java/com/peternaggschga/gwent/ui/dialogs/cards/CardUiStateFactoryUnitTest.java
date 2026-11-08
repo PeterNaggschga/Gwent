@@ -33,8 +33,8 @@ public class CardUiStateFactoryUnitTest {
 
     @Before
     public void initMocks() {
-        factory = new CardUiStateFactory(ApplicationProvider.getApplicationContext(), false, false);
-        calculator = DamageCalculatorUseCase.getDamageCalculator(false, false, Collections.emptyList());
+        factory = new CardUiStateFactory(ApplicationProvider.getApplicationContext(), false, false, false);
+        calculator = DamageCalculatorUseCase.getDamageCalculator(false, false, false, Collections.emptyList());
         unitMock = mock(UnitEntity.class);
         when(unitMock.calculateDamage(any())).thenCallRealMethod();
         when(unitMock.isBuffed(any())).thenCallRealMethod();
@@ -79,8 +79,8 @@ public class CardUiStateFactoryUnitTest {
     public void createCardUiStateDamageIsEqualToCalculatorDamage() {
         for (boolean weather : new boolean[]{false, true}) {
             for (boolean horn : new boolean[]{false, true}) {
-                calculator = DamageCalculatorUseCase.getDamageCalculator(weather, horn, Collections.emptyList());
-                factory = new CardUiStateFactory(ApplicationProvider.getApplicationContext(), weather, horn);
+                calculator = DamageCalculatorUseCase.getDamageCalculator(weather, horn, false, Collections.emptyList());
+                factory = new CardUiStateFactory(ApplicationProvider.getApplicationContext(), weather, horn, false);
                 for (int damage = 0; damage < TESTING_DEPTH; damage++) {
                     when(unitMock.calculateDamage(calculator)).thenReturn(calculator.calculateDamage(0, damage));
                     CardUiState state = factory.createCardUiState(unitMock, calculator);
@@ -105,13 +105,13 @@ public class CardUiStateFactoryUnitTest {
         assertThat(factory.createCardUiState(unitMock, calculator).getDamageTextColor())
                 .isEqualTo(context.getColor(R.color.color_damage_textColor));
 
-        factory = new CardUiStateFactory(context, true, false);
-        calculator = DamageCalculatorUseCase.getDamageCalculator(true, false, Collections.emptyList());
+        factory = new CardUiStateFactory(context, true, false, false);
+        calculator = DamageCalculatorUseCase.getDamageCalculator(true, false, false, Collections.emptyList());
         assertThat(factory.createCardUiState(unitMock, calculator).getDamageTextColor())
                 .isEqualTo(context.getColor(R.color.color_damage_textColor_debuffed));
 
-        factory = new CardUiStateFactory(context, true, true);
-        calculator = DamageCalculatorUseCase.getDamageCalculator(true, true, Collections.emptyList());
+        factory = new CardUiStateFactory(context, true, true, false);
+        calculator = DamageCalculatorUseCase.getDamageCalculator(true, true, false, Collections.emptyList());
         assertThat(factory.createCardUiState(unitMock, calculator).getDamageTextColor())
                 .isEqualTo(context.getColor(R.color.color_damage_textColor_buffed));
     }
@@ -122,12 +122,15 @@ public class CardUiStateFactoryUnitTest {
                 Pair.create(Ability.NONE, CardUiState.UNUSED),
                 Pair.create(Ability.BINDING, R.drawable.icon_binding),
                 Pair.create(Ability.HORN, R.drawable.icon_horn),
+                Pair.create(Ability.BERSERKER, R.drawable.icon_berserker),
+                Pair.create(Ability.MARDROEME, R.drawable.icon_mardroeme),
                 Pair.create(Ability.MORAL_BOOST, R.drawable.icon_moral_boost),
                 Pair.create(Ability.REVENGE, R.drawable.icon_revenge)
         ).forEach(pair -> {
             when(unitMock.getAbility()).thenReturn(pair.first);
             CardUiState state = factory.createCardUiState(unitMock, calculator);
             assertThat(state.getAbilityImageId()).isEqualTo(pair.second);
+            assertThat(state.showAbility()).isEqualTo(pair.first != Ability.NONE);
         });
     }
 

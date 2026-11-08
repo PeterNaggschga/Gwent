@@ -11,6 +11,12 @@
     <color name="color_damage_textColor_buffed">#10A010</color>
     <color name="color_damage_textColor_debuffed">#E42020</color>
 
+    <color name="color_text_skellige">#D3D1D1</color>
+    <color name="color_background_skellige">#4A1FA9</color>
+    <color name="color_gradient_skellige">#270F4D</color>
+    <color name="color_accent_skellige">#9260FA</color>
+    <color name="color_card_view_button_background_skellige">#A575FF</color>
+
     <color name="color_text_scoiatael">#CAC559</color>
     <color name="color_background_scoiatael">#339300</color>
     <color name="color_gradient_scoiatael">#164000</color>

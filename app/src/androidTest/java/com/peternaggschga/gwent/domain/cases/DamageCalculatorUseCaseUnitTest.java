@@ -67,7 +67,7 @@ public class DamageCalculatorUseCaseUnitTest {
                     DamageCalculatorUseCase.getDamageCalculator(REPOSITORY, row)
                             .test()
                             .assertValue(calculator -> {
-                                DamageCalculator calculator1 = DamageCalculatorBuildDirector.getCalculator(weather, horn, testList);
+                                DamageCalculator calculator1 = DamageCalculatorBuildDirector.getCalculator(weather, horn, false, testList);
                                 boolean equal = calculator.getClass() == calculator1.getClass();
                                 for (UnitEntity unit : testList) {
                                     equal &= unit.calculateDamage(calculator) == unit.calculateDamage(calculator1);

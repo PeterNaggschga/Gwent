@@ -15,9 +15,14 @@ import com.peternaggschga.gwent.R;
 /**
  * An AppCompatActivity that gives the user an introduction into the usage of the application.
  * Is called when the app is first started 
- * (as tracked by the androidx.preference.Preference at key R.stringpreference_first_use_key.
+ * (as tracked by the SharedPreferences entry at FIRST_USE_PREFERENCE_KEY).
  */
 public class IntroductionActivity extends AppCompatActivity {
+    /**
+     * SharedPreferences key tracking whether the introduction has been completed.
+     */
+    public static final String FIRST_USE_PREFERENCE_KEY = "firstUse";
+
     /**
      * IndicatorManager used to update the progress indicators according to the currently shown page.
      * Is initialized in onCreate(Bundle).
@@ -85,7 +90,7 @@ public class IntroductionActivity extends AppCompatActivity {
         View.OnClickListener onFinish = view -> {
             PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
                     .edit()
-                    .putBoolean(getString(R.string.preference_first_use_key), false)
+                    .putBoolean(FIRST_USE_PREFERENCE_KEY, false)
                     .apply();
             callback.setEnabled(false);
             getOnBackPressedDispatcher().onBackPressed();

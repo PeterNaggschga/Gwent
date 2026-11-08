@@ -39,35 +39,35 @@ public class DamageCalculatorBuildDirectorUnitTest {
 
     @Test
     public void getCalculatorNoHornEmptyListReturnsWeatherDamageCalculator() {
-        assertThat(DamageCalculatorBuildDirector.getCalculator(false, false, Collections.emptyList()).getClass()).isEqualTo(WeatherDamageCalculator.class);
-        assertThat(DamageCalculatorBuildDirector.getCalculator(true, false, Collections.emptyList()).getClass()).isEqualTo(WeatherDamageCalculator.class);
+        assertThat(DamageCalculatorBuildDirector.getCalculator(false, false, false, Collections.emptyList()).getClass()).isEqualTo(WeatherDamageCalculator.class);
+        assertThat(DamageCalculatorBuildDirector.getCalculator(true, false, false, Collections.emptyList()).getClass()).isEqualTo(WeatherDamageCalculator.class);
     }
 
     @Test
     public void getCalculatorWithHornReturnsHornDamageCalculator() {
         List<UnitEntity> list = getMockUnitList(true, true, false);
-        assertThat(DamageCalculatorBuildDirector.getCalculator(false, true, list).getClass()).isEqualTo(HornDamageCalculatorDecorator.class);
-        assertThat(DamageCalculatorBuildDirector.getCalculator(true, true, list).getClass()).isEqualTo(HornDamageCalculatorDecorator.class);
+        assertThat(DamageCalculatorBuildDirector.getCalculator(false, true, false, list).getClass()).isEqualTo(HornDamageCalculatorDecorator.class);
+        assertThat(DamageCalculatorBuildDirector.getCalculator(true, true, false, list).getClass()).isEqualTo(HornDamageCalculatorDecorator.class);
     }
 
     @Test
     public void getCalculatorWithHornUnitReturnsHornDamageCalculator() {
         List<UnitEntity> list = getMockUnitList(true, true, true);
-        assertThat(DamageCalculatorBuildDirector.getCalculator(false, false, list).getClass()).isEqualTo(HornDamageCalculatorDecorator.class);
-        assertThat(DamageCalculatorBuildDirector.getCalculator(true, false, list).getClass()).isEqualTo(HornDamageCalculatorDecorator.class);
+        assertThat(DamageCalculatorBuildDirector.getCalculator(false, false, false, list).getClass()).isEqualTo(HornDamageCalculatorDecorator.class);
+        assertThat(DamageCalculatorBuildDirector.getCalculator(true, false, false, list).getClass()).isEqualTo(HornDamageCalculatorDecorator.class);
     }
 
     @Test
     public void getCalculatorWithBindingUnitReturnsBondDamageCalculator() {
         List<UnitEntity> list = getMockUnitList(true, false, false);
-        assertThat(DamageCalculatorBuildDirector.getCalculator(false, false, list).getClass()).isEqualTo(BondDamageCalculatorDecorator.class);
-        assertThat(DamageCalculatorBuildDirector.getCalculator(true, false, list).getClass()).isEqualTo(BondDamageCalculatorDecorator.class);
+        assertThat(DamageCalculatorBuildDirector.getCalculator(false, false, false, list).getClass()).isEqualTo(BondDamageCalculatorDecorator.class);
+        assertThat(DamageCalculatorBuildDirector.getCalculator(true, false, false, list).getClass()).isEqualTo(BondDamageCalculatorDecorator.class);
     }
 
     @Test
     public void getCalculatorWithMoralUnitReturnsMoralDamageCalculator() {
         List<UnitEntity> list = getMockUnitList(true, true, false);
-        assertThat(DamageCalculatorBuildDirector.getCalculator(false, false, list).getClass()).isEqualTo(MoralDamageCalculatorDecorator.class);
-        assertThat(DamageCalculatorBuildDirector.getCalculator(true, false, list).getClass()).isEqualTo(MoralDamageCalculatorDecorator.class);
+        assertThat(DamageCalculatorBuildDirector.getCalculator(false, false, false, list).getClass()).isEqualTo(MoralDamageCalculatorDecorator.class);
+        assertThat(DamageCalculatorBuildDirector.getCalculator(true, false, false, list).getClass()).isEqualTo(MoralDamageCalculatorDecorator.class);
     }
 }
