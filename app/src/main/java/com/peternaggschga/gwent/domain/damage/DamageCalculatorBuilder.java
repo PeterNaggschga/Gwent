@@ -19,18 +19,18 @@ import java.util.Map;
 class DamageCalculatorBuilder {
     /**
      * The DamageCalculator instance that is being built by this DamageCalculatorBuilder.
-     * Starts as a WeatherDamageCalculator, since this is always at the end of the decorator chain.
+     * Starts as a WeatherDamageCalculator; the selected weather calculator forms the base of the chain.
      */
     @NonNull
     private DamageCalculator calculator = new WeatherDamageCalculator(false);
 
     /**
-     * Sets the weather debuff for the calculation. Should be called first or never.
-     *
-     * @param weather Boolean defining whether the weather debuff is active.
+     * Selects the weather calculator before adding other modifiers.
+     * @param weather Whether weather is active.
+     * @param kingBran Whether King Bran replaces the ordinary weather penalty.
      */
-    void setWeather(boolean weather) {
-        calculator = new WeatherDamageCalculator(weather);
+    void setWeather(boolean weather, boolean kingBran) {
+        calculator = kingBran ? new KingBranDamageCalculator(weather) : new WeatherDamageCalculator(weather);
     }
 
     /**

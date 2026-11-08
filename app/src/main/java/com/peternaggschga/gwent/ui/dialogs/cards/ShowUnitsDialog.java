@@ -95,7 +95,7 @@ public class ShowUnitsDialog extends OverlayDialog {
         return GwentApplication.getRepository(context)
                 .flatMap(repository -> repository.isWeather(row)
                         .zipWith(repository.isHorn(row), (weather, horn) ->
-                                new CardUiStateFactory(context, weather, horn))
+                                new CardUiStateFactory(context, weather, horn, repository.isKingBran()))
                         .map(factory -> {
                             CompositeDisposable initialDisposables = new CompositeDisposable();
                             CardListAdapter adapter = new CardListAdapter(

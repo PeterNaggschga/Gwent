@@ -1,8 +1,7 @@
 package com.peternaggschga.gwent.domain.cases;
 
-import android.util.Pair;
-
 import androidx.annotation.NonNull;
+import androidx.core.util.Pair;
 
 import com.peternaggschga.gwent.data.RowType;
 import com.peternaggschga.gwent.data.UnitEntity;
@@ -33,21 +32,21 @@ public class DamageCalculatorUseCase {
         return repository.isWeather(row)
                 .zipWith(repository.isHorn(row), Pair::create)
                 .zipWith(repository.getUnits(row), (weatherHorn, units) ->
-                        getDamageCalculator(weatherHorn.first, weatherHorn.second, units));
+                        getDamageCalculator(weatherHorn.first, weatherHorn.second, repository.isKingBran(), units));
     }
 
     /**
-     * Creates a DamageCalculator for a row with the given weather status, horn status and units.
-     * Basically calls DamageCalculatorBuildDirector.getCalculator with the given parameters.
+     * Builds a calculator using explicit row and leader state.
      *
-     * @param weather Boolean defining whether the calculation encompasses the weather debuff.
-     * @param horn    Boolean defining whether a commander's horn is in the row.
-     * @param units   Collection of UnitEntity objects that are in the row.
-     * @return A DamageCalculator object capable of calculating damage for the given units.
-     * @see DamageCalculatorBuildDirector.getCalculator(boolean, boolean, Collection)
+     * @param weather  Whether weather is active.
+     * @param horn     Whether the row has a commander's horn.
+     * @param kingBran Whether King Bran's weather effect is active.
+     * @param units    Units in the row.
+     * @return A calculator applying the selected weather effect before other modifiers.
      */
     @NonNull
-    public static DamageCalculator getDamageCalculator(boolean weather, boolean horn, @NonNull Collection<UnitEntity> units) {
-        return DamageCalculatorBuildDirector.getCalculator(weather, horn, units);
+    public static DamageCalculator getDamageCalculator(boolean weather, boolean horn, boolean kingBran,
+                                                       @NonNull Collection<UnitEntity> units) {
+        return DamageCalculatorBuildDirector.getCalculator(weather, horn, kingBran, units);
     }
 }

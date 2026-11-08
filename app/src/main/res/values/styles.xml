@@ -62,4 +62,18 @@
             @color/color_card_view_button_background_scoiatael
         </item>
     </style>
+
+    <style name="SkelligeTheme" parent="BaseTheme">
+        <item name="colorPrimary">@color/color_text_skellige</item>
+        <item name="colorAccent">@color/color_accent_skellige</item>
+        <item name="card_count_text_color">@color/color_text_skellige</item>
+        <item name="android:alertDialogIcon">@drawable/icon_round_skellige</item>
+        <item name="point_ball_mipmap">@drawable/ball_violet</item>
+        <item name="card_view_mipmap">@drawable/card_skellige_landscape_free</item>
+        <item name="card_background_color">@color/color_background_skellige</item>
+        <item name="card_background_gradient">@color/color_gradient_skellige</item>
+        <item name="card_view_button_background">
+            @color/color_card_view_button_background_skellige
+        </item>
+    </style>
 </resources>

@@ -63,6 +63,6 @@ public class GwentApplication extends Application {
         if (repository != null) {
             return Single.just(repository);
         }
-        return UnitRepository.getRepository(database).doOnSuccess(unitRepository -> repository = unitRepository);
+        return UnitRepository.getRepository(database, this).doOnSuccess(unitRepository -> repository = unitRepository);
     }
 }

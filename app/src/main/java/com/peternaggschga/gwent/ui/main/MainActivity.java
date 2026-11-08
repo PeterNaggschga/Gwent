@@ -2,9 +2,9 @@ package com.peternaggschga.gwent.ui.main;
 
 import static com.peternaggschga.gwent.ui.main.FactionSwitchListener.THEME_PREFERENCE_KEY;
 import static com.peternaggschga.gwent.ui.main.FactionSwitchListener.THEME_SCOIATAEL;
+import static com.peternaggschga.gwent.ui.main.FactionSwitchListener.THEME_SKELLIGE;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -17,6 +17,7 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.WindowCompat;
@@ -196,12 +197,18 @@ public class MainActivity extends AppCompatActivity {
 
             ImageView weather = rowLayout.findViewById(R.id.weatherView);
             ImageView horn = rowLayout.findViewById(R.id.hornView);
+            ImageView mardroeme = rowLayout.findViewById(R.id.mardroemeView);
+            mardroeme.setVisibility(PreferenceManager.getDefaultSharedPreferences(this)
+                    .getInt(THEME_PREFERENCE_KEY, THEME_SCOIATAEL) == FactionSwitchListener.THEME_SKELLIGE
+                    ? View.VISIBLE : View.GONE);
             ConstraintLayout cards = rowLayout.findViewById(R.id.cardView);
 
             weather.setOnClickListener(v ->
                     disposables.add(gameBoardViewModel.onWeatherViewPressed(row).subscribe()));
             horn.setOnClickListener(v ->
                     disposables.add(gameBoardViewModel.onHornViewPressed(row).subscribe()));
+            mardroeme.setOnClickListener(v ->
+                    disposables.add(gameBoardViewModel.onMardroemeViewPressed(row).subscribe()));
 
             cards.setOnClickListener(v -> disposables.add(
                     GwentApplication.getRepository(this)
@@ -218,6 +225,7 @@ public class MainActivity extends AppCompatActivity {
                     rowLayout.findViewById(R.id.pointView),
                     weather,
                     horn,
+                    mardroeme,
                     rowLayout.findViewById(R.id.cardCountView));
             disposables.add(gameBoardViewModel.getRowUiState(row).subscribe(observer));
         }
@@ -243,29 +251,48 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Shows a new ChangeFactionDialog enabling the user to choose the preferred theme.
      * The decision is saved in the preference at the key FactionSwitchListenerTHEME_PREFERENCE_KEY
-     * and if the user opted to reset on faction switch
-     * (i.e., the preference at R.stringpreference_key_faction_reset is true),
-     * GameBoardViewModelonFactionSwitchReset(Context) is called.
+     * GameBoardViewModel.onFactionSwitchReset(Context) clears Mardroeme on every actual
+     * faction change and optionally resets the board according to preferences.
+     * Selecting Skellige always asks for its leader, including when it is already selected.
+     * Selecting another current faction has no effect.
      */
     private void inflateFactionPopup() {
         new ChangeFactionDialog(this, theme -> {
+            if (theme == THEME_SKELLIGE) {
+                new AlertDialog.Builder(this)
+                        .setTitle(R.string.alertDialog_skellige_leader_title)
+                        .setMessage(R.string.alertDialog_skellige_leader_msg)
+                        .setPositiveButton(R.string.alertDialog_yes, (dialog, which) -> selectFaction(theme, true))
+                        .setNegativeButton(R.string.alertDialog_no, (dialog, which) -> selectFaction(theme, false))
+                        .setCancelable(false)
+                        .show();
+                return;
+            }
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
             if (preferences.getInt(THEME_PREFERENCE_KEY, THEME_SCOIATAEL) == theme) {
                 return;
             }
 
-            boolean resetOnFactionSwitch = preferences.getBoolean(
-                    getString(R.string.preference_key_faction_reset),
-                    getResources().getBoolean(R.bool.faction_reset_preference_default)
-            );
-            if (resetOnFactionSwitch) {
-                disposables.add(gameBoardViewModel.onFactionSwitchReset(this).subscribe());
-            }
-            preferences.edit()
-                    .putInt(THEME_PREFERENCE_KEY, theme)
-                    .apply();
+            selectFaction(theme, false);
         }).show();
+    }
+
+    /**
+     * Saves the faction and repository-owned leader state, resetting only on an actual faction change.
+     *
+     * @param theme    Selected faction theme.
+     * @param kingBran Whether King Bran was selected for Skellige.
+     */
+    private void selectFaction(int theme, boolean kingBran) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        if (preferences.getInt(THEME_PREFERENCE_KEY, THEME_SCOIATAEL) != theme) {
+            disposables.add(gameBoardViewModel.onFactionSwitchReset(this).subscribe());
+        }
+        disposables.add(GwentApplication.getRepository(this)
+                .flatMapCompletable(repository -> repository.setKingBran(theme == THEME_SKELLIGE && kingBran))
+                .doOnComplete(() -> preferences.edit().putInt(THEME_PREFERENCE_KEY, theme).apply())
+                .subscribe());
     }
 
     /**

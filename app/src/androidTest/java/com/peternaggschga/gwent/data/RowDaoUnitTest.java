@@ -1,6 +1,7 @@
 package com.peternaggschga.gwent.data;
 
 import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.fail;
 
 import androidx.room3.Room;
@@ -13,6 +14,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import io.reactivex.rxjava3.subscribers.TestSubscriber;
 import kotlinx.coroutines.BuildersKt;
 import kotlinx.coroutines.Dispatchers;
 
@@ -51,9 +53,11 @@ public class RowDaoUnitTest {
         for (RowType row : RowType.values()) {
             rowDao.insertRow(new RowEntity(row))
                     .andThen(rowDao.updateWeather(row))
+                    .andThen(rowDao.updateBuffState(row, RowBuffState.MARDROEME))
                     .andThen(rowDao.insertRow(new RowEntity(row)))
                     .blockingAwait();
             rowDao.isWeather(row).test().await().assertValue(true);
+            rowDao.getBuffState(row).test().await().assertValue(RowBuffState.MARDROEME);
         }
     }
 
@@ -119,36 +123,59 @@ public class RowDaoUnitTest {
     }
 
     @Test
-    public void updateHornUpdatesHorn() throws InterruptedException {
-        for (RowType row : RowType.values()) {
-            rowDao.insertRow(new RowEntity(row))
-                    .andThen(rowDao.isHorn(row))
-                    .test()
-                    .await()
-                    .assertValue(false);
-            rowDao.updateHorn(row)
-                    .andThen(rowDao.isHorn(row))
-                    .test()
-                    .await()
-                    .assertValue(true);
-            rowDao.updateHorn(row)
-                    .andThen(rowDao.isHorn(row))
-                    .test()
-                    .await()
-                    .assertValue(false);
+    public void clearMardroemePreservesHornAndWeather() {
+        for (RowType target : RowType.values()) {
+            rowDao.clearRows().blockingAwait();
+            for (RowType row : RowType.values()) {
+                rowDao.insertRow(new RowEntity(row))
+                        .andThen(rowDao.updateBuffState(row, row == target ? RowBuffState.MARDROEME : RowBuffState.HORN))
+                        .andThen(rowDao.updateWeather(row)).blockingAwait();
+            }
+            rowDao.clearMardroeme().blockingAwait();
+            for (RowType row : RowType.values()) {
+                assertThat(rowDao.getBuffState(row).blockingGet())
+                        .isEqualTo(row == target ? RowBuffState.NONE : RowBuffState.HORN);
+                assertThat(rowDao.isWeather(row).blockingGet()).isTrue();
+            }
         }
     }
 
     @Test
-    public void updateHornAssertsNonNull() {
+    public void updateBuffStateStoresAllStates() throws InterruptedException {
+        for (RowType row : RowType.values()) {
+            rowDao.insertRow(new RowEntity(row))
+                    .andThen(rowDao.getBuffState(row))
+                    .test()
+                    .await()
+                    .assertValue(RowBuffState.NONE);
+            for (RowBuffState state : new RowBuffState[]{RowBuffState.HORN, RowBuffState.MARDROEME, RowBuffState.NONE}) {
+                rowDao.updateBuffState(row, state)
+                        .andThen(rowDao.getBuffState(row))
+                        .test()
+                        .await()
+                        .assertValue(state);
+            }
+        }
+    }
+
+    @Test
+    public void updateBuffStateAssertsNonNullRow() {
         try {
             //noinspection DataFlowIssue
             rowDao.insertRow(new RowEntity(RowType.MELEE))
-                    .andThen(rowDao.updateHorn(null))
+                    .andThen(rowDao.updateBuffState(null, RowBuffState.HORN))
                     .blockingAwait();
             fail();
         } catch (NullPointerException ignored) {
         }
+    }
+
+    @Test
+    @SuppressWarnings("DataFlowIssue")
+    public void updateBuffStateAssertsNonNullState() {
+        rowDao.insertRow(new RowEntity(RowType.MELEE)).blockingAwait();
+        assertThrows(NullPointerException.class,
+                () -> rowDao.updateBuffState(RowType.MELEE, null).blockingAwait());
     }
 
     @Test
@@ -165,11 +192,11 @@ public class RowDaoUnitTest {
     }
 
     @Test
-    public void isHornAssertsNonNull() {
+    public void getBuffStateAssertsNonNull() {
         try {
             //noinspection DataFlowIssue
             rowDao.insertRow(new RowEntity(RowType.MELEE))
-                    .andThen(rowDao.isHorn(null))
+                    .andThen(rowDao.getBuffState(null))
                     .test()
                     .dispose();
             fail();
@@ -197,10 +224,10 @@ public class RowDaoUnitTest {
     }
 
     @Test
-    public void isHornFlowableAssertsNonNull() {
+    public void getBuffStateFlowableAssertsNonNull() {
         try {
             //noinspection DataFlowIssue
-            rowDao.isHornFlowable(null)
+            rowDao.getBuffStateFlowable(null)
                     .test()
                     .cancel();
             fail();
@@ -209,9 +236,29 @@ public class RowDaoUnitTest {
     }
 
     @Test
-    public void isHornFlowableHasValueFromBeginning() {
+    public void getBuffStateFlowableHasValueFromBeginning() {
         assertThat(rowDao.insertRow(new RowEntity(RowType.MELEE))
-                .andThen(rowDao.isHornFlowable(RowType.MELEE))
-                .blockingFirst()).isFalse();
+                .andThen(rowDao.getBuffStateFlowable(RowType.MELEE))
+                .blockingFirst()).isEqualTo(RowBuffState.NONE);
+    }
+
+    @Test
+    public void getBuffStateFlowableReturnsAllStates() {
+        for (RowType row : RowType.values()) {
+            rowDao.insertRow(new RowEntity(row)).blockingAwait();
+            TestSubscriber<RowBuffState> observer = rowDao.getBuffStateFlowable(row).test();
+            try {
+                observer.awaitCount(1).assertValues(RowBuffState.NONE);
+                RowBuffState[] states = {RowBuffState.HORN, RowBuffState.MARDROEME, RowBuffState.NONE};
+                for (int i = 0; i < states.length; i++) {
+                    rowDao.updateBuffState(row, states[i]).blockingAwait();
+                    observer.awaitCount(i + 2);
+                }
+                observer.assertNoErrors().assertValues(RowBuffState.NONE, RowBuffState.HORN,
+                        RowBuffState.MARDROEME, RowBuffState.NONE);
+            } finally {
+                observer.cancel();
+            }
+        }
     }
 }

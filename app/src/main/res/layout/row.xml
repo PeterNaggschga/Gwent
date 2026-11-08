@@ -39,25 +39,44 @@
         android:layout_marginTop="@dimen/point_circle_diameter_div2"
         android:contentDescription="@string/content_description_row_weather"
         android:scaleType="centerCrop"
-        app:layout_constraintBottom_toTopOf="@id/hornView"
+        app:layout_constraintBottom_toTopOf="@id/hornGroupView"
         app:layout_constraintDimensionRatio="1048:674"
         app:layout_constraintEnd_toEndOf="@id/cardView"
         app:layout_constraintStart_toStartOf="@id/cardView"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/good_weather" />
 
-    <ImageView
-        android:id="@+id/hornView"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/hornGroupView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:contentDescription="@string/content_description_row_horn"
-        android:scaleType="centerCrop"
         app:layout_constraintBottom_toTopOf="@id/cardView"
         app:layout_constraintDimensionRatio="1048:674"
         app:layout_constraintEnd_toEndOf="@id/cardView"
         app:layout_constraintStart_toStartOf="@id/cardView"
-        app:layout_constraintTop_toBottomOf="@id/weatherView"
-        app:srcCompat="@drawable/horn_grey" />
+        app:layout_constraintTop_toBottomOf="@id/weatherView">
+
+        <ImageView
+            android:id="@+id/hornView"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/content_description_row_horn"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toStartOf="@id/mardroemeView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/horn_grey" />
+
+        <ImageView
+            android:id="@+id/mardroemeView"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/content_description_row_mardroeme"
+            android:scaleType="centerCrop"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/hornView"
+            app:srcCompat="@drawable/mardroeme_grey" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cardView"
@@ -66,7 +85,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/hornView">
+        app:layout_constraintTop_toBottomOf="@id/hornGroupView">
 
         <ImageView
             android:id="@+id/cardsImage"
