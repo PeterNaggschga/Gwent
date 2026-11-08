@@ -112,6 +112,31 @@ public class FactionSwitchListenerUnitTest {
     }
 
     @Test
+    public void clearingPreferencesRestoresDefaultFaction() {
+        try (MockedStatic<ImageViewSwitchAnimator> switchAnimator = mockStatic(ImageViewSwitchAnimator.class)) {
+            switchAnimator.when(() -> ImageViewSwitchAnimator.animatedSwitch(any(), anyInt()))
+                    .thenReturn(Completable.complete());
+            when(mockPreferences.getInt(THEME_PREFERENCE_KEY, THEME_SCOIATAEL)).thenReturn(THEME_SKELLIGE);
+            testListener.onSharedPreferenceChanged(mockPreferences, THEME_PREFERENCE_KEY);
+            clearInvocations(mockContext, mockPreferences, mockMardroemeView);
+
+            // A missing preference returns the supplied default after Editor.clear().
+            when(mockPreferences.getInt(THEME_PREFERENCE_KEY, THEME_SCOIATAEL))
+                    .thenAnswer(invocation -> invocation.getArgument(1));
+            testListener.onSharedPreferenceChanged(mockPreferences, null);
+
+            verify(mockPreferences).getInt(THEME_PREFERENCE_KEY, THEME_SCOIATAEL);
+            verify(mockContext).setTheme(R.style.ScoiataelTheme);
+            verify(mockMardroemeView, times(3)).setVisibility(View.GONE);
+
+            clearInvocations(mockContext, mockMardroemeView);
+            testListener.onSharedPreferenceChanged(mockPreferences, null);
+            verify(mockContext, never()).setTheme(anyInt());
+            verify(mockMardroemeView, never()).setVisibility(anyInt());
+        }
+    }
+
+    @Test
     public void selectingCurrentFactionDoesNothing() {
         when(mockPreferences.getInt(eq(THEME_PREFERENCE_KEY), anyInt())).thenReturn(THEME_SCOIATAEL);
         testListener.onSharedPreferenceChanged(mockPreferences, THEME_PREFERENCE_KEY);
