@@ -4,7 +4,7 @@
 
     <string name="faction_monster">Monsters</string>
     <string name="faction_nilfgaard">Nilfgaardian Empire</string>
-    <string name="faction_northern_kingdoms">Northern Kingdoms</string>
+    <string name="faction_northern_kingdoms">Northern Realms</string>
     <string name="faction_scoiatael" translatable="false">Scoia\'tael</string>
     <string name="faction_skellige" translatable="false">Skellige</string>
 
@@ -155,7 +155,7 @@
     <string name="content_description_coinpopup_vin">A fan art showing Vin from Brandon Sanderson\'s Mistborn-series.</string>
     <string name="content_description_factionpopup_monster">Card with symbol of monster faction</string>
     <string name="content_description_factionpopup_nilfgaard">Card with symbol of nilfgaardian empire faction</string>
-    <string name="content_description_factionpopup_northern_kingdoms">Card with symbol of Northern Kingdoms faction</string>
+    <string name="content_description_factionpopup_northern_kingdoms">Card with symbol of Northern Realms faction</string>
     <string name="content_description_factionpopup_scoiatael">Card with symbol of Scoia\'tael faction</string>
     <string name="content_description_factionpopup_skellige">Card with symbol of Skellige faction</string>
     <string name="content_description_row_pointball">point display of combat row</string>
@@ -167,9 +167,9 @@
     <string name="content_description_introduction_indicator">dot that indicates progress</string>
     <string name="content_description_introduction_next">forward arrow</string>
 
-    <string name="rules_general_text"><![CDATA[<p>Gwent is an old card game particularly popular among dwarves. It depicts a battle between two armies: the players are generals, and their cards represent their units. Each player uses their own deck, built around one of five factions: Monsters, Nilfgaardian Empire, Northern Kingdoms, Scoia\'tael and Skellige. Each faction has unique cards that support different play styles. Neutral cards can be used by any faction. The goal is to win two rounds out of three by having greater total strength than your opponent.</p>]]></string>
+    <string name="rules_general_text"><![CDATA[<p>Gwent is an old card game particularly popular among dwarves. It depicts a battle between two armies: the players are generals, and their cards represent their units. Each player uses their own deck, built around one of five factions: Monsters, Nilfgaardian Empire, Northern Realms, Scoia\'tael and Skellige. Each faction has unique cards that support different play styles. Neutral cards can be used by any faction. The goal is to win two rounds out of three by having greater total strength than your opponent.</p>]]></string>
     <string name="rules_course_text"><![CDATA[<p>At the start of the first round, each player draws ten cards from their deck. You may then replace up to two cards, drawing a new card for each one you replace. The replaced cards are shuffled back into your deck. Determine the starting player by flipping a coin.<br />Players take turns. On your turn, either play a card or pass. Once you pass, you cannot play any more cards for the rest of the round. Your opponent may continue playing cards until they also pass. A player with no cards left must pass.<br />The round ends when both players have passed. The player with the higher total score wins the round. If the scores are tied, both players win the round. At the end of each round, cards on the battlefield are moved to their owners\' discard piles. You keep your remaining hand for the next round—you do not draw new cards. The winner of the previous round takes the first turn. The goal of the game is to win two rounds.</p>]]></string>
-    <string name="rules_factions_text"><![CDATA[<p>There are five factions: Monsters, Nilfgaardian Empire, Northern Kingdoms, Scoia\'tael and Skellige. Each faction has unique cards, leaders and a faction perk. Neutral cards can be used in any faction\'s deck.</p>The Monsters faction is led by Eredin Bréacc Glas, also known as Sparrowhawk, the King of the Wild Hunt. Its Iron Skin perk lets you keep one random unit on the battlefield at the end of each round.<br />Emhyr var Emreis, also known as \"The White Flame Dancing on the Barrows of his Enemies\", is the emperor of Nilfgaard. The Nilfgaardian faction\'s Treachery perk lets it win tied rounds.<br />The Northern Kingdoms are led by Foltest, King of Temeria. Their faction perk lets you draw one card after winning a round.<br />The Scoia\'tael are nonhuman rebels fighting against oppression by the Northern Kingdoms. They are led by Francesca Findabair, also known as Enid an Gleanna (Daisy of the Valleys). Their faction perk lets you choose who takes the first turn in the first round.<br />Skellige\'s faction perk places two random unit cards from your discard pile on the battlefield at the start of the third round.]]></string>
+    <string name="rules_factions_text"><![CDATA[<p>There are five factions: Monsters, Nilfgaardian Empire, Northern Realms, Scoia\'tael and Skellige. Each faction has unique cards, leaders and a faction perk. Neutral cards can be used in any faction\'s deck.</p>The Monsters faction is led by Eredin Bréacc Glas, also known as Sparrowhawk, the King of the Wild Hunt. Its Iron Skin perk lets you keep one random unit on the battlefield at the end of each round.<br />Emhyr var Emreis, also known as \"The White Flame Dancing on the Barrows of his Enemies\", is the emperor of Nilfgaard. The Nilfgaardian faction\'s Treachery perk lets it win tied rounds.<br />The Northern Realms are led by Foltest, King of Temeria. Their faction perk lets you draw one card after winning a round.<br />The Scoia\'tael are nonhuman rebels fighting against oppression by the Northern Realms. They are led by Francesca Findabair, also known as Enid an Gleanna (Daisy of the Valleys). Their faction perk lets you choose who takes the first turn in the first round.<br />Skellige\'s faction perk places two random unit cards from your discard pile on the battlefield at the start of the third round.]]></string>
     <string name="rules_commander_text"><![CDATA[
     <p>Each faction offers a choice of leaders with different abilities, listed below.</p>
     <h5>Monsters: Eredin Bréacc Glas</h5>
@@ -184,7 +184,7 @@
     <p>Invader of the North: <br />Abilities that return a unit to the battlefield now return a randomly chosen unit. This affects both players.</p>
     <p>Emperor of Nilfgaard: <br />Look at three random cards from your opponent\'s hand.</p>
     <p>His Imperial Majesty: <br />Choose a Torrential Rain card from your deck and play it immediately.</p>
-    <h5>Northern Kingdoms: Foltest</h5>
+    <h5>Northern Realms: Foltest</h5>
     <p>The Steel-Forged: <br />Destroy all your opponent\'s siege units tied for the highest strength if the total strength of their siege units is at least 10.</p>
     <p>Lord Commander of the North: <br />Remove all weather effects currently in play.</p>
     <p>The Siegemaster: <br />Double the strength of all your siege units unless a Commander\'s Horn is already present in that row.</p>
