@@ -27,11 +27,10 @@ card images can be downloaded from the following links:
 
 | Language |                                                   `zip`                                                   |                                                      `tar`                                                      |
 |:--------:|:---------------------------------------------------------------------------------------------------------:|:---------------------------------------------------------------------------------------------------------------:|
-| English  | [gwent_cards_en.zip](https://github.com/PeterNaggschga/Gwent/releases/download/v2.0.0/gwent_cards_en.zip) | [gwent_cards_en.tar.gz](https://github.com/PeterNaggschga/Gwent/releases/download/v2.0.0/gwent_cards_en.tar.gz) |
-|  German  | [gwent_cards_de.zip](https://github.com/PeterNaggschga/Gwent/releases/download/v2.0.0/gwent_cards_de.zip) | [gwent_cards_de.tar.gz](https://github.com/PeterNaggschga/Gwent/releases/download/v2.0.0/gwent_cards_de.tar.gz) |
+| English  | [gwent_cards_en.zip](https://github.com/PeterNaggschga/Gwent/releases/download/v2.2.0/gwent_cards_en.zip) | [gwent_cards_en.tar.gz](https://github.com/PeterNaggschga/Gwent/releases/download/v2.2.0/gwent_cards_en.tar.gz) |
+|  German  | [gwent_cards_de.zip](https://github.com/PeterNaggschga/Gwent/releases/download/v2.2.0/gwent_cards_de.zip) | [gwent_cards_de.tar.gz](https://github.com/PeterNaggschga/Gwent/releases/download/v2.2.0/gwent_cards_de.tar.gz) |
 
-Please be aware that the Skellige faction is only available in the german
-packages! [This PDF](https://peternaggschga.github.io/Gwent/printing-layout.pdf) summarizes in
+[This PDF](https://peternaggschga.github.io/Gwent/printing-layout.pdf) summarizes in
 which quantity you need to print which card.
 
 When you installed the app, printed out your deck and found a friend, you are ready to go and can
