@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
  * or set the default damage according to the squads base damage.
  * @see CardNumberPickerAdapter
  */
-class SquadManager {
+public class SquadManager {
     /**
      * Integer constant defining how many different squads there may be per row.
      */
