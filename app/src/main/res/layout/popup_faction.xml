@@ -120,9 +120,39 @@
         android:textSize="@dimen/rectangle_textSize"
         android:theme="@style/ScoiataelTheme"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/skelligeButton"
         app:layout_constraintHeight_min="@dimen/rectangle_height"
         app:layout_constraintStart_toEndOf="@id/northernKingdomsButton"
         app:layout_constraintTop_toBottomOf="@id/scoiataelCardView"
+        app:layout_constraintWidth_max="@dimen/popUp_faction_button_max_width" />
+
+    <ImageView
+        android:id="@+id/skelligeCardView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/border_margin"
+        android:contentDescription="@string/content_description_factionpopup_skellige"
+        android:src="@drawable/card_skellige"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/skelligeButton"
+        app:layout_constraintStart_toStartOf="@id/skelligeButton"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/skelligeButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/popUp_faction_margin"
+        android:background="@drawable/rectangle"
+        android:text="@string/faction_skellige"
+        android:textAllCaps="false"
+        android:textColor="@color/color_text_skellige"
+        android:textSize="@dimen/rectangle_textSize"
+        android:theme="@style/SkelligeTheme"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_min="@dimen/rectangle_height"
+        app:layout_constraintStart_toEndOf="@id/scoiataelButton"
+        app:layout_constraintTop_toBottomOf="@id/skelligeCardView"
         app:layout_constraintWidth_max="@dimen/popUp_faction_button_max_width" />
 </androidx.constraintlayout.widget.ConstraintLayout>

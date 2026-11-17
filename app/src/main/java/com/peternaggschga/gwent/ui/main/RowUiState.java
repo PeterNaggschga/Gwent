@@ -3,6 +3,11 @@ package com.peternaggschga.gwent.ui.main;
 
 
 import androidx.annotation.IntRange;
+import androidx.annotation.NonNull;
+
+import com.peternaggschga.gwent.data.RowBuffState;
+
+import java.util.Objects;
 
 /**
  * A data class encapsulating the visible state of a row in the main view of the application.
@@ -20,9 +25,10 @@ public class RowUiState {
     private final boolean weather;
 
     /**
-     * Defines whether the commander's horn buff is active in this row.
+     * Defines the persisted, mutually exclusive buff state of this row.
      */
-    private final boolean horn;
+    @NonNull
+    private final RowBuffState buffState;
 
     /**
      * Defines the number of units in this row.
@@ -34,11 +40,13 @@ public class RowUiState {
      * Constructor of a RowUiState encapsulating the given data.
      * @param damage Integer representing the summed-up damage of all units.
      * @param weather Boolean defining whether the weather debuff is active.
-     * @param horn Boolean defining whether the commander's horn buff is active.
+     * @param buffState RowBuffState defining the active buff, or NONE if neither is active.
      * @param units Integer representing the number of units.
      * @throws IllegalArgumentException When damage or units is negative.
+     * @throws NullPointerException When buffState is null.
      */
-    public RowUiState(@IntRange(from = 0) int damage, boolean weather, boolean horn, @IntRange(from = 0) int units) {
+    public RowUiState(@IntRange(from = 0) int damage, boolean weather, @NonNull RowBuffState buffState,
+                      @IntRange(from = 0) int units) {
         if (damage < 0) {
             throw new IllegalArgumentException("Damage must be greater or equal to 0 but is " + damage + ".");
         }
@@ -47,7 +55,7 @@ public class RowUiState {
         }
         this.damage = damage;
         this.weather = weather;
-        this.horn = horn;
+        this.buffState = Objects.requireNonNull(buffState);
         this.units = units;
     }
 
@@ -73,7 +81,16 @@ public class RowUiState {
      * @return A Boolean whether the commander's horn buff is active.
      */
     public boolean isHorn() {
-        return horn;
+        return buffState == RowBuffState.HORN;
+    }
+
+    /**
+     * Returns whether the Mardroeme effect is active in this row.
+     *
+     * @return A Boolean defining whether the Mardroeme effect is active.
+     */
+    public boolean isMardroeme() {
+        return buffState == RowBuffState.MARDROEME;
     }
 
     /**
@@ -96,6 +113,7 @@ public class RowUiState {
         if (this == o) return true;
         if (!(o instanceof RowUiState)) return false;
         RowUiState state = (RowUiState) o;
-        return damage == state.damage && weather == state.weather && horn == state.horn && units == state.units;
+        return damage == state.damage && weather == state.weather && buffState == state.buffState
+                && units == state.units;
     }
 }

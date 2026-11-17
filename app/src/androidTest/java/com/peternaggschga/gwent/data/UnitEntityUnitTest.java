@@ -214,9 +214,9 @@ public class UnitEntityUnitTest {
         public void selectsCorrectEpicString() {
             Context context = ApplicationProvider.getApplicationContext();
             when(mockUnit.isEpic()).thenReturn(true);
-            assertThat(mockUnit.toString(context)).contains(context.getString(R.string.unit_toString_epic));
+            assertThat(mockUnit.toString(context)).contains(context.getResources().getQuantityString(R.plurals.unit_toString_epic, 1));
             when(mockUnit.isEpic()).thenReturn(false);
-            assertThat(mockUnit.toString(context)).contains(context.getString(R.string.unit_toString_unit));
+            assertThat(mockUnit.toString(context)).contains(context.getResources().getQuantityString(R.plurals.unit_toString_unit, 1));
         }
 
         @Test
@@ -309,13 +309,14 @@ public class UnitEntityUnitTest {
         }
 
         @Test
-        public void sameDescriptionIsReusedViaTimesSymbol() {
+        public void sameDescriptionUsesPluralNounAndCount() {
             Context context = ApplicationProvider.getApplicationContext();
-            UnitEntity mockUnit = mock(UnitEntity.class);
-            when(mockUnit.toString(any())).thenReturn(MOCK_UNIT_DESCRIPTION);
+            UnitEntity unit = new UnitEntity(false, 4, Ability.NONE, null, RowType.MELEE);
 
-            assertThat(UnitEntity.collectionToString(context, Arrays.asList(mockUnit, mockUnit)))
-                    .isEqualTo(context.getString(R.string.unit_toString_multiplicity, 2, MOCK_UNIT_DESCRIPTION));
+            String description = UnitEntity.collectionToString(context, Arrays.asList(unit, unit));
+            assertThat(description).startsWith("2 ");
+            assertThat(description).contains(context.getResources().getQuantityString(R.plurals.unit_toString_unit, 2));
+            assertThat(description).doesNotContain("×");
         }
     }
 }

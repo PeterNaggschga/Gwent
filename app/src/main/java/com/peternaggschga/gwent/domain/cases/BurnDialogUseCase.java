@@ -106,7 +106,8 @@ public class BurnDialogUseCase {
             return Single.create(emitter -> new AlertDialog.Builder(context)
                     .setIconAttribute(android.R.attr.alertDialogIcon)
                     .setTitle(R.string.alertDialog_burn_title)
-                    .setMessage(context.getString(R.string.alertDialog_burn_msg, UnitEntity.collectionToString(context, units)))
+                    .setMessage(context.getResources().getQuantityString(R.plurals.alertDialog_burn_msg,
+                            units.size(), units.size(), UnitEntity.collectionToString(context, units)))
                     .setNegativeButton(R.string.alertDialog_burn_negative, (dialog, which) -> dialog.cancel())
                     .setPositiveButton(R.string.alertDialog_burn_positive, (dialog, which) -> {
                         // noinspection CheckResult, ResultOfMethodCallIgnored

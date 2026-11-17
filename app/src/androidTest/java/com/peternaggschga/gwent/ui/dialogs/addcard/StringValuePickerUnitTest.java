@@ -17,8 +17,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
@@ -26,7 +28,7 @@ import java.util.stream.Collectors;
 @RunWith(MockitoJUnitRunner.class)
 public class StringValuePickerUnitTest {
     static final SortedMap<Ability, Integer> ABILITY_TO_STRING_RES = new TreeMap<>();
-    static final Ability NOT_SELECTABLE = Ability.values()[0];
+    static final Ability NOT_SELECTABLE = Ability.NONE;
     NumberPicker mockPicker;
     StringValuePicker<Ability> testPicker;
 
@@ -34,6 +36,7 @@ public class StringValuePickerUnitTest {
     public static void initAbilityToStringRes() {
         ABILITY_TO_STRING_RES.put(Ability.HORN, R.string.add_picker_ability_horn);
         ABILITY_TO_STRING_RES.put(Ability.REVENGE, R.string.add_picker_ability_revenge);
+        ABILITY_TO_STRING_RES.put(Ability.BERSERKER, R.string.add_picker_ability_berserker);
         ABILITY_TO_STRING_RES.put(Ability.BINDING, R.string.add_picker_ability_binding);
         ABILITY_TO_STRING_RES.put(Ability.MORAL_BOOST, R.string.add_picker_ability_moralBoost);
     }
@@ -158,14 +161,15 @@ public class StringValuePickerUnitTest {
         assertThat(mockPicker.getValue()).isEqualTo(0);
 
         testPicker.setSelectableValues(ABILITY_TO_STRING_RES.keySet(), Ability.BINDING);
-        assertThat(mockPicker.getValue()).isEqualTo(Ability.BINDING.ordinal() - 1);
+        assertThat(mockPicker.getValue()).isEqualTo(new ArrayList<>(ABILITY_TO_STRING_RES.keySet()).indexOf(Ability.BINDING));
     }
 
     @Test
     public void getValueReturnsSelectedValue() {
-        for (int i = 0; i < Ability.values().length - 1; i++) {
+        List<Ability> selectableAbilities = new ArrayList<>(ABILITY_TO_STRING_RES.keySet());
+        for (int i = 0; i < selectableAbilities.size(); i++) {
             mockPicker.setValue(i);
-            assertThat(testPicker.getValue()).isEqualTo(Ability.values()[i + 1]);
+            assertThat(testPicker.getValue()).isEqualTo(selectableAbilities.get(i));
         }
     }
 
@@ -180,8 +184,9 @@ public class StringValuePickerUnitTest {
 
     @Test
     public void setValueSetsPickerValue() {
-        for (int i = 0; i < Ability.values().length - 1; i++) {
-            testPicker.setValue(Ability.values()[i + 1]);
+        List<Ability> selectableAbilities = new ArrayList<>(ABILITY_TO_STRING_RES.keySet());
+        for (int i = 0; i < selectableAbilities.size(); i++) {
+            testPicker.setValue(selectableAbilities.get(i));
             assertThat(mockPicker.getValue()).isEqualTo(i);
         }
     }
@@ -205,6 +210,7 @@ public class StringValuePickerUnitTest {
         Context context = ApplicationProvider.getApplicationContext();
         assertThat(testPicker.getDisplayString(Ability.HORN)).isEqualTo(context.getString(R.string.add_picker_ability_horn));
         assertThat(testPicker.getDisplayString(Ability.REVENGE)).isEqualTo(context.getString(R.string.add_picker_ability_revenge));
+        assertThat(testPicker.getDisplayString(Ability.BERSERKER)).isEqualTo(context.getString(R.string.add_picker_ability_berserker));
         assertThat(testPicker.getDisplayString(Ability.BINDING)).isEqualTo(context.getString(R.string.add_picker_ability_binding));
         assertThat(testPicker.getDisplayString(Ability.MORAL_BOOST)).isEqualTo(context.getString(R.string.add_picker_ability_moralBoost));
     }

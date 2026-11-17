@@ -6,7 +6,7 @@ import androidx.room3.Entity;
 import androidx.room3.PrimaryKey;
 
 /**
- * A class representing the state of an attack row, i.e., weather and commanders horn.
+ * A class representing the state of an attack row, i.e., weather and its active buff.
  * Is a persistent Entity and is therefore saved in a database table named `rows`.
  */
 @Entity(tableName = "rows")
@@ -30,16 +30,17 @@ public class RowEntity {
     private boolean weather;
 
     /**
-     * Defines whether the commanders horn buff is present in the represented row, i.e.,
-     * if set to true, the damage value of units in the represented row is doubled.
-     * Is set to `false` by default.
+     * Defines the active buff of the represented row as one of the values in RowBuffState.
+     * The commander's horn and Mardroeme effects are mutually exclusive.
+     * Is set to RowBuffState.NONE by default.
      */
-    @ColumnInfo(defaultValue = "false")
-    private boolean horn;
+    @NonNull
+    @ColumnInfo(defaultValue = "'NONE'")
+    private RowBuffState buffState = RowBuffState.NONE;
 
     /**
      * Constructor of a RowEntity.
-     * .weather and .horn cannot be set here
+     * .weather and .buffState cannot be set here
      * since a new row must start with the respective default values.
      *
      * @param id RowType of the represented row.
@@ -80,22 +81,23 @@ public class RowEntity {
     }
 
     /**
-     * Getter for .horn.
+     * Getter for .buffState.
      * Only used by Room extension.
      *
-     * @return Boolean representing the current status of the horn buff.
+     * @return RowBuffState representing the currently active buff, or NONE if no buff is active.
      */
-    protected boolean isHorn() {
-        return horn;
+    @NonNull
+    protected RowBuffState getBuffState() {
+        return buffState;
     }
 
     /**
-     * Setter for .horn.
+     * Setter for .buffState.
      * Only used by Room extension.
      *
-     * @param horn Boolean representing the new status of the horn buff.
+     * @param buffState RowBuffState representing the new active buff, or NONE to clear it.
      */
-    protected void setHorn(boolean horn) {
-        this.horn = horn;
+    protected void setBuffState(@NonNull RowBuffState buffState) {
+        this.buffState = buffState;
     }
 }

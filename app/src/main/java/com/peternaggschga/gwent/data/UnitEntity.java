@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * A class representing a card on the game board.
@@ -64,6 +65,11 @@ public class UnitEntity {
      * Integer defining what the maximum damage of a non-epic UnitEntity can be.
      */
     public static final int NON_EPIC_DAMAGE_VALUES_UPPER_BOUND = 20;
+
+    /**
+     * Tight Bond squad reserved for transformed ranged Berserkers, outside selectable squads 1–3.
+     */
+    public static final int BERSERKER_SQUAD = 4;
 
     /**
      * Defines the Ability of the represented card.
@@ -120,6 +126,37 @@ public class UnitEntity {
     }
 
     /**
+     * Creates an independent copy with the same stats but an unset ID.
+     *
+     * @return A new unit with ID 0, so Room generates a new identity when it is inserted.
+     */
+    @NonNull
+    public UnitEntity copy() {
+        return new UnitEntity(epic, damage, ability, squad, row);
+    }
+
+    /**
+     * Creates a copy with new stats, retaining this unit's ID, row, and epic status.
+     * Does not modify the original unit.
+     *
+     * @param damage  New base damage.
+     * @param ability New ability.
+     * @param squad   Positive Tight Bond squad, or null for other abilities.
+     * @return A unit suitable for updating the existing database entry by ID.
+     * @throws IllegalArgumentException When damage or the ability/squad combination is invalid.
+     */
+    @NonNull
+    public UnitEntity withStats(@IntRange(from = 0) int damage, @NonNull Ability ability,
+                                @Nullable Integer squad) {
+        UnitEntity result = copy();
+        result.setDamage(damage);
+        result.setAbility(ability);
+        result.setSquad(squad);
+        result.id = id;
+        return result;
+    }
+
+    /**
      * Calculates the damage of this unit when (de-)buffed.
      * Returns .damage if .epic is true.
      * Otherwise, the damage is calculated through the given DamageCalculator,
@@ -152,7 +189,7 @@ public class UnitEntity {
      * Creates a String containing the descriptions of all units in the given collection,
      * separated by commas.
      * If n units have the same description, instead of printing the same description n times,
-     * "n×" is printed in front of the description.
+     * the count is printed in front of a quantity-aware description.
      * Unit descriptions are created using .toString(Context).
      * Ordering of units in the given Collection is not guaranteed to be kept.
      *
@@ -168,16 +205,17 @@ public class UnitEntity {
             throw new IllegalArgumentException("Units collection must not be empty.");
         }
 
-        Map<String, Integer> descriptionStrings = new HashMap<>(units.size());
+        Map<String, List<UnitEntity>> descriptionStrings = new HashMap<>(units.size());
         for (UnitEntity unit : units) {
             String description = unit.toString(context);
-            descriptionStrings.merge(description, 1, Integer::sum);
+            descriptionStrings.computeIfAbsent(description, key -> new ArrayList<>()).add(unit);
         }
 
         List<String> descriptions = new ArrayList<>(descriptionStrings.size());
         if (descriptionStrings.size() < units.size()) {
-            descriptionStrings.forEach((key, value) ->
-                    descriptions.add(context.getString(R.string.unit_toString_multiplicity, value, key)));
+            descriptionStrings.forEach((key, value) -> descriptions.add(value.size() == 1 ? key
+                    : context.getString(R.string.unit_toString_multiplicity, value.size(),
+                    value.get(0).toString(context, value.size()))));
         } else {
             descriptions.addAll(descriptionStrings.keySet());
         }
@@ -208,6 +246,18 @@ public class UnitEntity {
      */
     @NonNull
     public String toString(@NonNull Context context) {
+        return toString(context, 1);
+    }
+
+    /**
+     * Formats these stats with a noun appropriate for the number of identical units.
+     *
+     * @param context Context used to acquire String resources.
+     * @param count Number of identical units used to select the grammatical number.
+     * @return A quantity-aware string representation of this unit's stats.
+     */
+    @NonNull
+    private String toString(@NonNull Context context, int count) {
         String row;
         switch (getRow()) {
             case RANGE:
@@ -220,7 +270,8 @@ public class UnitEntity {
             default:
                 row = context.getString(R.string.unit_toString_melee);
         }
-        String epic = isEpic() ? context.getString(R.string.unit_toString_epic) : context.getString(R.string.unit_toString_unit);
+        String epic = context.getResources().getQuantityString(
+                isEpic() ? R.plurals.unit_toString_epic : R.plurals.unit_toString_unit, count);
         String ability;
         String squad = "";
         switch (getAbility()) {
@@ -371,5 +422,31 @@ public class UnitEntity {
      */
     void setRow(@NonNull RowType row) {
         this.row = row;
+    }
+
+    /**
+     * Compares identity and all persisted stats, allowing streams to detect in-place database updates.
+     *
+     * @param o Object to compare with this unit.
+     * @return Whether ID, epic status, damage, ability, squad, and row are equal.
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof UnitEntity)) return false;
+        UnitEntity unit = (UnitEntity) o;
+        return id == unit.id && epic == unit.epic && damage == unit.damage && ability == unit.ability
+                && Objects.equals(squad, unit.squad) && row == unit.row;
+    }
+
+    /**
+     * Returns a hash derived from identity and all persisted stats.
+     * Units must not be modified while used as hash-based collection keys.
+     *
+     * @return A hash consistent with equals(Object).
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, epic, damage, ability, squad, row);
     }
 }

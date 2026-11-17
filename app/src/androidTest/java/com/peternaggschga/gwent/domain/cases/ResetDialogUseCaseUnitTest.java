@@ -13,6 +13,7 @@ import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.peternaggschga.gwent.R;
+import com.peternaggschga.gwent.data.RowBuffState;
 import com.peternaggschga.gwent.data.UnitRepository;
 import com.peternaggschga.gwent.ui.sounds.SoundManager;
 
@@ -36,7 +37,7 @@ public class ResetDialogUseCaseUnitTest {
     public void initMocks() {
         repository = mock(UnitRepository.class);
         when(repository.isWeather(any())).thenReturn(Single.just(true));
-        when(repository.isHorn(any())).thenReturn(Single.just(true));
+        when(repository.getBuffState(any())).thenReturn(Single.just(RowBuffState.MARDROEME));
         when(repository.getUnits()).thenReturn(Single.just(Collections.emptyList()));
         when(repository.reset(any())).thenReturn(Completable.complete());
         when(repository.reset()).thenReturn(Completable.complete());

@@ -25,7 +25,7 @@ class SquadManager {
     /**
      * Integer constant defining how many different squads there may be per row.
      */
-    public static final int MAX_NR_SQUADS = 3;
+    public static final int MAX_NR_SQUADS = UnitEntity.BERSERKER_SQUAD - 1;
 
     /**
      * Array of SquadState objects containing one SquadState for each possible squad.
@@ -77,7 +77,8 @@ class SquadManager {
 
         Context context = picker.getContext();
         Toast.makeText(context,
-                context.getString(R.string.popUp_add_card_binding_count, squad.getSquadNumber(), squad.getSquadMembers()),
+                context.getResources().getQuantityString(R.plurals.popUp_add_card_binding_count,
+                        squad.getSquadMembers(), squad.getSquadNumber(), squad.getSquadMembers()),
                 Toast.LENGTH_SHORT).show();
 
         if (squad.hasMembers()) {
