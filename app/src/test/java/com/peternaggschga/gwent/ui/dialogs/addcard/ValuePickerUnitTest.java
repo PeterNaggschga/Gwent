@@ -214,9 +214,10 @@ public class ValuePickerUnitTest {
 
     @Test
     public void valuesPublishesUserChangesImmediately() {
+        testPicker.setSelectableValues(Arrays.asList(Ability.HORN, Ability.MARDROEME), Ability.HORN);
         TestObserver<Ability> observer = testPicker.values().test();
         pickerListener.onValueChange(mockPicker, 0, 1);
-        observer.assertValues(Ability.HORN, Ability.REVENGE).assertNoErrors();
+        observer.assertValues(Ability.HORN, Ability.MARDROEME).assertNoErrors();
     }
 
     @Test
@@ -245,11 +246,12 @@ public class ValuePickerUnitTest {
 
     @Test
     public void valuesSupportsMultipleSubscribersWithoutReplacingWidgetListener() {
+        testPicker.setSelectableValues(Arrays.asList(Ability.HORN, Ability.MARDROEME), Ability.HORN);
         TestObserver<Ability> first = testPicker.values().test();
         TestObserver<Ability> second = testPicker.values().test();
         pickerListener.onValueChange(mockPicker, 0, 1);
-        first.assertValues(Ability.HORN, Ability.REVENGE);
-        second.assertValues(Ability.HORN, Ability.REVENGE);
+        first.assertValues(Ability.HORN, Ability.MARDROEME);
+        second.assertValues(Ability.HORN, Ability.MARDROEME);
         verify(mockPicker, never()).setOnValueChangedListener(any());
     }
 

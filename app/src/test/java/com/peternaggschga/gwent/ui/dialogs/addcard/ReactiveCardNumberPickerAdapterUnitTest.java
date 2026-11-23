@@ -79,9 +79,10 @@ public class ReactiveCardNumberPickerAdapterUnitTest {
         create(RowType.SIEGE);
         assertThat(hero.labels).asList().containsExactly(String.valueOf(R.string.add_picker_epic_normal));
         assertThat(ability.labels).asList().containsExactly(
+                String.valueOf(R.string.add_picker_ability_moralBoost),
                 String.valueOf(R.string.add_picker_ability_default),
-                String.valueOf(R.string.add_picker_ability_binding),
-                String.valueOf(R.string.add_picker_ability_moralBoost)).inOrder();
+                String.valueOf(R.string.add_picker_ability_binding)).inOrder();
+        assertThat(ability.value).isEqualTo(1);
         assertThat(squad.visibility).isEqualTo(View.GONE);
         assertThat(count.value).isEqualTo(1);
     }

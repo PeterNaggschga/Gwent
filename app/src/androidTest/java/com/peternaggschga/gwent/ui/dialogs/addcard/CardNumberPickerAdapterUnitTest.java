@@ -28,15 +28,15 @@ import io.reactivex.rxjava3.schedulers.TestScheduler;
 public class CardNumberPickerAdapterUnitTest {
     @Test
     public void initializesRealPickersWithFilteredNormalOptions() {
-        assertInitialOptions(RowType.RANGE, 2, 4);
+        assertInitialOptions(RowType.RANGE, 2, 4, 0);
     }
 
     @Test
     public void unavailableHeroesCannotBeSelected() {
-        assertInitialOptions(RowType.SIEGE, 1, 3);
+        assertInitialOptions(RowType.SIEGE, 1, 3, 1);
     }
 
-    private void assertInitialOptions(RowType row, int heroOptions, int abilityOptions) {
+    private void assertInitialOptions(RowType row, int heroOptions, int abilityOptions, int defaultAbilityIndex) {
         InstrumentationRegistry.getInstrumentation().runOnMainSync(() -> {
             Context context = new ContextThemeWrapper(
                     InstrumentationRegistry.getInstrumentation().getTargetContext(),
@@ -52,7 +52,9 @@ public class CardNumberPickerAdapterUnitTest {
                 assertThat(hero.getDisplayedValues()).hasLength(heroOptions);
                 assertThat(ability.getDisplayedValues()).hasLength(abilityOptions);
                 assertThat(hero.getValue()).isEqualTo(0);
-                assertThat(ability.getValue()).isEqualTo(0);
+                assertThat(ability.getValue()).isEqualTo(defaultAbilityIndex);
+                assertThat(ability.getDisplayedValues()[defaultAbilityIndex])
+                        .isEqualTo(context.getString(R.string.add_picker_ability_default));
                 assertThat(pickerGroup.findViewById(R.id.popup_add_card_binding_picker).getVisibility())
                         .isEqualTo(View.GONE);
             } finally {

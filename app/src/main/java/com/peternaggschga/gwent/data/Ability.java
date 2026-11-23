@@ -15,14 +15,9 @@ public enum Ability {
     HORN,
 
     /**
-     * Represents a card that has the Summon Avenger ability.
+     * Represents a card that has the Morale Boost ability.
      */
-    REVENGE,
-
-    /**
-     * Represents a card that has the Berserker ability.
-     */
-    BERSERKER,
+    MORAL_BOOST,
 
     /**
      * Represents a card that has the Mardroeme ability.
@@ -30,12 +25,17 @@ public enum Ability {
     MARDROEME,
 
     /**
+     * Represents a card that has the Summon Avenger ability.
+     */
+    REVENGE,
+
+    /**
      * Represents a card that has the Tight Bond ability.
      */
     BINDING,
 
     /**
-     * Represents a card that has the Morale Boost ability.
+     * Represents a card that has the Berserker ability.
      */
-    MORAL_BOOST,
+    BERSERKER,
 }

@@ -190,14 +190,21 @@ class CardNumberPickerAdapter implements Disposable {
     }
 
     /**
-     * Applies sorted ability options, preserving the current selection when valid.
+     * Applies sorted ability options, centering NONE when there are exactly three choices.
+     * Preserves the current selection when valid, otherwise prefers NONE when available.
      * A programmatic fallback is published so dependent squad state updates immediately.
      *
      * @param hero Whether hero abilities should be offered.
      */
     private void updateAbilities(boolean hero) {
         List<Ability> abilities = abilityFilter.getAbilities(hero).stream().sorted().collect(Collectors.toList());
-        Ability selected = abilities.contains(abilityPicker.getValue()) ? abilityPicker.getValue() : abilities.get(0);
+        boolean hasNone = abilities.contains(Ability.NONE);
+        if (abilities.size() == 3 && hasNone) {
+            abilities.remove(Ability.NONE);
+            abilities.add(1, Ability.NONE);
+        }
+        Ability previous = abilityPicker.getValue();
+        Ability selected = abilities.contains(previous) ? previous : (hasNone ? Ability.NONE : abilities.get(0));
         abilityPicker.setSelectableValues(abilities, selected);
     }
 
