@@ -81,10 +81,10 @@ public class UnitDaoUnitTest {
                 .stream().findFirst().get();
         try {
             unitDao.insertUnits(Collections.singletonList(entity)).ignoreElement()
-                    .andThen(unitDao.countUnits())
+                    .andThen(unitDao.getUnits())
                     .test()
                     .await()
-                    .assertValue(1);
+                    .assertValue(units -> units.size() == 1);
         } catch (Exception ignored) {
             fail();
         }
@@ -113,7 +113,7 @@ public class UnitDaoUnitTest {
     @Test
     public void insertUnitsAcceptsEmptyBatch() {
         unitDao.insertUnits(Collections.emptyList()).ignoreElement().blockingAwait();
-        assertThat(unitDao.countUnits().blockingGet()).isEqualTo(0);
+        assertThat(unitDao.getUnits().blockingGet()).isEmpty();
     }
 
     @Test
@@ -123,7 +123,7 @@ public class UnitDaoUnitTest {
         UnitEntity existing = unitDao.getUnits().blockingGet().get(0);
         unitDao.insertUnits(Arrays.asList(existing, new UnitEntity(false, 8, Ability.NONE, null, RowType.RANGE))).ignoreElement()
                 .blockingAwait();
-        assertThat(unitDao.countUnits().blockingGet()).isEqualTo(2);
+        assertThat(unitDao.getUnits().blockingGet()).hasSize(2);
         assertThat(unitDao.getUnit(existing.getId()).blockingGet().getDamage()).isEqualTo(5);
     }
 
@@ -150,34 +150,17 @@ public class UnitDaoUnitTest {
         assertThrows(RuntimeException.class, () -> unitDao.insertUnits(Arrays.asList(
                 new UnitEntity(false, 5, Ability.NONE, null, RowType.MELEE),
                 new UnitEntity(false, 5, Ability.NONE, null, RowType.RANGE))).ignoreElement().blockingAwait());
-        assertThat(unitDao.countUnits().blockingGet()).isEqualTo(0);
+        assertThat(unitDao.getUnits().blockingGet()).isEmpty();
     }
 
     @Test
-    public void deleteUnitDeletesUnit() throws InterruptedException {
+    public void deleteUnitsDeletesUnits() {
         getUnitsReturnsAllUnits();
         List<UnitEntity> units = unitDao.getUnits().blockingGet();
         assertThat(units).hasSize(RowType.values().length * 5);
-
-        for (int i = 0; i < units.size(); ) {
-            unitDao.deleteUnit(units.get(i).getId())
-                    .andThen(unitDao.countUnits())
-                    .test()
-                    .await()
-                    .assertValue(units.size() - ++i);
-        }
-    }
-
-    @Test
-    public void deleteUnitsDeletesUnits() throws InterruptedException {
-        getUnitsReturnsAllUnits();
-        List<UnitEntity> units = unitDao.getUnits().blockingGet();
-        assertThat(units).hasSize(RowType.values().length * 5);
-        unitDao.deleteUnits(units)
-                .andThen(unitDao.countUnits())
-                .test()
-                .await()
-                .assertValue(0);
+        assertThat(unitDao.deleteUnits(units)
+                .andThen(unitDao.getUnits())
+                .blockingGet()).isEmpty();
     }
 
     @Test
@@ -272,29 +255,19 @@ public class UnitDaoUnitTest {
 
     @Test
     public void countUnitsCountsCorrectly() throws InterruptedException {
-        for (int rowTypeNumber = 0; rowTypeNumber < RowType.values().length; rowTypeNumber++) {
-            RowType row = RowType.values()[rowTypeNumber];
+        for (RowType row : RowType.values()) {
             unitDao.countUnits(row)
                     .test()
                     .await()
                     .assertValue(0);
             for (int unitNumber = 0; unitNumber < 5; unitNumber++) {
-                unitDao.countUnits()
-                        .test()
-                        .await()
-                        .assertValue(rowTypeNumber * 5 + unitNumber);
                 unitDao.insertUnits(Collections.singletonList(new UnitEntity(false, unitNumber, Ability.values()[unitNumber / 2], null, row))).ignoreElement()
                         .andThen(unitDao.countUnits(row))
                         .test()
                         .await()
                         .assertValue(unitNumber + 1);
             }
-            unitDao.countUnits()
-                    .test()
-                    .await()
-                    .assertValue((rowTypeNumber + 1) * 5);
         }
-
     }
 
     @Test

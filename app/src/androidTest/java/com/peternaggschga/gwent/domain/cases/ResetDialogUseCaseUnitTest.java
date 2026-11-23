@@ -40,7 +40,6 @@ public class ResetDialogUseCaseUnitTest {
         when(repository.getBuffState(any())).thenReturn(Single.just(RowBuffState.MARDROEME));
         when(repository.getUnits()).thenReturn(Single.just(Collections.emptyList()));
         when(repository.reset(any())).thenReturn(Completable.complete());
-        when(repository.reset()).thenReturn(Completable.complete());
     }
 
     @Test

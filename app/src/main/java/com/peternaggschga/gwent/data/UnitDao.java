@@ -45,14 +45,6 @@ public interface UnitDao {
     Completable updateUnits(@NonNull List<UnitEntity> units);
 
     /**
-     * Deletes the UnitEntity object with the given id from `units`.
-     * @param id Integer representing the UnitEntity.id of the deleted UnitEntity.
-     * @return A Completable tracking operation status.
-     */
-    @Query("DELETE FROM units WHERE `id` = :id")
-    Completable deleteUnit(int id);
-
-    /**
      * Deletes the given UnitEntity objects from `units`.
      *
      * @param units List of UnitEntity that are being inserted.
@@ -114,14 +106,6 @@ public interface UnitDao {
      */
     @Query("SELECT COUNT(*) FROM units WHERE `row` = :row")
     Single<Integer> countUnits(@NonNull RowType row);
-
-    /**
-     * Counts UnitEntity objects in `units`.
-     *
-     * @return A Single tracking operation status and returning the value.
-     */
-    @Query("SELECT COUNT(*) FROM units")
-    Single<Integer> countUnits();
 
     /**
      * Fetches a Flowable of Booleans defining whether `units` contains units that are not epic.

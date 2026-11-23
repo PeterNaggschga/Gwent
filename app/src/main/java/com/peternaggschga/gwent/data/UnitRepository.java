@@ -30,7 +30,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
  * A facade class managing public access to the data layer.
  * The contained functions mostly redirect requests to package-private DAO methods in RowDao and UnitDao.
  * Some functions implement slightly more complex behavior by chaining multiple DAO calls,
- * e.g., .reset().
+ * e.g., .reset(UnitEntity).
  */
 public class UnitRepository {
     /**
@@ -141,23 +141,10 @@ public class UnitRepository {
     }
 
     /**
-     * Resets the board by removing all units and resetting row status.
-     * Resetting row status is equivalent to removing the old rows and calling .initializeRows().
-     * Method is a wrapper for .reset(UnitEntity).
-     *
-     * @return A Completable tracking operation status.
-     * @see .reset(UnitEntity)
-     */
-    @NonNull
-    public Completable reset() {
-        return reset(null);
-    }
-
-    /**
      * Resets the board by removing all units but the given one and resetting row status.
      * Resetting row status is equivalent to removing the old rows and calling .initializeRows().
      *
-     * @param keptUnit UnitEntity that should be kept.
+     * @param keptUnit UnitEntity that should be kept, or null to remove all units.
      * @return A Completable tracking operation status.
      * @see .initializeRows()
      */
@@ -382,7 +369,6 @@ public class UnitRepository {
 
     /**
      * Returns whether RowEntity.buffState is RowBuffState.HORN for the given attack row.
-     * @see .isHornFlowable(RowType)
      * @param row RowEntity.id where the horn status is queried.
      * @return A Single emitting true for HORN and false for NONE or MARDROEME.
      */
@@ -397,25 +383,6 @@ public class UnitRepository {
     }
 
     /**
-     * Returns a Flowable emitting whether RowEntity.buffState is RowBuffState.HORN for the given attack row.
-     *
-     * @param row RowEntity.id where the horn status is queried.
-     * @return A Flowable emitting distinct Boolean values: true for HORN, false otherwise.
-     * @see .isHorn(RowType)
-     */
-    @NonNull
-    public Flowable<Boolean> isHornFlowable(@NonNull RowType row) {
-        return database
-                .rows()
-                .getBuffStateFlowable(row)
-                .onBackpressureLatest()
-                .map(rowBuffState -> rowBuffState == RowBuffState.HORN)
-                .distinctUntilChanged()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
-    }
-
-    /**
      * Removes the given units from the game.
      * @param units List of units to be removed.
      * @return A Completable tracking operation status.
@@ -423,17 +390,6 @@ public class UnitRepository {
     @NonNull
     public Completable delete(@NonNull Collection<UnitEntity> units) {
         return database.units().deleteUnits(units).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
-    }
-
-    /**
-     * Removes the unit with the given id from the game.
-     *
-     * @param id Integer representing the unit that should be deleted.
-     * @return A Completable tracking operation status.
-     */
-    @NonNull
-    public Completable delete(int id) {
-        return database.units().deleteUnit(id).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 
     /**
@@ -452,22 +408,10 @@ public class UnitRepository {
      * Counts the units in the given attack row.
      * @param row RowEntity.id where the units are counted.
      * @return A Single tracking operation status and returning the value.
-     * @see .countUnits()
      */
     @NonNull
     public Single<Integer> countUnits(@NonNull RowType row) {
         return database.units().countUnits(row).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
-    }
-
-    /**
-     * Counts the units in all attack rows.
-     *
-     * @return A Single tracking operation status and returning the value.
-     * @see .countUnits(RowType)
-     */
-    @NonNull
-    public Single<Integer> countUnits() {
-        return database.units().countUnits().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 
     /**

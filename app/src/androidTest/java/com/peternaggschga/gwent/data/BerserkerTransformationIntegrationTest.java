@@ -108,7 +108,7 @@ public class BerserkerTransformationIntegrationTest {
         assertThat(repository.getBuffState(RowType.MELEE).blockingGet()).isEqualTo(RowBuffState.HORN);
 
         UnitEntity mardroeme = units.stream().filter(unit -> unit.getAbility() == Ability.MARDROEME).findFirst().get();
-        repository.delete(mardroeme.getId()).blockingAwait();
+        repository.delete(Collections.singletonList(mardroeme)).blockingAwait();
         repository.insertUnit(false, 2, Ability.BERSERKER, null, RowType.MELEE, 1).blockingAwait();
         units = repository.getUnits(RowType.MELEE).blockingGet();
         assertThat(units.stream().filter(unit -> unit.getAbility() == Ability.BERSERKER).count()).isEqualTo(1);
@@ -200,14 +200,14 @@ public class BerserkerTransformationIntegrationTest {
                 .filter(unit -> unit.getAbility() == Ability.MORAL_BOOST).count()).isEqualTo(1);
 
         repository.insertUnits(Collections.singletonList(oldBerserker)).blockingAwait();
-        assertThat(repository.countUnits().blockingGet()).isEqualTo(2);
+        assertThat(repository.getUnits().blockingGet()).hasSize(2);
         assertThat(repository.getUnit((int) oldId).blockingGet().getAbility()).isEqualTo(Ability.BERSERKER);
 
         repository.copy((int) oldId).blockingAwait();
         assertThat(repository.getUnits(RowType.MELEE).blockingGet().stream()
                 .filter(unit -> unit.getAbility() == Ability.MORAL_BOOST).count()).isEqualTo(2);
         repository.reset(oldBerserker).blockingAwait();
-        assertThat(repository.countUnits().blockingGet()).isEqualTo(1);
+        assertThat(repository.getUnits().blockingGet()).hasSize(1);
         assertThat(repository.getUnit((int) oldId).blockingGet().getAbility()).isEqualTo(Ability.BERSERKER);
         assertThat(repository.getBuffState(RowType.MELEE).blockingGet()).isEqualTo(RowBuffState.NONE);
     }
@@ -221,7 +221,7 @@ public class BerserkerTransformationIntegrationTest {
         UnitEntity missing = new UnitEntity(false, 5, Ability.NONE, null, RowType.MELEE);
         missing.setId(9999);
         repository.updateUnits(Arrays.asList(first, second, missing)).blockingAwait();
-        assertThat(repository.countUnits().blockingGet()).isEqualTo(2);
+        assertThat(repository.getUnits().blockingGet()).hasSize(2);
         for (UnitEntity unit : original) {
             assertThat(unit.getDamage()).isEqualTo(2);
             assertThat(unit.getAbility()).isEqualTo(Ability.BERSERKER);

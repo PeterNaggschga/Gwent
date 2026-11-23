@@ -16,7 +16,6 @@ import org.junit.runner.RunWith;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -84,7 +83,7 @@ public class UnitRepositoryIntegrationTest {
         database.rows().updateBuffState(RowType.MELEE, RowBuffState.MARDROEME).blockingAwait();
         repository = UnitRepository.getRepository(database,
                 ApplicationProvider.getApplicationContext()).blockingGet();
-        assertThat(database.units().countUnits().blockingGet()).isGreaterThan(0);
+        assertThat(database.units().getUnits().blockingGet()).isNotEmpty();
         assertThat(database.rows().getBuffState(RowType.MELEE).blockingGet()).isEqualTo(RowBuffState.MARDROEME);
     }
 
@@ -95,11 +94,11 @@ public class UnitRepositoryIntegrationTest {
                 database.units().insertUnits(Collections.singletonList(new UnitEntity(false, 5, Ability.NONE, null, row))).ignoreElement().blockingAwait();
             }
         }
-        assertThat(repository.reset()
+        assertThat(repository.reset(null)
                 .observeOn(Schedulers.io())
-                .andThen(database.units().countUnits())
+                .andThen(database.units().getUnits())
                 .blockingGet()
-        ).isEqualTo(0);
+        ).isEmpty();
     }
 
     @Test
@@ -113,9 +112,9 @@ public class UnitRepositoryIntegrationTest {
         UnitEntity unit = database.units().getUnits().subscribeOn(Schedulers.io()).blockingGet().stream().findAny().get();
         assertThat(repository.reset(unit)
                 .observeOn(Schedulers.io())
-                .andThen(database.units().countUnits())
+                .andThen(database.units().getUnits())
                 .blockingGet()
-        ).isEqualTo(1);
+        ).hasSize(1);
     }
 
     @Test
@@ -125,7 +124,7 @@ public class UnitRepositoryIntegrationTest {
                 database.rows().updateBuffState(row, state)
                         .andThen(database.rows().updateWeather(row)).blockingAwait();
             }
-            repository.reset().blockingAwait();
+            repository.reset(null).blockingAwait();
             for (RowType row : RowType.values()) {
                 database.rows().getBuffState(row).test().await().assertValue(RowBuffState.NONE);
                 database.rows().isWeather(row).test().await().assertValue(false);
@@ -137,9 +136,9 @@ public class UnitRepositoryIntegrationTest {
     public void insertUnitAddsUnits() {
         assertThat(repository.insertUnit(false, 5, Ability.NONE, null, RowType.MELEE, TESTING_DEPTH)
                 .observeOn(Schedulers.io())
-                .andThen(database.units().countUnits())
+                .andThen(database.units().getUnits())
                 .blockingGet())
-                .isEqualTo(TESTING_DEPTH);
+                .hasSize(TESTING_DEPTH);
     }
 
     @Test
@@ -353,8 +352,8 @@ public class UnitRepositoryIntegrationTest {
                     fail();
                 }
             }));
-            repository.reset().blockingAwait();
-            repository.reset().blockingAwait();
+            repository.reset(null).blockingAwait();
+            repository.reset(null).blockingAwait();
         }
         disposables.dispose();
     }
@@ -524,60 +523,15 @@ public class UnitRepositoryIntegrationTest {
     }
 
     @Test
-    public void isHornFlowableReturnsHorn() {
-        for (RowType row : RowType.values()) {
-            Flowable<Boolean> isHorn = repository.isHornFlowable(row);
-            assertThat(isHorn.blockingFirst()).isFalse();
-            for (RowBuffState state : RowBuffState.values()) {
-                assertThat(database.rows().updateBuffState(row, state)
-                        .andThen(isHorn)
-                        .blockingFirst())
-                        .isEqualTo(state == RowBuffState.HORN);
-            }
-        }
-    }
-
-    @Test
-    public void isHornFlowableIsDistinctUntilChanged() {
-        for (RowType row : RowType.values()) {
-            TestSubscriber<Boolean> observer = repository.isHornFlowable(row).test();
-            try {
-                observer.awaitCount(1).assertValues(false);
-                database.rows().updateBuffState(row, RowBuffState.MARDROEME).blockingAwait();
-                database.rows().updateBuffState(row, RowBuffState.HORN).blockingAwait();
-                observer.awaitCount(2).assertValues(false, true);
-
-                database.rows().updateBuffState(row, RowBuffState.NONE).blockingAwait();
-                observer.awaitCount(3).assertValues(false, true, false);
-                database.rows().updateBuffState(row, RowBuffState.MARDROEME).blockingAwait();
-                database.rows().updateBuffState(row, RowBuffState.HORN).blockingAwait();
-                observer.awaitCount(4).assertNoErrors().assertValues(false, true, false, true);
-            } finally {
-                observer.cancel();
-            }
-        }
-    }
-
-    @Test
-    public void isHornFlowableAssertsNonNull() {
-        try {
-            //noinspection DataFlowIssue, ResultOfMethodCallIgnored
-            repository.isHornFlowable(null).blockingFirst();
-            fail();
-        } catch (NullPointerException ignored) {
-        }
-    }
-
-    @Test
     public void deleteDeletesUnits() {
         insertDummys();
 
         List<UnitEntity> units = database.units().getUnits().blockingGet();
         assertThat(repository.delete(units)
                 .observeOn(Schedulers.io())
-                .andThen(database.units().countUnits())
+                .andThen(database.units().getUnits())
                 .blockingGet())
-                .isEqualTo(0);
+                .isEmpty();
     }
 
     @Test
@@ -592,58 +546,30 @@ public class UnitRepositoryIntegrationTest {
     }
 
     @Test
-    public void deleteUnitDeletesUnit() {
-        insertDummys();
-        List<UnitEntity> units = repository.getUnits().blockingGet();
-
-        int i = 0;
-        for (UnitEntity unit : units) {
-            List<UnitEntity> currentUnits = repository.delete(unit.getId())
-                    .andThen(repository.getUnits())
-                    .blockingGet();
-            assertThat(currentUnits).hasSize(units.size() - ++i);
-            Iterator<UnitEntity> unitIterator = units.subList(i, units.size()).iterator();
-            assertThat(
-                    currentUnits.stream()
-                            .map(UnitEntity::getId)
-                            .allMatch(id -> id == unitIterator.next().getId())
-            ).isTrue();
-        }
-    }
-
-    @Test
     public void copyCopiesUnits() {
         insertDummys();
 
         List<UnitEntity> units = database.units().getUnits().blockingGet();
         assertThat(repository.copy(units.get(0).getId())
                 .observeOn(Schedulers.io())
-                .andThen(database.units().countUnits())
+                .andThen(database.units().getUnits())
                 .blockingGet())
-                .isEqualTo(units.size() + 1);
+                .hasSize(units.size() + 1);
     }
 
     @Test
     public void countUnitsCountsCorrectly() {
-        for (int rowNumber = 0; rowNumber < RowType.values().length; rowNumber++) {
-            RowType row = RowType.values()[rowNumber];
+        for (RowType row : RowType.values()) {
             assertThat(repository.countUnits(row)
                     .blockingGet())
                     .isEqualTo(0);
             for (int unitNumber = 0; unitNumber < 5; unitNumber++) {
-                assertThat(repository.countUnits()
-                        .blockingGet())
-                        .isEqualTo(rowNumber * 5 + unitNumber);
                 assertThat(database.units().insertUnits(Collections.singletonList(new UnitEntity(false, unitNumber, Ability.values()[unitNumber / 2], null, row))).ignoreElement()
                         .andThen(repository.countUnits(row))
                         .blockingGet())
                         .isEqualTo(unitNumber + 1);
             }
-            assertThat(repository.countUnits()
-                    .blockingGet())
-                    .isEqualTo((rowNumber + 1) * 5);
         }
-
     }
 
     @Test
@@ -717,7 +643,7 @@ public class UnitRepositoryIntegrationTest {
             repository.insertUnit(false, 5, Ability.NONE, null, row, 5).blockingAwait();
             Flowable<List<UnitEntity>> unitsFlowable = repository.getUnitsFlowable(row);
             assertThat(unitsFlowable.blockingFirst()).hasSize(5);
-            assertThat(repository.reset()
+            assertThat(repository.reset(null)
                     .andThen(unitsFlowable)
                     .blockingFirst())
                     .isEmpty();
@@ -734,8 +660,8 @@ public class UnitRepositoryIntegrationTest {
                     fail();
                 }
             }));
-            repository.reset().blockingAwait();
-            repository.reset().blockingAwait();
+            repository.reset(null).blockingAwait();
+            repository.reset(null).blockingAwait();
         }
         disposables.dispose();
     }

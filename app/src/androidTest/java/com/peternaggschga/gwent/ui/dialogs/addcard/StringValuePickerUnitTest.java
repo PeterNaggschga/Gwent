@@ -44,16 +44,11 @@ public class StringValuePickerUnitTest {
     @Before
     public void initMocks() {
         mockPicker = new NumberPicker(ApplicationProvider.getApplicationContext());
-        testPicker = new StringValuePicker<>(mockPicker, ABILITY_TO_STRING_RES);
+        testPicker = new StringValuePicker<>(mockPicker, ABILITY_TO_STRING_RES, null);
     }
 
     @Test
     public void constructorAssertsValueToStringResIsNotEmpty() {
-        try {
-            new StringValuePicker<Ability>(mockPicker, Collections.emptySortedMap());
-            fail();
-        } catch (IllegalArgumentException ignored) {
-        }
         try {
             new StringValuePicker<Ability>(mockPicker, Collections.emptySortedMap(), null);
             fail();
@@ -81,9 +76,6 @@ public class StringValuePickerUnitTest {
 
     @Test
     public void constructorSetsPickerMinValue() {
-        mockPicker.setMinValue(1);
-        new StringValuePicker<>(mockPicker, ABILITY_TO_STRING_RES);
-        assertThat(mockPicker.getMinValue()).isEqualTo(0);
         mockPicker.setMinValue(1);
         new StringValuePicker<>(mockPicker, ABILITY_TO_STRING_RES, null);
         assertThat(mockPicker.getMinValue()).isEqualTo(0);
