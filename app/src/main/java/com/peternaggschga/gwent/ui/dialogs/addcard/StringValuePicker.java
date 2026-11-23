@@ -24,7 +24,6 @@ class StringValuePicker<T extends Comparable> extends ValuePicker<T> {
      * @throws IllegalArgumentException When valueToStringRes is empty.
      * @see .StringValuePicker(NumberPicker, SortedMap, Comparable)
      */
-    @SuppressWarnings("unused")
     StringValuePicker(@NonNull NumberPicker picker, @NonNull SortedMap<T, Integer> valueToStringRes) {
         this(picker, valueToStringRes, null);
     }

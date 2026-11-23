@@ -246,13 +246,16 @@ public class RowDaoUnitTest {
     public void getBuffStateFlowableReturnsAllStates() {
         for (RowType row : RowType.values()) {
             rowDao.insertRow(new RowEntity(row)).blockingAwait();
-            TestSubscriber<RowBuffState> observer = rowDao.getBuffStateFlowable(row).test();
+            // Room may re-query after an invalidation without changing the selected row's state.
+            TestSubscriber<RowBuffState> observer = rowDao.getBuffStateFlowable(row)
+                    .distinctUntilChanged()
+                    .test();
             try {
                 observer.awaitCount(1).assertValues(RowBuffState.NONE);
                 RowBuffState[] states = {RowBuffState.HORN, RowBuffState.MARDROEME, RowBuffState.NONE};
                 for (int i = 0; i < states.length; i++) {
                     rowDao.updateBuffState(row, states[i]).blockingAwait();
-                    observer.awaitCount(i + 2);
+                    observer.awaitCount(i + 2).assertValueAt(i + 1, states[i]);
                 }
                 observer.assertNoErrors().assertValues(RowBuffState.NONE, RowBuffState.HORN,
                         RowBuffState.MARDROEME, RowBuffState.NONE);

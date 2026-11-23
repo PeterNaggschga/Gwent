@@ -16,6 +16,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
 
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.subjects.PublishSubject;
+
 /**
  * A generic abstract wrapper class around NumberPicker
  * used to select values of arbitrary types extending Comparable.
@@ -47,12 +50,17 @@ abstract class ValuePicker<T extends Comparable> {
 
     /**
      * List of values that are selectable using this ValuePicker.
-     * @see setSelectableValues(Collection)
      * @see setSelectableValues(Collection, Comparable)
      * @see getSelectableValues()
      */
     @NonNull
     private final List<T> selectableValues;
+
+    /**
+     * User and programmatic selections, published after the picker state is updated.
+     */
+    @NonNull
+    private final PublishSubject<T> changes = PublishSubject.create();
 
     /**
      * Constructor of a ValuePicker wrapping the given NumberPicker and offering the given values.
@@ -91,46 +99,58 @@ abstract class ValuePicker<T extends Comparable> {
         selectableValues = new ArrayList<>(valueToStringRes.size());
 
         picker.setMinValue(0);
-        setSelectableValues(valueToStringRes.keySet(), defaultValue);
+        applySelectableValues(valueToStringRes.keySet(), defaultValue);
+        picker.setOnValueChangedListener(this::onPickerChanged);
     }
 
     /**
      * Sets selectableValues to the given values and show the given defaultValue.
      * Every given value must be in the key-set of displayIntegers.
-     * @see setSelectableValues(Collection)
      * @param values Collection of the new selectable values.
      * @param defaultValue Value that is shown in the beginning.
      *                     If null, then the first value defined by the Comparable interface is used.
-     * @throws IllegalArgumentException When values is empty or displayIntegers does not contain defaultValue when defaultValue is not null.
+     * @throws IllegalArgumentException When values is empty or does not contain a non-null defaultValue.
      * @throws IllegalStateException When values contains a value not present in the key-set of displayIntegers.
      */
     void setSelectableValues(@NonNull Collection<T> values, @Nullable T defaultValue) {
+        applySelectableValues(values, defaultValue);
+    }
+
+    /**
+     * Configures the widget without calling a subclass override during construction.
+     *
+     * @param values       New selectable values.
+     * @param defaultValue Value to select, or null to select the first value.
+     */
+    private void applySelectableValues(@NonNull Collection<T> values, @Nullable T defaultValue) {
         if (values.isEmpty()) {
             throw new IllegalArgumentException("Collection<T> values must not be empty.");
         }
         if (!displayIntegers.keySet().containsAll(values)) {
             throw new IllegalStateException("DisplayIntegers must contain all given values.");
         }
-        if (defaultValue != null && !displayIntegers.containsKey(defaultValue)) {
-            throw new IllegalArgumentException("DefaultValue must be null or a key in the given SortedMap.");
+        if (defaultValue != null && !values.contains(defaultValue)) {
+            throw new IllegalArgumentException("DefaultValue must be null or one of the selectable values.");
         }
 
+        List<T> newValues = new ArrayList<>(values);
         picker.setDisplayedValues(null);
         picker.setValue(0);
-        picker.setMaxValue(values.size() - 1);
+        picker.setMaxValue(newValues.size() - 1);
 
         selectableValues.clear();
-        String[] displayValues = new String[values.size()];
+        String[] displayValues = new String[newValues.size()];
         int i = 0;
-        for (T value : values) {
+        for (T value : newValues) {
             selectableValues.add(value);
             displayValues[i++] = getDisplayString(value);
         }
 
         if (defaultValue != null) {
-            setValue(defaultValue);
+            picker.setValue(selectableValues.indexOf(defaultValue));
         }
         picker.setDisplayedValues(displayValues);
+        publishValue(getValue());
     }
 
     /**
@@ -145,22 +165,35 @@ abstract class ValuePicker<T extends Comparable> {
     }
 
     /**
-     * Sets an OnValueChangeListener
-     * that is called when the value of the wrapped .picker has changed
-     * and stayed the same for 500 ms.
-     * The delayed NumberPicker.OnValueChangeListener
-     * that is generated from the given OnValueChangeListener using CardNumberPickerAdapter.getDelayedOnValueChangeListener().
-     * @see OnValueChangeListener
-     * @see CardNumberPickerAdapter.getDelayedOnValueChangeListener(NumberPicker.OnValueChangeListener)
-     * @param onValueChangedListener OnValueChangedListener that is to be executed when the value changes.
+     * Publishes a user selection as a typed value.
+     *
+     * @param picker NumberPicker reporting the change.
+     * @param oldVal Previous index in selectableValues.
+     * @param newVal Newly selected index in selectableValues.
      */
-    void setOnValueChangedListener(@NonNull OnValueChangeListener<T> onValueChangedListener) {
-        picker.setOnValueChangedListener(
-                CardNumberPickerAdapter.getDelayedOnValueChangeListener((picker, oldVal, newVal) ->
-                        onValueChangedListener.onValueChange(ValuePicker.this,
-                                selectableValues.get(oldVal),
-                                selectableValues.get(newVal)))
-        );
+    private void onPickerChanged(@NonNull NumberPicker picker, int oldVal, int newVal) {
+        publishValue(selectableValues.get(newVal));
+    }
+
+    /**
+     * Observes the current selection followed by distinct user and programmatic updates.
+     * Subscribe, mutate the picker, and dispose on the Android main thread.
+     * Multiple subscribers share the same NumberPicker listener.
+     *
+     * @return An Observable emitting the current value immediately to each subscriber.
+     */
+    @NonNull
+    Observable<T> values() {
+        return Observable.defer(() -> changes.startWithItem(getValue())).distinctUntilChanged();
+    }
+
+    /**
+     * Publishes a completed programmatic update from this picker or a subclass.
+     *
+     * @param value Selected value after all picker bounds and labels have been updated.
+     */
+    protected void publishValue(@NonNull T value) {
+        changes.onNext(value);
     }
 
     /**
@@ -183,6 +216,7 @@ abstract class ValuePicker<T extends Comparable> {
             throw new IllegalStateException("SelectableValues must contain the given value.");
         }
         picker.setValue(position);
+        publishValue(value);
     }
 
     /**
@@ -206,20 +240,6 @@ abstract class ValuePicker<T extends Comparable> {
     }
 
     /**
-     * An interface defining a callback for changes of the current value.
-     */
-    interface OnValueChangeListener<T extends Comparable> {
-        /**
-         * Called upon a change of the current value.
-         *
-         * @param picker ValuePicker associated with this listener.
-         * @param oldVal Value that was previously selected.
-         * @param newVal Value that was newly selected.
-         */
-        void onValueChange(@NonNull ValuePicker<T> picker, T oldVal, T newVal);
-    }
-
-    /**
      * Returns the displayIntegers map.
      *
      * @return A Map from values to Integer objects representing information on their String representation.
@@ -239,19 +259,5 @@ abstract class ValuePicker<T extends Comparable> {
     @NonNull
     protected List<T> getSelectableValues() {
         return selectableValues;
-    }
-
-    /**
-     * Sets selectableValues to the given values.
-     * Every given value must be in the key-set of displayIntegers.
-     * Wrapper of setSelectableValues(Collection, Comparable).
-     *
-     * @param values Collection of the new selectable values.
-     * @throws IllegalArgumentException When values is empty.
-     * @throws IllegalStateException When values contains a value not present in the key-set of displayIntegers.
-     * @see setSelectableValues(Collection, Comparable)
-     */
-    void setSelectableValues(@NonNull Collection<T> values) {
-        setSelectableValues(values, null);
     }
 }

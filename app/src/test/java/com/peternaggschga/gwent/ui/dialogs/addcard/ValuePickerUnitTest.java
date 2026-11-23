@@ -5,6 +5,7 @@ import static org.junit.Assert.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -31,6 +32,8 @@ import java.util.Objects;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import io.reactivex.rxjava3.observers.TestObserver;
+
 @RunWith(MockitoJUnitRunner.class)
 public class ValuePickerUnitTest {
     static final SortedMap<Ability, Integer> ABILITY_TO_STRING_RES = new TreeMap<>();
@@ -38,6 +41,7 @@ public class ValuePickerUnitTest {
     @Mock
     NumberPicker mockPicker;
     ValuePicker<Ability> testPicker;
+    NumberPicker.OnValueChangeListener pickerListener;
 
     @BeforeClass
     public static void initAbilityToStringRes() {
@@ -54,6 +58,10 @@ public class ValuePickerUnitTest {
                 return value.name();
             }
         };
+        ArgumentCaptor<NumberPicker.OnValueChangeListener> listenerCaptor =
+                ArgumentCaptor.forClass(NumberPicker.OnValueChangeListener.class);
+        verify(mockPicker).setOnValueChangedListener(listenerCaptor.capture());
+        pickerListener = listenerCaptor.getValue();
         reset(mockPicker);
     }
 
@@ -130,11 +138,6 @@ public class ValuePickerUnitTest {
     @Test
     public void setSelectableValuesAssertsNonEmptyCollection() {
         try {
-            testPicker.setSelectableValues(Collections.emptyList());
-            fail();
-        } catch (IllegalArgumentException ignored) {
-        }
-        try {
             testPicker.setSelectableValues(Collections.emptyList(), null);
             fail();
         } catch (IllegalArgumentException ignored) {
@@ -143,11 +146,6 @@ public class ValuePickerUnitTest {
 
     @Test
     public void setSelectableValuesAssertsKnownValues() {
-        try {
-            testPicker.setSelectableValues(Arrays.asList(Ability.values()));
-            fail();
-        } catch (IllegalStateException ignored) {
-        }
         try {
             testPicker.setSelectableValues(Arrays.asList(Ability.values()), null);
             fail();
@@ -166,14 +164,12 @@ public class ValuePickerUnitTest {
 
     @Test
     public void setSelectableValuesSetsPickerMaxValue() {
-        testPicker.setSelectableValues(ABILITY_TO_STRING_RES.keySet());
         testPicker.setSelectableValues(ABILITY_TO_STRING_RES.keySet(), null);
-        verify(mockPicker, times(2)).setMaxValue(ABILITY_TO_STRING_RES.size() - 1);
+        verify(mockPicker).setMaxValue(ABILITY_TO_STRING_RES.size() - 1);
     }
 
     @Test
     public void setSelectableValuesSetsPickerDisplayValues() {
-        testPicker.setSelectableValues(ABILITY_TO_STRING_RES.keySet());
         testPicker.setSelectableValues(ABILITY_TO_STRING_RES.keySet(), null);
 
         ArgumentCaptor<String[]> argumentCaptor = ArgumentCaptor.forClass(String[].class);
@@ -191,19 +187,19 @@ public class ValuePickerUnitTest {
                             return result;
                         })
                         .count()
-        ).isEqualTo(2);
+        ).isEqualTo(1);
     }
 
     @Test
     public void setSelectableValuesUpdatesSelectableValues() {
-        testPicker.setSelectableValues(Collections.singletonList(Ability.MORAL_BOOST));
+        testPicker.setSelectableValues(Collections.singletonList(Ability.MORAL_BOOST), null);
         assertThat(testPicker.getSelectableValues()).contains(Ability.MORAL_BOOST);
         assertThat(testPicker.getSelectableValues()).hasSize(1);
     }
 
     @Test
     public void setSelectableValuesSetsDefaultValue() {
-        testPicker.setSelectableValues(ABILITY_TO_STRING_RES.keySet());
+        testPicker.setSelectableValues(ABILITY_TO_STRING_RES.keySet(), null);
         verify(mockPicker).setValue(0);
 
         testPicker.setSelectableValues(ABILITY_TO_STRING_RES.keySet(), Ability.BINDING);
@@ -211,9 +207,59 @@ public class ValuePickerUnitTest {
     }
 
     @Test
-    public void setOnValueChangedListenerSetsListener() {
-        testPicker.setOnValueChangedListener(mock());
-        verify(mockPicker).setOnValueChangedListener(any());
+    public void valuesImmediatelyEmitsCurrentSelection() {
+        when(mockPicker.getValue()).thenReturn(2);
+        testPicker.values().test().assertValue(Ability.values()[3]).assertNoErrors();
+    }
+
+    @Test
+    public void valuesPublishesUserChangesImmediately() {
+        TestObserver<Ability> observer = testPicker.values().test();
+        pickerListener.onValueChange(mockPicker, 0, 1);
+        observer.assertValues(Ability.HORN, Ability.REVENGE).assertNoErrors();
+    }
+
+    @Test
+    public void valuesPublishesProgrammaticChangesWithoutDuplicates() {
+        TestObserver<Ability> observer = testPicker.values().test();
+        testPicker.setValue(Ability.BINDING);
+        testPicker.setValue(Ability.BINDING);
+        testPicker.setValue(Ability.MORAL_BOOST);
+        observer.assertValues(Ability.HORN, Ability.BINDING, Ability.MORAL_BOOST).assertNoErrors();
+    }
+
+    @Test
+    public void valuesPublishesSelectionResetAfterFiltering() {
+        TestObserver<Ability> observer = testPicker.values().test();
+        testPicker.setSelectableValues(Collections.singletonList(Ability.REVENGE), null);
+        observer.assertValues(Ability.HORN, Ability.REVENGE).assertNoErrors();
+    }
+
+    @Test
+    public void valuesPublishesOnlyFinalDefaultAfterFiltering() {
+        TestObserver<Ability> observer = testPicker.values().test();
+        when(mockPicker.getValue()).thenReturn(1);
+        testPicker.setSelectableValues(Arrays.asList(Ability.REVENGE, Ability.BINDING), Ability.BINDING);
+        observer.assertValues(Ability.HORN, Ability.BINDING).assertNoErrors();
+    }
+
+    @Test
+    public void valuesSupportsMultipleSubscribersWithoutReplacingWidgetListener() {
+        TestObserver<Ability> first = testPicker.values().test();
+        TestObserver<Ability> second = testPicker.values().test();
+        pickerListener.onValueChange(mockPicker, 0, 1);
+        first.assertValues(Ability.HORN, Ability.REVENGE);
+        second.assertValues(Ability.HORN, Ability.REVENGE);
+        verify(mockPicker, never()).setOnValueChangedListener(any());
+    }
+
+    @Test
+    public void disposedSubscriberReceivesNoFurtherChanges() {
+        TestObserver<Ability> observer = testPicker.values().test();
+        observer.dispose();
+        pickerListener.onValueChange(mockPicker, 0, 1);
+        testPicker.setValue(Ability.BINDING);
+        observer.assertValue(Ability.HORN);
     }
 
     @Test

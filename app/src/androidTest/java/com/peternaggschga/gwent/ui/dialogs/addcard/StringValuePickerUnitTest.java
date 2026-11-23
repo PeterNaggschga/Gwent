@@ -92,11 +92,6 @@ public class StringValuePickerUnitTest {
     @Test
     public void setSelectableValuesAssertsNonEmptyCollection() {
         try {
-            testPicker.setSelectableValues(Collections.emptyList());
-            fail();
-        } catch (IllegalArgumentException ignored) {
-        }
-        try {
             testPicker.setSelectableValues(Collections.emptyList(), null);
             fail();
         } catch (IllegalArgumentException ignored) {
@@ -105,11 +100,6 @@ public class StringValuePickerUnitTest {
 
     @Test
     public void setSelectableValuesAssertsKnownValues() {
-        try {
-            testPicker.setSelectableValues(Arrays.asList(Ability.values()));
-            fail();
-        } catch (IllegalStateException ignored) {
-        }
         try {
             testPicker.setSelectableValues(Arrays.asList(Ability.values()), null);
             fail();
@@ -128,7 +118,7 @@ public class StringValuePickerUnitTest {
 
     @Test
     public void setSelectableValuesSetsPickerMaxValue() {
-        testPicker.setSelectableValues(Collections.singletonList(Ability.HORN));
+        testPicker.setSelectableValues(Collections.singletonList(Ability.HORN), null);
         assertThat(mockPicker.getMaxValue()).isEqualTo(0);
         testPicker.setSelectableValues(ABILITY_TO_STRING_RES.keySet(), null);
         assertThat(mockPicker.getMaxValue()).isEqualTo(ABILITY_TO_STRING_RES.size() - 1);
@@ -136,7 +126,7 @@ public class StringValuePickerUnitTest {
 
     @Test
     public void setSelectableValuesSetsPickerDisplayValues() {
-        testPicker.setSelectableValues(Collections.singletonList(Ability.HORN));
+        testPicker.setSelectableValues(Collections.singletonList(Ability.HORN), null);
         assertThat(mockPicker.getDisplayedValues()[0])
                 .isEqualTo(ApplicationProvider.getApplicationContext().getString(R.string.add_picker_ability_horn));
 
@@ -150,14 +140,14 @@ public class StringValuePickerUnitTest {
 
     @Test
     public void setSelectableValuesUpdatesSelectableValues() {
-        testPicker.setSelectableValues(Collections.singletonList(Ability.MORAL_BOOST));
+        testPicker.setSelectableValues(Collections.singletonList(Ability.MORAL_BOOST), null);
         assertThat(testPicker.getSelectableValues()).contains(Ability.MORAL_BOOST);
         assertThat(testPicker.getSelectableValues()).hasSize(1);
     }
 
     @Test
     public void setSelectableValuesSetsDefaultValue() {
-        testPicker.setSelectableValues(ABILITY_TO_STRING_RES.keySet());
+        testPicker.setSelectableValues(ABILITY_TO_STRING_RES.keySet(), null);
         assertThat(mockPicker.getValue()).isEqualTo(0);
 
         testPicker.setSelectableValues(ABILITY_TO_STRING_RES.keySet(), Ability.BINDING);

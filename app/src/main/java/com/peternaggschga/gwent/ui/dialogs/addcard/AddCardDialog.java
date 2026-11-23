@@ -9,7 +9,6 @@ import androidx.annotation.Nullable;
 import com.peternaggschga.gwent.GwentApplication;
 import com.peternaggschga.gwent.R;
 import com.peternaggschga.gwent.data.RowType;
-import com.peternaggschga.gwent.data.UnitRepository;
 import com.peternaggschga.gwent.ui.dialogs.OverlayDialog;
 import com.peternaggschga.gwent.ui.dialogs.cards.ShowUnitsDialog;
 import com.peternaggschga.gwent.ui.sounds.SoundManager;
@@ -105,11 +104,14 @@ public class AddCardDialog extends OverlayDialog {
         if (pickerAdapter == null) {
             disposables.add(
                     GwentApplication.getRepository(getContext())
-                            .flatMap(UnitRepository::getUnits)
+                            .flatMap(repo -> repo.getUnits(row))
                             .map(SquadManager::new)
                             .map(squadManager ->
-                                    new CardNumberPickerAdapter(findViewById(R.id.card_layout), squadManager))
-                            .subscribe(cardNumberPickerAdapter -> pickerAdapter = cardNumberPickerAdapter)
+                                    new CardNumberPickerAdapter(row, findViewById(R.id.card_layout), squadManager))
+                            .subscribe(cardNumberPickerAdapter -> {
+                                pickerAdapter = cardNumberPickerAdapter;
+                                disposables.add(cardNumberPickerAdapter);
+                            })
             );
         }
 

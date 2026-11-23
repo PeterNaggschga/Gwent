@@ -1,49 +1,63 @@
 package com.peternaggschga.gwent.ui.dialogs.addcard;
 
-import static android.widget.NumberPicker.OnValueChangeListener;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static com.google.common.truth.Truth.assertThat;
+import static com.peternaggschga.gwent.ui.main.FactionSwitchListener.THEME_NORTHERN_KINGDOMS;
 
+import android.content.Context;
+import android.view.ContextThemeWrapper;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.NumberPicker;
 
-import org.junit.Before;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
+
+import com.peternaggschga.gwent.R;
+import com.peternaggschga.gwent.data.RowType;
+import com.peternaggschga.gwent.ui.dialogs.addcard.filter.AbilityFilter;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.junit.MockitoJUnitRunner;
 
-import java.util.concurrent.TimeUnit;
+import java.util.Collections;
 
-@RunWith(MockitoJUnitRunner.class)
+import io.reactivex.rxjava3.schedulers.TestScheduler;
+
+@RunWith(AndroidJUnit4.class)
 public class CardNumberPickerAdapterUnitTest {
-    private static final int NUMBER_PICKER_VALUE = 5;
-    NumberPicker mockPicker;
-    OnValueChangeListener mockListener;
-
-    @Before
-    public void initMocks() {
-        mockPicker = mock(NumberPicker.class);
-        when(mockPicker.getValue()).thenReturn(NUMBER_PICKER_VALUE);
-        mockListener = mock(OnValueChangeListener.class);
+    @Test
+    public void initializesRealPickersWithFilteredNormalOptions() {
+        assertInitialOptions(RowType.RANGE, 2, 4);
     }
 
     @Test
-    public void getDelayedOnValueChangeListenerDelays500Milliseconds() throws InterruptedException {
-        OnValueChangeListener delayed = CardNumberPickerAdapter.getDelayedOnValueChangeListener(mockListener);
-        delayed.onValueChange(mockPicker, 0, NUMBER_PICKER_VALUE);
-        verify(mockListener, never()).onValueChange(any(), anyInt(), anyInt());
-        TimeUnit.MILLISECONDS.sleep(600);
-        verify(mockListener).onValueChange(mockPicker, 0, NUMBER_PICKER_VALUE);
+    public void unavailableHeroesCannotBeSelected() {
+        assertInitialOptions(RowType.SIEGE, 1, 3);
     }
 
-    @Test
-    public void getDelayedOnValueChangeListenerChecksValueChanged() throws InterruptedException {
-        OnValueChangeListener delayed = CardNumberPickerAdapter.getDelayedOnValueChangeListener(mockListener);
-        delayed.onValueChange(mockPicker, NUMBER_PICKER_VALUE, 0);
-        TimeUnit.MILLISECONDS.sleep(600);
-        verify(mockListener, never()).onValueChange(any(), anyInt(), anyInt());
+    private void assertInitialOptions(RowType row, int heroOptions, int abilityOptions) {
+        InstrumentationRegistry.getInstrumentation().runOnMainSync(() -> {
+            Context context = new ContextThemeWrapper(
+                    InstrumentationRegistry.getInstrumentation().getTargetContext(),
+                    R.style.NorthernKingdomsTheme);
+            ViewGroup layout = (ViewGroup) LayoutInflater.from(context).inflate(R.layout.popup_add_card, null);
+            ViewGroup pickerGroup = layout.findViewById(R.id.card_layout);
+            CardNumberPickerAdapter adapter = new CardNumberPickerAdapter(pickerGroup,
+                    new SquadManager(Collections.emptyList()),
+                    AbilityFilter.create(THEME_NORTHERN_KINGDOMS, row), new TestScheduler());
+            try {
+                NumberPicker hero = pickerGroup.findViewById(R.id.popup_add_card_epic_picker);
+                NumberPicker ability = pickerGroup.findViewById(R.id.popup_add_card_ability_picker);
+                assertThat(hero.getDisplayedValues()).hasLength(heroOptions);
+                assertThat(ability.getDisplayedValues()).hasLength(abilityOptions);
+                assertThat(hero.getValue()).isEqualTo(0);
+                assertThat(ability.getValue()).isEqualTo(0);
+                assertThat(pickerGroup.findViewById(R.id.popup_add_card_binding_picker).getVisibility())
+                        .isEqualTo(View.GONE);
+            } finally {
+                adapter.dispose();
+            }
+        });
     }
 }
