@@ -109,19 +109,8 @@ class Sound {
      * Changes the value of .activated to the given Boolean.
      *
      * @param activated Boolean defining whether the Sound is activated.
-     * @see .setActivated(SharedPreferences)
      */
     void setActivated(boolean activated) {
         this.activated = activated;
-    }
-
-    /**
-     * Changes the value of .activated based on the given SharedPreferences.
-     * Only queries the boolean at key .preferenceKey, not whether all sounds are deactivated!
-     *
-     * @param sharedPreferences SharedPreferences containing information on the activated sounds.
-     */
-    void setActivated(@NonNull SharedPreferences sharedPreferences) {
-        setActivated(sharedPreferences.getBoolean(preferenceKey, activated));
     }
 }

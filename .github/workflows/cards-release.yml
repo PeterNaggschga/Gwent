@@ -1,0 +1,107 @@
+name: Draft card release
+
+on:
+  workflow_call:
+    inputs:
+      documentation-sha:
+        description: Commit produced by the documentation update
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  draft-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout documentation commit
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.documentation-sha }}
+
+      - name: Check release version
+        id: release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          version=$(sed -nE 's/^[[:space:]]*PROJECT_NUMBER[[:space:]]*=[[:space:]]*([^#]*).*/\1/p' docs/Doxyfile)
+          version=$(printf '%s\n' "$version" | sed -E 's/[[:space:]]+$//; s/^"(.*)"$/\1/')
+          if [[ ! "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "::error::PROJECT_NUMBER in docs/Doxyfile must be in a.b.c format"
+            exit 1
+          fi
+          tag="v$version"
+
+          # A tag that already points elsewhere cannot be retargeted by a draft.
+          refs=$(git ls-remote origin "refs/tags/$tag" "refs/tags/$tag^{}")
+          if [[ -n "$refs" ]]; then
+            tagged_commit=$(awk 'NR == 1 { sha = $1 } /\^\{\}$/ { sha = $1 } END { print sha }' <<< "$refs")
+            if [[ "$tagged_commit" != "$(git rev-parse HEAD)" ]]; then
+              echo "::notice::Skipping $tag because it already tags another commit"
+              exit 0
+            fi
+          fi
+
+          releases=$(gh api --paginate "repos/$GITHUB_REPOSITORY/releases?per_page=100" |
+            jq -cs --arg tag "$tag" '[.[][] | select(.tag_name == $tag)]')
+          if jq -e 'any(.[]; .draft == false)' <<< "$releases" > /dev/null; then
+            echo "::notice::Skipping $tag because its release is already published"
+            exit 0
+          fi
+
+          if jq -e 'length > 1' <<< "$releases" > /dev/null; then
+            echo "::error::More than one draft exists for $tag"
+            exit 1
+          fi
+
+          if jq -e 'any(.[].assets[]; .name | test("^gwent_cards_(de|en)\\.(zip|tar\\.gz)$") | not)' <<< "$releases" > /dev/null; then
+            echo "::error::Draft $tag contains assets this workflow does not manage"
+            exit 1
+          fi
+
+          draft_id=$(jq -r '.[0].id // empty' <<< "$releases")
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          echo "draft-id=$draft_id" >> "$GITHUB_OUTPUT"
+
+      - name: Package card archives
+        if: ${{ steps.release.outputs.tag != '' }}
+        shell: bash
+        run: |
+          archive_dir="$RUNNER_TEMP/card-archives"
+          mkdir -p "$archive_dir"
+          shopt -s dotglob
+          for language in de en; do
+            staging=$(mktemp -d "$RUNNER_TEMP/cards-$language.XXXXXX")
+            cp -R "resources/cards/$language/." "$staging/"
+            cp resources/cards/printing-layout.pdf "$staging/"
+            (cd "$staging" && python3 -m zipfile -c "$archive_dir/gwent_cards_$language.zip" ./*)
+            tar -czf "$archive_dir/gwent_cards_$language.tar.gz" -C "$staging" .
+          done
+
+      - name: Upload archives to release draft
+        if: ${{ steps.release.outputs.tag != '' }}
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.release.outputs.tag }}
+          DRAFT_ID: ${{ steps.release.outputs.draft-id }}
+          RELEASE_SHA: ${{ inputs.documentation-sha }}
+        run: |
+          cd "$RUNNER_TEMP/card-archives"
+          assets=(gwent_cards_{de,en}.{zip,tar.gz})
+          if [[ -n "$DRAFT_ID" ]]; then
+            release="repos/$GITHUB_REPOSITORY/releases/$DRAFT_ID"
+            is_draft=$(gh api "$release" --jq .draft)
+            if [[ "$is_draft" != true ]]; then
+              echo "::notice::Skipping $TAG because it is no longer a draft"
+              exit 0
+            fi
+            gh api --method PATCH "$release" \
+              -f body= -f target_commitish="$RELEASE_SHA" --silent
+            gh release upload "$TAG" "${assets[@]}" --clobber --repo "$GITHUB_REPOSITORY"
+          else
+            gh release create "$TAG" "${assets[@]}" --draft --title "$TAG" \
+              --notes "" --target "$RELEASE_SHA" --repo "$GITHUB_REPOSITORY"
+          fi

@@ -50,7 +50,7 @@ public class GwentApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        database = Room.databaseBuilder(this, AppDatabase.class, "database").build();
+        database = Room.databaseBuilder(this, AppDatabase.class, "database").fallbackToDestructiveMigration().build();
     }
 
     /**
@@ -63,6 +63,6 @@ public class GwentApplication extends Application {
         if (repository != null) {
             return Single.just(repository);
         }
-        return UnitRepository.getRepository(database).doOnSuccess(unitRepository -> repository = unitRepository);
+        return UnitRepository.getRepository(database, this).doOnSuccess(unitRepository -> repository = unitRepository);
     }
 }

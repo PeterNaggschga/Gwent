@@ -1,7 +1,6 @@
 package com.peternaggschga.gwent.ui.dialogs.addcard;
 
 
-
 import android.content.Context;
 import android.widget.Toast;
 
@@ -17,15 +16,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * A class used by the CardNumberPickerAdapter to determine the first squad with members
- * or set the default damage according to the squads base damage.
+ * Supplies squad membership information and base damage to the CardNumberPickerAdapter.
  * @see CardNumberPickerAdapter
  */
-class SquadManager {
+public class SquadManager {
     /**
      * Integer constant defining how many different squads there may be per row.
      */
-    public static final int MAX_NR_SQUADS = 3;
+    public static final int MAX_NR_SQUADS = UnitEntity.BERSERKER_SQUAD - 1;
 
     /**
      * Array of SquadState objects containing one SquadState for each possible squad.
@@ -48,12 +46,18 @@ class SquadManager {
     }
 
     /**
-     * Returns the lowest squad number referring to a squad that has members.
-     * If no squad has members, i.e., there are no units with the Ability.BINDING ability, 1 is returned.
-     * @return An Integer referencing to the first squad with members.
+     * Returns the first occupied squad among the selectable squads, or 1 if all are empty.
+     *
+     * @param squadCount Number of squads selectable for the current faction and row.
+     * @return An occupied selectable squad number, or 1.
+     * @throws IllegalArgumentException If squadCount is outside the selectable squad range.
      */
-    int getFirstSquadWithMembers() {
+    int getFirstSquadWithMembers(@IntRange(from = 1, to = MAX_NR_SQUADS) int squadCount) {
+        if (squadCount < 1 || squadCount > MAX_NR_SQUADS) {
+            throw new IllegalArgumentException("SquadCount must be in [1, " + MAX_NR_SQUADS + "].");
+        }
         return Arrays.stream(states)
+                .limit(squadCount)
                 .filter(SquadState::hasMembers)
                 .findFirst()
                 .map(SquadState::getSquadNumber)
@@ -61,27 +65,57 @@ class SquadManager {
     }
 
     /**
-     * Shows a Toast with information about the selected squad
-     * and sets the given picker to the SquadState.memberBaseDamage of said squad.
+     * Checks all tracked Tight Bond squads in the row, regardless of how many are selectable.
      *
-     * @param newVal Integer representing the newly selected squad.
-     * @param picker DamageValuePicker that is updated.
-     * @throws IllegalArgumentException When newVal is not between 1 and .MAX_NR_SQUADS.
-     * @see SquadState.getMemberBaseDamage()
+     * @return True if at least one tracked squad has a member.
      */
-    void onSquadChanged(@IntRange(from = 1, to = MAX_NR_SQUADS) int newVal, @NonNull DamageValuePicker picker) {
-        if (newVal < 1 || newVal > MAX_NR_SQUADS) {
-            throw new IllegalArgumentException("NewVal must be in [1, " + MAX_NR_SQUADS + "] but is " + newVal + ".");
-        }
-        SquadState squad = states[newVal - 1];
+    boolean hasNonEmptySquad() {
+        return Arrays.stream(states).anyMatch(SquadState::hasMembers);
+    }
 
-        Context context = picker.getContext();
+    /**
+     * Shows squad membership information without modifying a user's damage selection.
+     * Can be debounced independently of immediate selection updates.
+     *
+     * @param squadNumber Selected squad number.
+     * @param context Context used to display the Toast.
+     * @throws IllegalArgumentException If squadNumber is outside the selectable squad range.
+     */
+    void showSquadInfo(@IntRange(from = 1, to = MAX_NR_SQUADS) int squadNumber, @NonNull Context context) {
+        SquadState squad = getSquadState(squadNumber);
         Toast.makeText(context,
-                context.getString(R.string.popUp_add_card_binding_count, squad.getSquadNumber(), squad.getSquadMembers()),
+                context.getResources().getQuantityString(R.plurals.popUp_add_card_binding_count,
+                        squad.getSquadMembers(), squad.getSquadNumber(), squad.getSquadMembers()),
                 Toast.LENGTH_SHORT).show();
+    }
 
+    /**
+     * Immediately applies an occupied squad's base damage without showing a Toast.
+     *
+     * @param squadNumber Selected squad number.
+     * @param picker      Damage picker updated if the squad has members.
+     * @throws IllegalArgumentException If squadNumber is outside the selectable squad range.
+     */
+    void setSquadDamage(@IntRange(from = 1, to = MAX_NR_SQUADS) int squadNumber,
+                        @NonNull DamageValuePicker picker) {
+        SquadState squad = getSquadState(squadNumber);
         if (squad.hasMembers()) {
             picker.setValue(squad.getMemberBaseDamage());
         }
+    }
+
+    /**
+     * Validates a squad number and returns its stored state.
+     *
+     * @param squadNumber Squad number to look up.
+     * @return State of the selected squad.
+     * @throws IllegalArgumentException If squadNumber is outside the selectable squad range.
+     */
+    @NonNull
+    private SquadState getSquadState(int squadNumber) {
+        if (squadNumber < 1 || squadNumber > MAX_NR_SQUADS) {
+            throw new IllegalArgumentException("SquadNumber must be in [1, " + MAX_NR_SQUADS + "] but is " + squadNumber + ".");
+        }
+        return states[squadNumber - 1];
     }
 }

@@ -12,7 +12,7 @@ import java.util.Collection;
  * The respective visitors are created as a decorator hierarchy,
  * see DamageCalculatorBuildDirector.getCalculator().
  * @see com.peternaggschga.gwent.data.UnitEntity.calculateDamage(DamageCalculator)
- * @see DamageCalculatorBuildDirector.getCalculator(boolean, boolean, Collection)
+ * @see DamageCalculatorBuildDirector.getCalculator(boolean, boolean, boolean, Collection)
  */
 public interface DamageCalculator {
     /**

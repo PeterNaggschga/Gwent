@@ -10,8 +10,8 @@ import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -30,19 +30,42 @@ class DamageValuePicker extends ValuePicker<Integer> {
     private boolean epicValues = false;
 
     /**
+     * Preferred hero damage when the current selection is unavailable and this value is offered.
+     */
+    private static final int DEFAULT_HERO_DAMAGE = 10;
+
+    /**
+     * Fallback damage when the current selection is outside the normal damage range.
+     */
+    private static final int DEFAULT_NORMAL_DAMAGE = 5;
+
+    /**
+     * Sorted, distinct hero damage values copied from the faction filter at construction.
+     * Empty when no heroes are available for the edited row.
+     */
+    @NonNull
+    private final List<Integer> heroDamageValues;
+
+    /**
      * Constructor of a DamageValuePicker wrapping the given NumberPicker.
-     * Calls .setEpicValues() to initialize the NumberPicker with non-epic damage values.
+     * Initializes the NumberPicker with normal damage values and a default damage of 5.
      * @see ValuePicker.ValuePicker(NumberPicker, SortedMap)
      * @see .setEpicValues(boolean)
      * @param picker NumberPicker wrapped by the created DamageValuePicker.
+     * @param heroDamageValues Hero damage values supplied by the AbilityFilter; may be empty.
+     * @throws IllegalArgumentException If heroDamageValues contains an unknown hero damage value.
      */
-    DamageValuePicker(@NonNull NumberPicker picker) {
-        super(picker, Arrays.stream(EPIC_DAMAGE_VALUES).collect(
+    DamageValuePicker(@NonNull NumberPicker picker, @NonNull Collection<Integer> heroDamageValues) {
+        super(picker, EPIC_DAMAGE_VALUES.stream().collect(
                 TreeMap::new,
                 (map, integer) -> map.put(integer, integer),
                 Map::putAll)
         );
-        setEpicValues(false);
+        if (!EPIC_DAMAGE_VALUES.containsAll(heroDamageValues)) {
+            throw new IllegalArgumentException("Hero damage values must be a subset of EPIC_DAMAGE_VALUES.");
+        }
+        this.heroDamageValues = heroDamageValues.stream().distinct().sorted().collect(Collectors.toList());
+        setNormalValues(5);
     }
 
     /**
@@ -78,6 +101,7 @@ class DamageValuePicker extends ValuePicker<Integer> {
             throw new IllegalStateException("Value must be in [0, " + NON_EPIC_DAMAGE_VALUES_UPPER_BOUND + "] but is " + value + ".");
         } else {
             getPicker().setValue(value);
+            publishValue(value);
         }
     }
 
@@ -92,32 +116,54 @@ class DamageValuePicker extends ValuePicker<Integer> {
     }
 
     /**
-     * Switches the .selectableValues between non-epic and epic damage values.
-     * Sets .epicValues.
-     * @see .epicValues
-     * @param epicValues Boolean defining whether or not epic values are shown.
+     * Configures normal damage bounds and publishes only the final selection.
+     *
+     * @param selected Normal damage value to select.
      */
-    void setEpicValues(boolean epicValues) {
-        this.epicValues = epicValues;
-
-        if (epicValues) {
-            super.setSelectableValues(Arrays.asList(EPIC_DAMAGE_VALUES), EPIC_DAMAGE_VALUES[3]);
-            return;
-        }
+    private void setNormalValues(int selected) {
+        epicValues = false;
         getSelectableValues().clear();
         getSelectableValues().addAll(IntStream.rangeClosed(0, NON_EPIC_DAMAGE_VALUES_UPPER_BOUND).boxed().collect(Collectors.toList()));
         getPicker().setDisplayedValues(null);
         getPicker().setMaxValue(NON_EPIC_DAMAGE_VALUES_UPPER_BOUND);
-        getPicker().setValue(5);
+        getPicker().setValue(selected);
+        publishValue(selected);
     }
 
     /**
-     * Does nothing. Overrides parent since .selectableValues should only be modified by .setEpicValues().
+     * Switches between normal damage and the faction's filtered hero damage values.
+     * Preserves the selected damage when valid; otherwise prefers 10 for heroes
+     * or the lowest available hero damage. Normal damage defaults to 5 when invalid.
+     * Uses the hero damage values provided at construction.
+     *
+     * @param epicValues Whether hero damage values should be shown.
+     * @throws IllegalStateException If hero mode is requested when no hero damage values are available.
+     */
+    void setEpicValues(boolean epicValues) {
+        int previous = getValue();
+        if (!epicValues) {
+            setNormalValues(previous >= 0 && previous <= NON_EPIC_DAMAGE_VALUES_UPPER_BOUND ? previous : DEFAULT_NORMAL_DAMAGE);
+            return;
+        }
+        if (heroDamageValues.isEmpty()) {
+            throw new IllegalStateException("No hero damage values are available.");
+        }
+        int selected = heroDamageValues.contains(previous) ? previous
+                : heroDamageValues.contains(DEFAULT_HERO_DAMAGE) ? DEFAULT_HERO_DAMAGE : heroDamageValues.get(0);
+        this.epicValues = true;
+        super.setSelectableValues(heroDamageValues, selected);
+    }
+
+    /**
+     * Throws UnsupportedOperationException, since selectable values should only be modified by .setEpicValues().
      * @param values Collection of the new selectable values.
      * @param defaultValue Value that is shown in the beginning.
      *                     If null, then the first value defined by the Comparable interface is used.
+     * @see DamageValuePicker.setEpicValues(boolean)
+     * @throws UnsupportedOperationException On each call.
      */
     @Override
     void setSelectableValues(@NonNull Collection<Integer> values, @Nullable Integer defaultValue) {
+        throw new UnsupportedOperationException("DamageValuePicker values must only be changed using setEpicValues()");
     }
 }

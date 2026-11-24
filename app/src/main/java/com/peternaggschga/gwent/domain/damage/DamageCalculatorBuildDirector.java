@@ -20,17 +20,18 @@ import java.util.stream.Collectors;
  */
 public class DamageCalculatorBuildDirector {
     /**
-     * Creates a DamageCalculator for a row with the given weather status, horn status and units.
-     *
-     * @param weather Boolean defining whether the calculation encompasses the weather debuff.
-     * @param horn    Boolean defining whether a commander's horn is in the row.
-     * @param units   Collection of UnitEntity objects that are in the row.
-     * @return A DamageCalculator object capable of calculating damage for the given units.
+     * Builds a row calculator with the selected leader's weather effect applied before buffs.
+     * @param weather Whether weather is active.
+     * @param horn Whether the row has a commander's horn.
+     * @param kingBran Whether King Bran's weather effect is active.
+     * @param units Units in the row.
+     * @return A calculator including weather, bond, morale, and horn in that order.
      */
     @NonNull
-    public static DamageCalculator getCalculator(boolean weather, boolean horn, @NonNull Collection<UnitEntity> units) {
+    public static DamageCalculator getCalculator(boolean weather, boolean horn, boolean kingBran,
+                                                 @NonNull Collection<UnitEntity> units) {
         DamageCalculatorBuilder builder = new DamageCalculatorBuilder();
-        builder.setWeather(weather);
+        builder.setWeather(weather, kingBran);
 
         if (units.stream().anyMatch(unit -> unit.getAbility() == Ability.BINDING)) {
             setSquads(units, builder);

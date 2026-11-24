@@ -16,25 +16,10 @@ import java.util.SortedMap;
  */
 class StringValuePicker<T extends Comparable> extends ValuePicker<T> {
     /**
-     * Constructor of a StringValuePicker wrapping the given NumberPicker and offering the given values.
-     * Wrapper around .StringValuePicker(NumberPicker, SortedMap, Comparable) with null as defaultValue.
-     *
-     * @param picker           NumberPicker wrapped by the created StringValuePicker.
-     * @param valueToStringRes SortedMap with all selectableValues as keys and the respective displayIntegers (String ids) as value.
-     * @throws IllegalArgumentException When valueToStringRes is empty.
-     * @see .StringValuePicker(NumberPicker, SortedMap, Comparable)
-     */
-    @SuppressWarnings("unused")
-    StringValuePicker(@NonNull NumberPicker picker, @NonNull SortedMap<T, Integer> valueToStringRes) {
-        this(picker, valueToStringRes, null);
-    }
-
-    /**
      * Constructor of a StringValuePicker wrapping the given NumberPicker,
      * offering the given values and showing the given defaultValue.
      * Matches super-constructor ValuePicker(NumberPicker, SortedMap, Comparable).
      *
-     * @see .StringValuePicker(NumberPicker, SortedMap)
      * @param picker NumberPicker wrapped by the created StringValuePicker.
      * @param valueToStringRes SortedMap with all selectableValues as keys and the respective displayIntegers (String ids) as value.
      * @param defaultValue Value that is shown in the beginning.

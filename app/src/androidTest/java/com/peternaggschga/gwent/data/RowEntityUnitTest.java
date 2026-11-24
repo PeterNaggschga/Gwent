@@ -31,13 +31,13 @@ public class RowEntityUnitTest {
     }
 
     @Test
-    public void hornIsFalseByDefault() throws InterruptedException {
+    public void buffStateIsNoneByDefault() throws InterruptedException {
         for (RowType row : RowType.values()) {
             database.rows().insertRow(new RowEntity(row))
-                    .andThen(database.rows().isHorn(row))
+                    .andThen(database.rows().getBuffState(row))
                     .test()
                     .await()
-                    .assertValue(false);
+                    .assertValue(RowBuffState.NONE);
         }
     }
 

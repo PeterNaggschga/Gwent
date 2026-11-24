@@ -4,6 +4,7 @@ import static com.peternaggschga.gwent.ui.main.FactionSwitchListener.THEME_MONST
 import static com.peternaggschga.gwent.ui.main.FactionSwitchListener.THEME_NILFGAARD;
 import static com.peternaggschga.gwent.ui.main.FactionSwitchListener.THEME_NORTHERN_KINGDOMS;
 import static com.peternaggschga.gwent.ui.main.FactionSwitchListener.THEME_SCOIATAEL;
+import static com.peternaggschga.gwent.ui.main.FactionSwitchListener.THEME_SKELLIGE;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -58,6 +59,9 @@ public class ChangeFactionDialog extends OverlayDialog {
 
         findViewById(R.id.scoiataelCardView).setOnClickListener(getOnThemeClickListener(THEME_SCOIATAEL));
         findViewById(R.id.scoiataelButton).setOnClickListener(getOnThemeClickListener(THEME_SCOIATAEL));
+
+        findViewById(R.id.skelligeCardView).setOnClickListener(getOnThemeClickListener(THEME_SKELLIGE));
+        findViewById(R.id.skelligeButton).setOnClickListener(getOnThemeClickListener(THEME_SKELLIGE));
     }
 
     /**
@@ -70,7 +74,7 @@ public class ChangeFactionDialog extends OverlayDialog {
      * @see Callback.onThemeSelect(int)
      */
     @NonNull
-    private View.OnClickListener getOnThemeClickListener(@IntRange(from = THEME_MONSTER, to = THEME_SCOIATAEL) int theme) {
+    private View.OnClickListener getOnThemeClickListener(@IntRange(from = THEME_MONSTER, to = THEME_SKELLIGE) int theme) {
         return v -> {
             cancel();
             callback.onThemeSelect(theme);
@@ -87,6 +91,6 @@ public class ChangeFactionDialog extends OverlayDialog {
          *
          * @param theme Integer representing the selected theme.
          */
-        void onThemeSelect(@IntRange(from = THEME_MONSTER, to = THEME_SCOIATAEL) int theme);
+        void onThemeSelect(@IntRange(from = THEME_MONSTER, to = THEME_SKELLIGE) int theme);
     }
 }
