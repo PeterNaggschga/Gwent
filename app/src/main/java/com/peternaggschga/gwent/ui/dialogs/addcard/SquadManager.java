@@ -65,6 +65,15 @@ public class SquadManager {
     }
 
     /**
+     * Checks all tracked Tight Bond squads in the row, regardless of how many are selectable.
+     *
+     * @return True if at least one tracked squad has a member.
+     */
+    boolean hasNonEmptySquad() {
+        return Arrays.stream(states).anyMatch(SquadState::hasMembers);
+    }
+
+    /**
      * Shows squad membership information without modifying a user's damage selection.
      * Can be debounced independently of immediate selection updates.
      *

@@ -23,8 +23,17 @@ public class SquadManagerUnitTest {
     @Test
     public void emptySquadDoesNotChangeDamage() {
         DamageValuePicker picker = mock(DamageValuePicker.class);
-        new SquadManager(Collections.emptyList()).setSquadDamage(1, picker);
+        SquadManager manager = new SquadManager(Collections.emptyList());
+        assertThat(manager.hasNonEmptySquad()).isFalse();
+        manager.setSquadDamage(1, picker);
         verify(picker, never()).setValue(anyInt());
+    }
+
+    @Test
+    public void unitsWithoutTightBondDoNotFormASquad() {
+        UnitEntity unit = mock(UnitEntity.class);
+        when(unit.getAbility()).thenReturn(Ability.NONE);
+        assertThat(new SquadManager(Collections.singletonList(unit)).hasNonEmptySquad()).isFalse();
     }
 
     @Test
@@ -35,6 +44,7 @@ public class SquadManagerUnitTest {
         when(unit.getDamage()).thenReturn(4);
         DamageValuePicker picker = mock(DamageValuePicker.class);
         SquadManager manager = new SquadManager(Collections.singletonList(unit));
+        assertThat(manager.hasNonEmptySquad()).isTrue();
         manager.setSquadDamage(MAX_NR_SQUADS, picker);
         verify(picker).setValue(4);
         assertThat(manager.getFirstSquadWithMembers(MAX_NR_SQUADS)).isEqualTo(MAX_NR_SQUADS);

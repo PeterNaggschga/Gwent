@@ -68,8 +68,10 @@ class CardNumberPickerAdapter implements Disposable {
     private final ValuePicker<Ability> abilityPicker;
 
     /**
-     * ValuePicker used to decide the value of UnitEntity.squad.
-     * Visible after a 500 ms debounce only when Tight Bond offers multiple squads.
+     * Selects the squad for Tight Bond cards. Visible after a 500 ms debounce only when
+     * Tight Bond is selected, multiple squad numbers are available, and the row has a squad.
+     * If the row has no squad, saving Tight Bond cards starts squad 1 without changing the
+     * selected damage or showing a squad info toast.
      * @see .abilityPicker
      */
     @NonNull
@@ -154,20 +156,22 @@ class CardNumberPickerAdapter implements Disposable {
         disposables.add(epicPicker.values().subscribe(this::updateAbilities));
 
         int squadCount = abilityFilter.getSquadCount();
+        boolean squadsExist = squadManager.hasNonEmptySquad();
         if (squadCount > 0) {
             disposables.add(abilityPicker.values()
                     .filter(ability -> ability == Ability.BINDING)
-                    .subscribe(ability -> squadPicker.setValue(
-                            squadManager.getFirstSquadWithMembers(squadCount))));
-            disposables.add(abilityPicker.values()
-                    .switchMap(ability -> ability == Ability.BINDING
-                            ? squadPicker.values()
-                            .doOnNext(squad -> squadManager.setSquadDamage(squad, damagePicker))
-                            .debounce(500, TimeUnit.MILLISECONDS, scheduler)
-                            : Observable.empty())
-                    .subscribe(squad -> squadManager.showSquadInfo(squad, numberPicker.getContext())));
+                    .subscribe(ability -> squadPicker.setValue(squadManager.getFirstSquadWithMembers(squadCount))));
+            if (squadsExist) {
+                disposables.add(abilityPicker.values()
+                        .switchMap(ability -> ability == Ability.BINDING
+                                ? squadPicker.values()
+                                .doOnNext(squad -> squadManager.setSquadDamage(squad, damagePicker))
+                                .debounce(500, TimeUnit.MILLISECONDS, scheduler)
+                                : Observable.empty())
+                        .subscribe(squad -> squadManager.showSquadInfo(squad, numberPicker.getContext())));
+            }
         }
-        if (squadCount > 1) {
+        if (squadCount > 1 && squadsExist) {
             disposables.add(abilityPicker.values()
                     .debounce(500, TimeUnit.MILLISECONDS, scheduler)
                     .subscribe(ability -> squadPicker.getPicker().setVisibility(ability == Ability.BINDING ? View.VISIBLE : View.GONE)));

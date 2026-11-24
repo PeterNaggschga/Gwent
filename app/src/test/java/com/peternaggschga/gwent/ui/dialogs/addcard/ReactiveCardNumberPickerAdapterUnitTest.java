@@ -4,10 +4,12 @@ import static com.google.common.truth.Truth.assertThat;
 import static com.peternaggschga.gwent.ui.main.FactionSwitchListener.THEME_NORTHERN_KINGDOMS;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -29,6 +31,7 @@ import org.junit.Test;
 import org.mockito.MockedStatic;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.rxjava3.core.Completable;
@@ -55,6 +58,7 @@ public class ReactiveCardNumberPickerAdapterUnitTest {
         ability = new Picker(R.id.popup_add_card_ability_picker);
         squad = new Picker(R.id.popup_add_card_binding_picker);
         count = new Picker(R.id.popup_add_card_number_picker);
+        when(squads.hasNonEmptySquad()).thenReturn(true);
         when(squads.getFirstSquadWithMembers(anyInt())).thenReturn(1);
     }
 
@@ -66,7 +70,11 @@ public class ReactiveCardNumberPickerAdapterUnitTest {
     }
 
     private void create(RowType row) {
-        adapter = new CardNumberPickerAdapter(group, squads,
+        create(row, squads);
+    }
+
+    private void create(RowType row, SquadManager squadManager) {
+        adapter = new CardNumberPickerAdapter(group, squadManager,
                 AbilityFilter.create(THEME_NORTHERN_KINGDOMS, row), scheduler);
     }
 
@@ -114,6 +122,7 @@ public class ReactiveCardNumberPickerAdapterUnitTest {
 
     @Test
     public void bindingVisibilityWaitsForFullDebounce() {
+        when(squads.getFirstSquadWithMembers(anyInt())).thenReturn(2);
         create(RowType.MELEE);
         chooseBinding();
         assertThat(squad.visibility).isEqualTo(View.GONE);
@@ -121,8 +130,24 @@ public class ReactiveCardNumberPickerAdapterUnitTest {
         assertThat(squad.visibility).isEqualTo(View.GONE);
         scheduler.advanceTimeBy(1, TimeUnit.MILLISECONDS);
         assertThat(squad.visibility).isEqualTo(View.VISIBLE);
-        verify(squads).setSquadDamage(org.mockito.ArgumentMatchers.eq(1), any());
-        verify(squads).showSquadInfo(1, context);
+        verify(squads).setSquadDamage(eq(2), any());
+        verify(squads).showSquadInfo(2, context);
+    }
+
+    @Test
+    public void rowWithoutSquadsKeepsPickerHiddenAndStartsSquadOne() {
+        SquadManager emptySquads = spy(new SquadManager(Collections.emptyList()));
+        create(RowType.MELEE, emptySquads);
+        damage.selectIndex(7);
+        count.view.setValue(3);
+        chooseBinding();
+        assertThat(squad.visibility).isEqualTo(View.GONE);
+        assertSaved(false, 7, Ability.BINDING, 1, RowType.MELEE, 3);
+        scheduler.advanceTimeBy(1, TimeUnit.SECONDS);
+        assertThat(squad.visibility).isEqualTo(View.GONE);
+        assertSaved(false, 7, Ability.BINDING, 1, RowType.MELEE, 3);
+        verify(emptySquads, never()).setSquadDamage(anyInt(), any());
+        verify(emptySquads, never()).showSquadInfo(anyInt(), any());
     }
 
     @Test
@@ -154,9 +179,12 @@ public class ReactiveCardNumberPickerAdapterUnitTest {
         create(RowType.RANGE);
         chooseBinding();
         assertThat(squad.visibility).isEqualTo(View.GONE);
+        verify(squads).setSquadDamage(eq(1), any());
+        verify(squads, never()).showSquadInfo(anyInt(), any());
         assertSaved(false, 5, Ability.BINDING, 1, RowType.RANGE);
         scheduler.advanceTimeBy(1, TimeUnit.SECONDS);
         assertThat(squad.visibility).isEqualTo(View.GONE);
+        verify(squads).showSquadInfo(1, context);
     }
 
     @Test
@@ -190,14 +218,19 @@ public class ReactiveCardNumberPickerAdapterUnitTest {
 
     private void assertSaved(boolean epic, int selectedDamage, Ability selectedAbility,
                              Integer selectedSquad, RowType row) {
+        assertSaved(epic, selectedDamage, selectedAbility, selectedSquad, row, 1);
+    }
+
+    private void assertSaved(boolean epic, int selectedDamage, Ability selectedAbility,
+                             Integer selectedSquad, RowType row, int selectedCount) {
         UnitRepository repository = mock(UnitRepository.class);
-        when(repository.insertUnit(epic, selectedDamage, selectedAbility, selectedSquad, row, 1))
+        when(repository.insertUnit(epic, selectedDamage, selectedAbility, selectedSquad, row, selectedCount))
                 .thenReturn(Completable.complete());
         try (MockedStatic<GwentApplication> application = mockStatic(GwentApplication.class)) {
             application.when(() -> GwentApplication.getRepository(context)).thenReturn(Single.just(repository));
             adapter.addSelectedUnits(row).test().assertResult(epic);
         }
-        verify(repository).insertUnit(epic, selectedDamage, selectedAbility, selectedSquad, row, 1);
+        verify(repository).insertUnit(epic, selectedDamage, selectedAbility, selectedSquad, row, selectedCount);
     }
 
     private class Picker {
