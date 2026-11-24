@@ -10,7 +10,6 @@ import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -57,12 +56,12 @@ class DamageValuePicker extends ValuePicker<Integer> {
      * @throws IllegalArgumentException If heroDamageValues contains an unknown hero damage value.
      */
     DamageValuePicker(@NonNull NumberPicker picker, @NonNull Collection<Integer> heroDamageValues) {
-        super(picker, Arrays.stream(EPIC_DAMAGE_VALUES).collect(
+        super(picker, EPIC_DAMAGE_VALUES.stream().collect(
                 TreeMap::new,
                 (map, integer) -> map.put(integer, integer),
                 Map::putAll)
         );
-        if (!Arrays.asList(EPIC_DAMAGE_VALUES).containsAll(heroDamageValues)) {
+        if (!EPIC_DAMAGE_VALUES.containsAll(heroDamageValues)) {
             throw new IllegalArgumentException("Hero damage values must be a subset of EPIC_DAMAGE_VALUES.");
         }
         this.heroDamageValues = heroDamageValues.stream().distinct().sorted().collect(Collectors.toList());

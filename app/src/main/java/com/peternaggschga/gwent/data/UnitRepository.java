@@ -11,7 +11,6 @@ import androidx.preference.PreferenceManager;
 import com.peternaggschga.gwent.domain.cases.TransformBerserkersUseCase;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -176,8 +175,8 @@ public class UnitRepository {
         if (damage < 0 || damage > UnitEntity.NON_EPIC_DAMAGE_VALUES_UPPER_BOUND) {
             throw new IllegalArgumentException("Damage be between 0 and " + UnitEntity.NON_EPIC_DAMAGE_VALUES_UPPER_BOUND + " but is " + damage + ".");
         }
-        if (epic && Arrays.stream(UnitEntity.EPIC_DAMAGE_VALUES).noneMatch(integer -> integer == damage)) {
-            throw new IllegalArgumentException("Damage of epic units must be in " + Arrays.toString(UnitEntity.EPIC_DAMAGE_VALUES) + " but is " + damage + ".");
+        if (epic && !UnitEntity.EPIC_DAMAGE_VALUES.contains(damage)) {
+            throw new IllegalArgumentException("Damage of epic units must be in " + UnitEntity.EPIC_DAMAGE_VALUES + " but is " + damage + ".");
         }
         if (ability != Ability.BINDING && squad != null) {
             throw new IllegalArgumentException("Squad must be null or ability must be BINDING but squad is " + squad + " and ability is " + ability + ".");

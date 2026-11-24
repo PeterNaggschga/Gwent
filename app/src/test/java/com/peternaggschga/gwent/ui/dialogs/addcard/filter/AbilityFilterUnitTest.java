@@ -98,7 +98,7 @@ public class AbilityFilterUnitTest {
     @Test
     public void heroDamageValuesMatchRules() {
         assertThat(filter.getHeroDamageValues()).containsExactlyElementsIn(heroDamageValues);
-        assertThat(Arrays.asList(UnitEntity.EPIC_DAMAGE_VALUES))
+        assertThat(UnitEntity.EPIC_DAMAGE_VALUES)
                 .containsAtLeastElementsIn(filter.getHeroDamageValues());
     }
 

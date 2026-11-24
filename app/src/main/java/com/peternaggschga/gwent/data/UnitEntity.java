@@ -23,6 +23,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * A class representing a card on the game board.
@@ -56,10 +57,10 @@ public class UnitEntity {
     private int damage;
 
     /**
-     * Integer array containing every damage value an epic unit may have.
+     * Set containing every damage value an epic unit may have.
      */
     @NonNull
-    public static final Integer[] EPIC_DAMAGE_VALUES = new Integer[]{0, 7, 8, 10, 11, 15};
+    public static final Set<Integer> EPIC_DAMAGE_VALUES = Set.of(0, 7, 8, 10, 11, 15);
 
     /**
      * Integer defining what the maximum damage of a non-epic UnitEntity can be.

@@ -14,7 +14,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -185,7 +184,7 @@ public class UnitRepositoryIntegrationTest {
     @Test
     public void insertUnitAssertsNonEpicDamage() {
         int[] nonEpicDamage = IntStream.range(0, UnitEntity.NON_EPIC_DAMAGE_VALUES_UPPER_BOUND + 1)
-                .filter(damage -> Arrays.stream(UnitEntity.EPIC_DAMAGE_VALUES).noneMatch(integer -> damage == integer))
+                .filter(damage -> !UnitEntity.EPIC_DAMAGE_VALUES.contains(damage))
                 .toArray();
         for (int damage : nonEpicDamage) {
             try {

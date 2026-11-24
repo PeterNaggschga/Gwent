@@ -25,20 +25,23 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import io.reactivex.rxjava3.observers.TestObserver;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DamageValuePickerUnitTest {
+    private static final List<Integer> SORTED_EPIC_DAMAGE_VALUES =
+            EPIC_DAMAGE_VALUES.stream().sorted().collect(Collectors.toList());
+
     @Mock
     NumberPicker mockPicker;
     DamageValuePicker testPicker;
 
     @Before
     public void initMocks() {
-        testPicker = new DamageValuePicker(mockPicker, Arrays.asList(EPIC_DAMAGE_VALUES));
+        testPicker = new DamageValuePicker(mockPicker, EPIC_DAMAGE_VALUES);
         reset(mockPicker);
     }
 
@@ -65,7 +68,7 @@ public class DamageValuePickerUnitTest {
     @Test
     public void setEpicValuesSetsPickerMaxValue() {
         testPicker.setEpicValues(true);
-        verify(mockPicker).setMaxValue(EPIC_DAMAGE_VALUES.length - 1);
+        verify(mockPicker).setMaxValue(EPIC_DAMAGE_VALUES.size() - 1);
         testPicker.setEpicValues(false);
         verify(mockPicker).setMaxValue(NON_EPIC_DAMAGE_VALUES_UPPER_BOUND);
     }
@@ -79,17 +82,11 @@ public class DamageValuePickerUnitTest {
         ArgumentCaptor<String[]> argumentCaptor = ArgumentCaptor.forClass(String[].class);
         verify(mockPicker, atLeast(2)).setDisplayedValues(argumentCaptor.capture());
 
+        String[] expected = SORTED_EPIC_DAMAGE_VALUES.stream().map(String::valueOf).toArray(String[]::new);
         assertThat(
                 argumentCaptor.getAllValues()
                         .stream()
-                        .filter(Objects::nonNull)
-                        .filter(strings -> {
-                            boolean result = strings.length == EPIC_DAMAGE_VALUES.length;
-                            for (int i = 0; i < strings.length; i++) {
-                                result &= strings[i].equals(String.valueOf(EPIC_DAMAGE_VALUES[i]));
-                            }
-                            return result;
-                        })
+                        .filter(strings -> Arrays.equals(strings, expected))
                         .count()
         ).isEqualTo(1);
     }
@@ -98,7 +95,7 @@ public class DamageValuePickerUnitTest {
     public void setEpicValuesUpdatesSelectableValues() {
         testPicker.setEpicValues(true);
         assertThat(testPicker.getSelectableValues())
-                .containsExactlyElementsIn(EPIC_DAMAGE_VALUES);
+                .containsExactlyElementsIn(SORTED_EPIC_DAMAGE_VALUES).inOrder();
         testPicker.setEpicValues(false);
         assertThat(testPicker.getSelectableValues())
                 .containsExactlyElementsIn(IntStream.rangeClosed(0, NON_EPIC_DAMAGE_VALUES_UPPER_BOUND).boxed().toArray());
@@ -128,9 +125,9 @@ public class DamageValuePickerUnitTest {
     public void getValueReturnsEpicValueWhenEpic() {
         testPicker.setEpicValues(true);
         clearInvocations(mockPicker);
-        for (int i = 0; i < EPIC_DAMAGE_VALUES.length; i++) {
+        for (int i = 0; i < SORTED_EPIC_DAMAGE_VALUES.size(); i++) {
             when(mockPicker.getValue()).thenReturn(i);
-            assertThat(testPicker.getValue()).isEqualTo(EPIC_DAMAGE_VALUES[i]);
+            assertThat(testPicker.getValue()).isEqualTo(SORTED_EPIC_DAMAGE_VALUES.get(i));
             verify(mockPicker, times(i + 1)).getValue();
         }
     }
@@ -149,8 +146,8 @@ public class DamageValuePickerUnitTest {
     public void setValueSetsEpicValueWhenEpic() {
         testPicker.setEpicValues(true);
         reset(mockPicker);
-        for (int i = 0; i < EPIC_DAMAGE_VALUES.length; i++) {
-            testPicker.setValue(EPIC_DAMAGE_VALUES[i]);
+        for (int i = 0; i < SORTED_EPIC_DAMAGE_VALUES.size(); i++) {
+            testPicker.setValue(SORTED_EPIC_DAMAGE_VALUES.get(i));
             verify(mockPicker).setValue(i);
         }
     }
