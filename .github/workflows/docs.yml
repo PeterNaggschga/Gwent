@@ -60,7 +60,16 @@ jobs:
         run: |
           sha_new=$(git rev-parse HEAD)
           echo "SHA=$sha_new" >> "$GITHUB_OUTPUT"
-      
+
+  draft-card-release:
+    needs: update-documentation
+    if: ${{ github.ref == 'refs/heads/main' }}
+    uses: ./.github/workflows/cards-release.yml
+    permissions:
+      contents: write
+    with:
+      documentation-sha: ${{ needs.update-documentation.outputs.SHA }}
+
   rebase-dev:
     needs: update-documentation
     runs-on: ubuntu-latest
