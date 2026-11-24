@@ -50,7 +50,7 @@ public class GwentApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        database = Room.databaseBuilder(this, AppDatabase.class, "database").build();
+        database = Room.databaseBuilder(this, AppDatabase.class, "database").fallbackToDestructiveMigration().build();
     }
 
     /**
